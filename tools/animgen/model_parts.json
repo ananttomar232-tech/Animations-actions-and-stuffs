@@ -1,0 +1,967 @@
+{
+ "AbstractZombieModel": {
+  "extends": "",
+  "parts": []
+ },
+ "AgeableHierarchicalModel": {
+  "extends": "",
+  "parts": []
+ },
+ "AgeableListModel": {
+  "extends": "",
+  "parts": []
+ },
+ "AllayModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "body",
+   "head",
+   "left_arm",
+   "left_wing",
+   "right_arm",
+   "right_wing",
+   "root"
+  ]
+ },
+ "ArmorStandArmorModel": {
+  "extends": "HumanoidModel",
+  "parts": [
+   "hat",
+   "head",
+   "left_leg",
+   "right_leg"
+  ]
+ },
+ "ArmorStandModel": {
+  "extends": "ArmorStandArmorModel ",
+  "parts": [
+   "base_plate",
+   "body",
+   "head",
+   "left_arm",
+   "left_body_stick",
+   "left_leg",
+   "right_arm",
+   "right_body_stick",
+   "right_leg",
+   "shoulder_stick"
+  ]
+ },
+ "AxolotlModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_gills",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_gills",
+   "right_hind_leg",
+   "tail",
+   "top_gills"
+  ]
+ },
+ "BatModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "body",
+   "head",
+   "left_ear",
+   "left_wing",
+   "left_wing_tip",
+   "right_ear",
+   "right_wing",
+   "right_wing_tip"
+  ]
+ },
+ "BeeModel": {
+  "extends": "",
+  "parts": [
+   "back_legs",
+   "body",
+   "bone",
+   "front_legs",
+   "left_antenna",
+   "left_wing",
+   "middle_legs",
+   "right_antenna",
+   "right_wing",
+   "stinger"
+  ]
+ },
+ "BlazeModel": {
+  "extends": "",
+  "parts": [
+   "head"
+  ]
+ },
+ "BoatModel": {
+  "extends": "ListModel",
+  "parts": [
+   "back",
+   "bottom",
+   "front",
+   "left",
+   "left_paddle",
+   "right",
+   "right_paddle",
+   "water_patch"
+  ]
+ },
+ "BookModel": {
+  "extends": "Model ",
+  "parts": [
+   "flip_page1",
+   "flip_page2",
+   "left_lid",
+   "left_pages",
+   "right_lid",
+   "right_pages",
+   "seam"
+  ]
+ },
+ "CamelModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "bridle",
+   "head",
+   "hump",
+   "left_ear",
+   "left_front_leg",
+   "left_hind_leg",
+   "reins",
+   "right_ear",
+   "right_front_leg",
+   "right_hind_leg",
+   "saddle",
+   "tail"
+  ]
+ },
+ "CatModel": {
+  "extends": "",
+  "parts": []
+ },
+ "ChestBoatModel": {
+  "extends": "BoatModel ",
+  "parts": [
+   "chest_bottom",
+   "chest_lid",
+   "chest_lock"
+  ]
+ },
+ "ChestRaftModel": {
+  "extends": "RaftModel ",
+  "parts": [
+   "chest_bottom",
+   "chest_lid",
+   "chest_lock"
+  ]
+ },
+ "ChestedHorseModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head_parts",
+   "left_chest",
+   "right_chest",
+   "right_ear"
+  ]
+ },
+ "ChickenModel": {
+  "extends": "",
+  "parts": [
+   "beak",
+   "body",
+   "head",
+   "left_leg",
+   "left_wing",
+   "red_thing",
+   "right_leg",
+   "right_wing"
+  ]
+ },
+ "CodModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_fin",
+   "nose",
+   "right_fin",
+   "tail_fin",
+   "top_fin"
+  ]
+ },
+ "ColorableAgeableListModel": {
+  "extends": "",
+  "parts": []
+ },
+ "ColorableHierarchicalModel": {
+  "extends": "",
+  "parts": []
+ },
+ "CowModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "CreeperModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "DolphinModel": {
+  "extends": "",
+  "parts": [
+   "back_fin",
+   "body",
+   "head",
+   "left_fin",
+   "nose",
+   "right_fin",
+   "tail",
+   "tail_fin"
+  ]
+ },
+ "DrownedModel": {
+  "extends": "",
+  "parts": [
+   "left_arm",
+   "left_leg"
+  ]
+ },
+ "ElytraModel": {
+  "extends": "",
+  "parts": [
+   "left_wing",
+   "right_wing"
+  ]
+ },
+ "EndermanModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "hat",
+   "head",
+   "left_arm",
+   "left_leg",
+   "right_arm",
+   "right_leg"
+  ]
+ },
+ "EndermiteModel": {
+  "extends": "",
+  "parts": []
+ },
+ "EntityModel": {
+  "extends": "",
+  "parts": []
+ },
+ "EvokerFangsModel": {
+  "extends": "",
+  "parts": [
+   "base",
+   "lower_jaw",
+   "upper_jaw"
+  ]
+ },
+ "FoxModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_ear",
+   "left_front_leg",
+   "left_hind_leg",
+   "nose",
+   "right_ear",
+   "right_front_leg",
+   "right_hind_leg",
+   "tail"
+  ]
+ },
+ "FrogModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "croaking_body",
+   "eyes",
+   "head",
+   "left_arm",
+   "left_eye",
+   "left_foot",
+   "left_hand",
+   "left_leg",
+   "right_arm",
+   "right_eye",
+   "right_foot",
+   "right_hand",
+   "right_leg",
+   "root",
+   "tongue"
+  ]
+ },
+ "GhastModel": {
+  "extends": "",
+  "parts": [
+   "body"
+  ]
+ },
+ "GiantZombieModel": {
+  "extends": "AbstractZombieModel",
+  "parts": []
+ },
+ "GoatModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "left_horn",
+   "nose",
+   "right_front_leg",
+   "right_hind_leg",
+   "right_horn"
+  ]
+ },
+ "GuardianModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "eye",
+   "head",
+   "tail0",
+   "tail1",
+   "tail2"
+  ]
+ },
+ "HierarchicalModel": {
+  "extends": "",
+  "parts": [
+   "root"
+  ]
+ },
+ "HoglinModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_ear",
+   "left_front_leg",
+   "left_hind_leg",
+   "left_horn",
+   "mane",
+   "right_ear",
+   "right_front_leg",
+   "right_hind_leg",
+   "right_horn"
+  ]
+ },
+ "HorseModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "head_parts",
+   "head_saddle",
+   "left_ear",
+   "left_front_baby_leg",
+   "left_front_leg",
+   "left_hind_baby_leg",
+   "left_hind_leg",
+   "left_saddle_line",
+   "left_saddle_mouth",
+   "mane",
+   "mouth_saddle_wrap",
+   "right_ear",
+   "right_front_baby_leg",
+   "right_front_leg",
+   "right_hind_baby_leg",
+   "right_hind_leg",
+   "right_saddle_line",
+   "right_saddle_mouth",
+   "saddle",
+   "tail",
+   "upper_mouth"
+  ]
+ },
+ "HumanoidArmorModel": {
+  "extends": "",
+  "parts": [
+   "left_leg",
+   "right_leg"
+  ]
+ },
+ "HumanoidModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "hat",
+   "head",
+   "left_arm",
+   "left_leg",
+   "right_arm",
+   "right_leg"
+  ]
+ },
+ "IllagerModel": {
+  "extends": "",
+  "parts": [
+   "arms",
+   "body",
+   "hat",
+   "head",
+   "left_arm",
+   "left_leg",
+   "left_shoulder",
+   "nose",
+   "right_arm",
+   "right_leg"
+  ]
+ },
+ "IronGolemModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_arm",
+   "left_leg",
+   "right_arm",
+   "right_leg"
+  ]
+ },
+ "LavaSlimeModel": {
+  "extends": "",
+  "parts": [
+   "inside_cube"
+  ]
+ },
+ "LeashKnotModel": {
+  "extends": "",
+  "parts": [
+   "knot"
+  ]
+ },
+ "ListModel": {
+  "extends": "",
+  "parts": []
+ },
+ "LlamaModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_chest",
+   "left_front_leg",
+   "left_hind_leg",
+   "neck",
+   "right_chest",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "LlamaSpitModel": {
+  "extends": "",
+  "parts": [
+   "main"
+  ]
+ },
+ "MinecartModel": {
+  "extends": "",
+  "parts": [
+   "back",
+   "bottom",
+   "front",
+   "left",
+   "right"
+  ]
+ },
+ "Model": {
+  "extends": "",
+  "parts": []
+ },
+ "OcelotModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "nose",
+   "right_front_leg",
+   "right_hind_leg",
+   "tail1",
+   "tail2"
+  ]
+ },
+ "PandaModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "left_front_leg",
+   "left_hind_leg",
+   "nose",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "ParrotModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "beak1",
+   "beak2",
+   "body",
+   "feather",
+   "head",
+   "head2",
+   "left_leg",
+   "left_wing",
+   "right_leg",
+   "right_wing",
+   "tail"
+  ]
+ },
+ "PhantomModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_wing_base",
+   "left_wing_tip",
+   "right_wing_base",
+   "right_wing_tip",
+   "tail_base",
+   "tail_tip"
+  ]
+ },
+ "PigModel": {
+  "extends": "",
+  "parts": [
+   "head"
+  ]
+ },
+ "PiglinHeadModel": {
+  "extends": "SkullModelBase ",
+  "parts": [
+   "head",
+   "left_ear",
+   "right_ear"
+  ]
+ },
+ "PiglinModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "hat",
+   "head",
+   "left_ear",
+   "right_ear"
+  ]
+ },
+ "PlayerModel": {
+  "extends": "",
+  "parts": [
+   "cloak",
+   "ear",
+   "jacket",
+   "left_arm",
+   "left_leg",
+   "left_pants",
+   "left_sleeve",
+   "right_arm",
+   "right_pants",
+   "right_sleeve"
+  ]
+ },
+ "PolarBearModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "left_front_leg",
+   "left_hind_leg",
+   "mouth",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "PufferfishBigModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "bottom_back_fin",
+   "bottom_front_fin",
+   "bottom_middle_fin",
+   "left_back_fin",
+   "left_blue_fin",
+   "left_front_fin",
+   "right_back_fin",
+   "right_blue_fin",
+   "right_front_fin",
+   "top_back_fin",
+   "top_front_fin",
+   "top_middle_fin"
+  ]
+ },
+ "PufferfishMidModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "bottom_back_fin",
+   "bottom_front_fin",
+   "left_back_fin",
+   "left_blue_fin",
+   "left_front_fin",
+   "right_back_fin",
+   "right_blue_fin",
+   "right_front_fin",
+   "top_back_fin",
+   "top_front_fin"
+  ]
+ },
+ "PufferfishSmallModel": {
+  "extends": "",
+  "parts": [
+   "back_fin",
+   "body",
+   "left_eye",
+   "left_fin",
+   "right_eye",
+   "right_fin"
+  ]
+ },
+ "QuadrupedModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "RabbitModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_ear",
+   "left_front_leg",
+   "left_haunch",
+   "left_hind_foot",
+   "nose",
+   "right_ear",
+   "right_front_leg",
+   "right_haunch",
+   "right_hind_foot",
+   "tail"
+  ]
+ },
+ "RaftModel": {
+  "extends": "ListModel",
+  "parts": [
+   "bottom",
+   "left_paddle",
+   "right_paddle"
+  ]
+ },
+ "RavagerModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "left_horn",
+   "mouth",
+   "neck",
+   "right_front_leg",
+   "right_hind_leg",
+   "right_horn"
+  ]
+ },
+ "SalmonModel": {
+  "extends": "",
+  "parts": [
+   "back_fin",
+   "body_back",
+   "body_front",
+   "head",
+   "left_fin",
+   "right_fin",
+   "top_back_fin",
+   "top_front_fin"
+  ]
+ },
+ "SheepFurModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "SheepModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head"
+  ]
+ },
+ "ShieldModel": {
+  "extends": "Model ",
+  "parts": [
+   "handle",
+   "plate"
+  ]
+ },
+ "ShulkerBulletModel": {
+  "extends": "",
+  "parts": [
+   "main"
+  ]
+ },
+ "ShulkerModel": {
+  "extends": "",
+  "parts": [
+   "base",
+   "head",
+   "lid"
+  ]
+ },
+ "SilverfishModel": {
+  "extends": "",
+  "parts": []
+ },
+ "SkeletonModel": {
+  "extends": "",
+  "parts": [
+   "left_arm",
+   "left_leg",
+   "right_arm",
+   "right_leg"
+  ]
+ },
+ "SkullModel": {
+  "extends": "SkullModelBase ",
+  "parts": [
+   "head"
+  ]
+ },
+ "SlimeModel": {
+  "extends": "",
+  "parts": [
+   "cube",
+   "left_eye",
+   "mouth",
+   "right_eye"
+  ]
+ },
+ "SnifferModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "bone",
+   "head",
+   "left_ear",
+   "left_front_leg",
+   "left_hind_leg",
+   "left_mid_leg",
+   "lower_beak",
+   "nose",
+   "right_ear",
+   "right_front_leg",
+   "right_hind_leg",
+   "right_mid_leg",
+   "root"
+  ]
+ },
+ "SnowGolemModel": {
+  "extends": "",
+  "parts": [
+   "head",
+   "left_arm",
+   "lower_body",
+   "right_arm",
+   "upper_body"
+  ]
+ },
+ "SpiderModel": {
+  "extends": "",
+  "parts": [
+   "body0",
+   "body1",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "left_middle_front_leg",
+   "left_middle_hind_leg",
+   "right_front_leg",
+   "right_hind_leg",
+   "right_middle_front_leg",
+   "right_middle_hind_leg"
+  ]
+ },
+ "SquidModel": {
+  "extends": "",
+  "parts": [
+   "body"
+  ]
+ },
+ "StriderModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "left_bottom_bristle",
+   "left_leg",
+   "left_middle_bristle",
+   "left_top_bristle",
+   "right_bottom_bristle",
+   "right_leg",
+   "right_middle_bristle",
+   "right_top_bristle"
+  ]
+ },
+ "TadpoleModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "tail"
+  ]
+ },
+ "TridentModel": {
+  "extends": "Model ",
+  "parts": [
+   "base",
+   "left_spike",
+   "middle_spike",
+   "pole",
+   "right_spike"
+  ]
+ },
+ "TurtleModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "egg_belly",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "right_front_leg",
+   "right_hind_leg"
+  ]
+ },
+ "VexModel": {
+  "extends": "HierarchicalModel",
+  "parts": [
+   "body",
+   "head",
+   "left_arm",
+   "left_wing",
+   "right_arm",
+   "right_wing",
+   "root"
+  ]
+ },
+ "VillagerModel": {
+  "extends": "",
+  "parts": [
+   "arms",
+   "body",
+   "hat",
+   "hat_rim",
+   "head",
+   "jacket",
+   "left_leg",
+   "nose",
+   "right_leg"
+  ]
+ },
+ "WardenModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "bone",
+   "head",
+   "left_arm",
+   "left_leg",
+   "left_ribcage",
+   "left_tendril",
+   "right_arm",
+   "right_leg",
+   "right_ribcage",
+   "right_tendril"
+  ]
+ },
+ "WitchModel": {
+  "extends": "",
+  "parts": [
+   "hat",
+   "hat2",
+   "hat3",
+   "hat4",
+   "head",
+   "nose"
+  ]
+ },
+ "WitherBossModel": {
+  "extends": "",
+  "parts": [
+   "center_head",
+   "left_head",
+   "ribcage",
+   "right_head",
+   "shoulders",
+   "tail"
+  ]
+ },
+ "WolfModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "head",
+   "left_front_leg",
+   "left_hind_leg",
+   "real_head",
+   "real_tail",
+   "right_front_leg",
+   "right_hind_leg",
+   "tail",
+   "upper_body"
+  ]
+ },
+ "ZombieModel": {
+  "extends": "",
+  "parts": []
+ },
+ "ZombieVillagerModel": {
+  "extends": "",
+  "parts": [
+   "body",
+   "hat",
+   "hat_rim",
+   "head",
+   "left_arm",
+   "left_leg",
+   "right_arm",
+   "right_leg"
+  ]
+ }
+}

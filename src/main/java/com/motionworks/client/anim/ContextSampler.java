@@ -266,6 +266,7 @@ public final class ContextSampler {
             ItemStack use = e.getUseItem();
             s.setString(CtxVars.USE_ANIM, use.getUseAnimation().name().toLowerCase(Locale.ROOT));
             s.set(CtxVars.USE_TIME, e.getTicksUsingItem() / 20f);
+            s.set(CtxVars.LAST_USE_TIME, e.getTicksUsingItem() / 20f);
             s.setBool(CtxVars.USE_HAND_OFF, e.getUsedItemHand() == net.minecraft.world.InteractionHand.OFF_HAND);
         } else {
             s.setString(CtxVars.USE_ANIM, "none");

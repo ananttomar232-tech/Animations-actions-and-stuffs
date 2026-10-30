@@ -69,6 +69,7 @@ public final class CtxVars {
     public static final int USING_ITEM = Vars.id("q.is_using_item");
     public static final int USE_ANIM = Vars.id("q.use_anim");
     public static final int USE_TIME = Vars.id("q.use_time");
+    public static final int LAST_USE_TIME = Vars.id("q.last_use_time");
     public static final int USE_HAND_OFF = Vars.id("q.use_offhand");
     public static final int SWING = Vars.id("q.swing_progress");
     public static final int SWINGING = Vars.id("q.is_swinging");

@@ -54,7 +54,7 @@ public final class MotionSignature {
         }
         List<String> channels = new ArrayList<>(keys);
         float[] data = new float[channels.size() * 3 * SAMPLES];
-        Scope scope = new Scope();
+        Scope scope = probeScope();
         float[] tmp = new float[3];
         float len = Math.max(clip.length(), 1e-3f);
         for (int s = 0; s < SAMPLES; s++) {
@@ -78,6 +78,20 @@ public final class MotionSignature {
             }
         }
         return new MotionSignature(clip, channels, data);
+    }
+
+    /**
+     * Context for evaluating procedural (expression-driven) channels: every variable gets a
+     * distinct deterministic value, so different formulas give different signatures while the
+     * same formula always gives the same one.
+     */
+    static Scope probeScope() {
+        Scope s = new Scope();
+        int n = com.motionworks.engine.expr.Vars.count();
+        for (int i = com.motionworks.engine.expr.Vars.LOCAL_LIMIT; i < n; i++) {
+            s.set(i, 0.15f + 0.7f * com.motionworks.engine.math.Hashing.unit(com.motionworks.engine.math.Hashing.combine(0x5157, i)));
+        }
+        return s;
     }
 
     static String mirror(String bone) {

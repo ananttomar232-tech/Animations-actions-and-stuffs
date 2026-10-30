@@ -1,0 +1,593 @@
+{
+ "minecraft:allay": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:allay",
+   "@living"
+  ]
+ },
+ "minecraft:axolotl": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:axolotl",
+   "@living"
+  ]
+ },
+ "minecraft:bat": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:bat",
+   "@living"
+  ]
+ },
+ "minecraft:bee": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:bee",
+   "@living"
+  ]
+ },
+ "minecraft:blaze": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:blaze",
+   "@living"
+  ]
+ },
+ "minecraft:camel": {
+  "rig": "camel",
+  "targets": [
+   "minecraft:camel",
+   "@living"
+  ]
+ },
+ "minecraft:cat": {
+  "rig": "feline",
+  "targets": [
+   "minecraft:cat",
+   "@living"
+  ]
+ },
+ "minecraft:chicken": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:chicken",
+   "@living"
+  ]
+ },
+ "minecraft:cod": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:cod",
+   "@fish",
+   "@living"
+  ]
+ },
+ "minecraft:cow": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:cow",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:creeper": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:creeper",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:dolphin": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:dolphin",
+   "@living"
+  ]
+ },
+ "minecraft:donkey": {
+  "rig": "equine",
+  "targets": [
+   "minecraft:donkey",
+   "@equine",
+   "@living"
+  ]
+ },
+ "minecraft:drowned": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:drowned",
+   "@humanoid",
+   "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:ender_dragon": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:ender_dragon",
+   "@living"
+  ]
+ },
+ "minecraft:enderman": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:enderman",
+   "@humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:endermite": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:endermite",
+   "@living"
+  ]
+ },
+ "minecraft:evoker": {
+  "rig": "illager",
+  "targets": [
+   "minecraft:evoker",
+   "@illagers",
+   "@living"
+  ]
+ },
+ "minecraft:fox": {
+  "rig": "fox",
+  "targets": [
+   "minecraft:fox",
+   "@living"
+  ]
+ },
+ "minecraft:frog": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:frog",
+   "@living"
+  ]
+ },
+ "minecraft:ghast": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:ghast",
+   "@living"
+  ]
+ },
+ "minecraft:giant": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:giant",
+   "@humanoid",
+   "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:glow_squid": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:glow_squid",
+   "@cephalopod",
+   "@living"
+  ]
+ },
+ "minecraft:goat": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:goat",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:guardian": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:guardian",
+   "@living"
+  ]
+ },
+ "minecraft:hoglin": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:hoglin",
+   "@living"
+  ]
+ },
+ "minecraft:horse": {
+  "rig": "equine",
+  "targets": [
+   "minecraft:horse",
+   "@equine",
+   "@living"
+  ]
+ },
+ "minecraft:husk": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:husk",
+   "@humanoid",
+   "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:illusioner": {
+  "rig": "illager",
+  "targets": [
+   "minecraft:illusioner",
+   "@illagers",
+   "@living"
+  ]
+ },
+ "minecraft:iron_golem": {
+  "rig": "golem",
+  "targets": [
+   "minecraft:iron_golem",
+   "@living"
+  ]
+ },
+ "minecraft:llama": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:llama",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:magma_cube": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:magma_cube",
+   "@living"
+  ]
+ },
+ "minecraft:mooshroom": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:mooshroom",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:mule": {
+  "rig": "equine",
+  "targets": [
+   "minecraft:mule",
+   "@equine",
+   "@living"
+  ]
+ },
+ "minecraft:ocelot": {
+  "rig": "feline",
+  "targets": [
+   "minecraft:ocelot",
+   "@living"
+  ]
+ },
+ "minecraft:panda": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:panda",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:parrot": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:parrot",
+   "@living"
+  ]
+ },
+ "minecraft:phantom": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:phantom",
+   "@living"
+  ]
+ },
+ "minecraft:pig": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:pig",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:piglin": {
+  "rig": "player",
+  "targets": [
+   "minecraft:piglin",
+   "@humanoid",
+   "@piglins",
+   "@living"
+  ]
+ },
+ "minecraft:piglin_brute": {
+  "rig": "player",
+  "targets": [
+   "minecraft:piglin_brute",
+   "@humanoid",
+   "@piglins",
+   "@living"
+  ]
+ },
+ "minecraft:pillager": {
+  "rig": "illager",
+  "targets": [
+   "minecraft:pillager",
+   "@illagers",
+   "@living"
+  ]
+ },
+ "minecraft:player": {
+  "rig": "player",
+  "targets": [
+   "@player",
+   "@humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:polar_bear": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:polar_bear",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:pufferfish": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:pufferfish",
+   "@fish",
+   "@living"
+  ]
+ },
+ "minecraft:rabbit": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:rabbit",
+   "@living"
+  ]
+ },
+ "minecraft:ravager": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:ravager",
+   "@living"
+  ]
+ },
+ "minecraft:salmon": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:salmon",
+   "@fish",
+   "@living"
+  ]
+ },
+ "minecraft:sheep": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:sheep",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:shulker": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:shulker",
+   "@living"
+  ]
+ },
+ "minecraft:silverfish": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:silverfish",
+   "@living"
+  ]
+ },
+ "minecraft:skeleton": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:skeleton",
+   "@humanoid",
+   "@skeletal",
+   "@living"
+  ]
+ },
+ "minecraft:skeleton_horse": {
+  "rig": "equine",
+  "targets": [
+   "minecraft:skeleton_horse",
+   "@equine",
+   "@living"
+  ]
+ },
+ "minecraft:slime": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:slime",
+   "@living"
+  ]
+ },
+ "minecraft:sniffer": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:sniffer",
+   "@living"
+  ]
+ },
+ "minecraft:snow_golem": {
+  "rig": "snow_golem",
+  "targets": [
+   "minecraft:snow_golem",
+   "@living"
+  ]
+ },
+ "minecraft:spider": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:spider",
+   "@living"
+  ]
+ },
+ "minecraft:squid": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:squid",
+   "@cephalopod",
+   "@living"
+  ]
+ },
+ "minecraft:stray": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:stray",
+   "@humanoid",
+   "@skeletal",
+   "@living"
+  ]
+ },
+ "minecraft:strider": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:strider",
+   "@living"
+  ]
+ },
+ "minecraft:tadpole": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:tadpole",
+   "@living"
+  ]
+ },
+ "minecraft:trader_llama": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:trader_llama",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:tropical_fish": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:tropical_fish",
+   "@fish",
+   "@living"
+  ]
+ },
+ "minecraft:turtle": {
+  "rig": "quadruped",
+  "targets": [
+   "minecraft:turtle",
+   "@quadruped",
+   "@living"
+  ]
+ },
+ "minecraft:vex": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:vex",
+   "@living"
+  ]
+ },
+ "minecraft:villager": {
+  "rig": "villager",
+  "targets": [
+   "minecraft:villager",
+   "@villagers",
+   "@living"
+  ]
+ },
+ "minecraft:vindicator": {
+  "rig": "illager",
+  "targets": [
+   "minecraft:vindicator",
+   "@illagers",
+   "@living"
+  ]
+ },
+ "minecraft:wandering_trader": {
+  "rig": "villager",
+  "targets": [
+   "minecraft:wandering_trader",
+   "@villagers",
+   "@living"
+  ]
+ },
+ "minecraft:warden": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:warden",
+   "@living"
+  ]
+ },
+ "minecraft:witch": {
+  "rig": "villager",
+  "targets": [
+   "minecraft:witch",
+   "@living"
+  ]
+ },
+ "minecraft:wither": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:wither",
+   "@living"
+  ]
+ },
+ "minecraft:wither_skeleton": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:wither_skeleton",
+   "@humanoid",
+   "@skeletal",
+   "@living"
+  ]
+ },
+ "minecraft:wolf": {
+  "rig": "wolf",
+  "targets": [
+   "minecraft:wolf",
+   "@living"
+  ]
+ },
+ "minecraft:zombie": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:zombie",
+   "@humanoid",
+   "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:zombie_horse": {
+  "rig": "equine",
+  "targets": [
+   "minecraft:zombie_horse",
+   "@equine",
+   "@living"
+  ]
+ },
+ "minecraft:zombie_villager": {
+  "rig": "humanoid",
+  "targets": [
+   "minecraft:zombie_villager",
+   "@humanoid",
+   "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:zombified_piglin": {
+  "rig": "player",
+  "targets": [
+   "minecraft:zombified_piglin",
+   "@humanoid",
+   "@piglins",
+   "@living"
+  ]
+ }
+}

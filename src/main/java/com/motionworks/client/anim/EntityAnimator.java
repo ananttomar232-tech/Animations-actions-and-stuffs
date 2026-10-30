@@ -48,7 +48,8 @@ public final class EntityAnimator {
 
     // Edge-detection memory
     private boolean wasOnGround = true, wasSwinging, wasUsing, wasSneaking, wasSprinting, wasMoving, wasInWater,
-            wasUnderwater, wasRiding, wasSleeping, wasFlying, wasAggressive, wasDead, wasClimbing, wasBlocking;
+            wasUnderwater, wasRiding, wasSleeping, wasFlying, wasAggressive, wasDead, wasClimbing, wasBlocking, wasInCombat, wasCharged;
+    private String lastOff = "";
     private String lastMain = "";
     private int lastHurtTime;
     private int combo;
@@ -159,12 +160,25 @@ public final class EntityAnimator {
         wasBlocking = blocking;
 
         String main = ItemCategories.of(entity.getMainHandItem());
-        if (!main.equals(lastMain)) {
+        boolean mainChanged = !main.equals(lastMain);
+        if (mainChanged) {
             s.set(PREV_MAIN_HAND, StringIds.id(lastMain));
             if (!lastMain.isEmpty()) fire("item_switch");
             lastMain = main;
         }
 
+        String off = ItemCategories.of(entity.getOffhandItem());
+        if (!off.equals(lastOff)) {
+            // Main and off hand changing in the same tick is the swap-hands key.
+            if (!lastOff.isEmpty() && mainChanged) fire("offhand_switch");
+            lastOff = off;
+        }
+        boolean inCombat = s.get(CtxVars.IN_COMBAT) != 0f;
+        edge(inCombat, wasInCombat, "combat_enter", "combat_exit");
+        wasInCombat = inCombat;
+        boolean charged = s.get(CtxVars.CROSSBOW_CHARGED) != 0f;
+        if (wasCharged && !charged && !entity.isUsingItem()) fire("crossbow_fire");
+        wasCharged = charged;
         edge(s.get(CtxVars.SNEAKING) != 0f, wasSneaking, "sneak_start", "sneak_stop");
         wasSneaking = s.get(CtxVars.SNEAKING) != 0f;
         edge(s.get(CtxVars.SPRINTING) != 0f, wasSprinting, "sprint_start", "sprint_stop");
