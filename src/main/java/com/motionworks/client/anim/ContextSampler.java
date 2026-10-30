@@ -254,6 +254,7 @@ public final class ContextSampler {
         s.set(CtxVars.FREEZING, MathUtil.clamp01(e.getTicksFrozen() / 140f));
         if (e instanceof Player p) {
             s.set(CtxVars.HUNGER, 1f - p.getFoodData().getFoodLevel() / 20f);
+            s.setBool(CtxVars.FISHING, p.fishing != null);
         }
 
         ItemStack main = e.getMainHandItem();

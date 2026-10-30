@@ -14,7 +14,9 @@ import java.util.function.Supplier;
 public record EmotePacket(String clipId) {
     private static final Map<UUID, Long> LAST = new ConcurrentHashMap<>();
     /** Purely cosmetic client actions other players may see. */
-    private static final java.util.Set<String> RELAYED_EVENTS = java.util.Set.of("inspect", "draw_weapon", "sheathe_weapon");
+    private static final java.util.Set<String> RELAYED_EVENTS = java.util.Set.of("inspect", "draw_weapon", "sheathe_weapon", "menu_open", "menu_close");
+    /** Client-only screens other players may see the owner using. */
+    private static final java.util.Set<String> RELAYED_MENUS = java.util.Set.of("inventory", "chat", "book_edit");
 
     public static void encode(EmotePacket p, FriendlyByteBuf buf) {
         buf.writeUtf(p.clipId, 128);
@@ -35,7 +37,15 @@ public record EmotePacket(String clipId) {
         LAST.put(sender.getUUID(), now);
         if (p.clipId.startsWith("event:")) {
             String event = p.clipId.substring(6);
-            if (RELAYED_EVENTS.contains(event)) MWNetwork.toTrackers(sender, new AnimationEventPacket(sender.getId(), event, "", 0f), false);
+            String arg = "";
+            int colon = event.indexOf(':');
+            if (colon > 0) {
+                arg = event.substring(colon + 1);
+                event = event.substring(0, colon);
+            }
+            if (RELAYED_EVENTS.contains(event) && (arg.isEmpty() || RELAYED_MENUS.contains(arg))) {
+                MWNetwork.toTrackers(sender, new AnimationEventPacket(sender.getId(), event, arg, 0f), false);
+            }
             return;
         }
         MWNetwork.toTrackers(sender, new AnimationEventPacket(sender.getId(), "play_clip", p.clipId, 0f), false);

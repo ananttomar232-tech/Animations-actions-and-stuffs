@@ -67,6 +67,7 @@ public final class ServerTriggers {
         if ("fishing_rod".equals(cat)) send(e.getEntity(), e.getEntity().fishing == null ? "fish_cast" : "fish_reel", "", 0f, false);
         else if ("throwable".equals(cat)) send(e.getEntity(), "throw", "", 0f, false);
         else if ("map".equals(cat) || "book".equals(cat) || "device".equals(cat)) send(e.getEntity(), "inspect_item", cat, 0f, false);
+        else if ("glass_bottle".equals(cat)) send(e.getEntity(), "fill_bottle", "", 0f, false);
     }
 
     @SubscribeEvent
@@ -87,12 +88,67 @@ public final class ServerTriggers {
 
     @SubscribeEvent
     public static void onBreak(BlockEvent.BreakEvent e) {
-        if (!e.getPlayer().level().isClientSide) send(e.getPlayer(), "break_block", "", 0f, true);
+        if (e.getPlayer().level().isClientSide) return;
+        var st = e.getState();
+        String mat = st.is(net.minecraft.tags.BlockTags.LOGS) || st.is(net.minecraft.tags.BlockTags.PLANKS) ? "wood"
+                : st.is(net.minecraft.tags.BlockTags.CROPS) || st.getBlock() instanceof net.minecraft.world.level.block.BushBlock ? "plant"
+                : st.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL) ? "dirt"
+                : st.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_PICKAXE) ? "stone" : "other";
+        send(e.getPlayer(), "break_block", mat, 0f, true);
+    }
+
+    @SubscribeEvent
+    public static void onXp(PlayerXpEvent.PickupXp e) {
+        if (!e.getEntity().level().isClientSide && e.getEntity().tickCount % 4 == 0) send(e.getEntity(), "xp_pickup", "", 0f, true);
+    }
+
+    @SubscribeEvent
+    public static void onToolBreak(net.minecraftforge.event.entity.player.PlayerDestroyItemEvent e) {
+        if (!e.getEntity().level().isClientSide) send(e.getEntity(), "tool_break", ItemCategories.of(e.getOriginal()), 0f, true);
+    }
+
+    @SubscribeEvent
+    public static void onContainerOpen(net.minecraftforge.event.entity.player.PlayerContainerEvent.Open e) {
+        if (!e.getEntity().level().isClientSide) send(e.getEntity(), "menu_open", menuKind(e.getContainer()), 0f, true);
+    }
+
+    @SubscribeEvent
+    public static void onContainerClose(net.minecraftforge.event.entity.player.PlayerContainerEvent.Close e) {
+        if (!e.getEntity().level().isClientSide) send(e.getEntity(), "menu_close", menuKind(e.getContainer()), 0f, true);
+    }
+
+    static String menuKind(net.minecraft.world.inventory.AbstractContainerMenu m) {
+        if (m instanceof net.minecraft.world.inventory.ChestMenu c) return c.getRowCount() > 3 ? "large_chest" : "chest";
+        if (m instanceof net.minecraft.world.inventory.ShulkerBoxMenu) return "shulker";
+        if (m instanceof net.minecraft.world.inventory.CraftingMenu) return "crafting";
+        if (m instanceof net.minecraft.world.inventory.SmokerMenu) return "smoker";
+        if (m instanceof net.minecraft.world.inventory.BlastFurnaceMenu) return "blast_furnace";
+        if (m instanceof net.minecraft.world.inventory.FurnaceMenu) return "furnace";
+        if (m instanceof net.minecraft.world.inventory.AnvilMenu) return "anvil";
+        if (m instanceof net.minecraft.world.inventory.EnchantmentMenu) return "enchanting";
+        if (m instanceof net.minecraft.world.inventory.BrewingStandMenu) return "brewing";
+        if (m instanceof net.minecraft.world.inventory.GrindstoneMenu) return "grindstone";
+        if (m instanceof net.minecraft.world.inventory.StonecutterMenu) return "stonecutter";
+        if (m instanceof net.minecraft.world.inventory.LoomMenu) return "loom";
+        if (m instanceof net.minecraft.world.inventory.CartographyTableMenu) return "cartography";
+        if (m instanceof net.minecraft.world.inventory.SmithingMenu) return "smithing";
+        if (m instanceof net.minecraft.world.inventory.LecternMenu) return "lectern";
+        if (m instanceof net.minecraft.world.inventory.BeaconMenu) return "beacon";
+        if (m instanceof net.minecraft.world.inventory.MerchantMenu) return "merchant";
+        if (m instanceof net.minecraft.world.inventory.HorseInventoryMenu) return "horse";
+        if (m instanceof net.minecraft.world.inventory.DispenserMenu) return "dispenser";
+        if (m instanceof net.minecraft.world.inventory.HopperMenu) return "hopper";
+        return "other";
     }
 
     @SubscribeEvent
     public static void onToss(ItemTossEvent e) {
-        if (!e.getPlayer().level().isClientSide) send(e.getPlayer(), "drop", ItemCategories.of(e.getEntity().getItem()), 0f, true);
+        if (e.getPlayer().level().isClientSide) return;
+        send(e.getPlayer(), "drop", ItemCategories.of(e.getEntity().getItem()), 0f, true);
+        if (e.getEntity().getItem().is(net.minecraft.world.item.Items.GOLD_INGOT)
+                && !e.getPlayer().level().getEntitiesOfClass(net.minecraft.world.entity.monster.piglin.Piglin.class, e.getPlayer().getBoundingBox().inflate(6)).isEmpty()) {
+            send(e.getPlayer(), "barter_toss", "", 0f, true);
+        }
     }
 
     @SubscribeEvent
@@ -141,6 +197,7 @@ public final class ServerTriggers {
         Entity attacker = e.getDamageSource().getEntity();
         boolean breaks = attacker instanceof LivingEntity le && le.getMainHandItem().canDisableShield(e.getEntity().getUseItem(), e.getEntity(), le);
         send(e.getEntity(), breaks ? "guard_break" : "shield_block", "", 0f, true);
+        if (attacker instanceof LivingEntity la) send(la, breaks ? "break_guard" : "deflected", "", 0f, true);
     }
 
     @SubscribeEvent

@@ -157,6 +157,31 @@ public final class ClientEvents {
         if ("fishing_rod".equals(cat)) a.fire(e.getEntity().fishing == null ? "fish_cast" : "fish_reel");
         else if ("throwable".equals(cat)) a.fire("throw");
         else if ("map".equals(cat) || "book".equals(cat) || "device".equals(cat)) a.fire("inspect_item", cat, 0f);
+        else if ("glass_bottle".equals(cat)) a.fire("fill_bottle");
+    }
+
+    private static String localMenu;
+
+    /** Screens the server never hears about; relayed so other players see the owner busy. */
+    @SubscribeEvent
+    public static void onScreenOpen(net.minecraftforge.client.event.ScreenEvent.Opening e) {
+        String kind = e.getNewScreen() instanceof net.minecraft.client.gui.screens.inventory.InventoryScreen ? "inventory"
+                : e.getNewScreen() instanceof net.minecraft.client.gui.screens.ChatScreen ? "chat"
+                : e.getNewScreen() instanceof net.minecraft.client.gui.screens.inventory.BookEditScreen ? "book_edit" : null;
+        Minecraft mc = Minecraft.getInstance();
+        if (kind == null || mc.player == null) return;
+        localMenu = kind;
+        AnimatorManager.get(mc.player).fire("menu_open", kind, 0f);
+        MWNetwork.CHANNEL.sendToServer(new EmotePacket("event:menu_open:" + kind));
+    }
+
+    @SubscribeEvent
+    public static void onScreenClose(net.minecraftforge.client.event.ScreenEvent.Closing e) {
+        Minecraft mc = Minecraft.getInstance();
+        if (localMenu == null || mc.player == null) return;
+        AnimatorManager.get(mc.player).fire("menu_close", localMenu, 0f);
+        MWNetwork.CHANNEL.sendToServer(new EmotePacket("event:menu_close:" + localMenu));
+        localMenu = null;
     }
 
     @SubscribeEvent

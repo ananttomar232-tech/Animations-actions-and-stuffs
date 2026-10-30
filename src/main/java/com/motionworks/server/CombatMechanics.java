@@ -59,7 +59,7 @@ public final class CombatMechanics {
         p.causeFoodExhaustion(0.6f);
         DODGE_READY.put(p.getUUID(), now + MWConfig.SERVER.dodgeCooldownTicks.get());
         INVULNERABLE_UNTIL.put(p.getUUID(), now + MWConfig.SERVER.dodgeInvulnerabilityTicks.get());
-        ServerTriggers.send(p, "dodge", dir, 0f, true);
+        ServerTriggers.send(p, "dodge", dir, dir.equals("left") ? 1f : (dir.equals("right") ? -1f : 0f), true);
     }
 
     public static void bash(ServerPlayer p) {

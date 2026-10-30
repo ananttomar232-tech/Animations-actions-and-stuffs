@@ -30,7 +30,26 @@ public final class InteractionClassifier {
     public static String block(BlockState state, ItemStack held, boolean sneaking) {
         Block b = state.getBlock();
         String item = ItemCategories.of(held);
+        if (b instanceof CampfireBlock) {
+            if (held.isEdible()) return "cook";
+            if ("shovel".equals(item) && state.getValue(CampfireBlock.LIT)) return "douse";
+            if (held.isEmpty()) return "campfire";
+        }
+        if (b instanceof FenceBlock && "lead".equals(item)) return "tie_lead";
+        if (b instanceof BeehiveBlock && ("shears".equals(item) || "glass_bottle".equals(item))) return "harvest_hive";
+        if ((b instanceof SweetBerryBushBlock || b instanceof CaveVinesBlock || b instanceof CaveVinesPlantBlock) && !"bone_meal".equals(item) && held.getItem() != net.minecraft.world.item.Items.BONE_MEAL) {
+            return "pick_berries";
+        }
+        if (b instanceof PumpkinBlock && "shears".equals(item)) return "carve";
+        if (b instanceof EndPortalFrameBlock && held.getItem() == net.minecraft.world.item.Items.ENDER_EYE) return "insert_eye";
+        if ("honeycomb".equals(item)) return "wax";
+        if ("firework".equals(item)) return "launch_firework";
+        if ("vehicle".equals(item)) return "place_vehicle";
+        if ("hanging".equals(item)) return "hang";
+        if (held.isEmpty() && b instanceof FlowerBlock) return "smell_flower";
+        if (held.isEmpty() && (b instanceof AmethystClusterBlock || b instanceof AmethystBlock)) return "amethyst";
         if (!sneaking || held.isEmpty()) {
+            if (b == Blocks.IRON_DOOR) return "iron_door";
             if (b instanceof DoorBlock) return state.getValue(DoorBlock.OPEN) ? "door_close" : "door_open";
             if (b instanceof TrapDoorBlock) return state.getValue(TrapDoorBlock.OPEN) ? "trapdoor_close" : "trapdoor_open";
             if (b instanceof FenceGateBlock) return state.getValue(FenceGateBlock.OPEN) ? "gate_close" : "gate_open";
@@ -44,7 +63,7 @@ public final class InteractionClassifier {
             if (b instanceof EnchantmentTableBlock) return "enchanting";
             if (b instanceof LecternBlock) return "lectern";
             if (b instanceof BellBlock) return "bell";
-            if (b instanceof LeverBlock) return "lever";
+            if (b instanceof LeverBlock) return state.getValue(LeverBlock.POWERED) ? "lever_off" : "lever_on";
             if (b instanceof ButtonBlock) return "button";
             if (b instanceof BedBlock) return "bed";
             if (b instanceof NoteBlock) return "note_block";
@@ -81,12 +100,28 @@ public final class InteractionClassifier {
         String item = ItemCategories.of(held);
         if (target instanceof WanderingTrader) return "trader";
         if (target instanceof AbstractVillager) return "villager";
+        if (target instanceof net.minecraft.world.entity.animal.allay.Allay && !held.isEmpty()) return "give_item";
+        if ("name_tag".equals(item)) return "name_tag";
+        if ("saddle".equals(item)) return "saddle";
+        if (target instanceof Sheep && "dye".equals(item)) return "dye";
         if (target instanceof Sheep && "shears".equals(item)) return "shear";
         if (target instanceof Cow && "bucket".equals(item)) return "milk";
+        if ((target instanceof net.minecraft.world.entity.animal.AbstractFish || target instanceof net.minecraft.world.entity.animal.axolotl.Axolotl
+                || target instanceof net.minecraft.world.entity.animal.frog.Tadpole) && "bucket".equals(item)) return "catch_fish";
+        if (target instanceof net.minecraft.world.entity.TamableAnimal t && t.isTame() && held.isEmpty()) return "command_pet";
         if (target instanceof AbstractHorse && held.isEmpty()) return "mount";
-        if (target instanceof Animal a && a.isFood(held)) return "feed";
+        if (target instanceof Animal a && a.isFood(held)) {
+            if (target instanceof AbstractHorse || target instanceof net.minecraft.world.entity.animal.camel.Camel) return "feed_horse";
+            if (target instanceof net.minecraft.world.entity.animal.Parrot || target instanceof net.minecraft.world.entity.animal.Chicken) return "feed_bird";
+            if (target instanceof net.minecraft.world.entity.TamableAnimal) return "feed_pet";
+            return "feed";
+        }
         if (target instanceof Animal && "lead".equals(item)) return "leash";
-        if (target instanceof Animal) return "pet";
+        if (target instanceof net.minecraft.world.entity.animal.Wolf || target instanceof net.minecraft.world.entity.animal.Fox) return "pet_dog";
+        if (target instanceof net.minecraft.world.entity.animal.Cat || target instanceof net.minecraft.world.entity.animal.Ocelot) return "pet_cat";
+        if (target instanceof AbstractHorse || target instanceof net.minecraft.world.entity.animal.camel.Camel) return "pet_horse";
+        if (target instanceof Animal a2 && a2.getBbHeight() < 0.8f) return "pet_small";
+        if (target instanceof Animal) return "pet_dog";
         if (target instanceof AbstractGolem) return "golem";
         if (target instanceof Player) return "greet";
         if (target instanceof ArmorStand) return "armor_stand";

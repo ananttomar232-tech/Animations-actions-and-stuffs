@@ -67,10 +67,25 @@ public final class ItemCategories {
         if (item instanceof BrushItem) return "brush";
         if (item instanceof MapItem || item == Items.MAP) return "map";
         if (item instanceof BookItem || item instanceof WritableBookItem || item instanceof WrittenBookItem || item == Items.ENCHANTED_BOOK) return "book";
-        if (item instanceof SnowballItem || item instanceof EggItem || item instanceof EnderpearlItem
-                || item instanceof ThrowablePotionItem || item instanceof ExperienceBottleItem || item == Items.ENDER_EYE) return "throwable";
+        if (item instanceof EnderpearlItem || item == Items.ENDER_EYE) return "pearl";
+        if (item instanceof ThrowablePotionItem) return "splash_potion";
+        if (item instanceof SnowballItem || item instanceof EggItem || item instanceof ExperienceBottleItem) return "throwable";
         if (item instanceof PotionItem) return "potion";
-        if (stack.isEdible()) return "food";
+        if (item instanceof net.minecraft.world.item.HoneyBottleItem) return "honey";
+        if (item == Items.GOLDEN_APPLE || item == Items.ENCHANTED_GOLDEN_APPLE || item == Items.GOLDEN_CARROT) return "golden_food";
+        if (item instanceof net.minecraft.world.item.BowlFoodItem || item instanceof net.minecraft.world.item.SuspiciousStewItem) return "bowl_food";
+        if (stack.isEdible()) {
+            var food = stack.getFoodProperties(null);
+            return food != null && food.isMeat() ? "meat" : "food";
+        }
+        if (item instanceof net.minecraft.world.item.NameTagItem) return "name_tag";
+        if (item instanceof net.minecraft.world.item.SaddleItem) return "saddle";
+        if (item instanceof net.minecraft.world.item.DyeItem) return "dye";
+        if (item instanceof net.minecraft.world.item.RecordItem) return "record";
+        if (item instanceof net.minecraft.world.item.HoneycombItem) return "honeycomb";
+        if (item instanceof net.minecraft.world.item.BottleItem) return "glass_bottle";
+        if (item instanceof net.minecraft.world.item.HangingEntityItem || item instanceof net.minecraft.world.item.ItemFrameItem) return "hanging";
+        if (item instanceof net.minecraft.world.item.BoatItem || item instanceof net.minecraft.world.item.MinecartItem) return "vehicle";
         if (item instanceof CompassItem || item == Items.CLOCK || item == Items.RECOVERY_COMPASS) return "device";
         if (item instanceof LeadItem) return "lead";
         if (item instanceof ElytraItem) return "elytra";
@@ -79,6 +94,8 @@ public final class ItemCategories {
         if (item == Items.TOTEM_OF_UNDYING) return "totem";
         if (item instanceof BlockItem bi) {
             if (bi.getBlock() instanceof TorchBlock) return "torch";
+            if (bi.getBlock() instanceof net.minecraft.world.level.block.CropBlock || bi.getBlock() instanceof net.minecraft.world.level.block.StemBlock) return "seed";
+            if (bi.getBlock() instanceof net.minecraft.world.level.block.BushBlock) return "plant";
             if (bi.getBlock() instanceof LanternBlock) return "lantern";
             return "block";
         }

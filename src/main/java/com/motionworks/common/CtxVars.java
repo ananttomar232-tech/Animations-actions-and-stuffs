@@ -76,6 +76,8 @@ public final class CtxVars {
     public static final int MINING = Vars.id("q.is_mining");
     public static final int MINE_TARGET = Vars.id("q.mine_target");
     public static final int BLOCKING = Vars.id("q.is_blocking");
+    public static final int FISHING = Vars.id("q.is_fishing");
+    public static final int MENU = Vars.id("q.menu");
     public static final int CROSSBOW_CHARGED = Vars.id("q.crossbow_charged");
     public static final int ARMOR_WEIGHT = Vars.id("q.armor_weight");
     public static final int COMBO = Vars.id("q.combo");

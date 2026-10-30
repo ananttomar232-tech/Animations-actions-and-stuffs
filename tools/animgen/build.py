@@ -19,7 +19,7 @@ import core  # noqa: E402
 import rigs  # noqa: E402
 
 MODULES = [
-    "player_locomotion", "player_locomotion_more", "player_combat", "player_combat_more", "player_combat_handling", "player_interactions", "first_person",
+    "player_locomotion", "player_locomotion_more", "player_combat", "player_combat_more", "player_combat_handling", "player_interactions", "player_interactions_more", "player_interactions_work", "first_person",
     "passive_mobs", "hostile_mobs", "villagers", "environment_interactions", "cinematic", "emotes",
     "mounts", "swimming", "aerial", "damage", "contextual",
 ]

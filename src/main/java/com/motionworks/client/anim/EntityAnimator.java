@@ -50,6 +50,8 @@ public final class EntityAnimator {
     private boolean wasOnGround = true, wasSwinging, wasUsing, wasSneaking, wasSprinting, wasMoving, wasInWater,
             wasUnderwater, wasRiding, wasSleeping, wasFlying, wasAggressive, wasDead, wasClimbing, wasBlocking, wasInCombat, wasCharged;
     private String lastOff = "";
+    private final net.minecraft.world.item.Item[] lastArmor = new net.minecraft.world.item.Item[4];
+    private boolean armorKnown;
     private String lastMain = "";
     private int lastHurtTime;
     private int combo;
@@ -173,6 +175,19 @@ public final class EntityAnimator {
             if (!lastOff.isEmpty() && mainChanged) fire("offhand_switch");
             lastOff = off;
         }
+        int slot = 0;
+        for (net.minecraft.world.entity.EquipmentSlot es : new net.minecraft.world.entity.EquipmentSlot[] {
+                net.minecraft.world.entity.EquipmentSlot.HEAD, net.minecraft.world.entity.EquipmentSlot.CHEST,
+                net.minecraft.world.entity.EquipmentSlot.LEGS, net.minecraft.world.entity.EquipmentSlot.FEET}) {
+            net.minecraft.world.item.Item now = entity.getItemBySlot(es).getItem();
+            if (armorKnown && now != lastArmor[slot]) {
+                String name = es == net.minecraft.world.entity.EquipmentSlot.HEAD ? "head" : es == net.minecraft.world.entity.EquipmentSlot.CHEST ? "chest"
+                        : es == net.minecraft.world.entity.EquipmentSlot.LEGS ? "legs" : "feet";
+                fire(now == net.minecraft.world.item.Items.AIR ? "armor_off:" + name : "armor_on:" + name);
+            }
+            lastArmor[slot++] = now;
+        }
+        armorKnown = true;
         boolean inCombat = s.get(CtxVars.IN_COMBAT) != 0f;
         edge(inCombat, wasInCombat, "combat_enter", "combat_exit");
         wasInCombat = inCombat;
@@ -266,6 +281,8 @@ public final class EntityAnimator {
 
     public void fire(String event, String arg, float dir, float height) {
         Scope s = scope();
+        if ("menu_open".equals(event)) s.setString(CtxVars.MENU, arg);
+        if ("menu_close".equals(event)) s.setString(CtxVars.MENU, "none");
         s.setString(CtxVars.EVENT_ARG, arg);
         s.set(CtxVars.EVENT_DIR, dir);
         s.set(CtxVars.EVENT_HEIGHT, height);
