@@ -168,10 +168,14 @@ class Clip:
         return self
 
     def cycle(self, bone, ch, fn, samples=8, lerp="smooth"):
-        """Samples fn(u) for u in [0,1] across a looping clip (fn(0) == fn(1) assumed)."""
+        """Samples fn(u) for u in [0,1] across a looping clip.
+
+        The closing key is fn(1), not a copy of fn(0): for periodic motion they are equal, and for a
+        full turn (e.g. 360 * u) the last segment keeps rotating forward instead of unwinding backwards.
+        """
         for i in range(samples + 1):
             u = i / samples
-            self.key(bone, ch, u * self.length, fn(u % 1.0 if i < samples else 0.0), lerp=lerp)
+            self.key(bone, ch, u * self.length, fn(u), lerp=lerp)
         return self
 
     def ev(self, t, typ, **data):

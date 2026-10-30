@@ -52,8 +52,14 @@ def load_modules():
 VAR_RE = re.compile(r"\b(?:q|query|v|variable)\.[a-z_][a-z0-9_]*")
 
 
+def runtime_vars():
+    """Variables the runtime defines: every Vars.id(...) in CtxVars.java plus engine locals from context_vars.json."""
+    src = open(os.path.join(ROOT, "src/main/java/com/motionworks/common/CtxVars.java")).read()
+    return set(re.findall(r'Vars\.id\("([^"]+)"\)', src)) | set(json.load(open(os.path.join(HERE, "context_vars.json"))))
+
+
 def check_vars():
-    known = set(json.load(open(os.path.join(HERE, "context_vars.json"))))
+    known = runtime_vars()
     errors = []
     for c in core.CLIPS:
         texts = [json.dumps(c.trigger), c.time or "", c.weight or "", c.speed or "", json.dumps(c.bones)]

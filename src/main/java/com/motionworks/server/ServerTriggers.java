@@ -50,6 +50,52 @@ public final class ServerTriggers {
         MWNetwork.toTrackers(e, new AnimationEventPacket(e.getId(), event, arg == null ? "" : arg, dir, height), includeSelf);
     }
 
+    /** Server-thread task queue: lifecycle events are sent a tick later, once clients track the entity. */
+    private record Delayed(int due, Runnable task) {}
+
+    private static final java.util.List<Delayed> DELAYED = new java.util.ArrayList<>();
+
+    static void later(net.minecraft.server.MinecraftServer server, int ticks, Runnable task) {
+        if (DELAYED.size() < 4096) DELAYED.add(new Delayed(server.getTickCount() + ticks, task));
+    }
+
+    @SubscribeEvent
+    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent e) {
+        if (e.phase != net.minecraftforge.event.TickEvent.Phase.END || DELAYED.isEmpty()) return;
+        int now = e.getServer().getTickCount();
+        java.util.List<Delayed> due = new java.util.ArrayList<>();
+        DELAYED.removeIf(d -> d.due() <= now && due.add(d));
+        for (Delayed d : due) d.task().run();
+    }
+
+    /** "spawn:<type>" (natural, spawner, spawn_egg, reinforcement, ...) for freshly created mobs. */
+    @SubscribeEvent
+    public static void onMobSpawn(net.minecraftforge.event.entity.living.MobSpawnEvent.FinalizeSpawn e) {
+        Mob mob = e.getEntity();
+        if (mob.level().isClientSide || mob.getServer() == null) return;
+        String type = e.getSpawnType().name().toLowerCase(java.util.Locale.ROOT);
+        later(mob.getServer(), 2, () -> { if (mob.isAlive()) send(mob, "spawn", type, 0f, true); });
+    }
+
+    @SubscribeEvent
+    public static void onRespawn(PlayerEvent.PlayerRespawnEvent e) {
+        Player p = e.getEntity();
+        if (p.getServer() != null) later(p.getServer(), 5, () -> send(p, "respawn", e.isEndConquered() ? "end" : "death", 0f, true));
+    }
+
+    @SubscribeEvent
+    public static void onDimensionChange(PlayerEvent.PlayerChangedDimensionEvent e) {
+        Player p = e.getEntity();
+        String dim = e.getTo().location().getPath();
+        if (p.getServer() != null) later(p.getServer(), 10, () -> { if (p.isAlive()) send(p, "dimension_enter", dim, 0f, true); });
+    }
+
+    @SubscribeEvent
+    public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
+        Player p = e.getEntity();
+        if (p.getServer() != null) later(p.getServer(), 40, () -> { if (p.isAlive()) send(p, "join", "", 0f, true); });
+    }
+
     /** Called from MobMixin when a mob plays its ambient sound (moo, bark, groan...). */
     public static void onAmbientSound(Mob mob) {
         if (mob.level().isClientSide || mob.isSilent()) return;

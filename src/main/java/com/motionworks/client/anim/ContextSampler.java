@@ -306,6 +306,7 @@ public final class ContextSampler {
         s.setString(CtxVars.DIMENSION, level.dimension().location().getPath());
         s.setString(CtxVars.FEET_BLOCK, feetBlock(level.getBlockState(at)));
         s.set(CtxVars.FLUID_DEPTH, (float) e.getFluidHeight(net.minecraft.tags.FluidTags.WATER));
+        s.set(CtxVars.AIR, MathUtil.clamp01(e.getAirSupply() / (float) Math.max(1, e.getMaxAirSupply())));
         s.set(CtxVars.TEMPERATURE, level.getBiome(at).value().getBaseTemperature());
         s.set(CtxVars.ALTITUDE, (float) pos.y);
         if (--h.envCheck <= 0) {

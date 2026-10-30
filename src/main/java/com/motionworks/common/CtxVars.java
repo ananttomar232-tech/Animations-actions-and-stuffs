@@ -174,6 +174,7 @@ public final class CtxVars {
     // Environment detail
     public static final int FEET_BLOCK = Vars.id("q.feet_block");
     public static final int FLUID_DEPTH = Vars.id("q.fluid_depth");
+    public static final int AIR = Vars.id("q.air");
     public static final int NEAR_FIRE = Vars.id("q.near_fire");
     public static final int SKY_EXPOSED = Vars.id("q.sky_exposed");
     public static final int TEMPERATURE = Vars.id("q.temperature");
