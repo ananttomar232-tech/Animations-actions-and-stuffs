@@ -141,6 +141,7 @@ public final class ContextSampler {
         float peakY;
         float idleTime;
         float moveTime;
+        float lastIdle;
         float exertion;
         float sinceHurt = 99f;
         float sinceCombat = 99f;
@@ -155,6 +156,7 @@ public final class ContextSampler {
         int lastVehicleId;
         boolean nearFire;
         boolean skyExposed = true;
+        boolean atLedge;
     }
 
     static void sample(LivingEntity e, Scope s, History h, float dt) {
@@ -212,6 +214,7 @@ public final class ContextSampler {
         s.setBool(CtxVars.CLIMBING, e.onClimbable() && !onGround);
 
         if (moving) {
+            if (h.idleTime > 0f) h.lastIdle = h.idleTime;
             h.moveTime += dt;
             h.idleTime = 0f;
         } else {
@@ -220,6 +223,7 @@ public final class ContextSampler {
         }
         s.set(CtxVars.IDLE_TIME, h.idleTime);
         s.set(CtxVars.MOVE_TIME, h.moveTime);
+        s.set(CtxVars.LAST_IDLE, h.lastIdle);
 
         boolean sprinting = e.isSprinting();
         float exertTarget = sprinting ? 1f : (e.isSwimming() ? 0.8f : (moving ? 0.25f : 0f));
@@ -332,9 +336,11 @@ public final class ContextSampler {
             h.envCheck = 10;
             h.nearFire = nearFire(level, at);
             h.skyExposed = level.canSeeSky(at.above());
+            h.atLedge = onGround && ledgeAhead(level, e);
         }
         s.setBool(CtxVars.NEAR_FIRE, h.nearFire);
         s.setBool(CtxVars.SKY_EXPOSED, h.skyExposed);
+        s.setBool(CtxVars.AT_LEDGE, h.atLedge);
         s.setBool(CtxVars.HAS_RIDER, e.isVehicle());
         s.setBool(CtxVars.LEVITATING, e.hasEffect(MobEffects.LEVITATION));
         s.setBool(CtxVars.SLOW_FALLING, e.hasEffect(MobEffects.SLOW_FALLING));
@@ -460,8 +466,18 @@ public final class ContextSampler {
         if (b == Blocks.SNOW) return "snow";
         if (b == Blocks.SOUL_SAND || b == Blocks.SOUL_SOIL) return "soul_sand";
         if (b == Blocks.MUD) return "mud";
+        if (b == Blocks.NETHER_PORTAL) return "portal";
         if (st.is(net.minecraft.tags.BlockTags.FLOWERS) || st.is(net.minecraft.tags.BlockTags.REPLACEABLE_BY_TREES)) return "foliage";
         return st.isAir() ? "air" : "other";
+    }
+
+    /** True when the ground drops away by two or more blocks just ahead of the entity's facing. */
+    static boolean ledgeAhead(Level level, LivingEntity e) {
+        float yaw = e.getYRot() * Mth.DEG_TO_RAD;
+        double x = e.getX() - Mth.sin(yaw) * 0.7, z = e.getZ() + Mth.cos(yaw) * 0.7;
+        BlockPos ahead = BlockPos.containing(x, e.getY() - 0.5, z);
+        return level.getBlockState(ahead).getCollisionShape(level, ahead).isEmpty()
+                && level.getBlockState(ahead.below()).getCollisionShape(level, ahead.below()).isEmpty();
     }
 
     private static boolean nearFire(Level level, BlockPos at) {

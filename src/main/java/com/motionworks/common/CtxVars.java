@@ -175,6 +175,8 @@ public final class CtxVars {
     public static final int VEHICLE_SITTING = Vars.id("q.vehicle_sitting");
     public static final int LAST_VEHICLE = Vars.id("q.last_vehicle");
     public static final int SEAT = Vars.id("q.seat");
+    public static final int LAST_IDLE = Vars.id("q.last_idle");
+    public static final int AT_LEDGE = Vars.id("q.at_ledge");
 
     // Environment detail
     public static final int FEET_BLOCK = Vars.id("q.feet_block");

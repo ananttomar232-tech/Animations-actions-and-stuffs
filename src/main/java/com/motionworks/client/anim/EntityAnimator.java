@@ -226,6 +226,26 @@ public final class EntityAnimator {
         boolean climbing = s.get(CtxVars.CLIMBING) != 0f;
         edge(climbing, wasClimbing, "climb_start", "climb_stop");
         wasClimbing = climbing;
+        stateEdge(CtxVars.SITTING, s.get(CtxVars.SITTING) != 0f, "sit_down", "stand_up");
+        stateEdge(CtxVars.LYING, s.get(CtxVars.LYING) != 0f, "lie_down", "get_up");
+        stateEdge(CtxVars.EATING, s.get(CtxVars.EATING) != 0f, "eat_start", "eat_stop");
+        stateEdge(CtxVars.ANGRY, s.get(CtxVars.ANGRY) != 0f, "anger", "calm");
+        stateEdge(CtxVars.STANDING, s.get(CtxVars.STANDING) != 0f, "rear_up", "rear_down");
+        stateEdge(CtxVars.ADMIRING, s.get(CtxVars.ADMIRING) != 0f, "admire_start", "admire_stop");
+        stateEdge(CtxVars.TRADING, s.get(CtxVars.TRADING) != 0f, "trade_open", "trade_close");
+        stateEdge(CtxVars.NEAR_HOSTILE, s.get(CtxVars.NEAR_HOSTILE) != 0f, "danger_near", "danger_clear");
+        stateEdge(CtxVars.RAINING, s.get(CtxVars.RAINING) != 0f, "rain_start", "rain_stop");
+        stateEdge(CtxVars.IS_NIGHT, s.get(CtxVars.IS_NIGHT) != 0f, "nightfall", "daybreak");
+        stateEdge(CtxVars.HEALTH, s.get(CtxVars.HEALTH) < 0.3f, "wounded", "recovered");
+        stateEdge(CtxVars.LIGHT, s.get(CtxVars.LIGHT) < 4f, "enter_dark", "exit_dark");
+        stateEdge(CtxVars.HUNGER, s.get(CtxVars.HUNGER) > 0.7f, "hungry", "sated");
+        stateEdge(CtxVars.AT_LEDGE, s.get(CtxVars.AT_LEDGE) != 0f, "ledge_reached", "ledge_left");
+        stateEdge(CtxVars.BABY, s.get(CtxVars.BABY) != 0f, "baby", "grow_up");
+        stateEdge(CtxVars.PLAYING_DEAD, s.get(CtxVars.PLAYING_DEAD) != 0f, "play_dead", "revive");
+        stateEdge(CtxVars.DIGGING, s.get(CtxVars.DIGGING) != 0f, "dig_start", "dig_end");
+        stateEdge(CtxVars.LAYING_EGG, s.get(CtxVars.LAYING_EGG) != 0f, "lay_start", "lay_end");
+        stateEdge(CtxVars.STUNNED, s.get(CtxVars.STUNNED) != 0f, "stunned", "unstunned");
+        stateEdge(CtxVars.CHARGING, s.get(CtxVars.CHARGING) != 0f, "charge_start", "charge_stop");
         boolean aggressive = entity instanceof Mob m && m.isAggressive();
         if (aggressive && !wasAggressive) fire("aggro");
         wasAggressive = aggressive;
@@ -242,6 +262,14 @@ public final class EntityAnimator {
     }
 
     private boolean wasCreativeFlying, wasSpinning;
+    /** Last observed value per tracked state; the first observation only primes it, so nothing fires on spawn-in. */
+    private final java.util.Map<Integer, Boolean> stateEdges = new java.util.HashMap<>();
+
+    private void stateEdge(int key, boolean now, String on, String off) {
+        Boolean before = stateEdges.put(key, now);
+        if (before == null || before == now) return;
+        fire(now ? on : off);
+    }
 
     private void edge(boolean now, boolean before, String on, String off) {
         if (now && !before) fire(on);
