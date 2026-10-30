@@ -50,6 +50,21 @@ public final class ServerTriggers {
         MWNetwork.toTrackers(e, new AnimationEventPacket(e.getId(), event, arg == null ? "" : arg, dir, height), includeSelf);
     }
 
+    /** Called from MobMixin when a mob plays its ambient sound (moo, bark, groan...). */
+    public static void onAmbientSound(Mob mob) {
+        if (mob.level().isClientSide || mob.isSilent()) return;
+        send(mob, "vocalize", "", 0f, true);
+    }
+
+    /** Llamas spit through a projectile, never a swing; announce it from the spawned spit's owner. */
+    @SubscribeEvent
+    public static void onEntityJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
+        if (e.getLevel().isClientSide) return;
+        if (e.getEntity() instanceof net.minecraft.world.entity.projectile.LlamaSpit spit && spit.getOwner() instanceof LivingEntity owner) {
+            send(owner, "spit", "", 0f, true);
+        }
+    }
+
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
         if (e.getLevel().isClientSide || e.getHand() != InteractionHand.MAIN_HAND) return;

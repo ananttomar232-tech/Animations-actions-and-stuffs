@@ -324,21 +324,31 @@ def warp(u, duty):
 
 def quad_gait(c, gait="walk", stride=26, duty=0.6, bob=0.6, pitch=1.5, roll=1.5, head_bob=3.0, head_base=0.0,
               head_phase=0.0, head_yaw=0.0, tail=None, tail_amp=8, legs=None, front_scale=1.0, samples=8,
-              body_bone=None, body_amp=0.0, lift=0.0):
-    """Four-legged gait from footfall pattern. legs: (lh, lf, rh, rf) bone names."""
+              body_bone=None, body_amp=0.0, lift=0.0, snap=0.0, splay=0.0, yaw=0.0, roll_phase=0.0, pitch_phase=0.1, tail_phase=0.2):
+    """Four-legged gait from footfall pattern. legs: (lh, lf, rh, rf) bone names.
+
+    Character controls change the shape of the motion, not just its size:
+      snap        second harmonic on the leg swing (stiff, choppy steps)
+      splay       outward leg roll during swing (wide, paddling steps)
+      yaw         body twist with each stride (rolling, bear-like walk)
+      roll_phase / pitch_phase / tail_phase   timing of body sway and tail relative to footfalls
+    """
     lh, lf, rh, rf = legs or ("left_hind_leg", "left_front_leg", "right_hind_leg", "right_front_leg")
     ph = GAITS[gait]
     for bone, p, side, scale in ((lh, ph[0], 'l', 1.0), (lf, ph[1], 'l', front_scale), (rh, ph[2], 'r', 1.0), (rf, ph[3], 'r', front_scale)):
-        def f(u, p=p, scale=scale):
+        def f(u, p=p, scale=scale, side=side):
             w = warp(u + p, duty)
-            return [r(-stride * scale * math.cos(w * 2 * math.pi) + lift * max(0, math.sin(w * 2 * math.pi)) * -1), 0, 0]
+            a = w * 2 * math.pi
+            x = -stride * scale * math.cos(a) + lift * max(0, math.sin(a)) * -1 + snap * stride * scale * math.sin(2 * a)
+            z = splay * max(0, math.sin(a)) * (1 if side == 'r' else -1)
+            return [r(x), 0, r(z)]
         c.cycle(bone, "rotation", f, samples)
     harmonic = 1 if gait in ("gallop", "bound", "canter") else 2
     c.cycle("mw_center", "position", lambda u: move(0, -bob * 0.5 * (1 + cwave(u, 0, harmonic)), 0), samples)
-    c.cycle("mw_center", "rotation", lambda u: tilt(pitch * wave(u, 0.1, harmonic), 0, roll * wave(u)), samples)
+    c.cycle("mw_center", "rotation", lambda u: tilt(pitch * wave(u, pitch_phase, harmonic), yaw * wave(u, roll_phase + 0.25), roll * wave(u, roll_phase)), samples)
     c.cycle("head", "rotation", lambda u: [head_base + head_bob * cwave(u, head_phase, harmonic), head_yaw * wave(u), 0], samples)
     if tail:
-        c.cycle(tail, "rotation", lambda u: [0, tail_amp * wave(u, 0.2), 0], samples)
+        c.cycle(tail, "rotation", lambda u: [0, tail_amp * wave(u, tail_phase), 0], samples)
     if body_bone and body_amp:
         c.cycle(body_bone, "rotation", lambda u: [0, body_amp * wave(u), 0], samples)
     return c

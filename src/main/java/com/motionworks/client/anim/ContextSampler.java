@@ -10,7 +10,9 @@ import com.motionworks.engine.math.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -147,6 +149,9 @@ public final class ContextSampler {
         float playerDistance = 99f;
         float terrainPitch;
         float[] traits;
+        int envCheck;
+        boolean nearFire;
+        boolean skyExposed = true;
     }
 
     static void sample(LivingEntity e, Scope s, History h, float dt) {
@@ -299,6 +304,26 @@ public final class ContextSampler {
         s.set(CtxVars.LIGHT, level.getMaxLocalRawBrightness(at));
         s.setBool(CtxVars.COLD, level.getBiome(at).value().coldEnoughToSnow(at));
         s.setString(CtxVars.DIMENSION, level.dimension().location().getPath());
+        s.setString(CtxVars.FEET_BLOCK, feetBlock(level.getBlockState(at)));
+        s.set(CtxVars.FLUID_DEPTH, (float) e.getFluidHeight(net.minecraft.tags.FluidTags.WATER));
+        s.set(CtxVars.TEMPERATURE, level.getBiome(at).value().getBaseTemperature());
+        s.set(CtxVars.ALTITUDE, (float) pos.y);
+        if (--h.envCheck <= 0) {
+            h.envCheck = 10;
+            h.nearFire = nearFire(level, at);
+            h.skyExposed = level.canSeeSky(at.above());
+        }
+        s.setBool(CtxVars.NEAR_FIRE, h.nearFire);
+        s.setBool(CtxVars.SKY_EXPOSED, h.skyExposed);
+        s.setBool(CtxVars.HAS_RIDER, e.isVehicle());
+        s.setBool(CtxVars.LEVITATING, e.hasEffect(MobEffects.LEVITATION));
+        s.setBool(CtxVars.SLOW_FALLING, e.hasEffect(MobEffects.SLOW_FALLING));
+        s.setBool(CtxVars.POISONED, e.hasEffect(MobEffects.POISON));
+        s.setBool(CtxVars.WITHERING, e.hasEffect(MobEffects.WITHER));
+        s.setBool(CtxVars.BLINDED, e.hasEffect(MobEffects.BLINDNESS) || e.hasEffect(MobEffects.DARKNESS));
+        s.setBool(CtxVars.NAUSEOUS, e.hasEffect(MobEffects.CONFUSION));
+        s.setBool(CtxVars.INVISIBLE, e.isInvisible());
+        if (e instanceof net.minecraft.world.entity.player.Player p) s.setBool(CtxVars.FLYING, p.getAbilities().flying);
         h.terrainPitch += (terrainPitch(level, e) - h.terrainPitch) * MathUtil.approachFactor(0.15f, dt);
         s.set(CtxVars.TERRAIN_PITCH, h.terrainPitch);
 
@@ -403,6 +428,30 @@ public final class ContextSampler {
         return "other";
     }
 
+    /** Blocks the entity is standing inside that change how it moves. */
+    private static String feetBlock(BlockState st) {
+        net.minecraft.world.level.block.Block b = st.getBlock();
+        if (b == Blocks.COBWEB) return "cobweb";
+        if (b == Blocks.POWDER_SNOW) return "powder_snow";
+        if (b == Blocks.SWEET_BERRY_BUSH) return "berry_bush";
+        if (b == Blocks.HONEY_BLOCK) return "honey";
+        if (b == Blocks.SCAFFOLDING) return "scaffolding";
+        if (b == Blocks.BUBBLE_COLUMN) return "bubble_column";
+        if (b == Blocks.SNOW) return "snow";
+        if (b == Blocks.SOUL_SAND || b == Blocks.SOUL_SOIL) return "soul_sand";
+        if (b == Blocks.MUD) return "mud";
+        if (st.is(net.minecraft.tags.BlockTags.FLOWERS) || st.is(net.minecraft.tags.BlockTags.REPLACEABLE_BY_TREES)) return "foliage";
+        return st.isAir() ? "air" : "other";
+    }
+
+    private static boolean nearFire(Level level, BlockPos at) {
+        for (BlockPos p : BlockPos.betweenClosed(at.offset(-2, -1, -2), at.offset(2, 1, 2))) {
+            BlockState st = level.getBlockState(p);
+            if (st.is(net.minecraft.tags.BlockTags.CAMPFIRES) || st.is(net.minecraft.tags.BlockTags.FIRE) || st.is(Blocks.LAVA) || st.is(Blocks.MAGMA_BLOCK)) return true;
+        }
+        return false;
+    }
+
     private static boolean started(AnimationState a) {
         return a.isStarted();
     }
@@ -413,6 +462,7 @@ public final class ContextSampler {
             s.setBool(CtxVars.SITTING, t.isInSittingPose());
         }
         if (e instanceof NeutralMob n) s.setBool(CtxVars.ANGRY, n.isAngry());
+        if (e instanceof net.minecraft.world.entity.ambient.Bat bat) s.setBool(CtxVars.SLEEPING, bat.isResting());
         if (e instanceof Animal a) s.setBool(CtxVars.IN_LOVE, a.isInLove());
         if (e instanceof Mob m) s.setBool(CtxVars.LEASHED, m.isLeashed());
 

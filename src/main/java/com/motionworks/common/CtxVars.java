@@ -169,6 +169,24 @@ public final class CtxVars {
     public static final int JUMP_PROGRESS = Vars.id("q.jump_progress");
     public static final int PLAYING_DEAD = Vars.id("q.is_playing_dead");
     public static final int SITTING_POSE = Vars.id("q.is_sitting_pose");
+    public static final int HAS_RIDER = Vars.id("q.has_rider");
+
+    // Environment detail
+    public static final int FEET_BLOCK = Vars.id("q.feet_block");
+    public static final int FLUID_DEPTH = Vars.id("q.fluid_depth");
+    public static final int NEAR_FIRE = Vars.id("q.near_fire");
+    public static final int SKY_EXPOSED = Vars.id("q.sky_exposed");
+    public static final int TEMPERATURE = Vars.id("q.temperature");
+    public static final int ALTITUDE = Vars.id("q.altitude");
+
+    // Status effects
+    public static final int LEVITATING = Vars.id("q.is_levitating");
+    public static final int SLOW_FALLING = Vars.id("q.slow_falling");
+    public static final int POISONED = Vars.id("q.is_poisoned");
+    public static final int WITHERING = Vars.id("q.is_withering");
+    public static final int BLINDED = Vars.id("q.is_blinded");
+    public static final int NAUSEOUS = Vars.id("q.is_nauseous");
+    public static final int INVISIBLE = Vars.id("q.is_invisible");
 
     // Viewer
     public static final int LOCAL_PLAYER = Vars.id("q.is_local_player");

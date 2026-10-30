@@ -106,6 +106,7 @@ public final class AnimatorManager {
         try {
             if (!a.bind(model)) return;
             double clock = (entity.level().getGameTime() + partialTicks) / 20.0;
+            a.sampleFrame(partialTicks);
             if (!a.advanceTo(clock)) return;
             ModelRig mr = a.modelRig();
             float strength = MWConfig.CLIENT.intensity.get().floatValue();

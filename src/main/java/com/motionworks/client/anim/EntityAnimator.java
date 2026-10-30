@@ -295,6 +295,16 @@ public final class EntityAnimator {
         return controller != null && controller.play(clip, true);
     }
 
+    /** Per-frame inputs that must be interpolated with the render partial tick (gait phase). */
+    void sampleFrame(float partialTicks) {
+        if (controller == null) return;
+        Scope s = scope();
+        float position = entity.walkAnimation.position(partialTicks);
+        if (entity.isBaby()) position *= 3f;
+        s.set(CtxVars.LIMB_SWING, position);
+        s.set(CtxVars.LIMB_SWING_AMOUNT, Math.min(1f, entity.walkAnimation.speed(partialTicks)));
+    }
+
     /** Advances to the given synced clock (seconds) and returns false if nothing should apply. */
     boolean advanceTo(double clock) {
         if (controller == null || !sampled) return false;
