@@ -142,6 +142,12 @@ public final class ServerTriggers {
     @SubscribeEvent
     public static void onEntityJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
         if (e.getLevel().isClientSide || e.loadedFromDisk()) return;
+        if (e.getEntity() instanceof net.minecraft.world.entity.LightningBolt bolt) {
+            // One world-event packet per strike (entity id -1); clients fan it out to every nearby animated entity.
+            net.minecraft.world.phys.Vec3 at = bolt.position();
+            MWNetwork.toTrackers(bolt, new AnimationEventPacket(-1, "thunderclap", String.format(java.util.Locale.ROOT, "%.1f,%.1f,%.1f", at.x, at.y, at.z), 0f), false);
+            return;
+        }
         Entity owner = e.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile proj ? proj.getOwner()
                 : e.getEntity() instanceof net.minecraft.world.entity.projectile.EvokerFangs fangs ? fangs.getOwner() : null;
         if (owner instanceof Mob mob) send(mob, "shoot", projectileKind(e.getEntity()), 0f, true);

@@ -1,0 +1,56 @@
+{
+ "name": "boss.warden.title",
+ "anchor": "@anchor",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "low_angle",
+   "duration": 4.2,
+   "target": "@anchor"
+  },
+  {
+   "type": "close_up",
+   "duration": 2.5,
+   "target": "@anchor",
+   "transition": {
+    "type": "blend",
+    "duration": 0.6
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.0,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.warden.intro_emerge_roar"
+  },
+  {
+   "time": 4.2,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.warden.sniff_close"
+  },
+  {
+   "time": 0.4,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.startled_turn"
+  },
+  {
+   "time": 2.8,
+   "type": "shake",
+   "amount": 0.6
+  },
+  {
+   "time": 4.4,
+   "type": "title",
+   "title": "motionworks.boss.warden.title",
+   "subtitle": "motionworks.boss.warden.subtitle",
+   "duration": 2.4
+  }
+ ]
+}

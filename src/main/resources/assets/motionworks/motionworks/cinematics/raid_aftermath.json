@@ -1,0 +1,78 @@
+{
+ "name": "cinematic.raid_aftermath",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "low_angle",
+   "duration": 4.0
+  },
+  {
+   "type": "orbit",
+   "duration": 5.0,
+   "radius": 6,
+   "height": 2,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  },
+  {
+   "type": "crane",
+   "duration": 4.0
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.plant_sword"
+  },
+  {
+   "time": 2.2,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.lean_on_sword"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.cheer_hero"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.bow_to_hero"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:iron_golem",
+   "clip": "cine.iron_golem.kneel_to_hero"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.weep"
+  },
+  {
+   "time": 8.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.salute_fallen"
+  },
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:ravager",
+   "clip": "cine.ravager.entrance"
+  }
+ ]
+}

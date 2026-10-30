@@ -1,0 +1,70 @@
+{
+ "name": "cinematic.hero_campfire",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "orbit",
+   "duration": 6.0,
+   "radius": 4,
+   "height": 1.2,
+   "from_angle": -30,
+   "to_angle": 30
+  },
+  {
+   "type": "close_up",
+   "duration": 3.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  },
+  {
+   "type": "crane",
+   "duration": 5.0,
+   "from_height": 1,
+   "to_height": 9,
+   "transition": {
+    "type": "blend",
+    "duration": 1.2
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.campfire_sit"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.warm_hands"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.write_journal"
+  },
+  {
+   "time": 9.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.stargaze"
+  },
+  {
+   "time": 10,
+   "type": "particles",
+   "actor": "@self",
+   "particle": "ember",
+   "count": 20,
+   "spread": 1.5
+  }
+ ]
+}

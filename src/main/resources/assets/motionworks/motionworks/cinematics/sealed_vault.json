@@ -1,0 +1,47 @@
+{
+ "name": "cinematic.sealed_vault",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "over_shoulder",
+   "duration": 4.0
+  },
+  {
+   "type": "wide",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.light_wall_torch"
+  },
+  {
+   "time": 2.6,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.dramatic_lever"
+  },
+  {
+   "time": 4.8,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.heave_heavy_door"
+  },
+  {
+   "time": 3.6,
+   "type": "shake",
+   "amount": 0.4
+  }
+ ]
+}

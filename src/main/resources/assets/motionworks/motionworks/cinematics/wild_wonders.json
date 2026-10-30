@@ -1,0 +1,115 @@
+{
+ "name": "cinematic.wild_wonders",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 5.0
+  },
+  {
+   "type": "orbit",
+   "duration": 5.0,
+   "radius": 7,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:allay",
+   "clip": "cine.allay.deliver_gift"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:fox",
+   "clip": "cine.fox.steal_item"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:bee",
+   "clip": "cine.bee.royal_dance"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:sniffer",
+   "clip": "cine.sniffer.discover_seed"
+  },
+  {
+   "time": 3.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:dolphin",
+   "clip": "cine.dolphin.leap_arc"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:axolotl",
+   "clip": "cine.axolotl.faint_reveal"
+  },
+  {
+   "time": 4.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:ocelot",
+   "clip": "cine.ocelot.jungle_stalk_reveal"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:polar_bear",
+   "clip": "cine.polar_bear.protect_cub"
+  },
+  {
+   "time": 5.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:panda",
+   "clip": "cine.panda.bamboo_feast"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:frog",
+   "clip": "cine.frog.lily_croak"
+  },
+  {
+   "time": 6.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:turtle",
+   "clip": "cine.turtle.hatchling_journey"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:mooshroom",
+   "clip": "cine.mooshroom.spore_bloom"
+  },
+  {
+   "time": 7.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:husk",
+   "clip": "cine.husk.mirage_shamble"
+  },
+  {
+   "time": 8.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:shulker",
+   "clip": "cine.shulker.slow_open"
+  },
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.examine_relic"
+  }
+ ]
+}

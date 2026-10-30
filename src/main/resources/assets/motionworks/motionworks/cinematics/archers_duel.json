@@ -1,0 +1,46 @@
+{
+ "name": "cinematic.archers_duel",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "over_shoulder",
+   "duration": 4.0
+  },
+  {
+   "type": "extreme_close_up",
+   "duration": 2.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.5
+   }
+  },
+  {
+   "type": "pull_out",
+   "duration": 3.0
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.bow_aim_hold"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.pearl_hurl"
+  },
+  {
+   "time": 4.0,
+   "type": "time_scale",
+   "value": 0.35,
+   "duration": 1.2
+  }
+ ]
+}

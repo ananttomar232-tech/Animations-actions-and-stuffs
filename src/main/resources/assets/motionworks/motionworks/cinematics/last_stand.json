@@ -1,0 +1,66 @@
+{
+ "name": "cinematic.last_stand",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": false,
+ "shots": [
+  {
+   "type": "orbit",
+   "duration": 5.0,
+   "radius": 5,
+   "height": 1
+  },
+  {
+   "type": "low_angle",
+   "duration": 3.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.6
+   }
+  },
+  {
+   "type": "extreme_close_up",
+   "duration": 2.0
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.catch_breath"
+  },
+  {
+   "time": 2.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.surrender"
+  },
+  {
+   "time": 4.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.reach_out"
+  },
+  {
+   "time": 6.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.collapse_exhausted"
+  },
+  {
+   "time": 8.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.drop_to_knees_victory"
+  },
+  {
+   "time": 6.4,
+   "type": "time_scale",
+   "value": 0.4,
+   "duration": 1.5
+  }
+ ]
+}

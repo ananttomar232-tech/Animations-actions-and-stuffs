@@ -35,7 +35,8 @@ tr("player.afk.stand_up", "Getting Up After A Long Wait", event("start_moving", 
 tr("player.afk.dust_off", "Dusting Off After Sitting", event("start_moving", GROUND + " && q.last_idle > 20 && q.last_idle <= 60"), 1.2, {
     "right_arm:rot": [(0, Z), (0.3, arm('r', -20, 10, 30)), (0.5, arm('r', -10, 10, 30)), (0.7, arm('r', -20, 10, 30)), (1.2, Z)], "body:rot": [(0, Z), (0.3, tilt(8, -14, 0)), (1.2, Z)],
     "head:rot": [(0, Z), (0.3, [20, -20, 0]), (1.2, Z)]})
-loop_state("player.context.body_follow_head", "Body Turning To Follow The Gaze", CAT, P, GROUND + " && q.ground_speed < 0.02 && math.abs(q.head_yaw) > 70", 0.8, FP, {"body:rot": lambda u: tilt(0, "q.head_yaw * 0.3", 0)},
+loop_state("player.context.body_follow_head", "Body Turning To Follow The Gaze", CAT, P, GROUND + " && q.ground_speed < 0.02 && math.abs(q.head_yaw) > 70", 0.8, FP, {
+    "body:rot": lambda u: tilt(0, "q.head_yaw * 0.3", 0), "right_leg:rot": lambda u: [0, "q.head_yaw * 0.2", 0], "left_leg:rot": lambda u: [0, "q.head_yaw * 0.1", 0]},
            layer="additive", pri=60)
 
 # ============================================================================ player: life events

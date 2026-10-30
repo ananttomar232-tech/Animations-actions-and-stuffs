@@ -1,0 +1,57 @@
+{
+ "name": "cinematic.portal_departure",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "push_in",
+   "duration": 4.0
+  },
+  {
+   "type": "pov",
+   "duration": 2.5,
+   "transition": {
+    "type": "blend",
+    "duration": 0.6
+   }
+  },
+  {
+   "type": "pull_out",
+   "duration": 3.0
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.map_unfold"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.fist_resolve"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.look_back_once"
+  },
+  {
+   "time": 7.4,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.portal_step"
+  },
+  {
+   "time": 8.8,
+   "type": "flash",
+   "strength": 0.8
+  }
+ ]
+}

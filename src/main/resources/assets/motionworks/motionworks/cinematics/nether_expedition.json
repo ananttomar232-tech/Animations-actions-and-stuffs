@@ -1,0 +1,72 @@
+{
+ "name": "cinematic.nether_expedition",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 4.0
+  },
+  {
+   "type": "track",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.shield_eyes_flash"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.determined_march"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:piglin",
+   "clip": "cine.piglin.barter_ceremony"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:piglin_brute",
+   "clip": "cine.piglin_brute.guard_salute"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:ghast",
+   "clip": "cine.ghast.rise_from_lava_sea"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:blaze",
+   "clip": "cine.blaze.fortress_ignite"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:strider",
+   "clip": "cine.strider.lava_cross"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:piglin_brute",
+   "clip": "cine.piglin_brute.entrance"
+  }
+ ]
+}

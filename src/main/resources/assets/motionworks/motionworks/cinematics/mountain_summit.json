@@ -1,0 +1,70 @@
+{
+ "name": "cinematic.mountain_summit",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "crane",
+   "duration": 5.0,
+   "from_height": 1,
+   "to_height": 12
+  },
+  {
+   "type": "orbit",
+   "duration": 6.0,
+   "radius": 10,
+   "height": 4,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.climb_ledge_pull"
+  },
+  {
+   "time": 2.2,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.plant_flag"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.cloak_wind"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.horizon_gaze"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:goat",
+   "clip": "cine.goat.summit_scream"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.wind_brace"
+  },
+  {
+   "time": 8.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:snow_golem",
+   "clip": "cine.snow_golem.first_snow"
+  }
+ ]
+}

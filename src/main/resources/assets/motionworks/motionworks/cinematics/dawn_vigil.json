@@ -1,0 +1,50 @@
+{
+ "name": "cinematic.dawn_vigil",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "pan",
+   "duration": 5.0,
+   "from_yaw": -50,
+   "to_yaw": 30
+  },
+  {
+   "type": "low_angle",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.kneel_reverent"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.rise_from_kneel"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.slow_turn_reveal"
+  },
+  {
+   "time": 7.4,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.ready_stance"
+  }
+ ]
+}

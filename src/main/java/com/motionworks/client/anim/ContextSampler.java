@@ -315,7 +315,8 @@ public final class ContextSampler {
         // Environment
         BlockPos below = BlockPos.containing(pos.x, pos.y - 0.2, pos.z);
         BlockState onState = level.getBlockState(below);
-        String surface = e.isInWater() ? "water" : SURFACES.getOrDefault(onState.getSoundType(), onState.isAir() ? "air" : "stone");
+        String surface = e.isInWater() ? "water" : onState.is(Blocks.MAGMA_BLOCK) ? "magma"
+                : SURFACES.getOrDefault(onState.getSoundType(), onState.isAir() ? "air" : "stone");
         s.setString(CtxVars.SURFACE, surface);
         BlockPos at = e.blockPosition();
         s.setBool(CtxVars.RAINING, level.isRainingAt(at.above()));

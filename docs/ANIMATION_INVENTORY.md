@@ -8,20 +8,20 @@ variables, and motion-signature uniqueness: no speed, amplitude, phase or mirror
 |---|---:|---:|
 | Player movement and locomotion | 180 | 180 |
 | Player combat and weapon handling | 220 | 220 |
-| Player everyday interactions | 0 | 220 |
-| First-person animations | 0 | 180 |
-| Passive animals and creatures | 0 | 300 |
-| Hostile mobs and monsters | 0 | 250 |
-| Villagers and humanoid NPCs | 0 | 160 |
-| Environmental interactions | 0 | 180 |
-| Cinematic and storytelling | 0 | 150 |
-| Emotes, gestures and expressions | 0 | 120 |
-| Mounts, vehicles and riding | 0 | 100 |
-| Swimming and underwater behaviour | 0 | 80 |
-| Flying and aerial movement | 0 | 80 |
-| Damage, reactions and recovery | 0 | 100 |
-| Special, contextual and transition animations | 0 | 100 |
-| **Total** | **400** | **2,420** |
+| Player everyday interactions | 220 | 220 |
+| First-person animations | 231 | 180 |
+| Passive animals and creatures | 318 | 300 |
+| Hostile mobs and monsters | 255 | 250 |
+| Villagers and humanoid NPCs | 160 | 160 |
+| Environmental interactions | 181 | 180 |
+| Cinematic and storytelling | 155 | 150 |
+| Emotes, gestures and expressions | 122 | 120 |
+| Mounts, vehicles and riding | 101 | 100 |
+| Swimming and underwater behaviour | 80 | 80 |
+| Flying and aerial movement | 80 | 80 |
+| Damage, reactions and recovery | 101 | 100 |
+| Special, contextual and transition animations | 102 | 100 |
+| **Total** | **2506** | **2,420** |
 
 Testing status `auto-validated` means the clip passed the authoring validator and the Java `ShippedLibraryTest`
 (loads with the runtime parser, every bone exists in the target rig, signatures distinct). In-game visual review is tracked
@@ -441,63 +441,2169 @@ separately in `docs/TESTING.md`.
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `player.interact.adjust_armor_stand` | Adjust Armour Stand | `@player` | event `interact_entity:armor_stand` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.anchor_charge` | Charge Respawn Anchor | `@player` | event `interact:respawn_anchor` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.anvil_strike` | Test The Anvil | `@player` | event `interact:anvil` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.armor_off_chest` | Unbuckle Chestplate | `@player` | event `armor_off:chest` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_off_feet` | Tug Off Boots | `@player` | event `armor_off:feet` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_off_head` | Lift Off Helmet | `@player` | event `armor_off:head` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_off_legs` | Kick Off Leggings | `@player` | event `armor_off:legs` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_on_chest` | Shrug Into Chestplate | `@player` | event `armor_on:chest` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_on_feet` | Lace Up Boots | `@player` | event `armor_on:feet` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_on_head` | Pull On Helmet | `@player` | event `armor_on:head` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.armor_on_legs` | Step Into Leggings | `@player` | event `armor_on:legs` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 150 |
+| `player.interact.axe_strip` | Strip Bark | `@player` | event `interact:strip` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.barrel_open_high` | Pry Open A Stacked Barrel | `@player` | event `interact:barrel` when `!q.is_dead && !q.is_swimming && q.event_height > 0.35` | 0.90s | action | 163 |
+| `player.interact.barrel_pry_low` | Pry Barrel Lid (Floor) | `@player` | event `interact:barrel` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75` | 0.90s | action | 160 |
+| `player.interact.barrel_pry_mid` | Pry Barrel Lid | `@player` | event `interact:barrel` when `!q.is_dead && !q.is_swimming && q.event_height >= -0.75` | 0.80s | action | 160 |
+| `player.interact.barter_toss` | Toss Gold To A Piglin | `@player` | event `barter_toss` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.beacon_reach` | Reach Toward Beacon | `@player` | event `interact:beacon` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.bed_check` | Sit On Bed Edge | `@player` | event `interact:bed` when `!q.is_dead && !q.is_swimming` | 1.60s | action | 160 |
+| `player.interact.bell_ring_high` | Reach Up And Ring Bell | `@player` | event `interact:bell` when `!q.is_dead && !q.is_swimming && q.event_height > 0.5` | 0.70s | action | 160 |
+| `player.interact.bell_ring_mid` | Strike The Bell | `@player` | event `interact:bell` when `!q.is_dead && !q.is_swimming && q.event_height <= 0.5` | 0.60s | action | 160 |
+| `player.interact.bone_meal_sprinkle` | Sprinkle Bone Meal | `@player` | event `interact:fertilize` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.bookshelf_pull` | Pull A Book From The Shelf | `@player` | event `interact:bookshelf` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.bookshelf_return` | Slide A Book Back | `@player` | event `interact:bookshelf` when `!q.is_dead && !q.is_swimming && q.main_hand == 'book'` | 0.80s | action | 161 |
+| `player.interact.break_dirt` | Kick Loose Dirt | `@player` | event `break_block` when `!q.is_dead && !q.is_swimming && q.event_arg == 'dirt'` | 0.50s | action | 158 |
+| `player.interact.break_other` | Brush Off Debris | `@player` | event `break_block` when `!q.is_dead && !q.is_swimming && q.event_arg != 'stone' && q.event_arg != 'wood' && q.event_arg != 'dirt' && q.event_arg != 'plant'` | 0.50s | action | 158 |
+| `player.interact.break_plant` | Harvest Crop | `@player` | event `break_block` when `!q.is_dead && !q.is_swimming && q.event_arg == 'plant'` | 0.70s | action | 158 |
+| `player.interact.break_stone` | Heave Loose Stone | `@player` | event `break_block` when `!q.is_dead && !q.is_swimming && q.event_arg == 'stone'` | 0.50s | action | 158 |
+| `player.interact.break_wood` | Timber Finish | `@player` | event `break_block` when `!q.is_dead && !q.is_swimming && q.event_arg == 'wood'` | 0.50s | action | 158 |
+| `player.interact.brewing_stir` | Stir The Brewing Stand | `@player` | event `interact:brewing` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.brush_away` | Brush Away Sand | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'brush'` | 0.80s | overlay | 140 |
+| `player.interact.bucket_panic_pour` | Douse The Flames | `@player` | event `bucket:empty` when `!q.is_dead && !q.is_swimming && q.is_on_fire` | 0.70s | action | 165 |
+| `player.interact.bucket_pour` | Pour Bucket Out | `@player` | event `bucket:empty` when `!q.is_dead && !q.is_swimming && !q.is_on_fire` | 0.90s | action | 160 |
+| `player.interact.bucket_scoop` | Scoop With Bucket | `@player` | event `bucket:fill` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.button_press` | Press Button | `@player` | event `interact:button` when `!q.is_dead && !q.is_swimming` | 0.50s | action | 160 |
+| `player.interact.cake_slice` | Grab A Slice Of Cake | `@player` | event `interact:cake` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.carve_pumpkin` | Carve A Pumpkin | `@player` | event `interact:carve` when `!q.is_dead && !q.is_swimming` | 1.30s | action | 160 |
+| `player.interact.catch_in_bucket` | Scoop Creature Into Bucket | `@player` | event `interact_entity:catch_fish` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.cauldron_scoop` | Scoop From Cauldron | `@player` | event `interact:cauldron` when `!q.is_dead && !q.is_swimming && q.main_hand != 'armor'` | 0.90s | action | 160 |
+| `player.interact.cauldron_wash` | Wash Dye From Armour | `@player` | event `interact:cauldron` when `!q.is_dead && !q.is_swimming && q.main_hand == 'armor'` | 1.40s | action | 160 |
+| `player.interact.celebrate_level` | Level-Up Fist Pump | `@player` | event `celebrate:level` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 175 |
+| `player.interact.celebrate_tame` | Delighted Clap For New Friend | `@player` | event `celebrate:tame` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 175 |
+| `player.interact.chest_grab_hurried` | Grab From Chest In A Hurry | `@player` | event `interact:chest` when `!q.is_dead && !q.is_swimming && q.near_hostile` | 0.50s | action | 164 |
+| `player.interact.chest_open_high` | Reach Up To A High Chest | `@player` | event `interact:chest` when `!q.is_dead && !q.is_swimming && q.event_height > 0.35` | 0.90s | action | 163 |
+| `player.interact.chest_open_low` | Kneel And Lift Chest Lid | `@player` | event `interact:chest` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75` | 1.00s | action | 160 |
+| `player.interact.chest_open_mid` | Lift Chest Lid | `@player` | event `interact:chest` when `!q.is_dead && !q.is_swimming && q.event_height >= -0.75` | 0.80s | action | 160 |
+| `player.interact.chime_amethyst` | Tap The Amethyst | `@player` | event `interact:amethyst` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.command_pet` | Command Pet To Sit | `@player` | event `interact_entity:command_pet` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.composter_dump` | Tip Scraps Into Composter | `@player` | event `interact:composter` when `!q.is_dead && !q.is_swimming && q.main_hand != 'empty'` | 0.70s | action | 160 |
+| `player.interact.composter_empty` | Scoop Out Bone Meal | `@player` | event `interact:composter` when `!q.is_dead && !q.is_swimming && q.main_hand == 'empty'` | 0.90s | action | 160 |
+| `player.interact.consult_compass` | Turn To Follow The Needle | `@player` | event `inspect_item:device` when `!q.is_dead && !q.is_swimming` | 1.80s | action | 160 |
+| `player.interact.container_peek` | Peek Into Dispenser | `@player` | event `interact:container` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.cook_on_campfire` | Lay Food On Campfire | `@player` | event `interact:cook` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.crafting_slap` | Spread Out On Workbench | `@player` | event `interact:crafting` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.door_backhand_close` | Close Door Behind | `@player` | event `interact:door_close` when `!q.is_dead && !q.is_swimming && q.forward_speed > 0.02` | 0.60s | action | 161 |
+| `player.interact.door_elbow_open` | Elbow A Door Open (Hands Full) | `@player` | event `interact:door_open` when `!q.is_dead && !q.is_swimming && (q.main_hand == 'block' \|\| q.main_hand == 'book' \|\| q.main_hand == 'map')` | 0.70s | action | 164 |
+| `player.interact.door_peek_open` | Ease Door Open And Peek | `@player` | event `interact:door_open` when `!q.is_dead && !q.is_swimming && q.is_sneaking` | 1.40s | action | 163 |
+| `player.interact.door_pull_closed` | Pull Door Closed | `@player` | event `interact:door_close` when `!q.is_dead && !q.is_swimming && q.forward_speed <= 0.02` | 0.70s | action | 160 |
+| `player.interact.door_push_open` | Push Door Open | `@player` | event `interact:door_open` when `!q.is_dead && !q.is_swimming && !q.is_sneaking && q.near_hostile == 0` | 0.70s | action | 160 |
+| `player.interact.door_shoulder_barge` | Shoulder Through Door | `@player` | event `interact:door_open` when `!q.is_dead && !q.is_swimming && (q.is_sprinting \|\| q.near_hostile)` | 0.60s | action | 162 |
+| `player.interact.door_slam_shut` | Slam Door On Danger | `@player` | event `interact:door_close` when `!q.is_dead && !q.is_swimming && q.near_hostile` | 0.50s | action | 165 |
+| `player.interact.douse_campfire` | Douse The Campfire | `@player` | event `interact:douse` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.drink_chug_combat` | Chug Potion In Combat | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'drink' && q.in_combat` | 0.40s | overlay | 134 |
+| `player.interact.drink_finish` | Satisfied Exhale | `@player` | event `use_finish` when `!q.is_dead && !q.is_swimming && q.last_use_time > 1 && (q.main_hand == 'potion' \|\| q.main_hand == 'honey' \|\| q.main_hand == 'bucket')` | 0.90s | action | 160 |
+| `player.interact.drink_honey` | Sip Honey Slowly | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'drink' && q.main_hand == 'honey'` | 1.00s | overlay | 133 |
+| `player.interact.drink_milk` | Gulp Milk From Bucket | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'drink' && q.main_hand == 'bucket'` | 0.60s | overlay | 133 |
+| `player.interact.drink_potion` | Tip Back A Potion | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'drink' && q.main_hand == 'potion'` | 0.80s | overlay | 133 |
+| `player.interact.drop_hurl` | Hurl Item While Running | `@player` | event `drop` when `!q.is_dead && !q.is_swimming && q.is_sprinting` | 0.45s | action | 161 |
+| `player.interact.drop_set_down` | Set Item Down Gently | `@player` | event `drop` when `!q.is_dead && !q.is_swimming && q.is_sneaking` | 0.90s | action | 161 |
+| `player.interact.drop_toss` | Toss Item Away | `@player` | event `drop` when `!q.is_dead && !q.is_swimming && !q.is_sneaking && !q.is_sprinting` | 0.50s | action | 160 |
+| `player.interact.dye_sheep` | Rub Dye Into Wool | `@player` | event `interact_entity:dye` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.eat_bite` | Bite And Chew | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.main_hand == 'food' && q.hunger <= 0.7 && q.in_combat == 0` | 0.60s | overlay | 130 |
+| `player.interact.eat_cram_in_combat` | Cram Food Mid-Fight | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.in_combat` | 0.30s | overlay | 132 |
+| `player.interact.eat_finish` | Wipe Mouth After Eating | `@player` | event `use_finish` when `!q.is_dead && !q.is_swimming && q.last_use_time > 1 && (q.main_hand == 'food' \|\| q.main_hand == 'meat' \|\| q.main_hand == 'bowl_food')` | 0.80s | action | 160 |
+| `player.interact.eat_golden_apple` | Savour A Golden Apple | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.main_hand == 'golden_food'` | 1.00s | overlay | 133 |
+| `player.interact.eat_spoon_stew` | Spoon Stew From Bowl | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.main_hand == 'bowl_food'` | 0.80s | overlay | 133 |
+| `player.interact.eat_tear_meat` | Tear Into Meat | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.main_hand == 'meat'` | 0.70s | overlay | 133 |
+| `player.interact.eat_wolf_down` | Wolf Down Food | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'eat' && q.hunger > 0.7` | 0.35s | overlay | 131 |
+| `player.interact.enchant_raise` | Hands Over Enchanting Table | `@player` | event `interact:enchanting` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.ender_chest_open` | Open Ender Chest Reverently | `@player` | event `interact:ender_chest` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.feed_animal` | Offer Food Low | `@player` | event `interact_entity:feed` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.feed_bird` | Offer Seeds On Palm | `@player` | event `interact_entity:feed_bird` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 161 |
+| `player.interact.feed_horse` | Offer Food To Horse | `@player` | event `interact_entity:feed_horse` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 161 |
+| `player.interact.feed_pet` | Crouch To Feed Pet | `@player` | event `interact_entity:feed_pet` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 161 |
+| `player.interact.fill_bottle` | Fill A Glass Bottle | `@player` | event `fill_bottle` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.fish_cast_overhead` | Overhead Cast | `@player` | event `fish_cast` when `!q.is_dead && !q.is_swimming && q.main_hand == 'fishing_rod' && !q.is_sneaking` | 0.90s | action | 160 |
+| `player.interact.fish_cast_sidearm` | Low Sidearm Cast | `@player` | event `fish_cast` when `!q.is_dead && !q.is_swimming && q.main_hand == 'fishing_rod' && q.is_sneaking` | 0.80s | action | 161 |
+| `player.interact.fish_catch_admire` | Land The Catch | `@player` | event `fish_catch` when `!q.is_dead && !q.is_swimming` | 1.60s | action | 170 |
+| `player.interact.fish_reel_in` | Reel In | `@player` | event `fish_reel` when `!q.is_dead && !q.is_swimming && q.main_hand == 'fishing_rod'` | 0.70s | action | 160 |
+| `player.interact.fish_wait` | Wait For A Bite | `@player` | state `!q.is_dead && !q.is_swimming && q.main_hand == 'fishing_rod' && q.is_fishing && q.ground_speed < 0.02` | 5.00s | overlay | 125 |
+| `player.interact.fish_wait_fidget` | Take Up Line Slack | `@player` | state `!q.is_dead && !q.is_swimming && q.main_hand == 'fishing_rod' && q.is_fishing && q.ground_speed < 0.02` | 1.80s | overlay | 125 |
+| `player.interact.flint_strike` | Strike Flint And Steel | `@player` | event `interact:ignite` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.furnace_low` | Crouch At Furnace | `@player` | event `interact:furnace` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75` | 1.00s | action | 160 |
+| `player.interact.furnace_mid` | Feed The Furnace | `@player` | event `interact:furnace` when `!q.is_dead && !q.is_swimming && q.event_height >= -0.75` | 0.80s | action | 160 |
+| `player.interact.gate_latch` | Swing Gate Shut | `@player` | event `interact:gate_close` when `!q.is_dead && !q.is_swimming` | 0.70s | action | 160 |
+| `player.interact.gate_push` | Push Gate Open | `@player` | event `interact:gate_open` when `!q.is_dead && !q.is_swimming` | 0.70s | action | 160 |
+| `player.interact.give_allay` | Hand An Item To The Allay | `@player` | event `interact_entity:give_item` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.greet_player` | Friendly Nod And Wave | `@player` | event `interact_entity:greet` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.greet_trader` | Greet The Wandering Trader | `@player` | event `interact_entity:trader` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.greet_villager` | Lean In To Talk | `@player` | event `interact_entity:villager` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.grindstone_crank` | Crank The Grindstone | `@player` | event `interact:grindstone` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.hang_decoration` | Hang A Painting | `@player` | event `interact:hang` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.harvest_hive` | Harvest The Hive Gently | `@player` | event `interact:harvest_hive` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.hoe_till` | Till The Soil | `@player` | event `interact:till` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.horn_blow` | Sound The Horn | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'toot_horn'` | 2.00s | overlay | 136 |
+| `player.interact.insert_eye` | Seat An Eye Of Ender | `@player` | event `interact:insert_eye` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.inventory_close` | Pat Down Pockets | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'inventory'` | 0.80s | action | 126 |
+| `player.interact.iron_door_rattle` | Rattle Locked Iron Door | `@player` | event `interact:iron_door` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.jukebox_eject` | Pop The Record Out | `@player` | event `interact:jukebox` when `!q.is_dead && !q.is_swimming && q.main_hand == 'empty'` | 0.70s | action | 160 |
+| `player.interact.jukebox_insert` | Insert A Record | `@player` | event `interact:jukebox` when `!q.is_dead && !q.is_swimming && q.main_hand != 'empty'` | 0.90s | action | 160 |
+| `player.interact.launch_firework` | Light And Back Away | `@player` | event `interact:launch_firework` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.leash_loop` | Loop A Lead | `@player` | event `interact_entity:leash` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.lectern_place_book` | Lay Book On Lectern | `@player` | event `interact:lectern` when `!q.is_dead && !q.is_swimming && q.main_hand == 'book'` | 0.90s | action | 160 |
+| `player.interact.lectern_read` | Turn Lectern Page | `@player` | event `interact:lectern` when `!q.is_dead && !q.is_swimming && q.main_hand != 'book'` | 1.00s | action | 160 |
+| `player.interact.lever_off` | Haul Lever Down | `@player` | event `interact:lever_off` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.lever_on` | Throw Lever Up | `@player` | event `interact:lever_on` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.milk_cow` | Crouch And Milk | `@player` | event `interact_entity:milk` when `!q.is_dead && !q.is_swimming` | 1.80s | action | 160 |
+| `player.interact.mine_dirt_hand` | Scrape Dirt By Hand | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'dirt' && q.main_hand == 'empty'` | 0.50s | overlay | 120 |
+| `player.interact.mine_dirt_shovel` | Dig With Shovel | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'dirt' && q.main_hand == 'shovel'` | 0.60s | overlay | 120 |
+| `player.interact.mine_generic_tool` | Tool Work | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.main_hand != 'empty' && q.main_hand != 'pickaxe' && q.main_hand != 'axe' && q.main_hand != 'shovel' && q.main_hand != 'hoe'` | 0.50s | overlay | 110 |
+| `player.interact.mine_high` | Overhead Mining | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.head_pitch <= -40 && q.main_hand != 'empty'` | 0.55s | overlay | 125 |
+| `player.interact.mine_low` | Kneeling Low Mining | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.head_pitch >= 45 && q.main_hand != 'empty'` | 0.55s | overlay | 125 |
+| `player.interact.mine_metal_pickaxe` | Heavy Pick Blows On Ore | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'metal' && q.main_hand == 'pickaxe'` | 0.65s | overlay | 120 |
+| `player.interact.mine_plant_hand` | Pull Up Plants | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'plant' && q.main_hand == 'empty'` | 0.60s | overlay | 120 |
+| `player.interact.mine_plant_hoe` | Slice Through Plants | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'plant' && q.main_hand == 'hoe'` | 0.45s | overlay | 120 |
+| `player.interact.mine_plant_shears` | Snip With Shears | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'plant' && q.main_hand == 'shears'` | 0.35s | overlay | 120 |
+| `player.interact.mine_stone_hand` | Punch At Stone | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'stone' && q.main_hand == 'empty'` | 0.40s | overlay | 120 |
+| `player.interact.mine_stone_pickaxe` | Pickaxe Strokes On Stone | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'stone' && q.main_hand == 'pickaxe' && q.head_pitch < 45 && q.head_pitch > -40` | 0.50s | overlay | 120 |
+| `player.interact.mine_tired` | Exhausted Mining | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.hunger > 0.7 && q.main_hand == 'pickaxe'` | 0.80s | overlay | 126 |
+| `player.interact.mine_wood_axe` | Chop Wood | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'wood' && q.main_hand == 'axe'` | 0.55s | overlay | 120 |
+| `player.interact.mine_wood_hand` | Punch A Log | `@player` | state `!q.is_dead && !q.is_swimming && q.is_mining && q.mine_target == 'wood' && q.main_hand == 'empty'` | 0.42s | overlay | 120 |
+| `player.interact.name_tag` | Fasten A Name Tag | `@player` | event `interact_entity:name_tag` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.note_block_tap` | Tap Note Block | `@player` | event `interact:note_block` when `!q.is_dead && !q.is_swimming` | 0.50s | action | 160 |
+| `player.interact.pet_cat` | Stroke The Cat | `@player` | event `interact_entity:pet_cat` when `!q.is_dead && !q.is_swimming` | 1.60s | action | 160 |
+| `player.interact.pet_dog` | Scratch Behind The Ears | `@player` | event `interact_entity:pet_dog` when `!q.is_dead && !q.is_swimming` | 1.60s | action | 160 |
+| `player.interact.pet_horse` | Pat The Horse's Neck | `@player` | event `interact_entity:pet_horse` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.pet_small` | Tickle A Small Creature | `@player` | event `interact_entity:pet_small` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.pick_berries` | Pick Berries | `@player` | event `interact:pick_berries` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.pickup_food_sniff` | Pick Up And Sniff Food | `@player` | event `pickup:food` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 163 |
+| `player.interact.pickup_gentle` | Crouched Careful Pickup | `@player` | event `pickup` when `!q.is_dead && !q.is_swimming && q.is_sneaking` | 0.80s | action | 161 |
+| `player.interact.pickup_grab` | Scoop Item Up | `@player` | event `pickup` when `!q.is_dead && !q.is_swimming && !q.is_sprinting && !q.is_sneaking` | 0.60s | action | 160 |
+| `player.interact.pickup_snatch` | Snatch On The Run | `@player` | event `pickup` when `!q.is_dead && !q.is_swimming && q.is_sprinting` | 0.40s | action | 161 |
+| `player.interact.pickup_weapon_check` | Pick Up And Weigh Weapon | `@player` | event `pickup` when `!q.is_dead && !q.is_swimming && (q.event_arg == 'sword' \|\| q.event_arg == 'axe')` | 1.00s | action | 163 |
+| `player.interact.place_block` | Place Block | `@player` | event `place` when `!q.is_dead && !q.is_swimming && !q.is_sneaking && q.is_on_ground && q.main_hand != 'torch' && q.main_hand != 'seed' && q.main_hand != 'plant'` | 0.50s | action | 160 |
+| `player.interact.place_careful` | Careful Edge Placement | `@player` | event `place` when `!q.is_dead && !q.is_swimming && q.is_sneaking` | 0.80s | action | 162 |
+| `player.interact.place_torch_wall` | Mount A Torch | `@player` | event `place` when `!q.is_dead && !q.is_swimming && q.main_hand == 'torch'` | 0.60s | action | 160 |
+| `player.interact.place_tower_jump` | Pillar Jump Placement | `@player` | event `place` when `!q.is_dead && !q.is_swimming && !q.is_on_ground` | 0.45s | action | 163 |
+| `player.interact.place_vehicle` | Set Down A Vehicle | `@player` | event `interact:place_vehicle` when `!q.is_dead && !q.is_swimming` | 0.90s | action | 160 |
+| `player.interact.plant_sapling` | Plant A Sapling | `@player` | event `place` when `!q.is_dead && !q.is_swimming && q.main_hand == 'plant'` | 1.10s | action | 164 |
+| `player.interact.plant_seed` | Press Seeds Into Soil | `@player` | event `place` when `!q.is_dead && !q.is_swimming && q.main_hand == 'seed'` | 0.90s | action | 164 |
+| `player.interact.pot_peek` | Peer Into Decorated Pot | `@player` | event `interact:pot` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.pot_plant` | Plant In Flower Pot | `@player` | event `interact:flower_pot` when `!q.is_dead && !q.is_swimming && q.main_hand != 'empty'` | 0.80s | action | 160 |
+| `player.interact.pot_take` | Pull Plant From Pot | `@player` | event `interact:flower_pot` when `!q.is_dead && !q.is_swimming && q.main_hand == 'empty'` | 0.70s | action | 160 |
+| `player.interact.read_book` | Open And Read A Book | `@player` | event `inspect_item:book` when `!q.is_dead && !q.is_swimming` | 3.00s | action | 160 |
+| `player.interact.redstone_tinker` | Tinker With Redstone | `@player` | event `interact:tinker` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.rotate_item_frame` | Turn The Framed Item | `@player` | event `interact_entity:item_frame` when `!q.is_dead && !q.is_swimming` | 0.70s | action | 160 |
+| `player.interact.saddle_up` | Throw On A Saddle | `@player` | event `interact_entity:saddle` when `!q.is_dead && !q.is_swimming` | 1.20s | action | 160 |
+| `player.interact.shear_sheep` | Kneel And Shear | `@player` | event `interact_entity:shear` when `!q.is_dead && !q.is_swimming` | 1.60s | action | 160 |
+| `player.interact.shovel_flatten` | Flatten A Path | `@player` | event `interact:flatten` when `!q.is_dead && !q.is_swimming` | 0.80s | action | 160 |
+| `player.interact.shulker_open` | Kneel At Shulker Box | `@player` | event `interact:shulker` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.sign_wipe` | Wipe Sign Clean | `@player` | event `interact:sign` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.sleep_back` | Sleeping On Back | `@player` | state `!q.is_dead && q.is_sleeping` | 5.00s | base | 900 |
+| `player.interact.sleep_restless` | Restless Sleep | `@player` | state `!q.is_dead && q.is_sleeping && (q.health < 0.4 \|\| q.hunger > 0.8)` | 3.00s | base | 901 |
+| `player.interact.sleep_side` | Curled On Side | `@player` | state `!q.is_dead && q.is_sleeping` | 6.00s | base | 900 |
+| `player.interact.smell_flower` | Stop To Smell A Flower | `@player` | event `interact:smell_flower` when `!q.is_dead && !q.is_swimming` | 2.40s | action | 160 |
+| `player.interact.spyglass_lower` | Lower Spyglass | `@player` | event `use_stop` when `!q.is_dead && !q.is_swimming && q.main_hand == 'spyglass'` | 0.50s | action | 160 |
+| `player.interact.spyglass_raise` | Raise Spyglass | `@player` | event `use_start` when `!q.is_dead && !q.is_swimming && q.main_hand == 'spyglass'` | 0.40s | action | 160 |
+| `player.interact.spyglass_survey` | Survey Through Spyglass | `@player` | state `!q.is_dead && !q.is_swimming && q.is_using_item && q.use_anim == 'spyglass'` | 4.00s | overlay | 135 |
+| `player.interact.tie_lead` | Tie Lead To Post | `@player` | event `interact:tie_lead` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.touch_golem` | Touch The Iron Golem | `@player` | event `interact_entity:golem` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.trade_complete` | Pocket The Goods | `@player` | event `trade` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 170 |
+| `player.interact.trapdoor_lift_floor` | Lift Floor Hatch | `@player` | event `interact:trapdoor_open` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75` | 1.00s | action | 160 |
+| `player.interact.trapdoor_peek` | Peer Down Through Hatch | `@player` | event `interact:trapdoor_open` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75 && q.is_sneaking` | 1.80s | action | 164 |
+| `player.interact.trapdoor_pull_down` | Pull Hatch Down | `@player` | event `interact:trapdoor_close` when `!q.is_dead && !q.is_swimming && q.event_height > -0.75` | 0.70s | action | 160 |
+| `player.interact.trapdoor_push_overhead` | Push Hatch Overhead | `@player` | event `interact:trapdoor_open` when `!q.is_dead && !q.is_swimming && q.event_height > 0.35` | 0.70s | action | 160 |
+| `player.interact.trapdoor_slam_floor` | Drop Floor Hatch | `@player` | event `interact:trapdoor_close` when `!q.is_dead && !q.is_swimming && q.event_height < -0.75` | 0.80s | action | 160 |
+| `player.interact.typing_done` | Look Up From Thought | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'chat'` | 0.70s | action | 126 |
+| `player.interact.unfold_map` | Unfold The Map | `@player` | event `inspect_item:map` when `!q.is_dead && !q.is_swimming` | 1.40s | action | 160 |
+| `player.interact.wake_groggy` | Groggy Wake-Up | `@player` | event `wake` when `q.hunger >= 0.6 \|\| q.time_of_day >= 0.3` | 2.40s | action | 180 |
+| `player.interact.wake_rested` | Wake And Stretch | `@player` | event `wake` when `q.hunger < 0.6 && q.time_of_day < 0.3` | 2.20s | action | 180 |
+| `player.interact.wake_startled` | Startled Awake | `@player` | event `wake` when `q.near_hostile` | 1.00s | action | 181 |
+| `player.interact.warm_hands` | Warm Hands By The Fire | `@player` | event `interact:campfire` when `!q.is_dead && !q.is_swimming` | 3.00s | action | 160 |
+| `player.interact.wax_copper` | Rub Wax Onto Copper | `@player` | event `interact:wax` when `!q.is_dead && !q.is_swimming` | 1.10s | action | 160 |
+| `player.interact.work_anvil` | Hammer At The Anvil | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'anvil' && q.ground_speed < 0.02` | 0.80s | base | 120 |
+| `player.interact.work_beacon` | Commune With The Beacon | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'beacon' && q.ground_speed < 0.02` | 3.00s | base | 120 |
+| `player.interact.work_blast_furnace` | Shield Face From The Blast Heat | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'blast_furnace' && q.ground_speed < 0.02` | 1.80s | base | 120 |
+| `player.interact.work_book_edit` | Write In The Book | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'book_edit' && q.ground_speed < 0.02` | 1.40s | base | 120 |
+| `player.interact.work_brewing` | Measure And Pour Potions | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'brewing' && q.ground_speed < 0.02` | 2.20s | base | 120 |
+| `player.interact.work_cartography` | Draw The Map | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'cartography' && q.ground_speed < 0.02` | 1.60s | base | 120 |
+| `player.interact.work_chat` | Lost In Thought | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'chat' && q.ground_speed < 0.02` | 4.00s | base | 120 |
+| `player.interact.work_chest` | Rummage Through Chest | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'chest' && q.ground_speed < 0.02` | 1.60s | base | 120 |
+| `player.interact.work_close_anvil` | Set Down The Hammer | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'anvil'` | 0.60s | action | 125 |
+| `player.interact.work_close_brewing` | Cork The Bottle | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'brewing'` | 0.60s | action | 125 |
+| `player.interact.work_close_chest` | Shut The Chest Lid | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'chest'` | 0.60s | action | 125 |
+| `player.interact.work_close_crafting` | Dust Off Hands | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'crafting'` | 0.60s | action | 125 |
+| `player.interact.work_close_enchanting` | Close The Grimoire | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'enchanting'` | 0.60s | action | 125 |
+| `player.interact.work_close_furnace` | Close The Furnace Door | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'furnace'` | 0.60s | action | 125 |
+| `player.interact.work_close_merchant` | Nod Farewell To The Merchant | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg == 'merchant'` | 0.60s | action | 125 |
+| `player.interact.work_close_other` | Step Back From Station | `@player` | event `menu_close` when `!q.is_dead && !q.is_swimming && q.event_arg != 'chest' && q.event_arg != 'crafting' && q.event_arg != 'furnace' && q.event_arg != 'anvil'` | 0.60s | action | 125 |
+| `player.interact.work_crafting` | Craft At The Workbench | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'crafting' && q.ground_speed < 0.02` | 1.20s | base | 120 |
+| `player.interact.work_dispenser` | Load The Dispenser | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'dispenser' && q.ground_speed < 0.02` | 1.20s | base | 120 |
+| `player.interact.work_enchanting` | Channel The Enchantment | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'enchanting' && q.ground_speed < 0.02` | 3.00s | base | 120 |
+| `player.interact.work_fidget_chest` | Dig Deeper In The Chest | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'chest' && q.ground_speed < 0.02` | 1.60s | base | 120 |
+| `player.interact.work_fidget_crafting` | Puzzle Over The Recipe | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'crafting' && q.ground_speed < 0.02` | 2.40s | base | 120 |
+| `player.interact.work_fidget_furnace` | Poke The Coals | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'furnace' && q.ground_speed < 0.02` | 1.40s | base | 120 |
+| `player.interact.work_fidget_merchant` | Count The Emeralds | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'merchant' && q.ground_speed < 0.02` | 2.00s | base | 120 |
+| `player.interact.work_furnace` | Tend The Furnace | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'furnace' && q.ground_speed < 0.02` | 2.00s | base | 120 |
+| `player.interact.work_grindstone` | Work The Grindstone | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'grindstone' && q.ground_speed < 0.02` | 0.90s | base | 120 |
+| `player.interact.work_hopper` | Sort Items Into The Hopper | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'hopper' && q.ground_speed < 0.02` | 1.40s | base | 120 |
+| `player.interact.work_horse` | Adjust Saddlebags | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'horse' && q.ground_speed < 0.02` | 1.80s | base | 120 |
+| `player.interact.work_inventory` | Check The Pack | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'inventory' && q.ground_speed < 0.02` | 3.00s | base | 120 |
+| `player.interact.work_large_chest` | Search A Large Chest | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'large_chest' && q.ground_speed < 0.02` | 2.40s | base | 120 |
+| `player.interact.work_lectern` | Read At The Lectern | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'lectern' && q.ground_speed < 0.02` | 4.00s | base | 120 |
+| `player.interact.work_loom` | Weave At The Loom | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'loom' && q.ground_speed < 0.02` | 1.00s | base | 120 |
+| `player.interact.work_merchant` | Haggle Over Trades | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'merchant' && q.ground_speed < 0.02` | 2.00s | base | 120 |
+| `player.interact.work_shulker` | Sort A Shulker Box | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'shulker' && q.ground_speed < 0.02` | 1.80s | base | 120 |
+| `player.interact.work_smithing` | Fit Netherite At The Smithing Table | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'smithing' && q.ground_speed < 0.02` | 1.40s | base | 120 |
+| `player.interact.work_smoker` | Fan The Smoker | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'smoker' && q.ground_speed < 0.02` | 1.00s | base | 120 |
+| `player.interact.work_stonecutter` | Guide Stone Through The Saw | `@player` | state `!q.is_dead && !q.is_swimming && q.menu == 'stonecutter' && q.ground_speed < 0.02` | 1.40s | base | 120 |
+| `player.interact.workstation_settle` | Settle At Workstation | `@player` | event `interact:workstation` when `!q.is_dead && !q.is_swimming` | 1.00s | action | 160 |
+| `player.interact.xp_absorb` | Absorb Experience | `@player` | event `xp_pickup` when `!q.is_dead && !q.is_swimming` | 0.60s | reaction | 120 |
 
 ## First-person animations
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `fp.axe_berserk` | FP Berserk Flurry | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.health < 0.25` | 0.75s | action | 215 |
+| `fp.axe_board_chop` | FP Axe-And-Shield Chop | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.off_hand == 'shield' && q.is_on_ground` | 0.70s | action | 203 |
+| `fp.axe_chop` | FP Downward Chop | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 0 && q.is_on_ground` | 0.70s | action | 200 |
+| `fp.axe_cleave` | FP Horizontal Cleave | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 2 && q.is_on_ground` | 0.80s | action | 200 |
+| `fp.axe_guard_breaker` | FP Guard-Breaking Wrench | `@first_person` | event `break_guard` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe'` | 0.80s | action | 216 |
+| `fp.axe_hack` | FP Diagonal Hack | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 1 && q.is_on_ground` | 0.70s | action | 200 |
+| `fp.axe_haft_jab` | FP Haft Jab | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.is_sneaking && q.attack_strength < 0.9` | 0.45s | action | 206 |
+| `fp.axe_heavy_overhead` | FP Heavy Overhead Split | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 0 && q.is_on_ground && q.attack_strength >= 0.9` | 0.95s | action | 205 |
+| `fp.axe_hook` | FP Hooking Pull | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 2 && q.is_on_ground && q.attack_strength >= 0.9` | 0.80s | action | 206 |
+| `fp.axe_jump_chop` | FP Leaping Chop | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && !q.is_on_ground && q.vertical_speed < 0` | 0.65s | action | 212 |
+| `fp.axe_meteor` | FP Somersault Crash | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && !q.is_on_ground && q.vertical_speed < 0 && q.fall_distance > 4` | 0.90s | action | 214 |
+| `fp.axe_running_chop` | FP Running Chop | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.is_sprinting` | 0.60s | action | 210 |
+| `fp.axe_swipe_air` | FP Axe Air Swing | `@first_person` | event `swing` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && !q.is_mining` | 0.60s | action | 150 |
+| `fp.axe_two_hand_sweep` | FP Two-Handed Sweep | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.combo == 1 && q.off_hand == 'empty' && q.is_on_ground && q.attack_strength >= 0.9` | 1.00s | action | 206 |
+| `fp.axe_weak_tap` | FP Uncharged Axe Tap | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.attack_strength < 0.3` | 0.40s | action | 199 |
+| `fp.axe_whirlwind` | FP Whirlwind Spin | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.is_sprinting && q.combo == 2` | 0.90s | action | 217 |
+| `fp.blast_duck` | FP Duck From Blast | `@first_person` | event `explosion_flinch` when `!q.is_dead && !q.is_sleeping` | 0.90s | reaction | 255 |
+| `fp.bonemeal_sprinkle` | FP Sprinkle Bone Meal | `@first_person` | event `interact` when `!q.is_dead && !q.is_sleeping && q.event_arg == 'fertilize'` | 0.90s | action | 181 |
+| `fp.bow_cancel` | FP Ease Bowstring | `@first_person` | event `use_stop` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.last_use_time < 0.15` | 0.50s | action | 202 |
+| `fp.bow_crouch_aim` | FP Crouched Steady Aim | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.is_using_item && q.is_sneaking` | 2.00s | overlay | 153 |
+| `fp.bow_draw` | FP Draw Bowstring | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.is_using_item && q.use_time < 1.0` | 1.00s | overlay | 150 |
+| `fp.bow_full_hold` | FP Full Draw Steady | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.is_using_item && q.use_time >= 1.0 && q.use_time < 3` | 1.20s | overlay | 151 |
+| `fp.bow_fumble` | FP Shaky Nock | `@first_person` | event `use_start` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.health < 0.3` | 0.70s | action | 181 |
+| `fp.bow_jump_shot` | FP Airborne Shot | `@first_person` | event `use_stop` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && !q.is_on_ground` | 0.50s | action | 203 |
+| `fp.bow_nock` | FP Nock Arrow | `@first_person` | event `use_start` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow'` | 0.35s | action | 180 |
+| `fp.bow_overdraw` | FP Overdrawn Shake | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.is_using_item && q.use_time >= 3` | 0.30s | overlay | 152 |
+| `fp.bow_quick_release` | FP Snap Shot | `@first_person` | event `use_stop` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.last_use_time >= 0.15 && q.last_use_time < 0.5` | 0.35s | action | 201 |
+| `fp.bow_release` | FP Loose Arrow | `@first_person` | event `use_stop` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow' && q.last_use_time >= 0.5` | 0.45s | action | 200 |
+| `fp.break_ore` | FP Ore Prised Loose | `@first_person` | event `break_block:ore` when `!q.is_dead && !q.is_sleeping` | 0.70s | gesture | 176 |
+| `fp.break_plant` | FP Flick Through Plants | `@first_person` | event `break_block:plant` when `!q.is_dead && !q.is_sleeping` | 0.30s | gesture | 175 |
+| `fp.break_stone` | FP Stone Gives Way | `@first_person` | event `break_block:stone` when `!q.is_dead && !q.is_sleeping` | 0.40s | gesture | 175 |
+| `fp.break_wood` | FP Wood Splits | `@first_person` | event `break_block:wood` when `!q.is_dead && !q.is_sleeping` | 0.45s | gesture | 175 |
+| `fp.bucket_pour` | FP Pour Bucket | `@first_person` | event `bucket:empty` when `!q.is_dead && !q.is_sleeping` | 0.80s | action | 181 |
+| `fp.bucket_scoop` | FP Scoop With Bucket | `@first_person` | event `bucket:fill` when `!q.is_dead && !q.is_sleeping` | 0.70s | action | 181 |
+| `fp.button_press` | FP Press Button | `@first_person` | event `interact:button` when `!q.is_dead && !q.is_sleeping` | 0.40s | action | 180 |
+| `fp.chest_lift` | FP Lift Chest Lid | `@first_person` | event `interact:chest` when `!q.is_dead && !q.is_sleeping` | 0.80s | action | 180 |
+| `fp.counter_axe` | FP Counter Cleave | `@first_person` | event `counter` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe'` | 0.60s | action | 255 |
+| `fp.counter_empty` | FP Counter One-Two | `@first_person` | event `counter` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty'` | 0.60s | action | 255 |
+| `fp.counter_sword` | FP Riposte | `@first_person` | event `counter` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword'` | 0.60s | action | 255 |
+| `fp.counter_trident` | FP Counter Spear Spin | `@first_person` | event `counter` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident'` | 0.60s | action | 255 |
+| `fp.crafting_work` | FP Work The Crafting Grid | `@first_person` | event `interact:crafting` when `!q.is_dead && !q.is_sleeping` | 1.00s | action | 180 |
+| `fp.crawl` | FP Crawling Hand Plant | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_crawling` | 1.40s | overlay | 122 |
+| `fp.crossbow_aim` | FP Crossbow Aim | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow' && q.crossbow_charged && !q.is_using_item && q.in_combat` | 2.00s | overlay | 140 |
+| `fp.crossbow_crank` | FP Crank Crossbow | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow' && q.is_using_item` | 0.60s | overlay | 150 |
+| `fp.crossbow_fire` | FP Crossbow Recoil | `@first_person` | event `crossbow_fire` when `q.is_on_ground && !q.is_sneaking` | 0.50s | action | 200 |
+| `fp.crossbow_fire_crouched` | FP Braced Crouch Shot | `@first_person` | event `crossbow_fire` when `q.is_sneaking` | 0.45s | action | 201 |
+| `fp.crossbow_fire_jump` | FP Mid-Air Crossbow Shot | `@first_person` | event `crossbow_fire` when `!q.is_on_ground` | 0.55s | action | 202 |
+| `fp.crossbow_hurried` | FP Hurried Reload | `@first_person` | event `use_start` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow' && q.near_hostile` | 0.90s | action | 182 |
+| `fp.crossbow_load_complete` | FP Lock The Bolt | `@first_person` | event `use_finish` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow'` | 0.45s | action | 181 |
+| `fp.crossbow_load_start` | FP Hook The String | `@first_person` | event `use_start` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow'` | 0.50s | action | 180 |
+| `fp.crouch_dip` | FP Crouch Dip | `@first_person` | event `sneak_start` when `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water` | 0.30s | gesture | 129 |
+| `fp.death_collapse` | FP Collapse | `@first_person` | event `death` | 1.40s | action | 400 |
+| `fp.dodge_archer_hop` | FP Archer's Hop | `@first_person` | event `dodge:back` when `q.main_hand == 'bow'` | 0.55s | action | 301 |
+| `fp.dodge_back_roll` | FP Backward Roll | `@first_person` | event `dodge:back` when `q.is_sneaking` | 0.80s | action | 301 |
+| `fp.dodge_backstep` | FP Evasive Backstep | `@first_person` | event `dodge:back` when `!q.is_sneaking && q.main_hand != 'bow'` | 0.50s | action | 300 |
+| `fp.dodge_lurch` | FP Armoured Lurch | `@first_person` | event `dodge:forward` when `q.armor_weight > 0.6` | 0.70s | action | 302 |
+| `fp.dodge_roll` | FP Combat Roll | `@first_person` | event `dodge:forward` when `q.armor_weight <= 0.6` | 0.75s | action | 300 |
+| `fp.dodge_side` | FP Lateral Dodge | `@first_person` | event `dodge` when `q.event_arg == 'left' \|\| q.event_arg == 'right'` | 0.50s | action | 300 |
+| `fp.door_pull` | FP Pull Door Shut | `@first_person` | event `interact:door_close` when `!q.is_dead && !q.is_sleeping` | 0.60s | action | 180 |
+| `fp.door_push` | FP Push Door Open | `@first_person` | event `interact:door_open` when `!q.is_dead && !q.is_sleeping` | 0.60s | action | 180 |
+| `fp.draw_axe` | FP Heft Axe | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe'` | 0.70s | action | 180 |
+| `fp.draw_block` | FP Toss And Catch Block | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'block'` | 0.70s | action | 180 |
+| `fp.draw_bow` | FP Unsling Bow | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow'` | 0.65s | action | 180 |
+| `fp.draw_crossbow` | FP Bring Up Crossbow | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow'` | 0.70s | action | 180 |
+| `fp.draw_food` | FP Bring Food Up | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'food'` | 0.50s | action | 180 |
+| `fp.draw_hoe` | FP Twirl Hoe | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'hoe'` | 0.60s | action | 180 |
+| `fp.draw_pickaxe` | FP Pull Pickaxe | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'pickaxe'` | 0.50s | action | 180 |
+| `fp.draw_shovel` | FP Swing Shovel Up | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'shovel'` | 0.60s | action | 180 |
+| `fp.draw_sword` | FP Draw Sword | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword'` | 0.60s | action | 180 |
+| `fp.draw_torch` | FP Raise Torch | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'torch'` | 0.55s | action | 180 |
+| `fp.draw_trident` | FP Swing Trident Around | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident'` | 0.80s | action | 180 |
+| `fp.drink_gulp` | FP Gulping | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_using_item && q.use_anim == 'drink'` | 0.45s | overlay | 145 |
+| `fp.drink_wipe` | FP Wipe Mouth | `@first_person` | event `use_finish` when `!q.is_dead && !q.is_sleeping && (q.main_hand == 'potion' \|\| q.main_hand == 'honey')` | 1.00s | action | 186 |
+| `fp.drop_toss` | FP Toss Item Away | `@first_person` | event `drop` when `!q.is_dead && !q.is_sleeping` | 0.45s | action | 177 |
+| `fp.eat_chew` | FP Chewing | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_using_item && q.use_anim == 'eat' && q.main_hand != 'golden_food'` | 0.32s | overlay | 145 |
+| `fp.eat_finish` | FP Last Bite | `@first_person` | event `use_finish` when `!q.is_dead && !q.is_sleeping && (q.main_hand == 'food' \|\| q.main_hand == 'meat' \|\| q.main_hand == 'bowl_food')` | 0.80s | action | 185 |
+| `fp.eat_gobble` | FP Wolfing Food Down | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_using_item && q.use_anim == 'eat' && q.hunger > 0.7` | 0.20s | overlay | 146 |
+| `fp.eat_savour` | FP Savouring Golden Food | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_using_item && q.use_anim == 'eat' && q.main_hand == 'golden_food'` | 0.60s | overlay | 146 |
+| `fp.fish_cast` | FP Cast Fishing Line | `@first_person` | event `fish_cast` when `!q.is_dead && !q.is_sleeping` | 0.70s | action | 183 |
+| `fp.fish_reel` | FP Reel In Line | `@first_person` | event `fish_reel` when `!q.is_dead && !q.is_sleeping` | 0.60s | action | 183 |
+| `fp.fish_wait` | FP Watch The Bobber | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_fishing` | 2.80s | overlay | 141 |
+| `fp.fist_body_blow` | FP Body Blow | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.is_sneaking && q.attack_strength < 0.9` | 0.42s | action | 206 |
+| `fp.fist_cross` | FP Cross | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 1` | 0.42s | action | 200 |
+| `fp.fist_elbow` | FP Elbow Strike | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.is_sneaking && q.attack_strength >= 0.9` | 0.45s | action | 207 |
+| `fp.fist_ground_pound` | FP Ground Pound | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && !q.is_on_ground && q.vertical_speed < 0 && q.fall_distance > 4` | 0.75s | action | 214 |
+| `fp.fist_haymaker` | FP Haymaker | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 2 && q.attack_strength >= 0.9` | 0.70s | action | 206 |
+| `fp.fist_hook` | FP Hook | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 2` | 0.50s | action | 200 |
+| `fp.fist_jab` | FP Jab | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 0` | 0.35s | action | 200 |
+| `fp.fist_punch_air` | FP Shadow Punch | `@first_person` | event `swing` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && !q.is_mining` | 0.30s | action | 150 |
+| `fp.fist_push_kick` | FP Push Kick | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.is_sneaking && q.combo == 2` | 0.70s | action | 208 |
+| `fp.fist_running_punch` | FP Running Punch | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.is_sprinting` | 0.45s | action | 210 |
+| `fp.fist_slap` | FP Slap | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.attack_strength < 0.3` | 0.35s | action | 199 |
+| `fp.fist_spin_kick` | FP Spinning Back Kick | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 2 && q.trait_energy > 0.6 && q.attack_strength >= 0.9` | 1.00s | action | 209 |
+| `fp.fist_superman` | FP Leaping Punch | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && !q.is_on_ground && q.vertical_speed < 0` | 0.55s | action | 212 |
+| `fp.fist_uppercut` | FP Uppercut | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty' && q.combo == 0 && q.attack_strength >= 0.9` | 0.55s | action | 205 |
+| `fp.flint_strike` | FP Strike Flint | `@first_person` | event `interact` when `!q.is_dead && !q.is_sleeping && q.event_arg == 'ignite'` | 0.60s | action | 181 |
+| `fp.freefall` | FP Freefall Flail | `@first_person` | state `!q.is_dead && !q.is_sleeping && !q.is_on_ground && !q.is_fall_flying && !q.is_in_water && q.vertical_speed < -0.6` | 0.50s | overlay | 123 |
+| `fp.generic_swap` | FP Quick Swap | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping` | 0.30s | action | 170 |
+| `fp.glide` | FP Elytra Glide Brace | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_fall_flying` | 1.80s | overlay | 122 |
+| `fp.glide_spread` | FP Spread For Glide | `@first_person` | event `glide_start` | 0.60s | gesture | 138 |
+| `fp.golden_glow` | FP Golden Rush | `@first_person` | event `use_finish` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'golden_food'` | 1.20s | action | 186 |
+| `fp.hoe_hook` | FP Hoe Hook Trip | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'hoe' && q.attack_strength >= 0.9` | 0.75s | action | 195 |
+| `fp.hoe_sweep` | FP Hoe Sweep | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'hoe'` | 0.65s | action | 190 |
+| `fp.hurt_arrow` | FP Arrow Strike | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'projectile'` | 0.40s | reaction | 257 |
+| `fp.hurt_back` | FP Hit From Behind | `@first_person` | event `hurt_back` when `!q.is_dead && !q.is_sleeping` | 0.50s | reaction | 260 |
+| `fp.hurt_blast` | FP Blast Concussion | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'explosion'` | 1.20s | reaction | 262 |
+| `fp.hurt_burn` | FP Swat At Flames | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'fire'` | 0.90s | reaction | 258 |
+| `fp.hurt_drown` | FP Lungs Burning | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'drown'` | 1.00s | reaction | 258 |
+| `fp.hurt_fall` | FP Fall Damage Jolt | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'fall'` | 0.70s | reaction | 258 |
+| `fp.hurt_freeze` | FP Frostbite Flinch | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'freeze'` | 0.80s | reaction | 257 |
+| `fp.hurt_front` | FP Hit From The Front | `@first_person` | event `hurt_front` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'melee'` | 0.45s | reaction | 260 |
+| `fp.hurt_magic` | FP Magic Vertigo | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'magic'` | 1.40s | reaction | 257 |
+| `fp.hurt_prick` | FP Thorn Prick | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'prick'` | 0.50s | reaction | 256 |
+| `fp.hurt_shock` | FP Lightning Seizure | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.hurt_kind == 'lightning'` | 1.00s | reaction | 263 |
+| `fp.hurt_side` | FP Hit From The Side | `@first_person` | event `hurt` when `!q.is_dead && !q.is_sleeping && math.abs(q.hurt_dir) > 45 && math.abs(q.hurt_dir) <= 135` | 0.45s | reaction | 259 |
+| `fp.idle_breathe` | FP Idle Breathing | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.ground_speed < 0.02 && !q.is_using_item && !q.is_sneaking && q.idle_time < 15 && q.health >= 0.3` | 3.60s | overlay | 105 |
+| `fp.idle_settled` | FP Settled Idle | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.ground_speed < 0.02 && !q.is_using_item && !q.is_sneaking && q.idle_time >= 15 && q.health >= 0.3` | 6.00s | overlay | 106 |
+| `fp.idle_wounded` | FP Wounded Breathing | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.02 && q.health < 0.3` | 1.40s | overlay | 108 |
+| `fp.inspect_axe` | FP Thumb Axe Edge | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.trait_energy <= 0.6` | 2.40s | action | 175 |
+| `fp.inspect_axe_spin` | FP Axe Haft Roll | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'axe' && q.trait_energy > 0.6` | 1.60s | action | 175 |
+| `fp.inspect_block` | FP Turn Block Over | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'block'` | 2.00s | action | 175 |
+| `fp.inspect_bow` | FP Pluck Bowstring | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bow'` | 2.00s | action | 175 |
+| `fp.inspect_crossbow` | FP Sight Along Crossbow | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'crossbow'` | 2.20s | action | 175 |
+| `fp.inspect_knuckles` | FP Crack Knuckles | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'empty'` | 1.60s | action | 175 |
+| `fp.inspect_pickaxe` | FP Check Pickaxe Tip | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'pickaxe'` | 2.00s | action | 175 |
+| `fp.inspect_sword` | FP Inspect Blade | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.trait_energy <= 0.6` | 2.60s | action | 175 |
+| `fp.inspect_sword_flip` | FP Sword Toss Flourish | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.trait_energy > 0.6` | 1.80s | action | 175 |
+| `fp.inspect_tool` | FP Lean On Tool | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && (q.main_hand == 'shovel' \|\| q.main_hand == 'hoe')` | 2.60s | action | 175 |
+| `fp.inspect_totem` | FP Raise Totem | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'totem'` | 2.40s | action | 175 |
+| `fp.inspect_trident` | FP Admire Tines | `@first_person` | event `inspect` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident'` | 2.40s | action | 175 |
+| `fp.jump_lift` | FP Jump Hand Lift | `@first_person` | event `jump` when `!q.is_dead && !q.is_sleeping && !q.is_sprinting` | 0.45s | gesture | 130 |
+| `fp.ladder_climb` | FP Hand-Over-Hand Climb | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_climbing && math.abs(q.vertical_speed) > 0.02` | 0.90s | overlay | 121 |
+| `fp.ladder_grab` | FP Grab The Rungs | `@first_person` | event `climb_start` when `!q.is_dead && !q.is_sleeping` | 0.40s | gesture | 137 |
+| `fp.ladder_hang` | FP Cling To Ladder | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_climbing && math.abs(q.vertical_speed) <= 0.02` | 2.40s | overlay | 121 |
+| `fp.land_crash` | FP Crash Landing | `@first_person` | event `land` when `!q.is_dead && !q.is_sleeping && q.last_fall >= 8` | 1.10s | gesture | 134 |
+| `fp.land_hard` | FP Heavy Landing | `@first_person` | event `land` when `!q.is_dead && !q.is_sleeping && q.last_fall >= 3 && q.last_fall < 8` | 0.60s | gesture | 133 |
+| `fp.land_soft` | FP Soft Landing | `@first_person` | event `land` when `!q.is_dead && !q.is_sleeping && q.last_fall < 3` | 0.35s | gesture | 132 |
+| `fp.landing_roll` | FP Landing Roll | `@first_person` | event `landing_roll` | 0.80s | action | 300 |
+| `fp.lava_panic` | FP Lava Panic | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_in_lava` | 0.35s | overlay | 124 |
+| `fp.lever_pull` | FP Throw The Lever | `@first_person` | event `interact` when `!q.is_dead && !q.is_sleeping && (q.event_arg == 'lever_on' \|\| q.event_arg == 'lever_off')` | 0.55s | action | 180 |
+| `fp.milk_shudder` | FP Milk Shudder | `@first_person` | event `use_finish` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'bucket'` | 0.80s | action | 186 |
+| `fp.mine_axe` | FP Chopping Rhythm | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'axe'` | 0.70s | action | 170 |
+| `fp.mine_block` | FP Bashing With A Block | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && (q.main_hand == 'block' \|\| q.main_hand == 'item' \|\| q.main_hand == 'food')` | 0.40s | action | 169 |
+| `fp.mine_exhausted` | FP Weary Mining | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.exertion > 0.85 && (q.main_hand == 'pickaxe' \|\| q.main_hand == 'shovel')` | 0.90s | action | 171 |
+| `fp.mine_fist` | FP Punching Blocks | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'empty'` | 0.30s | action | 170 |
+| `fp.mine_hoe` | FP Hoe Raking | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'hoe'` | 0.50s | action | 170 |
+| `fp.mine_pickaxe` | FP Pickaxe Mining Rhythm | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'pickaxe'` | 0.60s | action | 170 |
+| `fp.mine_shears` | FP Shearing Snips | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'shears'` | 0.40s | action | 170 |
+| `fp.mine_shovel` | FP Shovel Scoop Rhythm | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'shovel'` | 0.65s | action | 170 |
+| `fp.mine_sword` | FP Hacking At Webs | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_mining && q.main_hand == 'sword'` | 0.45s | action | 170 |
+| `fp.mount_swing` | FP Swing Into Saddle | `@first_person` | event `mount` when `!q.is_dead && !q.is_sleeping && q.vehicle != 'boat' && q.vehicle != 'minecart'` | 0.80s | gesture | 139 |
+| `fp.parry_axe` | FP Shield Parry Riposte (axe) | `@first_person` | event `parry` when `q.main_hand == 'axe'` | 0.55s | action | 250 |
+| `fp.parry_empty` | FP Shield Parry Riposte (empty) | `@first_person` | event `parry` when `q.main_hand == 'empty'` | 0.55s | action | 250 |
+| `fp.parry_sword` | FP Shield Parry Riposte (sword) | `@first_person` | event `parry` when `q.main_hand == 'sword'` | 0.55s | action | 250 |
+| `fp.parry_trident` | FP Shield Parry Riposte (trident) | `@first_person` | event `parry` when `q.main_hand == 'trident'` | 0.55s | action | 250 |
+| `fp.pickaxe_heavy` | FP Pickaxe Spike Blow | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'pickaxe' && q.attack_strength >= 0.9` | 0.80s | action | 195 |
+| `fp.pickaxe_strike` | FP Pickaxe Strike | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'pickaxe'` | 0.60s | action | 190 |
+| `fp.pickup_item` | FP Snatch Up Item | `@first_person` | event `pickup` when `!q.is_dead && !q.is_sleeping && q.head_pitch > 20` | 0.50s | gesture | 176 |
+| `fp.place_below` | FP Place Block Underfoot | `@first_person` | event `place` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'block' && q.head_pitch >= 40` | 0.35s | action | 182 |
+| `fp.place_block` | FP Set Block Down | `@first_person` | event `place` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'block' && q.head_pitch < 40` | 0.35s | action | 182 |
+| `fp.ride_reins` | FP Holding The Reins | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_riding && q.vehicle != 'boat' && q.vehicle != 'minecart'` | 0.80s | overlay | 118 |
+| `fp.sheathe_axe` | FP Shoulder Axe | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.prev_main_hand == 'axe' && q.main_hand != 'axe'` | 0.60s | action | 181 |
+| `fp.sheathe_bow` | FP Sling Bow | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.prev_main_hand == 'bow' && q.main_hand != 'bow'` | 0.60s | action | 181 |
+| `fp.sheathe_crossbow` | FP Stow Crossbow | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.prev_main_hand == 'crossbow' && q.main_hand != 'crossbow'` | 0.60s | action | 181 |
+| `fp.sheathe_sword` | FP Sheathe Sword | `@first_person` | event `item_switch` when `!q.is_dead && !q.is_sleeping && q.prev_main_hand == 'sword' && q.main_hand != 'sword'` | 0.60s | action | 181 |
+| `fp.shield_bash_hit` | FP Shield Bash | `@first_person` | event `shield_bash:hit` | 0.60s | action | 240 |
+| `fp.shield_bash_miss` | FP Bash Overreach | `@first_person` | event `shield_bash:miss` | 0.75s | action | 240 |
+| `fp.shield_crouch` | FP Turtle Guard | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_blocking && q.is_sneaking` | 1.40s | overlay | 161 |
+| `fp.shield_guard_break` | FP Guard Broken | `@first_person` | event `guard_break` | 1.00s | action | 260 |
+| `fp.shield_hold` | FP Shield Wall | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_blocking && !q.is_sneaking` | 1.60s | overlay | 160 |
+| `fp.shield_impact` | FP Absorb Blow | `@first_person` | event `shield_block` | 0.45s | action | 230 |
+| `fp.shield_lower` | FP Lower Shield | `@first_person` | event `guard_down` when `!q.is_dead && !q.is_sleeping && (q.off_hand == 'shield' \|\| q.main_hand == 'shield')` | 0.40s | action | 180 |
+| `fp.shield_peek` | FP Peek Over Shield | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_blocking && !q.is_sneaking && q.use_time > 2` | 1.60s | overlay | 162 |
+| `fp.shield_raise` | FP Raise Shield | `@first_person` | event `guard_up` when `!q.is_dead && !q.is_sleeping && (q.off_hand == 'shield' \|\| q.main_hand == 'shield') && q.ground_speed < 0.2` | 0.25s | action | 180 |
+| `fp.shield_raise_rush` | FP Snap Shield Up | `@first_person` | event `guard_up` when `!q.is_dead && !q.is_sleeping && (q.off_hand == 'shield' \|\| q.main_hand == 'shield') && q.ground_speed >= 0.2` | 0.30s | action | 180 |
+| `fp.shield_sag` | FP Tired Shield Sag | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_blocking && q.exertion > 0.7` | 1.00s | overlay | 163 |
+| `fp.shiver` | FP Shivering Hands | `@first_person` | state `!q.is_dead && !q.is_sleeping && (q.is_cold \|\| q.freezing > 0.2)` | 0.25s | overlay | 109 |
+| `fp.shovel_jab` | FP Shovel Jab | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'shovel' && q.attack_strength >= 0.9` | 0.55s | action | 195 |
+| `fp.shovel_smack` | FP Shovel Smack | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'shovel'` | 0.60s | action | 190 |
+| `fp.sneak_creep` | FP Sneaking Creep | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.is_sneaking && q.ground_speed >= 0.01` | 1.60s | overlay | 111 |
+| `fp.sneak_hold` | FP Crouched Readiness | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.is_sneaking && q.ground_speed < 0.01` | 3.00s | overlay | 111 |
+| `fp.sprint_burst` | FP Sprint Burst | `@first_person` | event `sprint_start` when `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water` | 0.40s | gesture | 129 |
+| `fp.sprint_exhausted` | FP Ragged Sprint | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.is_sprinting && q.exertion > 0.8` | 0.70s | overlay | 113 |
+| `fp.sprint_jump` | FP Leaping Stride | `@first_person` | event `jump` when `!q.is_dead && !q.is_sleeping && q.is_sprinting` | 0.55s | gesture | 131 |
+| `fp.sprint_pump` | FP Sprint Arm Pump | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.is_sprinting && q.exertion <= 0.8` | 0.62s | overlay | 112 |
+| `fp.surface_gasp` | FP Surface Gasp | `@first_person` | event `surface` when `!q.is_dead && !q.is_sleeping` | 0.90s | gesture | 136 |
+| `fp.swap_hands` | FP Swap Hands | `@first_person` | event `offhand_switch` when `!q.is_dead && !q.is_sleeping` | 0.50s | action | 182 |
+| `fp.swim_stroke` | FP Front Crawl Strokes | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_swimming` | 1.30s | overlay | 120 |
+| `fp.sword_backhand` | FP Backhand Slash | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 1 && q.is_on_ground` | 0.55s | action | 200 |
+| `fp.sword_backhand_power` | FP Backhand Power Arc | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 1 && q.is_on_ground && q.attack_strength >= 0.9` | 0.75s | action | 205 |
+| `fp.sword_board_chop` | FP Sword-And-Board Chop | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.off_hand == 'shield' && q.combo == 1 && q.is_on_ground` | 0.60s | action | 203 |
+| `fp.sword_board_cut` | FP Sword-And-Board Cut | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.off_hand == 'shield' && q.combo == 0 && q.is_on_ground` | 0.55s | action | 203 |
+| `fp.sword_board_feint` | FP Shield Feint Thrust | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.off_hand == 'shield' && q.combo == 2 && q.is_on_ground` | 0.70s | action | 203 |
+| `fp.sword_crit_flourish` | FP Critical Flourish | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && !q.is_on_ground && q.vertical_speed < 0 && q.attack_strength >= 0.9` | 0.75s | action | 213 |
+| `fp.sword_desperate` | FP Desperate Flail | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.health < 0.25` | 0.60s | action | 215 |
+| `fp.sword_forehand` | FP Forehand Slash | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 0 && q.is_on_ground` | 0.55s | action | 200 |
+| `fp.sword_jump_cleave` | FP Leaping Cleave | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && !q.is_on_ground && q.vertical_speed < 0` | 0.60s | action | 212 |
+| `fp.sword_lunge` | FP Lunging Thrust | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.is_sneaking && q.attack_strength >= 0.9` | 0.65s | action | 207 |
+| `fp.sword_overhead` | FP Overhead Finisher | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 2 && q.is_on_ground` | 0.70s | action | 200 |
+| `fp.sword_plunge` | FP Plunging Strike | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && !q.is_on_ground && q.vertical_speed < 0 && q.fall_distance > 4` | 0.70s | action | 214 |
+| `fp.sword_pommel` | FP Pommel Strike | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.is_sneaking && q.attack_strength < 0.5` | 0.40s | action | 209 |
+| `fp.sword_rising_power` | FP Rising Power Slash | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 0 && q.is_on_ground && q.attack_strength >= 0.9` | 0.75s | action | 205 |
+| `fp.sword_running_slash` | FP Running Slash | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.is_sprinting` | 0.50s | action | 210 |
+| `fp.sword_sneak_stab` | FP Sneak Stab | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.is_sneaking && q.attack_strength < 0.9` | 0.45s | action | 206 |
+| `fp.sword_sprint_lunge` | FP Charging Lunge | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.is_sprinting && q.attack_strength >= 0.9` | 0.70s | action | 211 |
+| `fp.sword_sweep_spin` | FP Sweeping Spin | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.combo == 2 && q.is_on_ground && q.attack_strength >= 0.9` | 0.95s | action | 206 |
+| `fp.sword_swipe_air` | FP Air Swipe | `@first_person` | event `swing` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && !q.is_mining` | 0.45s | action | 150 |
+| `fp.sword_two_hand_overhead` | FP Two-Handed Overhead | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.off_hand == 'empty' && q.combo == 1 && q.attack_strength >= 0.9 && q.is_on_ground` | 0.85s | action | 208 |
+| `fp.sword_weak_poke` | FP Uncharged Poke | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'sword' && q.attack_strength < 0.3` | 0.35s | action | 199 |
+| `fp.throw_crouched` | FP Crouched Snap Throw | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.is_sneaking && (q.main_hand == 'throwable' \|\| q.main_hand == 'pearl')` | 0.50s | action | 190 |
+| `fp.throw_lob` | FP Underhand Lob | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'throwable' && q.head_pitch > 20` | 0.50s | action | 190 |
+| `fp.throw_overhand` | FP Overhand Throw | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'throwable' && q.head_pitch <= 20 && !q.is_sprinting` | 0.50s | action | 190 |
+| `fp.throw_pearl` | FP Pearl Flick | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'pearl'` | 0.50s | action | 190 |
+| `fp.throw_sidearm` | FP Sidearm Throw | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'throwable' && q.is_sprinting` | 0.50s | action | 190 |
+| `fp.throw_splash` | FP Splash Toss | `@first_person` | event `throw` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'splash_potion'` | 0.50s | action | 190 |
+| `fp.tread_water` | FP Treading Water | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_in_water && !q.is_swimming && !q.is_on_ground && !q.is_underwater` | 1.10s | overlay | 119 |
+| `fp.trident_butt` | FP Butt Strike | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.attack_strength < 0.3` | 0.45s | action | 199 |
+| `fp.trident_double` | FP Double Thrust | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.combo == 1 && q.is_on_ground` | 0.60s | action | 200 |
+| `fp.trident_feint` | FP Trident Feint | `@first_person` | event `swing` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && !q.is_mining` | 0.45s | action | 150 |
+| `fp.trident_haft_sweep` | FP Haft Sweep | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.combo == 2 && q.is_on_ground` | 0.70s | action | 200 |
+| `fp.trident_heavy_lunge` | FP Impaling Lunge | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.is_on_ground && q.attack_strength >= 0.9` | 0.80s | action | 205 |
+| `fp.trident_plunge` | FP Reverse-Grip Plunge | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && !q.is_on_ground && q.vertical_speed < 0` | 0.60s | action | 212 |
+| `fp.trident_quick` | FP Quick Thrust | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.combo == 0 && q.is_on_ground` | 0.45s | action | 200 |
+| `fp.trident_release` | FP Trident Release | `@first_person` | event `use_stop` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident'` | 0.60s | action | 220 |
+| `fp.trident_running` | FP Running Impale | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.is_sprinting` | 0.60s | action | 210 |
+| `fp.trident_sneak_jab` | FP Low Jab | `@first_person` | event `attack` when `!q.is_dead && !q.is_sleeping && q.main_hand == 'trident' && q.is_sneaking` | 0.40s | action | 206 |
+| `fp.trident_windup` | FP Trident Wind-Up | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_using_item && q.use_anim == 'spear'` | 1.00s | overlay | 150 |
+| `fp.underwater_drift` | FP Underwater Hover | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_underwater && !q.is_swimming && !q.is_on_ground` | 2.40s | overlay | 119 |
+| `fp.wake_rub` | FP Rub Eyes Awake | `@first_person` | event `wake` when `!q.is_dead` | 2.00s | action | 140 |
+| `fp.walk_sway` | FP Walking Hand Sway | `@first_person` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && !q.is_riding && !q.is_in_water && q.ground_speed >= 0.02 && !q.is_sprinting && !q.is_sneaking` | 1.00s | overlay | 110 |
+| `fp.water_entry` | FP Splash Down | `@first_person` | event `enter_water` when `!q.is_dead && !q.is_sleeping && q.vertical_speed < -0.3` | 0.70s | gesture | 135 |
 
 ## Passive animals and creatures
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `allay.cradle_item` | Allay Cradling An Item | `minecraft:allay` | state `!q.is_dead && q.is_holding && !q.is_dancing` | 1.60s | overlay | 130 |
+| `allay.dance` | Allay Jukebox Dance | `minecraft:allay` | state `!q.is_dead && q.is_dancing` | 0.80s | overlay | 150 |
+| `allay.follow_glance` | Allay Glancing Back At Its Friend | `minecraft:allay` | state `!q.is_dead && q.player_distance < 8 && q.ground_speed >= 0.03` | 3.00s | additive | 62 |
+| `allay.glide_forward` | Allay Gliding Ahead | `minecraft:allay` | state `!q.is_dead && q.ground_speed >= 0.03 && !q.is_dancing` | 0.80s | base | 110 |
+| `allay.hover_bob` | Allay Hover Bob | `minecraft:allay` | state `!q.is_dead && q.ground_speed < 0.03 && !q.is_dancing` | 2.00s | additive | 60 |
+| `allay.idle_hum` | Allay Humming To Itself | `minecraft:allay` | state `!q.is_dead && !q.is_holding && !q.is_dancing && q.ground_speed < 0.03` | 2.40s | overlay | 105 |
+| `allay.twirl` | Allay Delighted Twirl | `minecraft:allay` | event `vocalize` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `allay.wave` | Allay Friendly Wave | `minecraft:allay` | event `interacted` when `!q.is_dead` | 1.20s | gesture | 160 |
+| `axolotl.bottom_walk` | Axolotl Walking The Riverbed | `minecraft:axolotl` | state `!q.is_dead && q.is_in_water && q.is_on_ground && q.ground_speed >= 0.01` | 1.00s | base | 101 |
+| `axolotl.dry_flop` | Axolotl Drying Out | `minecraft:axolotl` | state `!q.is_dead && !q.is_in_water && q.ground_speed < 0.01` | 0.70s | overlay | 110 |
+| `axolotl.gill_flutter` | Axolotl Gill Flutter | `minecraft:axolotl` | state `!q.is_dead` | 1.20s | additive | 60 |
+| `axolotl.happy_wiggle` | Axolotl Happy Wiggle | `minecraft:axolotl` | event `interacted` when `!q.is_dead` | 1.20s | action | 150 |
+| `axolotl.hover` | Axolotl Floating Still | `minecraft:axolotl` | state `!q.is_dead && q.is_in_water && !q.is_on_ground && q.ground_speed < 0.02 && !q.is_playing_dead` | 3.00s | base | 99 |
+| `axolotl.land_waddle` | Axolotl Land Waddle | `minecraft:axolotl` | state `!q.is_dead && !q.is_in_water && q.is_on_ground && q.ground_speed >= 0.01` | 0.80s | base | 102 |
+| `axolotl.play_dead` | Axolotl Playing Dead | `minecraft:axolotl` | state `!q.is_dead && q.is_playing_dead` | 3.00s | overlay | 180 |
+| `axolotl.snap` | Axolotl Snapping Lunge | `minecraft:axolotl` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 180 |
+| `axolotl.swim` | Axolotl Undulating Swim | `minecraft:axolotl` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02 && !q.is_playing_dead` | 0.90s | base | 100 |
+| `bat.banking_turn` | Bat Banking Turn | `minecraft:bat` | state `!q.is_dead && !q.is_sleeping && math.abs(q.turn_rate) > 6` | 0.50s | additive | 62 |
+| `bat.ear_twitch` | Bat Ear Twitch | `minecraft:bat` | state `!q.is_dead && q.is_sleeping` | 2.60s | additive | 60 |
+| `bat.flutter` | Bat Erratic Flutter | `minecraft:bat` | state `!q.is_dead && !q.is_sleeping` | 0.30s | additive | 60 |
+| `bat.roost_hang` | Bat Hanging Wrapped | `minecraft:bat` | state `!q.is_dead && q.is_sleeping` | 4.00s | additive | 120 |
+| `bat.squeak` | Bat Squeak | `minecraft:bat` | event `vocalize` when `!q.is_dead` | 0.40s | gesture | 150 |
+| `bat.startle` | Bat Startled Awake | `minecraft:bat` | event `hurt` when `!q.is_dead` | 0.50s | reaction | 200 |
+| `bat.swoop` | Bat Swooping Dive | `minecraft:bat` | state `!q.is_dead && !q.is_sleeping && q.vertical_speed < -0.15` | 0.40s | overlay | 110 |
+| `bee.angry_buzz` | Bee Angry Buzz | `minecraft:bee` | state `!q.is_dead && q.is_angry` | 0.20s | overlay | 140 |
+| `bee.antenna_sense` | Bee Antenna Sensing | `minecraft:bee` | state `!q.is_dead` | 1.10s | additive | 60 |
+| `bee.crawl` | Bee Crawling | `minecraft:bee` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_flying` | 0.40s | base | 103 |
+| `bee.cruise` | Bee Cruising Flight | `minecraft:bee` | state `!q.is_dead && q.is_flying && q.ground_speed >= 0.03 && !q.has_nectar` | 0.80s | base | 101 |
+| `bee.hover` | Bee Hovering | `minecraft:bee` | state `!q.is_dead && q.is_flying && q.ground_speed < 0.03` | 1.60s | base | 100 |
+| `bee.laden_flight` | Bee Laden With Nectar | `minecraft:bee` | state `!q.is_dead && q.is_flying && q.has_nectar` | 1.20s | base | 102 |
+| `bee.pollinate` | Bee Pollinating | `minecraft:bee` | state `!q.is_dead && q.is_flying && !q.has_nectar && q.ground_speed < 0.01 && q.feet_block == 'foliage'` | 0.60s | overlay | 135 |
+| `bee.rest` | Bee Resting On Ground | `minecraft:bee` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_flying` | 3.00s | overlay | 110 |
+| `bee.sting` | Bee Sting Lunge | `minecraft:bee` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 180 |
+| `bee.waggle` | Bee Waggle Dance | `minecraft:bee` | event `vocalize` when `!q.is_dead && q.has_nectar` | 2.00s | action | 150 |
+| `camel.chew_cud` | Camel Chewing Cud | `minecraft:camel` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_sitting` | 1.80s | overlay | 120 |
+| `camel.dash` | Camel Dash | `minecraft:camel` | state `!q.is_dead && q.is_charging` | 0.60s | base | 110 |
+| `camel.ear_twitch` | Camel Ear Twitch | `minecraft:camel` | state `!q.is_dead` | 2.80s | additive | 60 |
+| `camel.grumble` | Camel Grumble | `minecraft:camel` | event `vocalize` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `camel.hump_wobble` | Camel Hump Wobble | `minecraft:camel` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.80s | additive | 60 |
+| `camel.kneel_idle` | Camel Kneeling Contentedly | `minecraft:camel` | state `!q.is_dead && q.is_sitting` | 4.00s | additive | 70 |
+| `camel.pace` | Camel Swaying Pace | `minecraft:camel` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && !q.is_charging` | 1.80s | base | 100 |
+| `camel.scan_horizon` | Camel Scanning The Dunes | `minecraft:camel` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_sitting && q.idle_time > 4` | 5.00s | overlay | 120 |
+| `camel.tail_flick` | Camel Tail Flick | `minecraft:camel` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01` | 3.20s | additive | 60 |
+| `cat.affection_rub` | Cat Rubbing Against Owner | `minecraft:cat` | state `!q.is_dead && q.is_tame && q.player_distance < 1.6 && q.ground_speed < 0.03 && !q.is_sitting` | 1.80s | overlay | 128 |
+| `cat.arch_hiss` | Cat Arched Back Hiss | `minecraft:cat` | state `!q.is_dead && q.near_hostile && q.hostile_distance < 4` | 0.50s | overlay | 150 |
+| `cat.dream` | Cat Twitching In Sleep | `minecraft:cat` | state `!q.is_dead && q.is_lying` | 3.00s | additive | 70 |
+| `cat.groom` | Cat Grooming | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 4` | 0.90s | overlay | 120 |
+| `cat.knead` | Cat Kneading | `minecraft:cat` | state `!q.is_dead && q.is_tame && (q.is_lying \|\| q.is_sitting) && q.player_distance < 3` | 0.70s | additive | 135 |
+| `cat.loaf` | Cat Loafing | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_sitting && !q.is_lying && q.idle_time > 8` | 5.00s | overlay | 100 |
+| `cat.meow` | Cat Meow | `minecraft:cat` | event `vocalize` when `!q.is_dead` | 0.70s | gesture | 150 |
+| `cat.pounce` | Cat Pounce | `minecraft:cat` | event `jump` when `!q.is_dead && q.is_crouching` | 0.80s | action | 160 |
+| `cat.prowl` | Cat Prowling Walk | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_sprinting && !q.is_crouching` | 1.10s | base | 100 |
+| `cat.sprint` | Cat Bounding Sprint | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_sprinting` | 0.45s | base | 101 |
+| `cat.stalk` | Cat Belly-Low Stalk | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_crouching` | 1.80s | base | 102 |
+| `cat.stretch` | Cat Long Stretch | `minecraft:cat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 4 && q.idle_time < 9` | 3.00s | overlay | 120 |
+| `cat.tail_flick` | Cat Tail Tip Flick | `minecraft:cat` | state `!q.is_dead` | 2.20s | additive | 60 |
+| `chicken.alarm` | Chicken Alarmed Squawk | `minecraft:chicken` | state `!q.is_dead && q.recent_hurt < 2` | 0.30s | overlay | 140 |
+| `chicken.chick_dart` | Chick Darting About | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.25s | base | 102 |
+| `chicken.cluck` | Chicken Cluck | `minecraft:chicken` | event `vocalize` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `chicken.dust_bath` | Chicken Dust Bath | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 18 && (q.surface == 'sand' \|\| q.surface == 'dirt' \|\| q.surface == 'gravel')` | 2.00s | overlay | 100 |
+| `chicken.flap_run` | Chicken Flapping Run | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed >= 0.12` | 0.40s | base | 101 |
+| `chicken.flutter_fall` | Chicken Fluttering Descent | `minecraft:chicken` | state `!q.is_dead && !q.is_on_ground && q.vertical_speed < 0` | 0.25s | additive | 80 |
+| `chicken.peck` | Chicken Pecking Seeds | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 2` | 1.20s | overlay | 120 |
+| `chicken.roost` | Chicken Roosting At Night | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_night && q.idle_time > 10` | 3.00s | overlay | 100 |
+| `chicken.scratch` | Chicken Scratching The Dirt | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 2` | 1.00s | overlay | 120 |
+| `chicken.strut` | Chicken Head-Bobbing Strut | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.12` | 0.60s | base | 100 |
+| `chicken.wing_stretch` | Chicken Wing And Leg Stretch | `minecraft:chicken` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 6` | 2.40s | overlay | 120 |
+| `cod.dart` | Cod Startled Dart | `minecraft:cod` | event `hurt` when `!q.is_dead && q.is_in_water` | 0.40s | reaction | 200 |
+| `cod.flop` | Cod Flopping On Land | `minecraft:cod` | state `!q.is_dead && !q.is_in_water` | 0.70s | overlay | 120 |
+| `cod.hover` | Cod Holding Station | `minecraft:cod` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02` | 2.00s | base | 99 |
+| `cod.swim` | Cod Swimming | `minecraft:cod` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 0.50s | base | 100 |
+| `cow.calf_frolic` | Calf Frolic | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.70s | base | 102 |
+| `cow.fly_swat` | Cow Swatting Flies | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && !q.is_night` | 5.00s | additive | 60 |
+| `cow.graze` | Cow Grazing | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 4.00s | overlay | 120 |
+| `cow.hoof_stamp` | Cow Hoof Stamp | `minecraft:cow` | event `stop_moving` when `!q.is_dead && !q.is_baby` | 0.90s | gesture | 150 |
+| `cow.lie_rest` | Cow Lying Down To Rest | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 20 && !q.is_baby` | 6.00s | overlay | 100 |
+| `cow.love_nuzzle` | Cow Affectionate Sway | `minecraft:cow` | state `!q.is_dead && q.is_in_love` | 2.40s | overlay | 125 |
+| `cow.moo` | Cow Moo | `minecraft:cow` | event `vocalize` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `cow.panic` | Cow Lumbering Stampede | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.recent_hurt < 6 \|\| q.ground_speed > 0.17) && !q.is_baby` | 0.90s | base | 101 |
+| `cow.ruminate` | Cow Chewing Cud | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 3.00s | overlay | 120 |
+| `cow.walk` | Cow Plodding Walk | `minecraft:cow` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17 && !q.is_baby` | 1.60s | base | 100 |
+| `dolphin.beached` | Dolphin Beached Thrash | `minecraft:dolphin` | state `!q.is_dead && !q.is_in_water && q.is_on_ground` | 0.60s | overlay | 120 |
+| `dolphin.blowhole_breath` | Dolphin Blowhole Breath | `minecraft:dolphin` | state `!q.is_dead && q.is_in_water && !q.is_underwater` | 3.00s | additive | 60 |
+| `dolphin.chase_sprint` | Dolphin Racing Ahead | `minecraft:dolphin` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.25` | 0.40s | overlay | 115 |
+| `dolphin.click_nod` | Dolphin Click Nod | `minecraft:dolphin` | event `vocalize` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `dolphin.leap` | Dolphin Breaching Leap | `minecraft:dolphin` | state `!q.is_dead && !q.is_in_water && !q.is_on_ground` | 1.00s | base | 110 |
+| `dolphin.play_spin` | Dolphin Playful Barrel Roll | `minecraft:dolphin` | state `!q.is_dead && q.is_in_water && q.is_underwater && q.trait_energy > 0.4 && q.ground_speed >= 0.05` | 1.60s | additive | 70 |
+| `dolphin.surface_bob` | Dolphin Bobbing At The Surface | `minecraft:dolphin` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.05 && !q.is_underwater` | 2.40s | base | 99 |
+| `dolphin.swim` | Dolphin Fluke Strokes | `minecraft:dolphin` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.05` | 0.70s | base | 100 |
+| `donkey.bray` | Donkey Bray | `minecraft:donkey` | event `vocalize` when `!q.is_dead` | 1.80s | gesture | 150 |
+| `donkey.ear_swivel` | Donkey Swiveling Ears | `minecraft:donkey` | state `!q.is_dead` | 2.40s | additive | 60 |
+| `donkey.graze` | Donkey Picking At Weeds | `minecraft:donkey` | state `!q.is_dead && q.is_eating` | 1.80s | overlay | 130 |
+| `donkey.stubborn` | Stubborn Donkey Planting Its Hooves | `minecraft:donkey` | state `!q.is_dead && q.is_leashed && q.ground_speed < 0.02 && q.trait_confidence > 0.5` | 1.80s | overlay | 120 |
+| `donkey.trot` | Donkey Two-Beat Trot | `minecraft:donkey` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.09 && q.ground_speed < 0.2` | 1.12s | base | 101 |
+| `donkey.walk` | Donkey Four-Beat Walk | `minecraft:donkey` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed < 0.09` | 1.88s | base | 100 |
+| `fox.brush_sway` | Fox Brush Sway | `minecraft:fox` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01` | 3.00s | additive | 60 |
+| `fox.creep` | Fox Creeping Low | `minecraft:fox` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_crouching` | 1.60s | base | 102 |
+| `fox.dash` | Fox Darting Run | `minecraft:fox` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed >= 0.18` | 0.40s | base | 101 |
+| `fox.ear_twitch` | Fox Ear Twitch | `minecraft:fox` | state `!q.is_dead` | 2.00s | additive | 60 |
+| `fox.interested` | Fox Ears Pricked And Tilting | `minecraft:fox` | state `!q.is_dead && q.is_interested` | 1.80s | additive | 125 |
+| `fox.mouse_pounce` | Fox Mouse Pounce | `minecraft:fox` | event `jump` when `!q.is_dead && q.is_pouncing && q.surface != 'snow'` | 0.90s | action | 168 |
+| `fox.sit_tail_wrap` | Fox Sitting Tail Wrapped | `minecraft:fox` | state `!q.is_dead && q.is_sitting` | 4.00s | additive | 70 |
+| `fox.sleep_breathe` | Fox Sleeping Breath | `minecraft:fox` | state `!q.is_dead && q.is_sleeping` | 3.20s | additive | 70 |
+| `fox.sniff` | Fox Sniffing Trail | `minecraft:fox` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 1.30s | overlay | 120 |
+| `fox.snow_dive` | Fox Snow Dive | `minecraft:fox` | event `jump` when `!q.is_dead && q.is_pouncing && q.surface == 'snow'` | 1.00s | action | 170 |
+| `fox.trot` | Fox Dainty Trot | `minecraft:fox` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_crouching && q.ground_speed < 0.18` | 0.60s | base | 100 |
+| `fox.yip` | Fox Yip | `minecraft:fox` | event `vocalize` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `frog.blink` | Frog Blink | `minecraft:frog` | state `!q.is_dead` | 4.00s | additive | 60 |
+| `frog.croak` | Frog Croaking | `minecraft:frog` | state `!q.is_dead && q.is_on_ground && q.idle_time > 4 && q.is_night` | 1.40s | additive | 120 |
+| `frog.float` | Frog Floating At The Surface | `minecraft:frog` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.01` | 2.60s | overlay | 110 |
+| `frog.hand_wipe` | Frog Wiping Its Eyes | `minecraft:frog` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 6` | 1.00s | overlay | 120 |
+| `frog.landing_squash` | Frog Landing Squash | `minecraft:frog` | event `land` when `!q.is_dead` | 0.35s | gesture | 150 |
+| `frog.leap` | Frog Leap | `minecraft:frog` | event `jump` when `!q.is_dead && !q.is_in_water` | 0.70s | action | 150 |
+| `frog.look_around` | Frog Turning To Watch | `minecraft:frog` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 3.00s | overlay | 120 |
+| `frog.puffed_rain` | Frog Puffed Up In The Rain | `minecraft:frog` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_raining && q.sky_exposed` | 2.00s | overlay | 120 |
+| `frog.swim_kick` | Frog Breaststroke Kick | `minecraft:frog` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.01` | 0.80s | base | 100 |
+| `frog.tongue_lash` | Frog Tongue Lash | `minecraft:frog` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 180 |
+| `glow_squid.drift` | Glow Squid Spiral Drift | `minecraft:glow_squid` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02` | 3.00s | base | 99 |
+| `glow_squid.ink_burst` | Glow Squid Glow Ink Flare | `minecraft:glow_squid` | event `hurt` when `!q.is_dead` | 1.20s | reaction | 200 |
+| `glow_squid.jet` | Glow Squid Shimmering Jet | `minecraft:glow_squid` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 1.00s | base | 100 |
+| `glow_squid.pulse_glow` | Glow Squid Breathing Pulse | `minecraft:glow_squid` | state `!q.is_dead && q.is_in_water` | 2.00s | additive | 60 |
+| `goat.bleat` | Goat Bleat | `minecraft:goat` | event `vocalize` when `!q.is_dead && !q.is_screaming` | 0.80s | gesture | 150 |
+| `goat.bound` | Goat Bounding Run | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.recent_hurt < 6 \|\| q.ground_speed > 0.17) && !q.is_ramming` | 0.50s | base | 101 |
+| `goat.head_shake` | Goat Head Shake | `minecraft:goat` | event `stop_moving` when `!q.is_dead` | 0.70s | gesture | 150 |
+| `goat.horn_rub` | Goat Rubbing Its Horns | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 10` | 2.20s | overlay | 120 |
+| `goat.kid_spring` | Goat Kid Springing | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.42s | base | 102 |
+| `goat.leap` | Goat Mountain Leap | `minecraft:goat` | event `jump` when `!q.is_dead` | 0.80s | action | 150 |
+| `goat.ledge_balance` | Goat Balancing On A Slope | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && math.abs(q.terrain_pitch) > 12` | 2.00s | overlay | 118 |
+| `goat.nibble` | Goat Nibbling Shrubs | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 1.40s | overlay | 120 |
+| `goat.ram_windup` | Goat Lowering For A Ram | `minecraft:goat` | state `!q.is_dead && q.is_ramming` | 0.50s | action | 160 |
+| `goat.scream` | Screaming Goat | `minecraft:goat` | event `vocalize` when `!q.is_dead && q.is_screaming` | 1.20s | gesture | 170 |
+| `goat.walk` | Goat Sure-Footed Walk | `minecraft:goat` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17 && !q.is_ramming` | 1.00s | base | 100 |
+| `horse.alert` | Horse On Alert | `minecraft:horse` | state `!q.is_dead && !q.has_rider && q.near_hostile && q.ground_speed < 0.05` | 1.60s | overlay | 118 |
+| `horse.buck_kick` | Horse Hind Kick | `minecraft:horse` | event `hurt_back` when `!q.is_dead && !q.has_rider` | 0.90s | action | 180 |
+| `horse.canter` | Horse Three-Beat Canter | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.2 && q.ground_speed < 0.3` | 0.75s | base | 102 |
+| `horse.doze` | Horse Dozing On Its Feet | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.has_rider && q.is_night && q.idle_time > 20` | 5.00s | overlay | 100 |
+| `horse.ear_flick` | Horse Ear Flicks | `minecraft:horse` | state `!q.is_dead` | 3.00s | additive | 60 |
+| `horse.foal_frolic` | Foal Frolicking | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.50s | base | 104 |
+| `horse.gallop` | Horse Full Gallop | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.3` | 0.55s | base | 103 |
+| `horse.graze` | Horse Grazing | `minecraft:horse` | state `!q.is_dead && q.is_eating` | 2.60s | overlay | 130 |
+| `horse.head_toss` | Horse Head Toss | `minecraft:horse` | event `vocalize` when `!q.is_dead && !q.has_rider` | 1.20s | gesture | 150 |
+| `horse.nuzzle` | Horse Nuzzling | `minecraft:horse` | state `!q.is_dead && q.is_in_love` | 2.00s | overlay | 125 |
+| `horse.paw_ground` | Horse Pawing The Ground | `minecraft:horse` | event `stop_moving` when `!q.is_dead && !q.has_rider` | 1.60s | gesture | 150 |
+| `horse.shake_off` | Horse Full-Body Shake | `minecraft:horse` | event `exit_water` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `horse.tail_swish` | Horse Tail Swish | `minecraft:horse` | state `!q.is_dead && q.is_on_ground` | 4.00s | additive | 60 |
+| `horse.trot` | Horse Two-Beat Trot | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.09 && q.ground_speed < 0.2` | 0.90s | base | 101 |
+| `horse.walk` | Horse Four-Beat Walk | `minecraft:horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed < 0.09` | 1.50s | base | 100 |
+| `llama.alert` | Llama Neck Stretched Alert | `minecraft:llama` | state `!q.is_dead && q.near_hostile && q.ground_speed < 0.05` | 2.00s | overlay | 118 |
+| `llama.caravan` | Llama Caravan Step | `minecraft:llama` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_leashed` | 1.60s | base | 101 |
+| `llama.hum` | Llama Humming Bob | `minecraft:llama` | event `vocalize` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `llama.kush` | Llama Kneeling Rest | `minecraft:llama` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 18` | 5.00s | overlay | 100 |
+| `llama.neck_sway` | Llama Swaying Neck | `minecraft:llama` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01` | 3.50s | additive | 60 |
+| `llama.pace` | Llama Lateral Pace | `minecraft:llama` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17 && !q.is_leashed` | 1.40s | base | 100 |
+| `llama.pack_jostle` | Llama Pack Jostle | `minecraft:llama` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.40s | additive | 60 |
+| `llama.spit` | Llama Spit | `minecraft:llama` | event `shoot:spit` when `!q.is_dead` | 0.80s | action | 160 |
+| `mooshroom.calf_hop` | Mooshroom Calf Hops | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.60s | base | 102 |
+| `mooshroom.graze_mycelium` | Mooshroom Snuffling Mycelium | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 3.20s | overlay | 120 |
+| `mooshroom.lie_lean` | Mooshroom Leaning Rest | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 20` | 7.00s | overlay | 100 |
+| `mooshroom.panic` | Mooshroom Panicked Gallop | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.recent_hurt < 6 \|\| q.ground_speed > 0.17)` | 0.80s | base | 101 |
+| `mooshroom.rain_shiver` | Mooshroom Rain Shiver | `minecraft:mooshroom` | state `!q.is_dead && q.is_raining && q.sky_exposed` | 0.50s | additive | 60 |
+| `mooshroom.sniff_ground` | Mooshroom Sniffing Around | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 2.00s | overlay | 120 |
+| `mooshroom.spore_shake` | Mooshroom Spore Shake | `minecraft:mooshroom` | event `vocalize` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `mooshroom.walk` | Mooshroom Spongy Amble | `minecraft:mooshroom` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17` | 1.70s | base | 100 |
+| `mule.ear_flop` | Mule Ear Flop | `minecraft:mule` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.20s | additive | 60 |
+| `mule.graze` | Mule Steady Grazing | `minecraft:mule` | state `!q.is_dead && q.is_eating` | 3.20s | overlay | 130 |
+| `mule.kick` | Mule Double-Barrel Kick | `minecraft:mule` | event `hurt` when `!q.is_dead` | 0.80s | action | 180 |
+| `mule.snort` | Mule Snort | `minecraft:mule` | event `vocalize` when `!q.is_dead` | 0.90s | gesture | 150 |
+| `mule.trot` | Mule Two-Beat Trot | `minecraft:mule` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.09 && q.ground_speed < 0.2` | 1.02s | base | 101 |
+| `mule.walk` | Mule Four-Beat Walk | `minecraft:mule` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed < 0.09` | 1.70s | base | 100 |
+| `ocelot.frozen_wary` | Ocelot Freezes Warily | `minecraft:ocelot` | state `!q.is_dead && q.player_distance < 7 && q.ground_speed < 0.02` | 2.00s | overlay | 120 |
+| `ocelot.groom` | Ocelot Grooming Its Flank | `minecraft:ocelot` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 4` | 1.10s | overlay | 120 |
+| `ocelot.pounce` | Ocelot Ambush Leap | `minecraft:ocelot` | event `jump` when `!q.is_dead && q.is_crouching` | 1.00s | action | 160 |
+| `ocelot.prowl` | Ocelot Prowling Walk | `minecraft:ocelot` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_sprinting && !q.is_crouching` | 0.95s | base | 100 |
+| `ocelot.sprint` | Ocelot Bounding Sprint | `minecraft:ocelot` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_sprinting` | 0.45s | base | 101 |
+| `ocelot.stalk` | Ocelot Belly-Low Stalk | `minecraft:ocelot` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_crouching` | 2.40s | base | 102 |
+| `ocelot.tail_flick` | Ocelot Tail Twitch | `minecraft:ocelot` | state `!q.is_dead` | 1.60s | additive | 60 |
+| `ocelot.tail_lash` | Ocelot Tail Lash | `minecraft:ocelot` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.player_distance < 10` | 0.80s | additive | 60 |
+| `panda.aggressive_swat` | Aggressive Panda Swat | `minecraft:panda` | event `attack` when `!q.is_dead` | 0.70s | action | 160 |
+| `panda.belly_up` | Panda Lolling On Its Back | `minecraft:panda` | state `!q.is_dead && q.is_on_back` | 2.00s | overlay | 140 |
+| `panda.cub_bounce` | Panda Cub Bounce | `minecraft:panda` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.80s | base | 102 |
+| `panda.eat_bamboo` | Panda Munching Bamboo | `minecraft:panda` | state `!q.is_dead && q.is_sitting && q.is_eating` | 1.20s | overlay | 140 |
+| `panda.lazy_flop` | Lazy Panda Sprawl | `minecraft:panda` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.gene == 'lazy' && q.idle_time > 8` | 6.00s | overlay | 100 |
+| `panda.playful_roll` | Playful Panda Somersault | `minecraft:panda` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.gene == 'playful'` | 2.00s | overlay | 120 |
+| `panda.roll_dizzy` | Panda Dizzy After Rolling | `minecraft:panda` | state `!q.is_dead && q.is_rolling` | 1.00s | additive | 72 |
+| `panda.sit_sway` | Panda Contented Sit | `minecraft:panda` | state `!q.is_dead && q.is_sitting && !q.is_eating` | 3.00s | overlay | 135 |
+| `panda.sneeze` | Panda Sneeze | `minecraft:panda` | event `vocalize` when `!q.is_dead && q.is_sneezing` | 1.20s | action | 170 |
+| `panda.waddle` | Panda Waddle | `minecraft:panda` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_rolling` | 1.50s | base | 100 |
+| `panda.weak_cough` | Weak Panda Wheeze | `minecraft:panda` | state `!q.is_dead && q.gene == 'weak'` | 3.00s | additive | 60 |
+| `panda.worried_cower` | Worried Panda Covering Eyes | `minecraft:panda` | state `!q.is_dead && q.gene == 'worried' && q.is_thundering` | 1.40s | overlay | 150 |
+| `parrot.feather_ruffle` | Parrot Feather Ruffle | `minecraft:parrot` | state `!q.is_dead && q.wind > 0.4` | 0.60s | additive | 60 |
+| `parrot.flight` | Parrot Flapping Flight | `minecraft:parrot` | state `!q.is_dead && q.is_flying` | 0.35s | base | 100 |
+| `parrot.groove` | Parrot Grooving To Music | `minecraft:parrot` | state `!q.is_dead && q.is_dancing` | 0.50s | overlay | 140 |
+| `parrot.head_bob` | Parrot Curious Head Bob | `minecraft:parrot` | state `!q.is_dead && !q.is_flying && q.player_distance < 5` | 1.40s | overlay | 120 |
+| `parrot.hop_walk` | Parrot Sideways Hop | `minecraft:parrot` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_flying` | 0.50s | base | 101 |
+| `parrot.landing_flare` | Parrot Landing Flare | `minecraft:parrot` | event `land` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `parrot.mimic` | Parrot Mimicry Squawk | `minecraft:parrot` | event `vocalize` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `parrot.preen` | Parrot Preening | `minecraft:parrot` | state `!q.is_dead && !q.is_flying && !q.is_dancing && q.idle_time > 3` | 1.60s | overlay | 120 |
+| `parrot.take_off` | Parrot Take-Off | `minecraft:parrot` | event `jump` when `!q.is_dead` | 0.40s | gesture | 150 |
+| `parrot.wing_spread` | Parrot Wing Display | `minecraft:parrot` | state `!q.is_dead && !q.is_flying && q.idle_time > 6` | 2.00s | overlay | 120 |
+| `pig.beg_carrot` | Pig Following Food Eagerly | `minecraft:pig` | state `!q.is_dead && q.player_distance < 4 && q.is_in_love == 0 && q.trait_social > 0.6 && q.ground_speed < 0.05` | 1.20s | overlay | 115 |
+| `pig.bolt` | Pig Squealing Bolt | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.recent_hurt < 6 \|\| q.ground_speed > 0.17)` | 0.45s | base | 101 |
+| `pig.mud_shake` | Pig Shakes Off Water | `minecraft:pig` | event `exit_water` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `pig.oink` | Pig Oink Nod | `minecraft:pig` | event `vocalize` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `pig.piglet_scamper` | Piglet Scamper | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.38s | base | 102 |
+| `pig.root` | Pig Rooting In Dirt | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 1.60s | overlay | 120 |
+| `pig.rump_wiggle` | Pig Rump Wiggle | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17` | 1.80s | additive | 60 |
+| `pig.sleep` | Pig Sleeping Belly-Down | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_night && q.idle_time > 25` | 3.40s | overlay | 100 |
+| `pig.sniff_air` | Pig Sniffing The Air | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 2.20s | overlay | 120 |
+| `pig.trot` | Pig Trotting | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17` | 0.90s | base | 100 |
+| `pig.wallow` | Pig Wallowing On Its Side | `minecraft:pig` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 18 && (q.surface == 'dirt' \|\| q.feet_block == 'mud' \|\| q.is_raining)` | 5.00s | overlay | 100 |
+| `polar_bear.amble` | Polar Bear Rolling Amble | `minecraft:polar_bear` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17` | 1.80s | base | 100 |
+| `polar_bear.charge` | Polar Bear Charge | `minecraft:polar_bear` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_angry \|\| q.ground_speed > 0.17)` | 0.75s | base | 101 |
+| `polar_bear.cub_tumble` | Polar Bear Cub Tumble | `minecraft:polar_bear` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_baby && q.trait_energy > 0.35` | 2.40s | overlay | 120 |
+| `polar_bear.growl` | Polar Bear Warning Growl | `minecraft:polar_bear` | event `vocalize` when `!q.is_dead && !q.is_baby` | 1.40s | gesture | 150 |
+| `polar_bear.rear_sway` | Polar Bear Upright Sway | `minecraft:polar_bear` | state `!q.is_dead && q.is_standing` | 1.60s | additive | 70 |
+| `polar_bear.shake_dry` | Polar Bear Shakes Dry | `minecraft:polar_bear` | event `exit_water` when `!q.is_dead` | 1.30s | gesture | 150 |
+| `polar_bear.sit_back` | Polar Bear Sitting Back | `minecraft:polar_bear` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_standing && q.idle_time > 15` | 4.00s | overlay | 100 |
+| `polar_bear.sniff_air` | Polar Bear Scenting The Wind | `minecraft:polar_bear` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_standing && q.idle_time > 3` | 2.60s | overlay | 120 |
+| `polar_bear.swipe` | Polar Bear Paw Swipe | `minecraft:polar_bear` | event `attack` when `!q.is_dead` | 0.80s | action | 160 |
+| `pufferfish.alarm_puff` | Pufferfish Alarm Puff | `minecraft:pufferfish` | event `hurt` when `!q.is_dead` | 1.00s | reaction | 200 |
+| `pufferfish.drift` | Pufferfish Bobbing Drift | `minecraft:pufferfish` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.01` | 2.60s | base | 99 |
+| `pufferfish.flop` | Pufferfish Stranded Roll | `minecraft:pufferfish` | state `!q.is_dead && !q.is_in_water` | 0.80s | overlay | 120 |
+| `pufferfish.paddle` | Pufferfish Fin Paddle | `minecraft:pufferfish` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.01` | 0.50s | base | 100 |
+| `pufferfish.spine_bristle` | Pufferfish Spine Bristle | `minecraft:pufferfish` | state `!q.is_dead && q.is_in_water && q.player_distance < 3` | 0.40s | additive | 60 |
+| `rabbit.binky` | Rabbit Binky Twist | `minecraft:rabbit` | event `jump` when `!q.is_dead && q.trait_energy > 0.55` | 0.60s | gesture | 150 |
+| `rabbit.ear_swivel` | Rabbit Ear Swivel | `minecraft:rabbit` | state `!q.is_dead` | 3.40s | additive | 60 |
+| `rabbit.flop` | Rabbit Flopped Over | `minecraft:rabbit` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 20 && !q.near_hostile` | 4.00s | overlay | 100 |
+| `rabbit.hop` | Rabbit Hopping | `minecraft:rabbit` | state `!q.is_dead && q.jump_progress > 0.01` | 1.00s | base | 100 |
+| `rabbit.nibble` | Rabbit Nibbling | `minecraft:rabbit` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 0.80s | overlay | 120 |
+| `rabbit.nose_twitch` | Rabbit Nose Twitch | `minecraft:rabbit` | state `!q.is_dead` | 0.50s | additive | 60 |
+| `rabbit.sentinel` | Rabbit Standing Sentinel | `minecraft:rabbit` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && (q.near_hostile \|\| q.player_distance < 5)` | 2.00s | overlay | 118 |
+| `rabbit.thump` | Rabbit Warning Thump | `minecraft:rabbit` | event `start_moving` when `!q.is_dead && q.near_hostile` | 0.60s | action | 150 |
+| `rabbit.wash_face` | Rabbit Washing Its Face | `minecraft:rabbit` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 0.60s | overlay | 120 |
+| `salmon.dart` | Salmon Startled Dart | `minecraft:salmon` | event `hurt` when `!q.is_dead && q.is_in_water` | 0.40s | reaction | 200 |
+| `salmon.flop` | Salmon Flopping On Land | `minecraft:salmon` | state `!q.is_dead && !q.is_in_water` | 0.60s | overlay | 120 |
+| `salmon.hover` | Salmon Holding Station | `minecraft:salmon` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02` | 1.60s | base | 99 |
+| `salmon.swim` | Salmon Swimming | `minecraft:salmon` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 0.40s | base | 100 |
+| `sheep.alert` | Sheep Alert Stance | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.near_hostile` | 1.80s | overlay | 118 |
+| `sheep.bleat` | Sheep Bleat | `minecraft:sheep` | event `vocalize` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `sheep.flee` | Sheep Flock Flight | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.recent_hurt < 6 \|\| q.ground_speed > 0.17) && !q.is_baby` | 0.60s | base | 101 |
+| `sheep.fleece_shudder` | Sheep Shuddering Fleece | `minecraft:sheep` | state `!q.is_dead && (q.is_raining \|\| q.wind > 0.6)` | 0.40s | additive | 60 |
+| `sheep.graze` | Sheep Cropping Grass | `minecraft:sheep` | state `!q.is_dead && q.is_eating` | 2.00s | overlay | 130 |
+| `sheep.lamb_headbutt` | Lambs Play-Butting | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_baby && q.trait_energy > 0.4` | 1.40s | overlay | 120 |
+| `sheep.lamb_skip` | Lamb Skipping | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.55s | base | 102 |
+| `sheep.lie` | Sheep Lying In The Grass | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 18 && !q.is_baby` | 5.00s | overlay | 100 |
+| `sheep.look_around` | Sheep Looking About | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 3` | 4.00s | overlay | 120 |
+| `sheep.walk` | Sheep Woolly Walk | `minecraft:sheep` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17 && !q.is_baby` | 1.30s | base | 100 |
+| `skeleton_horse.bone_gallop` | Skeleton Horse Clattering Gallop | `minecraft:skeleton_horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.2` | 0.60s | base | 101 |
+| `skeleton_horse.bone_rattle` | Skeleton Horse Bone Rattle | `minecraft:skeleton_horse` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01` | 0.30s | additive | 60 |
+| `skeleton_horse.hollow_stare` | Skeleton Horse Hollow Stare | `minecraft:skeleton_horse` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 4` | 5.00s | overlay | 120 |
+| `skeleton_horse.rattle_walk` | Skeleton Horse Rattling Walk | `minecraft:skeleton_horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed < 0.2` | 1.20s | base | 100 |
+| `skeleton_horse.rear_clatter` | Skeleton Horse Clattering Rear | `minecraft:skeleton_horse` | event `vocalize` when `!q.is_dead && !q.has_rider` | 1.40s | action | 150 |
+| `skeleton_horse.river_trot` | Skeleton Horse Wading Trot | `minecraft:skeleton_horse` | state `!q.is_dead && q.is_in_water` | 0.80s | base | 110 |
+| `sniffer.dig` | Sniffer Digging Up Seeds | `minecraft:sniffer` | state `!q.is_dead && q.is_digging` | 0.80s | additive | 135 |
+| `sniffer.ear_flap` | Sniffer Ear Flaps | `minecraft:sniffer` | state `!q.is_dead` | 1.80s | additive | 60 |
+| `sniffer.happy_rumble` | Sniffer Happy Rumble | `minecraft:sniffer` | event `vocalize` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `sniffer.idle_gaze` | Sniffer Gazing Around | `minecraft:sniffer` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_sniffing && !q.is_digging` | 6.00s | additive | 55 |
+| `sniffer.lie_down` | Sniffer Lying Down | `minecraft:sniffer` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 25` | 5.00s | overlay | 110 |
+| `sniffer.nose_wiggle` | Sniffer Nose Wiggle | `minecraft:sniffer` | state `!q.is_dead && !q.is_sniffing` | 2.40s | additive | 60 |
+| `sniffer.plod` | Sniffer Six-Legged Plod | `minecraft:sniffer` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_sniffing && !q.is_digging` | 2.20s | base | 100 |
+| `sniffer.rise_after_dig` | Sniffer Rising From A Dig | `minecraft:sniffer` | event `stop_moving` when `!q.is_dead && q.is_digging == 0` | 1.80s | gesture | 150 |
+| `sniffer.scenting` | Sniffer Scenting The Ground | `minecraft:sniffer` | state `!q.is_dead && q.is_sniffing` | 1.20s | additive | 130 |
+| `sniffer.snifflet_toddle` | Snifflet Toddle | `minecraft:sniffer` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.90s | base | 102 |
+| `squid.beached_writhe` | Squid Beached Writhe | `minecraft:squid` | state `!q.is_dead && !q.is_in_water` | 0.90s | overlay | 120 |
+| `squid.drift` | Squid Drifting | `minecraft:squid` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02` | 2.40s | base | 99 |
+| `squid.ink_burst` | Squid Ink Burst | `minecraft:squid` | event `hurt` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `squid.jet` | Squid Jet Pulse | `minecraft:squid` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 0.80s | base | 100 |
+| `squid.tentacle_curl` | Squid Tentacle Curl | `minecraft:squid` | state `!q.is_dead && q.is_in_water` | 3.40s | additive | 60 |
+| `strider.bristle_wave` | Strider Bristles Rippling | `minecraft:strider` | state `!q.is_dead && !q.is_suffocating` | 1.40s | additive | 60 |
+| `strider.cold_shuffle` | Strider Cold Shuffle | `minecraft:strider` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_suffocating` | 0.80s | base | 101 |
+| `strider.idle_look` | Strider Looking Around | `minecraft:strider` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_suffocating` | 4.00s | overlay | 105 |
+| `strider.lava_wade` | Strider Content In Lava | `minecraft:strider` | state `!q.is_dead && q.is_in_lava && q.ground_speed < 0.02` | 3.00s | overlay | 115 |
+| `strider.shiver` | Strider Shivering Out Of Lava | `minecraft:strider` | state `!q.is_dead && q.is_suffocating` | 0.20s | overlay | 130 |
+| `strider.tall_stride` | Strider Stilt Stride | `minecraft:strider` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_suffocating` | 1.20s | base | 100 |
+| `strider.warble` | Strider Warble | `minecraft:strider` | event `vocalize` when `!q.is_dead` | 0.90s | gesture | 150 |
+| `tadpole.idle` | Tadpole Hovering | `minecraft:tadpole` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.01` | 1.60s | base | 100 |
+| `tadpole.stranded` | Tadpole Stranded | `minecraft:tadpole` | state `!q.is_dead && !q.is_in_water` | 0.50s | overlay | 120 |
+| `tadpole.wiggle` | Tadpole Wiggle | `minecraft:tadpole` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.01` | 0.30s | base | 100 |
+| `trader_llama.caravan` | Trader Llama Caravan Step | `minecraft:trader_llama` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_leashed` | 1.80s | base | 101 |
+| `trader_llama.dust_shake` | Trader Llama Dust Shake | `minecraft:trader_llama` | event `stop_moving` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `trader_llama.kush` | Trader Llama Weary Kneel | `minecraft:trader_llama` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 18` | 5.00s | overlay | 100 |
+| `trader_llama.pace` | Trader Llama Burdened Pace | `minecraft:trader_llama` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.recent_hurt >= 6 && q.ground_speed <= 0.17 && !q.is_leashed` | 1.70s | base | 100 |
+| `trader_llama.spit` | Trader Llama Spit | `minecraft:trader_llama` | event `shoot:spit` when `!q.is_dead` | 0.80s | action | 160 |
+| `trader_llama.weary_head` | Trader Llama Drooping Head | `minecraft:trader_llama` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01` | 4.50s | additive | 60 |
+| `tropical_fish.dart` | Tropical Fish Startled Dart | `minecraft:tropical_fish` | event `hurt` when `!q.is_dead && q.is_in_water` | 0.40s | reaction | 200 |
+| `tropical_fish.flop` | Tropical Fish Flopping On Land | `minecraft:tropical_fish` | state `!q.is_dead && !q.is_in_water` | 0.55s | overlay | 120 |
+| `tropical_fish.hover` | Tropical Fish Holding Station | `minecraft:tropical_fish` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02` | 1.40s | base | 99 |
+| `tropical_fish.swim` | Tropical Fish Swimming | `minecraft:tropical_fish` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 0.35s | base | 100 |
+| `turtle.bask` | Turtle Basking | `minecraft:turtle` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_night && q.sky_exposed` | 6.00s | overlay | 120 |
+| `turtle.dig_nest` | Turtle Digging A Nest | `minecraft:turtle` | state `!q.is_dead && q.is_laying_egg` | 1.00s | action | 150 |
+| `turtle.gravid_trudge` | Gravid Turtle Trudge | `minecraft:turtle` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.has_egg` | 2.60s | base | 101 |
+| `turtle.hatchling_scuttle` | Hatchling Scuttle | `minecraft:turtle` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.50s | base | 102 |
+| `turtle.land_crawl` | Turtle Flipper Crawl | `minecraft:turtle` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_egg` | 2.00s | base | 100 |
+| `turtle.surface_breath` | Turtle Surfacing For Air | `minecraft:turtle` | event `surface` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `turtle.swim` | Turtle Gliding Strokes | `minecraft:turtle` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 2.40s | base | 100 |
+| `turtle.withdraw` | Turtle Withdraws Into Shell | `minecraft:turtle` | event `hurt` when `!q.is_dead` | 1.60s | reaction | 200 |
+| `wolf.bark` | Wolf Bark | `minecraft:wolf` | event `vocalize` when `!q.is_dead && !q.is_night` | 0.50s | gesture | 150 |
+| `wolf.beg` | Wolf Begging Head Tilt | `minecraft:wolf` | state `!q.is_dead && q.is_interested` | 2.40s | additive | 125 |
+| `wolf.curl_sleep` | Wolf Curled Asleep | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_night && q.idle_time > 30 && !q.is_sitting` | 4.00s | overlay | 100 |
+| `wolf.guard_growl` | Wolf Guarding Growl | `minecraft:wolf` | state `!q.is_dead && q.is_angry && q.ground_speed < 0.01` | 0.60s | overlay | 130 |
+| `wolf.happy_wag` | Wolf Happy Tail Wag | `minecraft:wolf` | state `!q.is_dead && q.is_tame && q.player_distance < 5 && !q.is_angry` | 0.40s | additive | 60 |
+| `wolf.howl` | Wolf Howling At The Moon | `minecraft:wolf` | event `vocalize` when `!q.is_dead && q.is_night && !q.is_baby` | 3.00s | action | 150 |
+| `wolf.lope` | Wolf Loping Run | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed >= 0.16` | 0.50s | base | 101 |
+| `wolf.play_bow` | Wolf Play Bow | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_tame && !q.is_sitting && q.player_distance < 4 && q.trait_energy > 0.5` | 1.20s | overlay | 120 |
+| `wolf.pup_pounce` | Wolf Pup Pouncing | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_baby` | 1.60s | overlay | 120 |
+| `wolf.scratch` | Wolf Scratching Behind The Ear | `minecraft:wolf` | state `!q.is_dead && q.is_sitting` | 0.30s | overlay | 120 |
+| `wolf.shake_dry` | Wolf Shakes Dry | `minecraft:wolf` | event `exit_water` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `wolf.sit_watch` | Wolf Sitting Watchfully | `minecraft:wolf` | state `!q.is_dead && q.is_sitting` | 4.00s | additive | 120 |
+| `wolf.sniff_ground` | Wolf Nose To The Ground | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.is_sitting && q.idle_time > 3` | 1.50s | overlay | 120 |
+| `wolf.stalk` | Wolf Stalking Prey | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_angry && q.ground_speed < 0.16` | 1.60s | base | 102 |
+| `wolf.stalk_crouch` | Wolf Hackles Raised | `minecraft:wolf` | state `!q.is_dead && q.is_angry` | 1.00s | additive | 75 |
+| `wolf.trot` | Wolf Trot | `minecraft:wolf` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.16 && !q.is_angry` | 0.80s | base | 100 |
+| `zombie_horse.graze_rot` | Zombie Horse Tearing At Grass | `minecraft:zombie_horse` | state `!q.is_dead && q.is_eating` | 1.40s | overlay | 130 |
+| `zombie_horse.groan` | Zombie Horse Groaning Head Loll | `minecraft:zombie_horse` | event `vocalize` when `!q.is_dead` | 2.00s | gesture | 150 |
+| `zombie_horse.limp` | Zombie Horse Limping Gait | `minecraft:zombie_horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed < 0.2` | 1.60s | base | 100 |
+| `zombie_horse.lurch_run` | Zombie Horse Lurching Run | `minecraft:zombie_horse` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.has_rider && q.ground_speed >= 0.2` | 0.70s | base | 101 |
+| `zombie_horse.mournful_stand` | Zombie Horse Mournful Stand | `minecraft:zombie_horse` | state `!q.is_dead && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 6` | 6.00s | overlay | 120 |
+| `zombie_horse.rot_twitch` | Zombie Horse Rotting Twitch | `minecraft:zombie_horse` | state `!q.is_dead` | 2.60s | additive | 60 |
 
 ## Hostile mobs and monsters
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `blaze.breathe` | Blaze Crackling Breath | `minecraft:blaze` | event `vocalize` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `blaze.fireball_volley` | Blaze Fireball Volley | `minecraft:blaze` | event `shoot:fireball` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `blaze.hover_spin` | Blaze Hovering Rod Orbit | `minecraft:blaze` | state `!q.is_dead && !q.is_charging` | 4.00s | additive | 60 |
+| `blaze.ignite_frenzy` | Blaze Igniting Frenzy | `minecraft:blaze` | state `!q.is_dead && q.is_charging` | 0.50s | additive | 70 |
+| `blaze.rain_fizzle` | Blaze Fizzling In Rain | `minecraft:blaze` | state `!q.is_dead && (q.is_raining && q.sky_exposed \|\| q.is_in_water)` | 0.30s | action | 150 |
+| `blaze.rod_flare` | Blaze Rods Flare When Struck | `minecraft:blaze` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `blaze.smoulder_idle` | Blaze Smouldering Idle | `minecraft:blaze` | state `!q.is_dead && q.ground_speed < 0.02 && !q.is_charging && !q.is_aggressive` | 3.00s | overlay | 105 |
+| `cave_spider.pounce` | Cave Spider Darting Lunge | `minecraft:cave_spider` | event `jump` when `!q.is_dead && (q.is_aggressive \|\| q.in_combat)` | 0.45s | action | 160 |
+| `cave_spider.scuttle` | Cave Spider Scuttle | `minecraft:cave_spider` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_climbing` | 0.37s | base | 100 |
+| `cave_spider.swarm_jitter` | Cave Spider Swarm Jitter | `minecraft:cave_spider` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.40s | overlay | 110 |
+| `cave_spider.twitchy` | Cave Spider Twitchy Legs | `minecraft:cave_spider` | state `!q.is_dead` | 0.90s | additive | 60 |
+| `cave_spider.venom_strike` | Cave Spider Venom Strike | `minecraft:cave_spider` | event `melee_hit` when `!q.is_dead` | 0.35s | action | 170 |
+| `cave_spider.wall_climb` | Cave Spider Skittering Climb | `minecraft:cave_spider` | state `!q.is_dead && q.is_climbing` | 0.31s | base | 101 |
+| `creeper.charged_crackle` | Charged Creeper Crackling | `minecraft:creeper` | state `!q.is_dead && q.is_powered` | 0.40s | additive | 70 |
+| `creeper.creep` | Creeper Silent Creep | `minecraft:creeper` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.20s | base | 100 |
+| `creeper.defuse_retreat` | Creeper Defusing And Backing Off | `minecraft:creeper` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.swell > 0.05 && !q.is_charging` | 0.60s | overlay | 120 |
+| `creeper.fuse_pop` | Creeper Final Swell | `minecraft:creeper` | event `death` when `q.swell > 0.9` | 0.30s | action | 300 |
+| `creeper.hiss_rear` | Creeper Rearing Hiss | `minecraft:creeper` | event `aggro` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `creeper.landing_squat` | Creeper Landing Squat | `minecraft:creeper` | event `land` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `creeper.leaf_rustle` | Creeper Rustling Foliage | `minecraft:creeper` | state `!q.is_dead && q.feet_block == 'foliage'` | 1.20s | additive | 60 |
+| `creeper.peek` | Creeper Peeking Around | `minecraft:creeper` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 5.00s | overlay | 120 |
+| `creeper.stalk` | Creeper Closing In | `minecraft:creeper` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.80s | base | 101 |
+| `creeper.swell_tremble` | Creeper Swelling Tremble | `minecraft:creeper` | state `!q.is_dead && q.is_charging` | 0.15s | additive | 200 |
+| `drowned.drag_under` | Drowned Drag-Under Grab | `minecraft:drowned` | event `attack` when `!q.is_dead && q.is_in_water` | 0.80s | action | 160 |
+| `drowned.float_idle` | Drowned Drifting Idle | `minecraft:drowned` | state `!q.is_dead && q.is_underwater && q.ground_speed < 0.02` | 4.50s | overlay | 110 |
+| `drowned.gurgle` | Drowned Gurgle | `minecraft:drowned` | event `vocalize` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `drowned.land_walk` | Drowned Dripping Walk | `minecraft:drowned` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_in_water` | 1.30s | base | 100 |
+| `drowned.seabed_walk` | Drowned Seabed Trudge | `minecraft:drowned` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_in_water` | 2.00s | base | 101 |
+| `drowned.swim` | Drowned Grasping Swim | `minecraft:drowned` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.40s | base | 100 |
+| `drowned.trident_aim` | Drowned Raising Trident | `minecraft:drowned` | state `!q.is_dead && q.main_hand == 'trident' && q.is_aggressive && q.ground_speed < 0.05` | 1.20s | action | 140 |
+| `elder_guardian.beached_flop` | Elder Guardian Stranded Heave | `minecraft:elder_guardian` | state `!q.is_dead && !q.is_in_water` | 2.40s | overlay | 130 |
+| `elder_guardian.curse_glare` | Elder Guardian Curse Glare | `minecraft:elder_guardian` | event `vocalize` when `!q.is_dead` | 2.00s | action | 150 |
+| `elder_guardian.eye_dart` | Elder Guardian Eye Slow Sweep | `minecraft:elder_guardian` | state `!q.is_dead && !q.is_attacking` | 6.00s | additive | 60 |
+| `elder_guardian.laser_lock` | Elder Guardian Withering Gaze | `minecraft:elder_guardian` | state `!q.is_dead && q.is_attacking` | 1.60s | overlay | 140 |
+| `elder_guardian.spike_bristle` | Elder Guardian Rippling Spikes | `minecraft:elder_guardian` | event `hurt` when `!q.is_dead` | 1.40s | reaction | 200 |
+| `elder_guardian.tail_swim` | Elder Guardian Ancient Glide | `minecraft:elder_guardian` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 2.00s | base | 100 |
+| `ender_dragon.charge_dive` | Ender Dragon Charging Dive | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'charging_player'` | 0.80s | additive | 64 |
+| `ender_dragon.death_convulse` | Ender Dragon Death Convulsions | `minecraft:ender_dragon` | state `q.phase == 'dying'` | 0.50s | additive | 90 |
+| `ender_dragon.landing_flare` | Ender Dragon Landing Flare | `minecraft:ender_dragon` | state `!q.is_dead && (q.phase == 'landing' \|\| q.phase == 'landing_approach')` | 1.40s | additive | 64 |
+| `ender_dragon.perch_breath` | Ender Dragon Perched Breath | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'sitting_flaming'` | 1.00s | additive | 66 |
+| `ender_dragon.perch_roar` | Ender Dragon Perched Roar | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'sitting_attacking'` | 1.20s | additive | 66 |
+| `ender_dragon.perch_scan` | Ender Dragon Scanning From Perch | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'sitting_scanning'` | 3.00s | additive | 66 |
+| `ender_dragon.soar_sway` | Ender Dragon Soaring Sway | `minecraft:ender_dragon` | state `!q.is_dead && (q.phase == 'holding_pattern' \|\| q.phase == 'hovering')` | 4.00s | additive | 60 |
+| `ender_dragon.strafe_bank` | Ender Dragon Strafing Bank | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'strafe_player'` | 1.60s | additive | 62 |
+| `enderman.arrive` | Enderman Arrival Unfold | `minecraft:enderman` | event `teleport` when `!q.is_dead && q.is_creepy` | 0.90s | reaction | 225 |
+| `enderman.block_pickup` | Enderman Lifting A Block | `minecraft:enderman` | event `break_block` when `!q.is_dead` | 1.20s | action | 150 |
+| `enderman.carry_block` | Enderman Cradling A Block | `minecraft:enderman` | state `!q.is_dead && q.is_carrying && !q.is_creepy` | 2.40s | overlay | 125 |
+| `enderman.glide_walk` | Enderman Long Gliding Stride | `minecraft:enderman` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_creepy` | 1.80s | base | 100 |
+| `enderman.idle_drift` | Enderman Absent Idle | `minecraft:enderman` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_creepy && !q.is_carrying` | 7.00s | overlay | 120 |
+| `enderman.lunge_strike` | Enderman Lunging Strike | `minecraft:enderman` | event `attack` when `!q.is_dead` | 0.60s | action | 160 |
+| `enderman.rage_stalk` | Enderman Enraged Stalk | `minecraft:enderman` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_creepy` | 0.90s | base | 101 |
+| `enderman.rain_flinch` | Enderman Recoiling From Rain | `minecraft:enderman` | state `!q.is_dead && q.is_raining && q.sky_exposed` | 0.50s | action | 150 |
+| `enderman.scream_jaw` | Enderman Scream | `minecraft:enderman` | event `aggro` when `!q.is_dead` | 1.00s | action | 170 |
+| `enderman.stare_tremble` | Enderman Stare Tremble | `minecraft:enderman` | state `!q.is_dead && q.is_creepy` | 0.20s | additive | 80 |
+| `enderman.vanish` | Enderman Teleport Shimmer | `minecraft:enderman` | event `teleport` when `!q.is_dead` | 0.50s | reaction | 220 |
+| `endermite.antennae_feel` | Endermite Restless Wriggle | `minecraft:endermite` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 0.60s | overlay | 120 |
+| `endermite.nip` | Endermite Hopping Nip | `minecraft:endermite` | event `melee_hit` when `!q.is_dead` | 0.35s | action | 170 |
+| `endermite.slither` | Endermite Slither | `minecraft:endermite` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 0.35s | base | 100 |
+| `endermite.void_jitter` | Endermite Void Jitter | `minecraft:endermite` | state `!q.is_dead` | 0.20s | additive | 60 |
+| `evoker.cast_fangs` | Evoker Summoning Fangs | `minecraft:evoker` | state `!q.is_dead && q.is_casting && q.arm_pose == 'spellcasting'` | 1.20s | action | 150 |
+| `evoker.channel_vex` | Evoker Channelling Vexes | `minecraft:evoker` | state `!q.is_dead && q.is_casting && q.arm_pose != 'spellcasting'` | 1.60s | action | 150 |
+| `evoker.raid_celebrate` | Evoker Raid Celebration Sway | `minecraft:evoker` | state `!q.is_dead && q.is_celebrating` | 1.00s | action | 160 |
+| `evoker.robed_glide` | Evoker Robed Glide | `minecraft:evoker` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.60s | base | 100 |
+| `evoker.sinister_hum` | Evoker Sinister Hum | `minecraft:evoker` | event `vocalize` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `ghast.charge_shot` | Ghast Inhaling To Shoot | `minecraft:ghast` | state `!q.is_dead && q.is_charging` | 0.80s | additive | 70 |
+| `ghast.drift` | Ghast Mournful Drift | `minecraft:ghast` | state `!q.is_dead && !q.is_charging` | 5.00s | additive | 60 |
+| `ghast.pained_flinch` | Ghast Pained Flinch | `minecraft:ghast` | event `hurt` when `!q.is_dead` | 0.90s | reaction | 200 |
+| `ghast.recoil` | Ghast Fireball Recoil | `minecraft:ghast` | event `shoot:fireball` when `!q.is_dead` | 0.80s | action | 170 |
+| `ghast.sleep_float` | Ghast Dozing Float | `minecraft:ghast` | state `!q.is_dead && q.player_distance > 24` | 8.00s | overlay | 105 |
+| `ghast.tear_quiver` | Ghast Quivering Sob | `minecraft:ghast` | state `!q.is_dead && q.player_distance <= 24 && !q.is_charging` | 1.60s | additive | 60 |
+| `ghast.wail` | Ghast Wail | `minecraft:ghast` | event `vocalize` when `!q.is_dead` | 2.40s | gesture | 150 |
+| `giant.loom` | Giant Looming | `minecraft:giant` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 6.00s | overlay | 120 |
+| `giant.quake_step` | Giant Earthshaking Step | `minecraft:giant` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 2.60s | base | 100 |
+| `giant.stomp` | Giant Stomp | `minecraft:giant` | event `vocalize` when `!q.is_dead` | 2.00s | action | 150 |
+| `guardian.beached_flop` | Guardian Beached Flop | `minecraft:guardian` | state `!q.is_dead && !q.is_in_water` | 0.60s | overlay | 130 |
+| `guardian.eye_dart` | Guardian Eye Darting | `minecraft:guardian` | state `!q.is_dead && !q.is_attacking` | 1.80s | additive | 60 |
+| `guardian.laser_lock` | Guardian Laser Lock | `minecraft:guardian` | state `!q.is_dead && q.is_attacking` | 0.50s | overlay | 140 |
+| `guardian.patrol_hover` | Guardian Patrol Hover | `minecraft:guardian` | state `!q.is_dead && q.is_in_water && q.ground_speed < 0.02 && !q.is_attacking` | 3.00s | base | 99 |
+| `guardian.spike_bristle` | Guardian Spike Bristle | `minecraft:guardian` | event `hurt` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `guardian.tail_swim` | Guardian Tail Swim | `minecraft:guardian` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02` | 1.00s | base | 100 |
+| `hoglin.ear_flick` | Hoglin Ear Flick | `minecraft:hoglin` | state `!q.is_dead` | 2.00s | additive | 60 |
+| `hoglin.fungus_fear` | Hoglin Backing From Warped Fungus | `minecraft:hoglin` | state `!q.is_dead && q.trait_nervous > 0.7 && q.dimension == 'the_nether' && q.ground_speed > 0.05 && !q.is_aggressive` | 0.80s | overlay | 110 |
+| `hoglin.gore_toss` | Hoglin Gore Toss | `minecraft:hoglin` | event `melee_hit` when `!q.is_dead` | 0.60s | action | 175 |
+| `hoglin.rampage` | Hoglin Rampage | `minecraft:hoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.55s | base | 101 |
+| `hoglin.root_crimson` | Hoglin Rooting For Fungus | `minecraft:hoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 1.40s | overlay | 120 |
+| `hoglin.snort` | Hoglin Snort | `minecraft:hoglin` | event `vocalize` when `!q.is_dead` | 0.70s | gesture | 150 |
+| `hoglin.trot` | Hoglin Bristling Trot | `minecraft:hoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.00s | base | 100 |
+| `hoglin.zombify_shudder` | Hoglin Overworld Shudder | `minecraft:hoglin` | state `!q.is_dead && q.dimension != 'the_nether'` | 0.25s | additive | 80 |
+| `husk.desert_drag` | Husk Desert Drag | `minecraft:husk` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.70s | base | 100 |
+| `husk.dust_cough` | Husk Dusty Rasp | `minecraft:husk` | event `vocalize` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `husk.heat_shimmer` | Husk Heat Sway | `minecraft:husk` | state `!q.is_dead && q.temperature > 1.5` | 6.00s | additive | 60 |
+| `husk.hunger_grab` | Husk Starving Grab | `minecraft:husk` | event `attack` when `!q.is_dead` | 0.65s | action | 160 |
+| `husk.parched_idle` | Husk Parched Hunch | `minecraft:husk` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 3.20s | overlay | 120 |
+| `husk.sand_charge` | Husk Sand-Blind Charge | `minecraft:husk` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.80s | base | 101 |
+| `illusioner.blindness_flourish` | Illusioner Blinding Flourish | `minecraft:illusioner` | event `vocalize` when `!q.is_dead` | 1.20s | action | 150 |
+| `illusioner.bow_draw` | Illusioner Arcane Bow Draw | `minecraft:illusioner` | state `!q.is_dead && q.arm_pose == 'bow_and_arrow'` | 1.00s | additive | 80 |
+| `illusioner.mirror_cast` | Illusioner Mirror Image Cast | `minecraft:illusioner` | state `!q.is_dead && q.is_casting` | 0.80s | action | 150 |
+| `illusioner.raid_celebrate` | Illusioner Raid Celebration Spin | `minecraft:illusioner` | state `!q.is_dead && q.is_celebrating` | 1.00s | action | 160 |
+| `magma_cube.accordion_launch` | Magma Cube Accordion Launch | `minecraft:magma_cube` | event `jump` when `!q.is_dead` | 0.60s | action | 160 |
+| `magma_cube.coil_idle` | Magma Cube Coiling | `minecraft:magma_cube` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 2.00s | overlay | 105 |
+| `magma_cube.core_pulse` | Magma Cube Core Pulse | `minecraft:magma_cube` | state `!q.is_dead` | 1.40s | additive | 60 |
+| `magma_cube.lava_bathe` | Magma Cube Bathing In Lava | `minecraft:magma_cube` | state `!q.is_dead && q.is_in_lava` | 3.00s | overlay | 110 |
+| `magma_cube.sear_strike` | Magma Cube Searing Strike | `minecraft:magma_cube` | event `melee_hit` when `!q.is_dead` | 0.40s | action | 172 |
+| `magma_cube.slam` | Magma Cube Molten Slam | `minecraft:magma_cube` | event `land` when `!q.is_dead` | 0.50s | action | 170 |
+| `phantom.bite` | Phantom Bite | `minecraft:phantom` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 170 |
+| `phantom.circling_bank` | Phantom Circling Bank | `minecraft:phantom` | state `!q.is_dead && math.abs(q.turn_rate) > 3` | 2.00s | additive | 62 |
+| `phantom.death_spiral` | Phantom Death Spiral | `minecraft:phantom` | event `death` | 1.00s | action | 300 |
+| `phantom.glide` | Phantom Gliding Wingbeats | `minecraft:phantom` | state `!q.is_dead && q.vertical_speed > -0.3` | 1.60s | base | 100 |
+| `phantom.screech` | Phantom Screech | `minecraft:phantom` | event `vocalize` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `phantom.sun_scorch` | Phantom Scorching At Dawn | `minecraft:phantom` | state `!q.is_dead && q.is_on_fire` | 0.30s | action | 150 |
+| `phantom.swoop` | Phantom Swooping Dive | `minecraft:phantom` | state `!q.is_dead && q.vertical_speed <= -0.3` | 0.50s | base | 101 |
+| `phantom.wing_pump` | Phantom Climbing Wing Pump | `minecraft:phantom` | event `jump` | 0.60s | gesture | 150 |
+| `piglin.admire_gold` | Piglin Admiring Gold | `minecraft:piglin` | state `!q.is_dead && q.is_admiring` | 2.00s | action | 150 |
+| `piglin.barter_toss` | Piglin Tossing A Barter | `minecraft:piglin` | event `barter_toss` when `!q.is_dead` | 0.80s | action | 160 |
+| `piglin.crossbow_crank` | Piglin Cranking Crossbow | `minecraft:piglin` | state `!q.is_dead && q.arm_pose == 'crossbow_charge'` | 0.60s | additive | 80 |
+| `piglin.ear_flop` | Piglin Ear Flop | `minecraft:piglin` | state `!q.is_dead` | 1.00s | additive | 60 |
+| `piglin.gold_jealousy` | Piglin Gold Jealousy Snort | `minecraft:piglin` | event `vocalize` when `!q.is_dead && q.is_aggressive` | 0.90s | gesture | 150 |
+| `piglin.hunt_hoglin` | Piglin Hunting Party Crouch | `minecraft:piglin` | state `!q.is_dead && q.is_aggressive && q.main_hand == 'crossbow' && q.ground_speed < 0.02` | 2.00s | overlay | 118 |
+| `piglin.swagger` | Piglin Swaggering Walk | `minecraft:piglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.10s | base | 100 |
+| `piglin.victory_dance` | Piglin Victory Dance | `minecraft:piglin` | state `!q.is_dead && q.is_dancing` | 0.60s | action | 150 |
+| `piglin.war_charge` | Piglin War Charge | `minecraft:piglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat) && q.main_hand == 'sword'` | 0.70s | base | 101 |
+| `piglin.zombify_shake` | Piglin Overworld Convulsions | `minecraft:piglin` | state `!q.is_dead && q.dimension != 'the_nether'` | 0.30s | additive | 85 |
+| `piglin_brute.axe_chop` | Piglin Brute Axe Chop | `minecraft:piglin_brute` | event `attack` when `!q.is_dead` | 0.85s | action | 160 |
+| `piglin_brute.ear_flop` | Piglin Brute Scarred Ear Twitch | `minecraft:piglin_brute` | state `!q.is_dead` | 2.60s | additive | 60 |
+| `piglin_brute.guard_bastion` | Piglin Brute Guarding The Bastion | `minecraft:piglin_brute` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 4.00s | overlay | 120 |
+| `piglin_brute.patrol` | Piglin Brute Patrol March | `minecraft:piglin_brute` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.20s | base | 100 |
+| `piglin_brute.war_cry` | Piglin Brute War Cry | `minecraft:piglin_brute` | event `aggro` when `!q.is_dead` | 1.20s | action | 160 |
+| `pillager.aim_strafe` | Pillager Aiming Strafe | `minecraft:pillager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 1.00s | base | 101 |
+| `pillager.crossbow_reload` | Pillager Crossbow Reload | `minecraft:pillager` | state `!q.is_dead && q.arm_pose == 'crossbow_charge'` | 0.80s | additive | 80 |
+| `pillager.mocking_laugh` | Pillager Mocking Laugh | `minecraft:pillager` | event `vocalize` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `pillager.patrol` | Pillager Patrol Walk | `minecraft:pillager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.10s | base | 100 |
+| `pillager.raid_celebrate` | Pillager Raid Celebration | `minecraft:pillager` | state `!q.is_dead && q.is_celebrating` | 0.70s | action | 160 |
+| `pillager.recoil` | Pillager Crossbow Recoil | `minecraft:pillager` | event `crossbow_fire` when `!q.is_dead` | 0.50s | reaction | 170 |
+| `pillager.watchtower_scan` | Pillager Watchtower Scan | `minecraft:pillager` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 5.00s | overlay | 120 |
+| `ravager.charge` | Ravager Charging Gallop | `minecraft:ravager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed >= 0.15` | 0.70s | base | 101 |
+| `ravager.horn_toss` | Ravager Horn Toss | `minecraft:ravager` | event `melee_hit` when `!q.is_dead` | 0.80s | action | 175 |
+| `ravager.jaw_drool` | Ravager Slack Jaw | `minecraft:ravager` | state `!q.is_dead && !q.is_roaring` | 3.00s | additive | 60 |
+| `ravager.lumber` | Ravager Lumbering March | `minecraft:ravager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.15` | 1.40s | base | 100 |
+| `ravager.roar` | Ravager Roar | `minecraft:ravager` | state `!q.is_dead && q.is_roaring` | 1.00s | action | 170 |
+| `ravager.snort_idle` | Ravager Snorting Idle | `minecraft:ravager` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_roaring && !q.is_stunned` | 2.60s | overlay | 120 |
+| `ravager.stomp_challenge` | Ravager Challenge Stomp | `minecraft:ravager` | event `notice` when `!q.is_dead` | 1.40s | action | 150 |
+| `ravager.stunned` | Ravager Stunned And Reeling | `minecraft:ravager` | state `!q.is_dead && q.is_stunned` | 1.20s | action | 165 |
+| `ravager.trample` | Ravager Trampling Through Foliage | `minecraft:ravager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.feet_block == 'foliage'` | 0.70s | additive | 60 |
+| `shulker.blink_out` | Shulker Teleport Blink | `minecraft:shulker` | event `teleport` when `!q.is_dead` | 0.50s | reaction | 210 |
+| `shulker.bullet_spit` | Shulker Bullet Spit | `minecraft:shulker` | event `shoot:bullet` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `shulker.dust_off` | Shulker Shell Shudder | `minecraft:shulker` | event `vocalize` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `shulker.lid_flutter` | Shulker Lid Flutter | `minecraft:shulker` | state `!q.is_dead` | 2.60s | additive | 60 |
+| `shulker.peek_wary` | Shulker Wary Peek | `minecraft:shulker` | state `!q.is_dead && q.player_distance < 6` | 2.00s | additive | 64 |
+| `shulker.snap_shut` | Shulker Snaps Shut | `minecraft:shulker` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `silverfish.antennae_feel` | Silverfish Feeling About | `minecraft:silverfish` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 1.40s | overlay | 120 |
+| `silverfish.burrow` | Silverfish Burrowing Wiggle | `minecraft:silverfish` | state `!q.is_dead && q.is_aggressive && q.ground_speed < 0.01` | 0.25s | overlay | 120 |
+| `silverfish.nip` | Silverfish Nip | `minecraft:silverfish` | event `melee_hit` when `!q.is_dead` | 0.30s | action | 170 |
+| `silverfish.slither` | Silverfish Slither | `minecraft:silverfish` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 0.50s | base | 100 |
+| `skeleton.backpedal` | Skeleton Backpedalling To Range | `minecraft:skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat) && q.forward_speed < -0.02` | 0.90s | base | 102 |
+| `skeleton.bone_rattle` | Skeleton Bone Rattle | `minecraft:skeleton` | state `!q.is_dead` | 0.25s | additive | 60 |
+| `skeleton.jaw_clack` | Skeleton Jaw Clack | `minecraft:skeleton` | event `vocalize` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `skeleton.scan` | Skeleton Scanning For Targets | `minecraft:skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 4.00s | overlay | 120 |
+| `skeleton.strafe_draw` | Skeleton Strafing Archer | `minecraft:skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat) && q.main_hand == 'bow'` | 0.90s | base | 101 |
+| `skeleton.sunburn_panic` | Skeleton Smouldering Flail | `minecraft:skeleton` | state `!q.is_dead && q.is_on_fire` | 0.40s | action | 150 |
+| `skeleton.walk` | Skeleton Rattling Walk | `minecraft:skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.10s | base | 100 |
+| `slime.crouch_spring` | Slime Coiled Spring | `minecraft:slime` | event `jump` when `!q.is_dead` | 0.40s | action | 160 |
+| `slime.dissolve_wobble` | Slime Weakened Wobble | `minecraft:slime` | state `!q.is_dead && q.health < 0.35` | 0.50s | additive | 64 |
+| `slime.eye_wander` | Slime Wandering Eyes | `minecraft:slime` | state `!q.is_dead` | 3.00s | additive | 62 |
+| `slime.gulp` | Slime Gulping Strike | `minecraft:slime` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 170 |
+| `slime.jiggle` | Slime Jelly Jiggle | `minecraft:slime` | state `!q.is_dead && q.is_on_ground` | 0.90s | additive | 60 |
+| `slime.splat_land` | Slime Splat Landing | `minecraft:slime` | event `land` when `!q.is_dead` | 0.50s | action | 170 |
+| `spider.abdomen_pulse` | Spider Abdomen Pulse | `minecraft:spider` | state `!q.is_dead` | 2.20s | additive | 60 |
+| `spider.fang_bite` | Spider Fang Bite | `minecraft:spider` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 170 |
+| `spider.hiss_threat` | Spider Threat Display | `minecraft:spider` | event `notice` when `!q.is_dead` | 1.00s | action | 150 |
+| `spider.leg_tap` | Spider Tapping Its Forelegs | `minecraft:spider` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 1.60s | overlay | 120 |
+| `spider.pounce` | Spider Pounce | `minecraft:spider` | event `jump` when `!q.is_dead && (q.is_aggressive \|\| q.in_combat)` | 0.70s | action | 160 |
+| `spider.scuttle` | Spider Scuttle | `minecraft:spider` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_climbing` | 0.60s | base | 100 |
+| `spider.wall_climb` | Spider Wall Climb | `minecraft:spider` | state `!q.is_dead && q.is_climbing` | 0.50s | base | 101 |
+| `spider.web_lurk` | Spider Lurking Motionless | `minecraft:spider` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat && q.light < 7` | 6.00s | overlay | 120 |
+| `stray.bone_rattle` | Stray Bone Rattle | `minecraft:stray` | state `!q.is_dead` | 0.25s | additive | 60 |
+| `stray.frost_breath` | Stray Frost Breath | `minecraft:stray` | state `!q.is_dead` | 3.00s | additive | 60 |
+| `stray.hunched_cold` | Stray Hunched Against The Cold | `minecraft:stray` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 3.00s | overlay | 120 |
+| `stray.walk` | Stray Frostbitten Gait | `minecraft:stray` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.10s | base | 100 |
+| `vex.cackle` | Vex Cackle | `minecraft:vex` | event `vocalize` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `vex.charge_dive` | Vex Charging Dive | `minecraft:vex` | state `!q.is_dead && q.is_charging` | 0.30s | action | 150 |
+| `vex.circle_taunt` | Vex Circling Taunt | `minecraft:vex` | state `!q.is_dead && q.is_aggressive && !q.is_charging` | 2.00s | overlay | 105 |
+| `vex.fade_death` | Vex Fading Away | `minecraft:vex` | event `death` | 0.80s | action | 300 |
+| `vex.hover` | Vex Malicious Hover | `minecraft:vex` | state `!q.is_dead && !q.is_charging` | 1.20s | additive | 60 |
+| `vex.slash` | Vex Spectral Slash | `minecraft:vex` | event `melee_hit` when `!q.is_dead` | 0.50s | action | 170 |
+| `vindicator.axe_rush` | Vindicator Axe Rush | `minecraft:vindicator` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.65s | base | 101 |
+| `vindicator.cleave` | Vindicator Cleaving Chop | `minecraft:vindicator` | event `attack` when `!q.is_dead` | 0.70s | action | 160 |
+| `vindicator.door_hack` | Vindicator Hacking Down A Door | `minecraft:vindicator` | state `!q.is_dead && (q.is_aggressive \|\| q.in_combat) && q.ground_speed < 0.01 && q.is_swinging` | 0.50s | action | 145 |
+| `vindicator.johnny_rage` | Vindicator Unhinged Rage | `minecraft:vindicator` | event `aggro` when `!q.is_dead && q.trait_confidence > 0.6` | 1.20s | action | 170 |
+| `vindicator.lurk` | Vindicator Mansion Lurk | `minecraft:vindicator` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 6.00s | overlay | 120 |
+| `vindicator.raid_celebrate` | Vindicator Raid Celebration Stomp | `minecraft:vindicator` | state `!q.is_dead && q.is_celebrating` | 0.70s | action | 160 |
+| `vindicator.stomp_walk` | Vindicator Brutish Stomp | `minecraft:vindicator` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.00s | base | 100 |
+| `warden.angry_stride` | Warden Furious Stride | `minecraft:warden` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.attack_tick >= 0.5` | 1.30s | base | 101 |
+| `warden.burrow_heave` | Warden Burrowing Heave | `minecraft:warden` | state `!q.is_dead && q.is_digging` | 1.00s | additive | 90 |
+| `warden.emerge_struggle` | Warden Clawing Up From The Deep Dark | `minecraft:warden` | state `!q.is_dead && q.is_emerging` | 1.00s | additive | 90 |
+| `warden.heartbeat` | Warden Soul Heartbeat | `minecraft:warden` | state `!q.is_dead` | 1.00s | additive | 60 |
+| `warden.heavy_walk` | Warden Ponderous Walk | `minecraft:warden` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.attack_tick < 0.5` | 2.20s | base | 100 |
+| `warden.listen_still` | Warden Listening Still | `minecraft:warden` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_sniffing && q.attack_tick < 0.3` | 5.00s | overlay | 120 |
+| `warden.roar_flex` | Warden Roar Ribcage Flex | `minecraft:warden` | event `aggro` when `!q.is_dead` | 2.00s | gesture | 160 |
+| `warden.sense_vibration` | Warden Senses A Vibration | `minecraft:warden` | event `notice` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `warden.smash` | Warden Overhead Smash | `minecraft:warden` | event `attack` when `!q.is_dead` | 0.90s | action | 180 |
+| `warden.sniff` | Warden Sniffing The Air | `minecraft:warden` | state `!q.is_dead && q.is_sniffing` | 1.00s | additive | 150 |
+| `warden.sonic_charge` | Warden Sonic Boom Charge | `minecraft:warden` | state `!q.is_dead && q.is_charging` | 1.60s | action | 200 |
+| `warden.tendril_quiver` | Warden Tendrils Quiver | `minecraft:warden` | state `!q.is_dead` | 0.40s | additive | 60 |
+| `witch.brew_drink` | Witch Quaffing A Potion | `minecraft:witch` | state `!q.is_dead && q.is_using_item` | 1.20s | action | 150 |
+| `witch.cackle` | Witch Cackle | `minecraft:witch` | event `vocalize` when `!q.is_dead` | 1.40s | gesture | 150 |
+| `witch.cauldron_stir` | Witch Stirring An Invisible Brew | `minecraft:witch` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive` | 2.40s | overlay | 120 |
+| `witch.hat_tilt_watch` | Witch Watching From Under The Brim | `minecraft:witch` | state `!q.is_dead && q.player_distance < 8 && q.ground_speed < 0.02` | 3.00s | additive | 64 |
+| `witch.hobble` | Witch Hobbling Gait | `minecraft:witch` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.30s | base | 100 |
+| `witch.nose_twitch` | Witch Nose Twitch | `minecraft:witch` | state `!q.is_dead` | 2.20s | additive | 60 |
+| `witch.panicked_brew` | Witch Fumbling For A Healing Brew | `minecraft:witch` | state `!q.is_dead && q.is_using_item && q.health < 0.4` | 0.60s | action | 155 |
+| `witch.potion_hurl` | Witch Hurling A Potion | `minecraft:witch` | event `shoot:potion` when `!q.is_dead` | 0.70s | action | 170 |
+| `wither.armored_phase` | Wither Armored Hunch | `minecraft:wither` | state `!q.is_dead && q.is_powered` | 2.00s | additive | 70 |
+| `wither.death_tremor` | Wither Death Tremor | `minecraft:wither` | event `death` | 2.00s | action | 300 |
+| `wither.heads_scan` | Wither Heads Scanning | `minecraft:wither` | state `!q.is_dead && !q.invulnerable` | 3.00s | additive | 60 |
+| `wither.hover_drift` | Wither Hovering Drift | `minecraft:wither` | state `!q.is_dead && !q.invulnerable && q.ground_speed < 0.03` | 4.00s | overlay | 105 |
+| `wither.shriek` | Wither Shriek | `minecraft:wither` | event `vocalize` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `wither.skull_barrage` | Wither Skull Barrage | `minecraft:wither` | event `shoot:skull` when `!q.is_dead` | 0.90s | gesture | 150 |
+| `wither.spawn_charge` | Wither Gathering Power | `minecraft:wither` | state `!q.is_dead && q.invulnerable` | 1.00s | overlay | 200 |
+| `wither.struck_recoil` | Wither Struck Recoil | `minecraft:wither` | event `hurt` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `wither.tail_coil` | Wither Spine Tail Coil | `minecraft:wither` | state `!q.is_dead` | 2.40s | additive | 60 |
+| `wither_skeleton.backhand` | Wither Skeleton Backhand Slash | `minecraft:wither_skeleton` | event `attack` when `!q.is_dead && q.main_hand == 'sword' && q.in_combat` | 0.70s | action | 160 |
+| `wither_skeleton.bone_rattle` | Wither Skeleton Bone Rattle | `minecraft:wither_skeleton` | state `!q.is_dead` | 0.35s | additive | 60 |
+| `wither_skeleton.guard_stance` | Wither Skeleton Guard Stance | `minecraft:wither_skeleton` | state `!q.is_dead && (q.is_aggressive \|\| q.in_combat) && q.ground_speed < 0.02` | 2.00s | overlay | 120 |
+| `wither_skeleton.nether_patrol` | Wither Skeleton Fortress Patrol Pause | `minecraft:wither_skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 5.00s | overlay | 120 |
+| `wither_skeleton.overhead_cleave` | Wither Skeleton Overhead Cleave | `minecraft:wither_skeleton` | event `attack` when `!q.is_dead && q.main_hand == 'sword'` | 0.90s | action | 160 |
+| `wither_skeleton.walk` | Wither Skeleton Menacing Stride | `minecraft:wither_skeleton` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.40s | base | 100 |
+| `zoglin.ear_flick` | Zoglin Ear Flick | `minecraft:zoglin` | state `!q.is_dead` | 3.60s | additive | 60 |
+| `zoglin.gore_toss` | Zoglin Gore Toss | `minecraft:zoglin` | event `melee_hit` when `!q.is_dead` | 0.70s | action | 175 |
+| `zoglin.rampage` | Zoglin Rampage | `minecraft:zoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.55s | base | 101 |
+| `zoglin.trot` | Zoglin Rotting Trot | `minecraft:zoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.20s | base | 100 |
+| `zoglin.twitch_idle` | Zoglin Rotting Twitch | `minecraft:zoglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 2.40s | overlay | 120 |
+| `zombie.baby_sprint` | Baby Zombie Sprint | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.45s | base | 102 |
+| `zombie.claw_swipe` | Zombie Clawing Swipe | `minecraft:zombie` | event `attack` when `!q.is_dead && q.main_hand == 'empty'` | 0.70s | action | 160 |
+| `zombie.door_bash` | Zombie Pounding On A Door | `minecraft:zombie` | state `!q.is_dead && (q.is_aggressive \|\| q.in_combat) && q.ground_speed < 0.01 && q.is_swinging` | 0.60s | action | 140 |
+| `zombie.grasping_reach` | Zombie Grasping Reach | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && (q.is_aggressive \|\| q.in_combat)` | 1.40s | overlay | 115 |
+| `zombie.groan` | Zombie Groan | `minecraft:zombie` | event `vocalize` when `!q.is_dead` | 1.80s | gesture | 150 |
+| `zombie.hunt_lurch` | Zombie Hunting Lurch | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat) && !q.is_baby` | 0.90s | base | 101 |
+| `zombie.idle_sway` | Zombie Swaying Idle | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 4.00s | overlay | 120 |
+| `zombie.notice` | Zombie Noticing Prey | `minecraft:zombie` | event `notice` when `!q.is_dead` | 0.90s | gesture | 150 |
+| `zombie.rise_from_ground` | Zombie Clawing Out Of The Earth | `minecraft:zombie` | manual | 3.00s | action | 250 |
+| `zombie.shamble` | Zombie Shamble | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat && !q.is_baby` | 1.40s | base | 100 |
+| `zombie.stumble_idle` | Zombie Stumbling In Place | `minecraft:zombie` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat && q.idle_time > 8` | 2.50s | overlay | 120 |
+| `zombie.sunburn` | Zombie Burning In Sunlight | `minecraft:zombie` | state `!q.is_dead && q.is_on_fire && !q.is_in_water` | 0.50s | action | 150 |
+| `zombie.weapon_bash` | Zombie Clumsy Weapon Bash | `minecraft:zombie` | event `attack` when `!q.is_dead && q.main_hand != 'empty'` | 0.80s | action | 160 |
+| `zombie_villager.curing_tremor` | Zombie Villager Curing Tremors | `minecraft:zombie_villager` | state `!q.is_dead && q.is_shaking` | 0.30s | overlay | 160 |
+| `zombie_villager.door_drag` | Zombie Villager Dragging Itself | `minecraft:zombie_villager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && q.health < 0.3` | 1.80s | base | 105 |
+| `zombie_villager.flail` | Zombie Villager Flailing Swat | `minecraft:zombie_villager` | event `attack` when `!q.is_dead` | 0.70s | action | 160 |
+| `zombie_villager.lost_idle` | Zombie Villager Lost Wandering Look | `minecraft:zombie_villager` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01` | 5.00s | overlay | 120 |
+| `zombie_villager.mournful_hrmm` | Zombie Villager Mournful Hrmm | `minecraft:zombie_villager` | event `vocalize` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `zombie_villager.shuffle` | Zombie Villager Shuffle | `minecraft:zombie_villager` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01` | 1.50s | base | 100 |
+| `zombified_piglin.dead_walk` | Zombified Piglin Dead Walk | `minecraft:zombified_piglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && !q.is_aggressive && !q.in_combat` | 1.50s | base | 100 |
+| `zombified_piglin.ear_flop` | Zombified Piglin Rotting Ear Droop | `minecraft:zombified_piglin` | state `!q.is_dead` | 1.80s | additive | 60 |
+| `zombified_piglin.grunt` | Zombified Piglin Wet Grunt | `minecraft:zombified_piglin` | event `vocalize` when `!q.is_dead` | 0.90s | gesture | 150 |
+| `zombified_piglin.idle_lean` | Zombified Piglin Listless Lean | `minecraft:zombified_piglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed < 0.01 && !q.is_aggressive && !q.in_combat` | 5.00s | overlay | 120 |
+| `zombified_piglin.vengeance` | Zombified Piglin Vengeful Horde Charge | `minecraft:zombified_piglin` | state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01 && (q.is_aggressive \|\| q.in_combat)` | 0.75s | base | 101 |
 
 ## Villagers and humanoid NPCs
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `iron_golem.child_pat` | Iron Golem Patting A Child | `minecraft:iron_golem` | event `speak` when `!q.is_dead && !q.is_sleeping` | 2.00s | action | 140 |
+| `iron_golem.cracked_limp` | Cracked Iron Golem Limp | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && q.health < 0.3` | 2.60s | base | 101 |
+| `iron_golem.creak` | Iron Golem Creaking Settle | `minecraft:iron_golem` | event `vocalize` when `!q.is_dead && !q.is_sleeping` | 1.60s | gesture | 150 |
+| `iron_golem.crumble` | Iron Golem Crumbling Collapse | `minecraft:iron_golem` | event `death` | 1.60s | action | 300 |
+| `iron_golem.ground_slam` | Iron Golem Ground Slam | `minecraft:iron_golem` | event `aggro` when `!q.is_dead && !q.is_sleeping` | 1.20s | action | 165 |
+| `iron_golem.offer_poppy` | Iron Golem Offering A Poppy | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.is_holding` | 2.00s | action | 150 |
+| `iron_golem.patrol` | Iron Golem Heavy Patrol | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && q.health >= 0.3` | 2.20s | base | 100 |
+| `iron_golem.repaired` | Iron Golem Repaired | `minecraft:iron_golem` | event `interacted` when `!q.is_dead && !q.is_sleeping && q.health < 1` | 1.40s | action | 150 |
+| `iron_golem.sentinel` | Iron Golem Sentinel Stance | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && !q.is_holding` | 6.00s | additive | 55 |
+| `iron_golem.uppercut_toss` | Iron Golem Uppercut Toss | `minecraft:iron_golem` | event `melee_hit` when `!q.is_dead && !q.is_sleeping` | 1.00s | action | 170 |
+| `iron_golem.vine_sway` | Iron Golem Vines Swaying | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.wind > 0.3` | 3.00s | additive | 58 |
+| `iron_golem.watch_over` | Iron Golem Watching Over The Village | `minecraft:iron_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.player_distance < 6 && !q.is_holding` | 4.00s | overlay | 110 |
+| `snow_golem.hurt_crumble` | Snow Golem Crumbling Flinch | `minecraft:snow_golem` | event `hurt` when `!q.is_dead && !q.is_sleeping` | 0.70s | reaction | 200 |
+| `snow_golem.idle_wobble` | Snow Golem Idle Wobble | `minecraft:snow_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01` | 4.00s | additive | 55 |
+| `snow_golem.melt_away` | Snow Golem Melting Away | `minecraft:snow_golem` | event `death` | 1.40s | action | 300 |
+| `snow_golem.melt_droop` | Snow Golem Melting Droop | `minecraft:snow_golem` | state `!q.is_dead && !q.is_sleeping && q.temperature > 1.0` | 2.60s | overlay | 120 |
+| `snow_golem.pumpkin_tilt` | Snow Golem Tilting Its Pumpkin | `minecraft:snow_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.player_distance < 5` | 2.40s | overlay | 110 |
+| `snow_golem.sheared_shiver` | Snow Golem Sheared Shiver | `minecraft:snow_golem` | event `interacted` when `!q.is_dead && !q.is_sleeping` | 1.00s | gesture | 150 |
+| `snow_golem.slide` | Snow Golem Sliding Waddle | `minecraft:snow_golem` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01` | 1.00s | base | 100 |
+| `snow_golem.snowfall_joy` | Snow Golem Delighting In Snowfall | `minecraft:snow_golem` | state `!q.is_dead && !q.is_sleeping && q.is_raining && q.is_cold` | 1.60s | overlay | 118 |
+| `snow_golem.throw` | Snow Golem Snowball Throw | `minecraft:snow_golem` | event `shoot:snowball` when `!q.is_dead && !q.is_sleeping` | 0.60s | action | 170 |
+| `villager.amble` | Villager Ambling Walk | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && !q.near_hostile && !q.is_baby && !q.is_night` | 1.30s | base | 100 |
+| `villager.argue` | Villager Heated Argument | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && q.is_speaking && q.mood < 0.3` | 0.90s | overlay | 118 |
+| `villager.armorer.bellows` | Armorer Pumping The Bellows | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'armorer'` | 1.20s | overlay | 120 |
+| `villager.armorer.hammer` | Armorer Hammering Plate | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'armorer'` | 0.70s | overlay | 120 |
+| `villager.armorer.inspect_plate` | Armorer Inspecting A Plate | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'armorer'` | 3.00s | overlay | 120 |
+| `villager.armorer.mannerism` | Armorer Cracking His Neck | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'armorer' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.armorer.polish` | Armorer Polishing A Chestplate | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'armorer'` | 1.40s | overlay | 120 |
+| `villager.armorer.trade_flourish` | Armorer Knocking On The Plate | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'armorer'` | 1.20s | action | 161 |
+| `villager.bored_yawn` | Villager Bored Yawn | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.idle_time > 40 && !q.in_conversation` | 4.00s | overlay | 107 |
+| `villager.butcher.cleave` | Butcher Cleaving | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'butcher'` | 0.90s | overlay | 120 |
+| `villager.butcher.mannerism` | Butcher Sniffing The Air | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'butcher' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.butcher.sharpen` | Butcher Sharpening His Knife | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'butcher'` | 0.80s | overlay | 120 |
+| `villager.butcher.smoke_hang` | Butcher Hanging Meat To Smoke | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'butcher'` | 2.20s | overlay | 120 |
+| `villager.butcher.trade_flourish` | Butcher Slapping The Counter | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'butcher'` | 1.00s | action | 161 |
+| `villager.butcher.weigh` | Butcher Weighing Cuts | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'butcher'` | 2.60s | overlay | 120 |
+| `villager.cartographer.compass_check` | Cartographer Checking A Compass | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cartographer'` | 2.00s | overlay | 120 |
+| `villager.cartographer.mannerism` | Cartographer Pointing The Way | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'cartographer' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.cartographer.plot` | Cartographer Plotting Routes | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cartographer'` | 1.40s | overlay | 120 |
+| `villager.cartographer.survey` | Cartographer Surveying The Horizon | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cartographer'` | 4.00s | overlay | 120 |
+| `villager.cartographer.trade_flourish` | Cartographer Rolling Up A Map | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'cartographer'` | 1.60s | action | 161 |
+| `villager.cartographer.unroll_map` | Cartographer Unrolling A Map | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cartographer'` | 2.60s | overlay | 120 |
+| `villager.child_bed_bounce` | Village Child Bouncing Before Bed | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_baby && q.is_night && q.surface == 'wood' && q.ground_speed < 0.01` | 0.60s | overlay | 120 |
+| `villager.child_cry` | Village Child Bursting Into Tears | `minecraft:villager` | event `hurt` when `!q.is_dead && !q.is_sleeping && q.is_baby` | 2.00s | reaction | 205 |
+| `villager.child_giggle` | Village Child Giggle | `minecraft:villager` | event `speak` when `!q.is_dead && !q.is_sleeping && q.is_baby` | 0.80s | gesture | 150 |
+| `villager.child_hopscotch` | Village Child Hopscotch | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_baby` | 1.20s | overlay | 120 |
+| `villager.child_play_tag` | Village Children Playing Tag | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_baby && q.trait_energy > 0.4` | 1.00s | overlay | 120 |
+| `villager.child_scamper` | Village Child Scampering | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && q.is_baby` | 0.45s | base | 103 |
+| `villager.child_tumble` | Village Child Tumbling On Landing | `minecraft:villager` | event `land` when `!q.is_dead && !q.is_sleeping && q.is_baby && q.last_fall > 1.5` | 1.00s | action | 160 |
+| `villager.child_wave` | Village Child Waving Excitedly | `minecraft:villager` | event `interacted` when `!q.is_dead && !q.is_sleeping && q.is_baby` | 1.20s | gesture | 152 |
+| `villager.cleric.bless` | Cleric Raising A Blessing | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cleric'` | 2.40s | overlay | 120 |
+| `villager.cleric.brew_stir` | Cleric Stirring A Brew | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cleric'` | 1.60s | overlay | 120 |
+| `villager.cleric.censer` | Cleric Swinging A Censer | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cleric'` | 1.40s | overlay | 120 |
+| `villager.cleric.mannerism` | Cleric Solemn Bow | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'cleric' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.cleric.pray` | Cleric In Prayer | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'cleric'` | 4.00s | overlay | 120 |
+| `villager.cleric.trade_flourish` | Cleric Blessing The Customer | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'cleric'` | 1.80s | action | 161 |
+| `villager.cold_hug` | Villager Hugging Itself In The Cold | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_cold && !q.near_fire && !q.is_baby` | 0.30s | overlay | 116 |
+| `villager.cower` | Villager Cowering | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.near_hostile && q.hostile_distance < 6` | 0.40s | action | 180 |
+| `villager.deal_struck` | Villager Deal Struck | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping` | 1.20s | action | 160 |
+| `villager.disagree` | Villager Disagreeing Hrmm | `minecraft:villager` | event `speak` when `!q.is_dead && !q.is_sleeping && q.mood < 0.35` | 1.20s | gesture | 150 |
+| `villager.farmer.harvest` | Farmer Crouched Harvest | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'farmer'` | 2.00s | overlay | 120 |
+| `villager.farmer.mannerism` | Farmer Squinting At The Sky | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'farmer' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.farmer.sow` | Farmer Sowing Seeds | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'farmer'` | 1.60s | overlay | 120 |
+| `villager.farmer.till` | Farmer Tilling Soil | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'farmer'` | 1.20s | overlay | 120 |
+| `villager.farmer.trade_flourish` | Farmer Hefting The Harvest | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'farmer'` | 1.40s | action | 161 |
+| `villager.farmer.wipe_brow` | Farmer Wiping His Brow | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'farmer'` | 3.00s | overlay | 120 |
+| `villager.fisherman.cast` | Fisherman Casting | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fisherman'` | 2.80s | overlay | 120 |
+| `villager.fisherman.gut_fish` | Fisherman Gutting A Catch | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fisherman'` | 1.00s | overlay | 120 |
+| `villager.fisherman.mannerism` | Fisherman Spinning A Yarn | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'fisherman' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.fisherman.mend_net` | Fisherman Mending Nets | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fisherman'` | 1.60s | overlay | 120 |
+| `villager.fisherman.reel` | Fisherman Reeling | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fisherman'` | 0.80s | overlay | 120 |
+| `villager.fisherman.trade_flourish` | Fisherman Holding Up A Catch | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'fisherman'` | 1.60s | action | 161 |
+| `villager.fletcher.bend_test` | Fletcher Testing A Bow Stave | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fletcher'` | 2.00s | overlay | 120 |
+| `villager.fletcher.fletch` | Fletcher Fletching Arrows | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fletcher'` | 1.00s | overlay | 120 |
+| `villager.fletcher.mannerism` | Fletcher Testing The Wind | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'fletcher' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.fletcher.sight_arrow` | Fletcher Sighting Down An Arrow | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fletcher'` | 2.60s | overlay | 120 |
+| `villager.fletcher.trade_flourish` | Fletcher Tipping His Cap | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'fletcher'` | 1.20s | action | 161 |
+| `villager.fletcher.whittle` | Fletcher Whittling | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'fletcher'` | 0.60s | overlay | 120 |
+| `villager.gesture_point` | Villager Pointing Something Out | `minecraft:villager` | event `speak` when `!q.is_dead && !q.is_sleeping && q.trait_curiosity > 0.6` | 1.60s | gesture | 146 |
+| `villager.gossip_talk` | Villager Gossiping | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && q.is_speaking` | 2.20s | overlay | 115 |
+| `villager.greet_wave` | Villager Greeting | `minecraft:villager` | event `interacted` when `!q.is_dead && !q.is_sleeping && !q.is_trading` | 1.40s | gesture | 150 |
+| `villager.group_laugh` | Villagers Laughing Together | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && !q.is_speaking && q.mood > 0.75 && q.conversation_size >= 3` | 1.00s | additive | 115 |
+| `villager.grumpy_shake` | Villager Unhappy Head Shake | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_unhappy` | 0.60s | action | 170 |
+| `villager.haggle` | Villager Haggling | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_trading` | 3.00s | overlay | 140 |
+| `villager.heat_fan` | Villager Fanning Itself In The Heat | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.temperature > 1.5 && !q.is_raining && !q.is_night` | 0.50s | overlay | 116 |
+| `villager.hmm` | Villager Thoughtful Hmm | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && !q.is_cold && !q.in_conversation` | 1.40s | gesture | 150 |
+| `villager.hurry_home` | Villager Hurrying Home At Dusk | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && q.is_night && !q.near_hostile && !q.is_baby` | 0.80s | base | 101 |
+| `villager.idle_look` | Villager Idle Looking About | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && !q.in_conversation` | 5.00s | additive | 55 |
+| `villager.idle_shift_weight` | Villager Shifting Weight | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && !q.in_conversation` | 6.00s | additive | 55 |
+| `villager.laugh` | Villager Laughing | `minecraft:villager` | event `speak` when `!q.is_dead && !q.is_sleeping && q.mood > 0.6` | 1.40s | gesture | 150 |
+| `villager.leatherworker.cut_strips` | Leatherworker Cutting Strips | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'leatherworker'` | 1.20s | overlay | 120 |
+| `villager.leatherworker.dye_dip` | Leatherworker Dipping In The Cauldron | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'leatherworker'` | 2.40s | overlay | 120 |
+| `villager.leatherworker.mannerism` | Leatherworker Tugging His Apron | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'leatherworker' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.leatherworker.stitch` | Leatherworker Stitching | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'leatherworker'` | 0.90s | overlay | 120 |
+| `villager.leatherworker.stretch_hide` | Leatherworker Stretching A Hide | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'leatherworker'` | 2.00s | overlay | 120 |
+| `villager.leatherworker.trade_flourish` | Leatherworker Snapping A Hide | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'leatherworker'` | 1.00s | action | 161 |
+| `villager.level_pride` | Seasoned Villager Proud Posture | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.villager_level >= 4 && !q.in_conversation` | 5.00s | additive | 56 |
+| `villager.librarian.mannerism` | Librarian Sage Nod | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'librarian' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.librarian.page_turn` | Librarian Turning Pages | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'librarian'` | 1.60s | overlay | 120 |
+| `villager.librarian.quill_write` | Librarian Writing With A Quill | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'librarian'` | 2.00s | overlay | 120 |
+| `villager.librarian.read` | Librarian Reading | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'librarian'` | 3.00s | overlay | 120 |
+| `villager.librarian.shelve` | Librarian Shelving A Book | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'librarian'` | 2.40s | overlay | 120 |
+| `villager.librarian.trade_flourish` | Librarian Tucking Away A Book | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'librarian'` | 1.40s | action | 161 |
+| `villager.listen_nod` | Villager Listening And Nodding | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && !q.is_speaking` | 2.60s | additive | 114 |
+| `villager.mason.chisel` | Mason Chiselling Stone | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'mason'` | 0.50s | overlay | 120 |
+| `villager.mason.heave_stone` | Mason Heaving A Stone | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'mason'` | 2.60s | overlay | 120 |
+| `villager.mason.mannerism` | Mason Rubbing His Back | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'mason' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.mason.measure` | Mason Measuring A Block | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'mason'` | 2.40s | overlay | 120 |
+| `villager.mason.polish_stone` | Mason Polishing Terracotta | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'mason'` | 1.20s | overlay | 120 |
+| `villager.mason.trade_flourish` | Mason Thumping A Brick | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'mason'` | 1.00s | action | 161 |
+| `villager.night_lantern_watch` | Villager Peering Into The Dark | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_night && q.light < 8 && !q.is_sleeping` | 3.00s | overlay | 112 |
+| `villager.nitwit_daydream` | Nitwit Daydreaming | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.profession == 'nitwit'` | 6.00s | overlay | 110 |
+| `villager.nitwit_spin` | Nitwit Spinning In Place | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.profession == 'nitwit' && q.trait_energy > 0.6` | 3.00s | overlay | 111 |
+| `villager.panic_flee` | Villager Panicked Flight | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && (q.near_hostile \|\| q.recent_hurt < 6) && !q.is_baby` | 0.50s | base | 102 |
+| `villager.rain_shelter` | Villager Shielding From The Rain | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_raining && q.sky_exposed && !q.near_hostile` | 1.60s | overlay | 125 |
+| `villager.rainy_window` | Villager Watching The Rain Indoors | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_raining && !q.sky_exposed` | 5.00s | overlay | 108 |
+| `villager.sceptic_listen` | Villager Listening Sceptically | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && !q.is_speaking && q.trait_confidence > 0.7` | 3.00s | additive | 115 |
+| `villager.shepherd.call_flock` | Shepherd Calling The Flock | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'shepherd'` | 2.00s | overlay | 120 |
+| `villager.shepherd.count_flock` | Shepherd Counting The Flock | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'shepherd'` | 3.00s | overlay | 120 |
+| `villager.shepherd.mannerism` | Shepherd Whistling For The Flock | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'shepherd' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.shepherd.shear` | Shepherd Shearing Wool | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'shepherd'` | 0.60s | overlay | 120 |
+| `villager.shepherd.spin_wool` | Shepherd At The Spinning Wheel | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'shepherd'` | 1.00s | overlay | 120 |
+| `villager.shepherd.trade_flourish` | Shepherd Fluffing Fresh Wool | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'shepherd'` | 1.40s | action | 161 |
+| `villager.shrug` | Villager Shrugging | `minecraft:villager` | event `speak` when `!q.is_dead && !q.is_sleeping && q.mood >= 0.35 && q.mood <= 0.6` | 1.00s | gesture | 150 |
+| `villager.shy_listen` | Villager Listening Shyly | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && !q.is_speaking && q.trait_social < 0.3` | 3.00s | additive | 115 |
+| `villager.sleep_breathe` | Villager Sleeping Breath | `minecraft:villager` | state `!q.is_dead && q.is_sleeping` | 3.60s | additive | 130 |
+| `villager.sneeze` | Villager Sneeze | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.is_cold` | 1.00s | gesture | 150 |
+| `villager.startled` | Villager Startled Jump | `minecraft:villager` | event `hurt` when `!q.is_dead && !q.is_sleeping` | 0.70s | reaction | 200 |
+| `villager.storyteller` | Villager Telling A Grand Story | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && q.is_speaking && q.conversation_size >= 3` | 3.00s | overlay | 117 |
+| `villager.sun_bask` | Villager Basking In The Sun | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.sky_exposed && !q.is_raining && q.time_of_day > 0.15 && q.time_of_day < 0.35 && q.idle_time > 12` | 6.00s | overlay | 108 |
+| `villager.thunder_flinch` | Villager Flinching At Thunder | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.is_thundering` | 0.90s | gesture | 148 |
+| `villager.toolsmith.grindstone` | Toolsmith Treadling The Grindstone | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'toolsmith'` | 0.80s | overlay | 120 |
+| `villager.toolsmith.hammer_head` | Toolsmith Shaping A Tool Head | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'toolsmith'` | 0.60s | overlay | 120 |
+| `villager.toolsmith.mannerism` | Toolsmith Flexing His Grip | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'toolsmith' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.toolsmith.test_edge` | Toolsmith Testing An Edge | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'toolsmith'` | 2.20s | overlay | 120 |
+| `villager.toolsmith.tongs_quench` | Toolsmith Quenching With Tongs | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'toolsmith'` | 2.40s | overlay | 120 |
+| `villager.toolsmith.trade_flourish` | Toolsmith Spinning A Tool | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'toolsmith'` | 1.20s | action | 161 |
+| `villager.unemployed_wander_look` | Unemployed Villager Scanning For Work | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.profession == 'none' && !q.is_baby` | 4.00s | overlay | 110 |
+| `villager.wake_stretch` | Villager Morning Stretch | `minecraft:villager` | event `wake` when `!q.is_dead && !q.is_baby` | 2.40s | action | 150 |
+| `villager.warm_by_fire` | Villager Warming By The Fire | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.near_fire && (q.is_night \|\| q.is_cold)` | 2.00s | overlay | 118 |
+| `villager.weaponsmith.grind_blade` | Weaponsmith Grinding A Blade | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'weaponsmith'` | 0.90s | overlay | 120 |
+| `villager.weaponsmith.inspect_blade` | Weaponsmith Sighting Down A Blade | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'weaponsmith'` | 3.00s | overlay | 120 |
+| `villager.weaponsmith.mannerism` | Weaponsmith Stern Stare | `minecraft:villager` | event `vocalize` when `!q.is_dead && !q.is_sleeping && q.profession == 'weaponsmith' && !q.in_conversation` | 1.60s | gesture | 145 |
+| `villager.weaponsmith.practice_swing` | Weaponsmith Practice Swing | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'weaponsmith'` | 1.40s | overlay | 120 |
+| `villager.weaponsmith.quench` | Weaponsmith Quenching Steel | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.time_of_day > 0.08 && q.time_of_day < 0.38 && !q.is_raining && !q.near_hostile && q.recent_hurt > 8 && q.profession == 'weaponsmith'` | 2.40s | overlay | 120 |
+| `villager.weaponsmith.trade_flourish` | Weaponsmith Brandishing A Blade | `minecraft:villager` | event `trade_complete` when `!q.is_dead && !q.is_sleeping && q.profession == 'weaponsmith'` | 1.40s | action | 161 |
+| `villager.whisper` | Villager Leaning In To Whisper | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.in_conversation && q.is_speaking && q.conversation_size == 2` | 2.00s | overlay | 116 |
+| `villager.wounded_hunch` | Wounded Villager Hunched Over | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.health < 0.35` | 2.40s | additive | 122 |
+| `villager.zombie_dread` | Villager Trembling At The Door | `minecraft:villager` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && q.is_night && q.near_hostile && q.hostile_distance >= 6` | 0.25s | additive | 170 |
+| `wandering_trader.bow_thanks` | Wandering Trader Bowing Thanks | `minecraft:wandering_trader` | event `trade_complete` when `!q.is_dead && !q.is_sleeping` | 1.60s | action | 160 |
+| `wandering_trader.call_llamas` | Wandering Trader Calling His Llamas | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.ground_speed < 0.01 && q.near_hostile == 0 && q.idle_time > 6` | 3.00s | overlay | 120 |
+| `wandering_trader.count_coins` | Wandering Trader Counting Emeralds | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && !q.is_trading && !q.is_using_item` | 2.00s | overlay | 120 |
+| `wandering_trader.drink_potion` | Wandering Trader Drinking A Potion | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_using_item` | 1.60s | action | 160 |
+| `wandering_trader.flee` | Wandering Trader Fleeing | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && q.near_hostile` | 0.55s | base | 101 |
+| `wandering_trader.hawk_wares` | Wandering Trader Hawking Wares | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_trading` | 2.40s | overlay | 140 |
+| `wandering_trader.invisible_sneak` | Wandering Trader Tiptoeing Unseen | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_invisible && q.ground_speed >= 0.01` | 1.40s | base | 110 |
+| `wandering_trader.shoo` | Wandering Trader Shooing | `minecraft:wandering_trader` | event `interacted` when `!q.is_dead && !q.is_sleeping && !q.is_trading && q.mood < 0.4` | 1.00s | gesture | 150 |
+| `wandering_trader.trek` | Wandering Trader Trekking | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed >= 0.01 && !q.near_hostile` | 1.50s | base | 100 |
+| `wandering_trader.wary_glance` | Wandering Trader Wary Glance | `minecraft:wandering_trader` | state `!q.is_dead && !q.is_sleeping && q.is_on_ground && q.ground_speed < 0.01 && !q.is_trading` | 3.60s | overlay | 120 |
+| `wandering_trader.yawn` | Wandering Trader Travel-Weary Yawn | `minecraft:wandering_trader` | event `vocalize` when `!q.is_dead && !q.is_sleeping && !q.is_trading` | 2.00s | gesture | 150 |
 
 ## Environmental interactions
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `axolotl.env_rain_happy` | Axolotl Happy In The Rain Out Of Water | `minecraft:axolotl` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && !q.is_in_water` | 1.40s | overlay | 125 |
+| `bat.env_wind_buffeted` | Bat Buffeted By The Wind | `minecraft:bat` | state `!q.is_dead && q.wind > 0.6 && !q.is_sleeping` | 0.60s | additive | 76 |
+| `bee.env_cold_sluggish` | Bee Sluggish In The Cold | `minecraft:bee` | state `!q.is_dead && q.is_cold && q.is_flying` | 1.40s | additive | 73 |
+| `bee.env_honey_delight` | Bee Delighting In Honey | `minecraft:bee` | state `!q.is_dead && q.feet_block == 'honey'` | 1.00s | overlay | 128 |
+| `bee.env_rain_heavy_wings` | Bee Labouring Through The Rain | `minecraft:bee` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.is_flying` | 0.70s | additive | 72 |
+| `bee.env_thunder` | Bee Zipping Away From Thunder | `minecraft:bee` | event `thunderclap` when `!q.is_dead` | 0.60s | reaction | 210 |
+| `camel.env_cold_shiver` | Desert Camel Shivering In The Snow | `minecraft:camel` | state `!q.is_dead && q.is_cold` | 0.30s | additive | 73 |
+| `camel.env_heat_content` | Camel Content Under The Desert Sun | `minecraft:camel` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 5.00s | overlay | 118 |
+| `camel.env_rain_disdain` | Camel Disdaining The Rain | `minecraft:camel` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `camel.env_thunder` | Camel Unfazed By Thunder | `minecraft:camel` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
+| `camel.env_wind_squint` | Camel Squinting Into Blowing Sand | `minecraft:camel` | state `!q.is_dead && q.wind > 0.6 && q.temperature > 1.5` | 2.00s | additive | 76 |
+| `cat.env_dark_eyes` | Cat Perfectly Calm In The Dark | `minecraft:cat` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.01 && !q.is_lying` | 4.00s | overlay | 108 |
+| `cat.env_fire_warm_loaf` | Cat Loafing By The Warm Fire | `minecraft:cat` | state `!q.is_dead && q.near_fire && q.ground_speed < 0.01 && !q.is_sitting && !q.is_lying` | 4.00s | overlay | 124 |
+| `cat.env_flower_bat` | Cat Batting At Flowers | `minecraft:cat` | state `!q.is_dead && q.feet_block == 'foliage' && q.ground_speed < 0.01 && !q.is_sitting` | 1.60s | overlay | 112 |
+| `cat.env_heat_sprawl` | Cat Sprawled Flat In The Heat | `minecraft:cat` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01 && !q.is_sitting && q.idle_time > 8` | 4.00s | overlay | 118 |
+| `cat.env_ice_skid` | Cat Skidding On Ice | `minecraft:cat` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 0.70s | additive | 75 |
+| `cat.env_night_prowl` | Cat Prowling Wide-Eyed At Night | `minecraft:cat` | state `!q.is_dead && q.is_night && q.ground_speed >= 0.01 && !q.is_tame` | 1.40s | additive | 74 |
+| `cat.env_rain_annoyed` | Cat Hunched And Annoyed In The Rain | `minecraft:cat` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.40s | overlay | 118 |
+| `cat.env_shallows_disgust` | Cat Shaking Each Wet Paw | `minecraft:cat` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.80s | overlay | 126 |
+| `cat.env_thunder` | Cat Puffing Up At Thunder | `minecraft:cat` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `chicken.env_cold_puffball` | Chicken Puffed Into A Ball | `minecraft:chicken` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `chicken.env_fire_flap` | Chicken Flapping Away From Fire | `minecraft:chicken` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.30s | overlay | 125 |
+| `chicken.env_heat_wings_out` | Chicken Holding Its Wings Out To Cool | `minecraft:chicken` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `chicken.env_rain_hunker` | Chicken Hunkered Down In The Rain | `minecraft:chicken` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `chicken.env_shallows_hop_out` | Chicken Hopping Out Of Puddles | `minecraft:chicken` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.40s | overlay | 126 |
+| `chicken.env_thunder` | Chicken Freezing Then Puffing Up At Thunder | `minecraft:chicken` | event `thunderclap` when `!q.is_dead` | 1.40s | reaction | 210 |
+| `chicken.env_wind_ruffled` | Chicken Ruffled By The Wind | `minecraft:chicken` | state `!q.is_dead && q.wind > 0.6` | 0.50s | additive | 76 |
+| `cow.env_cold_breath` | Cow Breathing Steam In The Cold | `minecraft:cow` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.60s | additive | 73 |
+| `cow.env_fire_back_away` | Cow Backing Away From Fire | `minecraft:cow` | state `!q.is_dead && q.near_fire && !q.is_on_fire && q.ground_speed < 0.05` | 1.20s | overlay | 125 |
+| `cow.env_heat_seek_shade` | Cow Drooping In The Heat | `minecraft:cow` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `cow.env_ice_splay` | Cow Splay-Legged On Ice | `minecraft:cow` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 1.00s | additive | 75 |
+| `cow.env_rain_stoic` | Cow Standing Stoic In The Rain | `minecraft:cow` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `cow.env_shallows_drink` | Cow Drinking At The Water's Edge | `minecraft:cow` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater && q.ground_speed < 0.01` | 2.40s | overlay | 126 |
+| `cow.env_thunder` | Cow Spooked By Thunder | `minecraft:cow` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `creeper.env_rain_hiss` | Creeper Hissing At The Rain | `minecraft:creeper` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 3.00s | additive | 72 |
+| `creeper.env_thunder` | Creeper Crackling As Lightning Strikes | `minecraft:creeper` | event `thunderclap` when `!q.is_dead` | 0.60s | reaction | 210 |
+| `donkey.env_rain_ears_back` | Donkey Pinning Its Ears In The Rain | `minecraft:donkey` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 2.00s | additive | 72 |
+| `donkey.env_thunder` | Donkey Braying At The Storm | `minecraft:donkey` | event `thunderclap` when `!q.is_dead` | 1.40s | reaction | 210 |
+| `drowned.env_storm_surface` | Drowned Surfacing In A Storm | `minecraft:drowned` | state `!q.is_dead && q.is_thundering && q.is_in_water && !q.is_underwater` | 2.40s | overlay | 130 |
+| `fox.env_bush_hide` | Fox Lurking In The Bushes | `minecraft:fox` | state `!q.is_dead && q.feet_block == 'foliage' && q.ground_speed < 0.01 && !q.is_sleeping` | 3.00s | overlay | 112 |
+| `fox.env_heat_pant` | Fox Panting In The Heat | `minecraft:fox` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed` | 0.45s | additive | 74 |
+| `fox.env_night_hunt` | Fox Hunting By Moonlight | `minecraft:fox` | state `!q.is_dead && q.is_night && q.ground_speed >= 0.01 && !q.is_crouching` | 1.20s | additive | 74 |
+| `fox.env_powder_snow_dive` | Fox Burrowing Into Powder Snow | `minecraft:fox` | state `!q.is_dead && q.feet_block == 'powder_snow'` | 0.80s | overlay | 128 |
+| `fox.env_rain_ear_flick` | Fox Flicking Rain From Its Ears | `minecraft:fox` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 1.60s | additive | 72 |
+| `fox.env_shallows_fish_pounce` | Fox Pouncing At Fish In The Shallows | `minecraft:fox` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater && q.ground_speed < 0.01` | 2.00s | overlay | 126 |
+| `fox.env_snow_tail_wrap` | Snow Fox Wrapped In Its Tail | `minecraft:fox` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01 && q.idle_time > 6 && !q.is_sitting && !q.is_sleeping` | 3.00s | overlay | 118 |
+| `fox.env_thunder` | Fox Cringing At Thunder | `minecraft:fox` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `frog.env_rain_hop_joy` | Frog Hopping Joyfully In The Rain | `minecraft:frog` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 1.00s | overlay | 118 |
+| `frog.env_thunder` | Frog Croaking Back At Thunder | `minecraft:frog` | event `thunderclap` when `!q.is_dead` | 0.50s | reaction | 210 |
+| `goat.env_cold_proud` | Goat Standing Proud In The Snow | `minecraft:goat` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 4.00s | overlay | 118 |
+| `goat.env_rain_head_shake` | Goat Shaking Rain From Its Horns | `minecraft:goat` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 3.00s | additive | 72 |
+| `goat.env_thunder` | Goat Answering The Thunder | `minecraft:goat` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `horse.env_cold_stamp` | Horse Stamping Against The Cold | `minecraft:horse` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `horse.env_dark_skittish` | Horse Skittish In The Dark | `minecraft:horse` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.05` | 0.80s | additive | 74 |
+| `horse.env_fire_shy` | Horse Shying From Fire | `minecraft:horse` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.80s | overlay | 126 |
+| `horse.env_heat_swish` | Horse Swishing At Flies In The Heat | `minecraft:horse` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed` | 1.40s | additive | 74 |
+| `horse.env_ice_careful` | Horse Picking Its Way Across Ice | `minecraft:horse` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 1.60s | additive | 75 |
+| `horse.env_night_wary` | Horse Wary Of The Night | `minecraft:horse` | state `!q.is_dead && q.is_night && q.ground_speed < 0.01 && !q.has_rider && q.idle_time < 20` | 3.00s | overlay | 118 |
+| `horse.env_rain_tail_to_wind` | Horse Turning Its Tail To The Rain | `minecraft:horse` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `horse.env_shallows_paw` | Horse Pawing At The Shallows | `minecraft:horse` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater && q.ground_speed < 0.01` | 1.40s | overlay | 126 |
+| `horse.env_soul_sand_struggle` | Horse Struggling Through Soul Sand | `minecraft:horse` | state `!q.is_dead && q.surface == 'soul' && q.ground_speed >= 0.01` | 1.00s | additive | 77 |
+| `horse.env_thunder` | Horse Shying At Thunder | `minecraft:horse` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `horse.env_wind_mane` | Horse's Mane Streaming In The Wind | `minecraft:horse` | state `!q.is_dead && q.wind > 0.6` | 0.80s | additive | 76 |
+| `iron_golem.env_rain_creak` | Iron Golem Creaking In The Rain | `minecraft:iron_golem` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 4.00s | overlay | 118 |
+| `iron_golem.env_thunder` | Iron Golem Looking To The Storm | `minecraft:iron_golem` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
+| `llama.env_cold_content` | Llama Content In Its Thick Wool | `minecraft:llama` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 3.40s | overlay | 118 |
+| `llama.env_rain_unbothered` | Llama Chewing Through The Rain | `minecraft:llama` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 1.80s | overlay | 118 |
+| `llama.env_thunder` | Llama Stretching Tall At Thunder | `minecraft:llama` | event `thunderclap` when `!q.is_dead` | 1.20s | reaction | 210 |
+| `llama.env_wind_ears_back` | Llama Pinning Back In The Wind | `minecraft:llama` | state `!q.is_dead && q.wind > 0.6` | 1.60s | additive | 76 |
+| `mooshroom.env_thunder` | Mooshroom Shuddering At Thunder | `minecraft:mooshroom` | event `thunderclap` when `!q.is_dead` | 0.60s | reaction | 210 |
+| `mule.env_rain_head_low` | Mule Plodding Head-Low In The Rain | `minecraft:mule` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed >= 0.01` | 1.20s | additive | 72 |
+| `panda.env_snow_tumble` | Panda Tumbling In Fresh Snow | `minecraft:panda` | state `!q.is_dead && q.is_cold && q.surface == 'snow' && q.ground_speed < 0.01 && !q.is_sitting` | 2.40s | overlay | 118 |
+| `parrot.env_cold_shiver` | Parrot Shivering In The Cold | `minecraft:parrot` | state `!q.is_dead && q.is_cold && !q.is_flying` | 0.25s | additive | 73 |
+| `parrot.env_rain_fluffed` | Parrot Fluffed Up In The Rain | `minecraft:parrot` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && !q.is_flying` | 2.00s | overlay | 118 |
+| `parrot.env_thunder` | Parrot Squawking At Thunder | `minecraft:parrot` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `pig.env_fire_squeal` | Pig Squealing Near Fire | `minecraft:pig` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.50s | overlay | 125 |
+| `pig.env_ice_slide` | Pig Sliding On Ice | `minecraft:pig` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 0.80s | additive | 75 |
+| `pig.env_rain_joy` | Pig Delighting In The Rain | `minecraft:pig` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 1.00s | additive | 72 |
+| `pig.env_shallows_snout_dip` | Pig Dipping Its Snout In The Shallows | `minecraft:pig` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater && q.ground_speed < 0.01` | 1.20s | overlay | 126 |
+| `pig.env_thunder` | Pig Squealing At Thunder | `minecraft:pig` | event `thunderclap` when `!q.is_dead` | 0.50s | reaction | 210 |
+| `player.env.ankle_splash` | Splashing Through The Shallows | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && q.is_in_water && q.fluid_depth < 0.4 && q.ground_speed >= 0.02` | 0.80s | overlay | 246 |
+| `player.env.berry_bush_frozen` | Holding Still Amid Thorns | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'berry_bush'` | 2.00s | overlay | 242 |
+| `player.env.berry_bush_tiptoe` | Wincing Through A Berry Bush | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.feet_block == 'berry_bush'` | 0.80s | overlay | 242 |
+| `player.env.blind_stumble` | Stumbling Blind | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.is_blinded` | 1.00s | overlay | 232 |
+| `player.env.bright_squint` | Squinting Up Into Bright Sky | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.light >= 15 && !q.is_night && q.head_pitch < -40 && q.sky_exposed` | 2.00s | overlay | 228 |
+| `player.env.brush_crouch` | Creeping Through The Brush | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.feet_block == 'foliage' && q.is_sneaking` | 1.40s | overlay | 228 |
+| `player.env.canopy_shelter` | Sheltering Under The Canopy | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_raining && !q.sky_exposed && q.feet_block != 'portal'` | 4.00s | overlay | 225 |
+| `player.env.catch_snowflakes` | Catching Snowflakes | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_raining && q.is_cold && q.sky_exposed` | 3.00s | overlay | 226 |
+| `player.env.cave_listen` | Listening To The Cave | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && !q.sky_exposed && q.altitude < 40 && q.idle_time > 5 && q.light >= 2` | 3.00s | overlay | 227 |
+| `player.env.cloak_streaming` | Cloak Streaming In The Wind | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.wind > 0.5` | 1.00s | additive | 60 |
+| `player.env.cobweb_stuck` | Stuck Fast In A Cobweb | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.feet_block == 'cobweb' && q.ground_speed < 0.005` | 1.40s | overlay | 240 |
+| `player.env.cobweb_tear_through` | Tearing Through Cobwebs | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.feet_block == 'cobweb' && q.ground_speed >= 0.005` | 2.00s | overlay | 240 |
+| `player.env.cold_blow_hands` | Blowing Warmth Into Your Hands | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_cold && !q.near_fire && !q.is_raining` | 1.60s | overlay | 229 |
+| `player.env.cold_stamp` | Stamping Feet Against The Cold | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_cold && !q.near_fire && q.idle_time > 6` | 1.00s | overlay | 229 |
+| `player.env.cold_water_wade` | Wading Through Icy Water | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && q.is_in_water && q.is_cold && q.ground_speed >= 0.01` | 1.20s | overlay | 247 |
+| `player.env.dark_grope` | Groping Through The Dark | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && (q.light < 2 \|\| q.is_blinded)` | 1.40s | overlay | 231 |
+| `player.env.dark_huddle` | Huddling In Pitch Darkness | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.light < 2 && !q.is_blinded` | 2.00s | overlay | 230 |
+| `player.env.deep_dark_hunch` | Hunched In The Oppressive Deep | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && !q.sky_exposed && q.altitude < 0` | 1.60s | additive | 91 |
+| `player.env.desert_shade_eyes` | Shading Your Eyes In The Desert Sun | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.temperature > 1.5 && !q.is_night && !q.is_raining && q.sky_exposed` | 4.00s | overlay | 229 |
+| `player.env.end_void_stare` | Staring Into The Endless Void | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.dimension == 'the_end' && q.at_ledge` | 4.00s | overlay | 248 |
+| `player.env.fire_poke` | Poking At The Fire | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.near_fire && !q.is_cold && q.idle_time > 8` | 2.20s | overlay | 234 |
+| `player.env.fire_warm_crouch` | Crouching To Warm Up By The Fire | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.near_fire && q.is_cold` | 1.00s | overlay | 235 |
+| `player.env.flower_brush` | Fingertips Brushing Flowers | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.feet_block == 'foliage' && !q.is_sneaking` | 1.20s | additive | 90 |
+| `player.env.flower_smell` | Stooping To Smell The Flowers | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'foliage' && q.idle_time > 3` | 3.00s | overlay | 227 |
+| `player.env.gust_stagger` | Staggered By A Gust | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.wind > 0.9` | 2.40s | additive | 92 |
+| `player.env.heat_collar_fan` | Fanning Your Collar In The Heat | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.temperature > 1.5 && !q.is_night && q.idle_time > 6` | 0.40s | overlay | 229 |
+| `player.env.honey_sticky_steps` | Sticky Steps On Honey | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.feet_block == 'honey'` | 1.60s | overlay | 243 |
+| `player.env.honey_unstick` | Yanking A Foot Free Of Honey | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'honey'` | 1.40s | overlay | 243 |
+| `player.env.ice_skate` | Skating Across The Ice | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.surface == 'glass' && q.is_sprinting` | 1.60s | overlay | 245 |
+| `player.env.ice_wobble` | Wobbling On Ice | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.surface == 'glass'` | 1.60s | overlay | 233 |
+| `player.env.invisible_tiptoe` | Tiptoeing While Invisible | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.is_invisible` | 1.40s | overlay | 231 |
+| `player.env.lantern_aloft` | Holding A Lantern Aloft In The Dark | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.main_hand == 'lantern' && !q.sky_exposed && q.light < 8` | 2.00s | additive | 231 |
+| `player.env.lava_heat_recoil` | Shielding Your Face From Lava Heat | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.near_fire && q.dimension == 'the_nether'` | 1.60s | overlay | 236 |
+| `player.env.magma_careful` | Treading Carefully On Magma | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.surface == 'magma' && q.is_sneaking` | 1.60s | additive | 244 |
+| `player.env.magma_hot_foot` | Hopping On Hot Magma | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.surface == 'magma' && !q.is_sneaking` | 0.50s | overlay | 244 |
+| `player.env.moon_gaze` | Gazing At The Moon | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_night && q.head_pitch < -30 && q.sky_exposed` | 5.00s | overlay | 226 |
+| `player.env.mountain_wind_stance` | Bracing Against Mountain Winds | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.altitude > 150 && q.wind > 0.5` | 2.00s | overlay | 229 |
+| `player.env.mud_boot_pull` | Pulling A Boot From The Mud | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'mud'` | 1.80s | overlay | 226 |
+| `player.env.nausea_reel` | Reeling With Nausea | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_nauseous` | 3.00s | additive | 94 |
+| `player.env.nether_ash_brush` | Brushing Off Nether Ash | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.dimension == 'the_nether' && !q.near_fire && q.idle_time > 8` | 2.00s | overlay | 226 |
+| `player.env.powder_snow_plunge` | Plunging Through Powder Snow | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.feet_block == 'powder_snow' && q.ground_speed >= 0.01` | 1.20s | overlay | 241 |
+| `player.env.powder_snow_sinking` | Sinking In Powder Snow | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.feet_block == 'powder_snow' && q.ground_speed < 0.01` | 0.60s | overlay | 241 |
+| `player.env.puddle_stomp` | Stomping In A Rain Puddle | `@player` | event `land` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.is_raining && q.mood > 0.6 && q.sky_exposed` | 0.70s | gesture | 285 |
+| `player.env.rain_face_up` | Turning Your Face To The Rain | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_raining && !q.is_cold && q.mood > 0.5 && q.sky_exposed` | 4.00s | overlay | 226 |
+| `player.env.rain_hand_shield` | Hand Over Your Head In The Rain | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.is_raining && !q.is_cold && q.main_hand == 'empty' && q.sky_exposed` | 1.00s | overlay | 224 |
+| `player.env.scaffold_balance` | Balancing On Scaffolding | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'scaffolding'` | 1.80s | overlay | 232 |
+| `player.env.smoke_wave_off` | Waving Away Campfire Smoke | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.near_fire && !q.is_cold && q.idle_time > 4` | 0.80s | overlay | 234 |
+| `player.env.snow_brush_off` | Brushing Snow Off Your Shoulders | `@player` | event `rain_stop` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_cold && q.sky_exposed` | 1.40s | gesture | 285 |
+| `player.env.snow_kick` | Kicking At The Snow | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'snow' && q.idle_time > 3` | 2.00s | overlay | 225 |
+| `player.env.soul_sand_tug` | Souls Tugging At Your Feet | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.surface == 'soul'` | 2.40s | overlay | 226 |
+| `player.env.storm_wary` | Wary Under A Thunderstorm | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.is_thundering && q.sky_exposed` | 3.00s | overlay | 227 |
+| `player.env.summit_vertigo` | Vertigo On A High Ledge | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.altitude > 180 && q.at_ledge && q.head_pitch > 40` | 1.40s | overlay | 247 |
+| `player.env.sun_bask` | Basking In The Sunshine | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.time_of_day > 0.2 && q.time_of_day < 0.3 && !q.is_raining && q.temperature <= 1.5 && q.idle_time > 10 && q.sky_exposed` | 6.00s | overlay | 226 |
+| `player.env.sunset_watch` | Watching The Sunset | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.time_of_day > 0.46 && q.time_of_day < 0.53 && !q.is_raining && q.sky_exposed` | 6.00s | overlay | 226 |
+| `player.env.thin_air` | Short Of Breath In The Thin Air | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.altitude > 200` | 0.70s | additive | 91 |
+| `player.env.thunder_duck` | Ducking Away From A Close Thunderclap | `@player` | event `thunderclap:near` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.40s | reaction | 300 |
+| `player.env.thunder_glance` | Glancing At Distant Thunder | `@player` | event `thunderclap:far` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.60s | gesture | 286 |
+| `player.env.torch_rain_cup` | Cupping A Torch Against The Rain | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.main_hand == 'torch' && q.is_raining && q.sky_exposed` | 1.00s | overlay | 232 |
+| `player.env.wind_hold_hat` | Holding Your Hat In The Wind | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.wind > 0.75` | 1.00s | overlay | 228 |
+| `polar_bear.env_heat_miserable` | Polar Bear Miserable In The Heat | `minecraft:polar_bear` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `polar_bear.env_rain_sprawl` | Polar Bear Sprawled In The Rain | `minecraft:polar_bear` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01 && q.idle_time > 10` | 4.00s | overlay | 118 |
+| `polar_bear.env_snow_roll` | Polar Bear Rolling In The Snow | `minecraft:polar_bear` | state `!q.is_dead && q.is_cold && q.surface == 'snow' && q.ground_speed < 0.01 && q.trait_energy > 0.5` | 3.00s | overlay | 118 |
+| `polar_bear.env_thunder` | Polar Bear Rising At Thunder | `minecraft:polar_bear` | event `thunderclap` when `!q.is_dead` | 1.60s | reaction | 210 |
+| `rabbit.env_grass_hide` | Rabbit Hiding In Tall Grass | `minecraft:rabbit` | state `!q.is_dead && q.feet_block == 'foliage' && q.ground_speed < 0.01` | 3.00s | overlay | 112 |
+| `rabbit.env_heat_ear_cool` | Rabbit Cooling Itself Through Its Ears | `minecraft:rabbit` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `rabbit.env_night_freeze` | Rabbit Freezing In The Dark | `minecraft:rabbit` | state `!q.is_dead && q.is_night && q.ground_speed < 0.01 && q.light < 6` | 3.00s | overlay | 118 |
+| `rabbit.env_powder_snow_sink` | Rabbit Floundering In Powder Snow | `minecraft:rabbit` | state `!q.is_dead && q.feet_block == 'powder_snow'` | 0.40s | overlay | 128 |
+| `rabbit.env_rain_ears_flat` | Rabbit Flattening Its Ears In The Rain | `minecraft:rabbit` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `rabbit.env_snow_hop_tracks` | Rabbit Bounding Over Fresh Snow | `minecraft:rabbit` | state `!q.is_dead && q.is_cold && q.ground_speed >= 0.01 && q.surface == 'snow'` | 0.60s | additive | 73 |
+| `rabbit.env_thunder` | Rabbit Bolting From Thunder | `minecraft:rabbit` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `sheep.env_cold_fluffed` | Sheep Fleece Fluffed Against The Cold | `minecraft:sheep` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 3.00s | additive | 73 |
+| `sheep.env_dark_huddle` | Sheep Pressed Together In The Dark | `minecraft:sheep` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `sheep.env_fire_wary` | Sheep Wary Of The Flames | `minecraft:sheep` | state `!q.is_dead && q.near_fire && !q.is_on_fire && q.ground_speed < 0.05` | 1.00s | overlay | 125 |
+| `sheep.env_heat_pant` | Sheep Panting Under Its Fleece | `minecraft:sheep` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed` | 0.60s | additive | 74 |
+| `sheep.env_ice_slip` | Sheep Slipping On Ice | `minecraft:sheep` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 0.90s | additive | 75 |
+| `sheep.env_rain_huddle` | Sheep Huddled Against The Rain | `minecraft:sheep` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.40s | overlay | 118 |
+| `sheep.env_shallows_reluctant` | Sheep Reluctant In The Shallows | `minecraft:sheep` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 1.20s | overlay | 126 |
+| `sheep.env_thunder` | Sheep Scattering At Thunder | `minecraft:sheep` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `skeleton.env_powder_freeze` | Skeleton Freezing In Powder Snow | `minecraft:skeleton` | state `!q.is_dead && q.freezing > 0.5` | 0.20s | overlay | 140 |
+| `skeleton.env_rain_drip` | Skeleton Dripping In The Rain | `minecraft:skeleton` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
+| `skeleton.env_thunder` | Skeleton Rattling At Thunder | `minecraft:skeleton` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `slime.env_rain_wobble` | Slime Wobbling Under The Rain | `minecraft:slime` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 0.60s | additive | 72 |
+| `sniffer.env_thunder` | Sniffer Lifting Its Nose To The Storm | `minecraft:sniffer` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
+| `snow_golem.env_rain_melt_wince` | Snow Golem Wincing As The Rain Melts It | `minecraft:snow_golem` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 0.60s | overlay | 130 |
+| `spider.env_rain_slick` | Spider Slipping On Slick Walls | `minecraft:spider` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.is_climbing` | 0.50s | additive | 72 |
+| `spider.env_web_at_home` | Spider At Home In Its Web | `minecraft:spider` | state `!q.is_dead && q.feet_block == 'cobweb'` | 4.00s | overlay | 128 |
+| `turtle.env_rain_relish` | Turtle Relishing The Rain | `minecraft:turtle` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
+| `turtle.env_thunder` | Turtle Pulling In At Thunder | `minecraft:turtle` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
+| `villager.env_thunder` | Villager Clutching Its Robes At Thunder | `minecraft:villager` | event `thunderclap` when `!q.is_dead` | 1.20s | reaction | 210 |
+| `wolf.env_cold_curl` | Wolf Curled Nose-To-Tail In The Snow | `minecraft:wolf` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01 && q.idle_time > 12 && !q.is_sitting` | 3.00s | overlay | 118 |
+| `wolf.env_fire_rest` | Wolf Resting By The Campfire | `minecraft:wolf` | state `!q.is_dead && q.near_fire && q.ground_speed < 0.01 && !q.is_sitting && q.is_tame` | 4.00s | overlay | 124 |
+| `wolf.env_heat_pant` | Wolf Panting In The Heat | `minecraft:wolf` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed` | 0.50s | additive | 74 |
+| `wolf.env_ice_scrabble` | Wolf Scrabbling On Ice | `minecraft:wolf` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 0.40s | additive | 75 |
+| `wolf.env_night_watch` | Wolf Keeping Night Watch | `minecraft:wolf` | state `!q.is_dead && q.is_night && q.ground_speed < 0.01 && !q.is_sitting` | 4.00s | overlay | 110 |
+| `wolf.env_rain_shake_off` | Wolf Shaking Off The Rain | `minecraft:wolf` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 4.00s | additive | 72 |
+| `wolf.env_shallows_play` | Wolf Splashing In The Shallows | `minecraft:wolf` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.60s | overlay | 126 |
+| `wolf.env_thunder` | Wolf Flattening Its Ears At Thunder | `minecraft:wolf` | event `thunderclap` when `!q.is_dead` | 1.20s | reaction | 210 |
+| `wolf.env_wind_fur` | Wolf Leaning Into The Wind | `minecraft:wolf` | state `!q.is_dead && q.wind > 0.6 && q.ground_speed < 0.01` | 1.40s | additive | 76 |
+| `zombie.env_fire_recoil` | Zombie Recoiling From Fire | `minecraft:zombie` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.80s | overlay | 135 |
+| `zombie.env_rain_relief` | Zombie Lifting Its Face To Cooling Rain | `minecraft:zombie` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01 && !q.is_aggressive` | 4.00s | overlay | 118 |
+| `zombie.env_thunder` | Zombie Groaning Up At The Storm | `minecraft:zombie` | event `thunderclap` when `!q.is_dead` | 1.80s | reaction | 210 |
 
 ## Cinematic and storytelling
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `cine.allay.deliver_gift` | Allay Delivering A Gift | `minecraft:allay` | manual | 2.40s | action | 500 |
+| `cine.axolotl.faint_reveal` | Axolotl Playing Dead, Then Peeking | `minecraft:axolotl` | manual | 3.00s | action | 500 |
+| `cine.bat.cave_swarm` | Bats Bursting From A Cave | `minecraft:bat` | manual | 1.20s | action | 500 |
+| `cine.bee.hive_return` | Bee Drifting Home To The Hive | `minecraft:bee` | manual | 2.00s | action | 500 |
+| `cine.bee.royal_dance` | Bee Performing For The Hive | `minecraft:bee` | manual | 2.40s | action | 500 |
+| `cine.blaze.fortress_ignite` | Blaze Igniting In The Fortress Hall | `minecraft:blaze` | manual | 2.00s | action | 500 |
+| `cine.camel.kneel_welcome` | Camel Kneeling To Welcome A Rider | `minecraft:camel` | manual | 3.00s | action | 500 |
+| `cine.cat.rub_legs` | Cat Weaving Between The Hero's Legs | `minecraft:cat` | manual | 2.40s | action | 500 |
+| `cine.cat.window_watch` | Cat Watching From The Window | `minecraft:cat` | manual | 4.00s | action | 500 |
+| `cine.chicken.dawn_crow` | Chicken Greeting The Dawn | `minecraft:chicken` | manual | 2.00s | action | 500 |
+| `cine.cow.pasture_low` | Cow Lowing Across The Pasture | `minecraft:cow` | manual | 2.40s | action | 500 |
+| `cine.creeper.sneak_up_reveal` | Creeper Sneaking Up Behind | `minecraft:creeper` | manual | 2.40s | action | 500 |
+| `cine.dolphin.lead_to_treasure` | Dolphin Leading The Way To Treasure | `minecraft:dolphin` | manual | 1.60s | action | 500 |
+| `cine.dolphin.leap_arc` | Dolphin Leaping Alongside | `minecraft:dolphin` | manual | 1.60s | action | 500 |
+| `cine.drowned.trident_rise` | Drowned Rising With A Trident | `minecraft:drowned` | manual | 3.00s | action | 500 |
+| `cine.elder_guardian.circle_menace` | Elder Guardian Circling Menace | `minecraft:elder_guardian` | manual | 4.00s | action | 500 |
+| `cine.elder_guardian.intro_glare` | Elder Guardian Intro: The Curse Glare | `minecraft:elder_guardian` | event `boss_intro` | 3.00s | action | 500 |
+| `cine.ender_dragon.flyover` | Ender Dragon Flyover Bank | `minecraft:ender_dragon` | manual | 2.40s | action | 500 |
+| `cine.ender_dragon.intro_roar` | Ender Dragon Intro: Sky Roar | `minecraft:ender_dragon` | event `boss_intro` | 3.00s | action | 500 |
+| `cine.ender_dragon.perch_breath` | Ender Dragon Breathing Fire From Its Perch | `minecraft:ender_dragon` | manual | 3.00s | action | 500 |
+| `cine.enderman.place_block_gently` | Enderman Setting A Block Down Gently | `minecraft:enderman` | manual | 2.40s | action | 500 |
+| `cine.enderman.stare_down` | Enderman Stare-Down | `minecraft:enderman` | manual | 3.00s | action | 500 |
+| `cine.evoker.entrance` | Evoker Ritual Summoning | `minecraft:evoker` | event `aggro` when `!q.is_dead && q.player_distance < 16 && q.trait_confidence > 0.8` | 3.00s | action | 420 |
+| `cine.evoker.fang_line` | Evoker Calling A Line Of Fangs | `minecraft:evoker` | manual | 2.00s | action | 500 |
+| `cine.fox.snow_frolic` | Fox Frolicking In Fresh Snow | `minecraft:fox` | manual | 1.00s | action | 500 |
+| `cine.fox.steal_item` | Fox Snatching An Item | `minecraft:fox` | manual | 1.60s | action | 500 |
+| `cine.frog.lily_croak` | Frog Croaking On A Lily Pad | `minecraft:frog` | manual | 2.00s | action | 500 |
+| `cine.ghast.rise_from_lava_sea` | Ghast Rising From The Lava Sea | `minecraft:ghast` | manual | 4.00s | action | 500 |
+| `cine.goat.summit_scream` | Goat Screaming From The Summit | `minecraft:goat` | manual | 2.00s | action | 500 |
+| `cine.horse.nuzzle_owner` | Horse Nuzzling Its Owner | `minecraft:horse` | manual | 3.00s | action | 500 |
+| `cine.horse.rear_silhouette` | Horse Rearing Against The Sky | `minecraft:horse` | manual | 2.40s | action | 500 |
+| `cine.horse.sunset_graze` | Horse Grazing At Sunset | `minecraft:horse` | manual | 4.00s | action | 500 |
+| `cine.husk.mirage_shamble` | Husk Shambling Out Of A Mirage | `minecraft:husk` | manual | 3.00s | action | 500 |
+| `cine.iron_golem.kneel_to_hero` | Iron Golem Kneeling Before The Hero | `minecraft:iron_golem` | manual | 3.00s | action | 500 |
+| `cine.iron_golem.shield_villagers` | Iron Golem Shielding The Villagers | `minecraft:iron_golem` | manual | 2.40s | action | 500 |
+| `cine.llama.caravan_halt` | Lead Llama Halting The Caravan | `minecraft:llama` | manual | 2.00s | action | 500 |
+| `cine.llama.spit_at_trader` | Llama Spitting At The Trader | `minecraft:llama` | manual | 1.60s | action | 500 |
+| `cine.mooshroom.spore_bloom` | Mooshroom Blooming In The Mist | `minecraft:mooshroom` | manual | 2.40s | action | 500 |
+| `cine.ocelot.jungle_stalk_reveal` | Ocelot Emerging From The Undergrowth | `minecraft:ocelot` | manual | 2.40s | action | 500 |
+| `cine.panda.bamboo_feast` | Panda Feasting On Bamboo | `minecraft:panda` | manual | 3.00s | action | 500 |
+| `cine.parrot.perch_land` | Parrot Landing On A Perch | `minecraft:parrot` | manual | 1.20s | action | 500 |
+| `cine.parrot.record_dance` | Parrot Dancing To A Record | `minecraft:parrot` | manual | 0.50s | action | 500 |
+| `cine.phantom.moon_silhouette` | Phantom Crossing The Moon | `minecraft:phantom` | manual | 3.00s | action | 500 |
+| `cine.piglin.barter_ceremony` | Piglin Barter Ceremony | `minecraft:piglin` | manual | 3.00s | action | 500 |
+| `cine.piglin.gold_sneer` | Piglin Sneering At Worthless Iron | `minecraft:piglin` | manual | 2.00s | action | 500 |
+| `cine.piglin_brute.entrance` | Piglin Brute Bastion Challenge | `minecraft:piglin_brute` | event `aggro` when `!q.is_dead && q.player_distance < 16 && q.trait_confidence > 0.8` | 2.20s | action | 420 |
+| `cine.piglin_brute.guard_salute` | Piglin Brute Guard Salute | `minecraft:piglin_brute` | manual | 2.00s | action | 500 |
+| `cine.pillager.captain_command` | Raid Captain Ordering The Attack | `minecraft:pillager` | manual | 2.40s | action | 500 |
+| `cine.player.advancement_challenge` | Advancement: Challenge Conquered | `@player` | event `victory:challenge` when `!q.is_dead` | 2.40s | action | 420 |
+| `cine.player.advancement_goal` | Advancement: Goal Reached | `@player` | event `victory:goal` when `!q.is_dead` | 1.80s | action | 420 |
+| `cine.player.advancement_task` | Advancement: A Quiet Nod Of Satisfaction | `@player` | event `victory:task` when `!q.is_dead` | 1.60s | action | 420 |
+| `cine.player.bell_rope` | Ring The Great Bell | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.bow_aim_hold` | Hold A Drawn Bow Steady | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.brace_for_wave` | Brace For The Onslaught | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.campfire_sit` | Sit By The Campfire | `@player` | manual | 5.00s | action | 500 |
+| `cine.player.catch_breath` | Catch Your Breath | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.catch_falling` | Catch Something Falling | `@player` | manual | 1.60s | action | 500 |
+| `cine.player.climb_ledge_pull` | Haul Yourself Over A Ledge | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.cloak_wind` | Cloak Whipping In The Wind | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.collapse_exhausted` | Collapse From Exhaustion | `@player` | manual | 2.60s | action | 500 |
+| `cine.player.cradle_wounded` | Cradle A Wounded Friend | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.determined_march` | Determined March | `@player` | manual | 1.20s | action | 500 |
+| `cine.player.dramatic_lever` | Throw The Great Lever | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.draw_sword_slow` | Slowly Draw A Blade | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.drink_from_stream` | Drink From A Stream | `@player` | manual | 3.60s | action | 500 |
+| `cine.player.drop_to_knees_victory` | Drop To Your Knees In Victory | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.embrace` | Embrace An Old Friend | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.examine_relic` | Examine A Relic | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.feed_kneel` | Kneel To Feed An Animal | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.fist_resolve` | Clench A Fist In Resolve | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.heave_heavy_door` | Heave Open A Heavy Door | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.horizon_gaze` | Gaze To The Horizon | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.kneel_grief` | Kneel In Grief | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.kneel_reverent` | Kneel In Reverence | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.knight_oath` | Swear A Knight's Oath | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.lantern_into_dark` | Raise A Lantern Into The Dark | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.last_breath` | A Last Steadying Breath | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.lean_on_sword` | Lean On The Sword | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.light_wall_torch` | Light A Torch On The Wall | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.look_back_once` | Look Back One Last Time | `@player` | manual | 2.60s | action | 500 |
+| `cine.player.look_up_awe` | Look Up In Awe | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.map_unfold` | Unfold A Map To Plan | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.pearl_hurl` | Hurl An Ender Pearl Into The Void | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.plant_flag` | Plant A Flag On The Summit | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.plant_sword` | Plant The Sword In The Earth | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.point_destination` | Point To The Destination | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.portal_step` | Step Through The Portal | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.raise_banner` | Raise The Banner High | `@player` | manual | 2.60s | action | 500 |
+| `cine.player.reach_out` | Reach Out Desperately | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.read_letter` | Read A Letter | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.ready_stance` | Settle Into A Ready Stance | `@player` | manual | 1.60s | action | 500 |
+| `cine.player.rise_from_kneel` | Rise From A Kneel | `@player` | manual | 1.80s | action | 500 |
+| `cine.player.salute_fallen` | Salute The Fallen | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.sheathe_slow` | Slowly Sheathe The Blade | `@player` | manual | 2.20s | action | 500 |
+| `cine.player.shield_eyes_flash` | Shield Eyes From A Blinding Light | `@player` | manual | 1.60s | action | 500 |
+| `cine.player.slew_elder_guardian` | Freed From The Elder's Curse | `@player` | event `boss_slain:elder_guardian` when `!q.is_dead` | 3.00s | action | 430 |
+| `cine.player.slew_ender_dragon` | Dragonslayer's Exultation | `@player` | event `boss_slain:ender_dragon` when `!q.is_dead` | 3.60s | action | 430 |
+| `cine.player.slew_warden` | Escaping The Warden's Wrath | `@player` | event `boss_slain:warden` when `!q.is_dead` | 3.00s | action | 430 |
+| `cine.player.slew_wither` | Standing Over The Shattered Wither | `@player` | event `boss_slain:wither` when `!q.is_dead` | 3.00s | action | 430 |
+| `cine.player.slow_turn_reveal` | Slow Turn To Face The Camera | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.spyglass_hold` | Survey Through A Spyglass | `@player` | manual | 4.00s | action | 500 |
+| `cine.player.stargaze` | Lie Back And Stargaze | `@player` | manual | 6.00s | action | 500 |
+| `cine.player.startled_turn` | Turn At A Sound Behind | `@player` | manual | 1.40s | action | 500 |
+| `cine.player.sunset_silhouette` | Silhouette Against The Sunset | `@player` | manual | 5.00s | action | 500 |
+| `cine.player.surrender` | Hands Raised In Surrender | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.tie_horse` | Tie A Horse To The Post | `@player` | manual | 2.40s | action | 500 |
+| `cine.player.toast` | Raise A Toast | `@player` | manual | 2.00s | action | 500 |
+| `cine.player.vanish_into_fog` | Walk Away Into The Fog | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.warm_hands` | Warm Hands Over The Fire | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.wave_farewell_far` | Wave Farewell Across A Distance | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.wind_brace` | Lean Into A Howling Gale | `@player` | manual | 3.00s | action | 500 |
+| `cine.player.write_journal` | Write In A Journal | `@player` | manual | 4.00s | action | 500 |
+| `cine.polar_bear.protect_cub` | Polar Bear Rearing To Protect Its Cub | `minecraft:polar_bear` | manual | 2.60s | action | 500 |
+| `cine.ravager.entrance` | Ravager Bursting Through The Gate | `minecraft:ravager` | event `aggro` when `!q.is_dead && q.player_distance < 16 && q.trait_confidence > 0.8` | 2.00s | action | 420 |
+| `cine.sheep.shepherds_flock` | Sheep Following The Shepherd | `minecraft:sheep` | manual | 2.00s | action | 500 |
+| `cine.shulker.slow_open` | Shulker Slowly Opening | `minecraft:shulker` | manual | 3.00s | action | 500 |
+| `cine.skeleton.bone_salute` | Skeleton Honour Guard Salute | `minecraft:skeleton` | manual | 2.00s | action | 500 |
+| `cine.skeleton.volley_aim` | Skeleton Archers Raising Bows | `minecraft:skeleton` | manual | 2.00s | action | 500 |
+| `cine.sniffer.discover_seed` | Sniffer Unearthing An Ancient Seed | `minecraft:sniffer` | manual | 3.00s | action | 500 |
+| `cine.snow_golem.first_snow` | Snow Golem Catching The First Snowflakes | `minecraft:snow_golem` | manual | 3.00s | action | 500 |
+| `cine.spider.drop_from_ceiling` | Spider Dropping From The Ceiling | `minecraft:spider` | manual | 1.60s | action | 500 |
+| `cine.strider.lava_cross` | Strider Ferrying Across The Lava | `minecraft:strider` | manual | 3.00s | action | 500 |
+| `cine.turtle.hatchling_journey` | Hatchling Racing For The Sea | `minecraft:turtle` | manual | 2.00s | action | 500 |
+| `cine.vex.spectral_swarm` | Vex Swarming Out Of A Spell | `minecraft:vex` | manual | 1.60s | action | 500 |
+| `cine.villager.announce` | Villager Announcing News | `minecraft:villager` | manual | 3.00s | action | 500 |
+| `cine.villager.beckon_inside` | Villager Beckoning Indoors | `minecraft:villager` | manual | 2.00s | action | 500 |
+| `cine.villager.bless_hero` | Cleric Anointing The Hero | `minecraft:villager` | manual | 3.60s | action | 500 |
+| `cine.villager.bow_to_hero` | Villager Bowing To The Hero | `minecraft:villager` | manual | 2.40s | action | 500 |
+| `cine.villager.cheer_hero` | Villager Cheering The Hero | `minecraft:villager` | manual | 1.00s | action | 500 |
+| `cine.villager.child_runs_to_hero` | Village Child Running To The Hero | `minecraft:villager` | manual | 2.00s | action | 500 |
+| `cine.villager.cower_raid` | Villager Cowering As The Raid Begins | `minecraft:villager` | manual | 2.00s | action | 500 |
+| `cine.villager.elder_storytell` | Village Elder Telling An Old Tale | `minecraft:villager` | manual | 4.00s | action | 500 |
+| `cine.villager.gift_offer` | Villager Offering A Gift | `minecraft:villager` | manual | 2.40s | action | 500 |
+| `cine.villager.harvest_dance` | Villagers Dancing At The Harvest Festival | `minecraft:villager` | manual | 1.00s | action | 500 |
+| `cine.villager.point_the_way` | Villager Pointing The Way | `minecraft:villager` | manual | 2.40s | action | 500 |
+| `cine.villager.pray_rain` | Villager Praying For Rain | `minecraft:villager` | manual | 4.00s | action | 500 |
+| `cine.villager.present_armour` | Armorer Presenting Forged Armour | `minecraft:villager` | manual | 3.00s | action | 500 |
+| `cine.villager.read_prophecy` | Librarian Reading An Old Prophecy | `minecraft:villager` | manual | 4.00s | action | 500 |
+| `cine.villager.weep` | Villager Weeping | `minecraft:villager` | manual | 3.00s | action | 500 |
+| `cine.vindicator.war_cry` | Vindicator War Cry | `minecraft:vindicator` | manual | 2.00s | action | 500 |
+| `cine.wandering_trader.farewell` | Trader Bidding Farewell | `minecraft:wandering_trader` | manual | 2.60s | action | 500 |
+| `cine.wandering_trader.reveal_wares` | Trader Revealing Rare Wares | `minecraft:wandering_trader` | manual | 3.00s | action | 500 |
+| `cine.warden.intro_emerge_roar` | Warden Intro: Emerge And Roar | `minecraft:warden` | event `boss_intro` | 4.00s | action | 500 |
+| `cine.warden.listen_then_leave` | Warden Listening, Then Sinking Away | `minecraft:warden` | manual | 4.00s | action | 500 |
+| `cine.warden.sniff_close` | Warden Sniffing Inches Away | `minecraft:warden` | manual | 3.00s | action | 500 |
+| `cine.witch.hut_cackle` | Witch Cackling In Her Doorway | `minecraft:witch` | manual | 2.40s | action | 500 |
+| `cine.wither.armour_phase` | Wither Shifting Into Its Armoured Phase | `minecraft:wither` | manual | 2.40s | action | 500 |
+| `cine.wither.charge_burst` | Wither Unleashing Its Charge | `minecraft:wither` | manual | 1.60s | action | 500 |
+| `cine.wither.intro_rise` | Wither Intro: Rising From Its Summoning | `minecraft:wither` | event `boss_intro` | 3.00s | action | 500 |
+| `cine.wolf.fetch_return` | Wolf Proudly Returning A Stick | `minecraft:wolf` | manual | 2.00s | action | 500 |
+| `cine.wolf.loyal_guard` | Wolf Standing Guard Over Its Owner | `minecraft:wolf` | manual | 3.00s | action | 500 |
+| `cine.wolf.pack_howl` | Pack Leader Howl | `minecraft:wolf` | manual | 3.00s | action | 500 |
+| `cine.zombie.lurch_reveal` | Zombie Lurching Out Of The Dark | `minecraft:zombie` | manual | 2.40s | action | 500 |
+| `cine.zombie.window_pound` | Zombie Pounding On The Glass | `minecraft:zombie` | manual | 2.00s | action | 500 |
+| `cine.zombie_villager.lost_memory` | Zombie Villager Recalling Its Old Life | `minecraft:zombie_villager` | manual | 3.00s | action | 500 |
 
 ## Emotes, gestures and expressions
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `emote.applaud` | Applause | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
+| `emote.arm_wave` | Rolling Arm Wave | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.arms_wide` | Arms Wide To The World | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.20s | action | 250 |
+| `emote.backflip` | Backflip | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.30s | action | 250 |
+| `emote.beckon` | Come Here | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.belly_laugh` | Belly Laugh | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.blow_kiss` | Blow A Kiss | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.bop` | Head Bop | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
+| `emote.bored` | Bored Out Of Your Mind | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.60s | action | 250 |
+| `emote.bounce` | Hip-Hop Bounce | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
+| `emote.bow` | Formal Bow | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.20s | action | 250 |
+| `emote.bring_it` | Bring It On | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.call_out` | Cup Hands And Call | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.cartwheel` | Cartwheel | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.champion` | Champion Stance | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.check_wrist` | Check The Time | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.cheer` | Cheer | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.chest_pound` | Chest Pound | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.chicken_dance` | Chicken Flap Dance | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.conductor` | Conduct The Orchestra | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.confetti` | Throw Confetti | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.confused` | Confused Head Tilt | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.cossack` | Squat Kicks | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.80s | action | 250 |
+| `emote.countdown` | Count Down From Three | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.cower` | Cower In Fear | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.40s | action | 250 |
+| `emote.crossed_arms` | Arms Crossed | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.crowd_bow` | Bow To The Crowd | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.curtsy` | Curtsy | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.dab` | Dab | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.daydream` | Daydreaming | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 4.00s | action | 250 |
+| `emote.disco_point` | Disco Point | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.disgust` | Disgusted | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.dizzy` | Dizzy | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.double_pump` | Double Fist Pump | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.drum_roll` | Drum Roll | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.30s | action | 250 |
+| `emote.embarrassed` | Embarrassed | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.evil_laugh` | Villainous Laugh | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.20s | action | 250 |
+| `emote.facepalm` | Facepalm | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.faint` | Faint | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.60s | action | 250 |
+| `emote.fidget` | Nervous Fidget | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.fist_bump` | Offer A Fist Bump | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.fist_pump` | Fist Pump | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.fist_shake` | Triumphant Fist Shake | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.flex` | Double Bicep Flex | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.flex_one` | Show Off A Bicep | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.floss` | Arm Swing Floss | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.80s | action | 250 |
+| `emote.follow_me` | Follow Me | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.frustrated` | Tearing Your Hair Out | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.gasp` | Gasp | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.golf_clap` | Polite Golf Clap | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.halt` | Halt! | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.hand_jive` | Hand Jive | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.hands_on_hips` | Hands On Hips | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.handshake` | Offer A Handshake | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.happy_hop` | Happy Hops | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
+| `emote.headbang` | Headbang | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.40s | action | 250 |
+| `emote.hiccup` | Hiccups | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.high_five` | Offer A High Five | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.high_kick` | Victory High Kick | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.jig` | Lively Jig | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.jump_cheer` | Jumping Cheer | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.knee_slide` | Knee Slide Celebration | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.lasso` | Lasso Twirl | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.laugh` | Laugh | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.look_around` | Scan The Horizon | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.lovestruck` | Lovestruck | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.mock_cry` | Mock Crying | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.moonwalk` | Backslide Glide | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.nod_yes` | Nod Yes | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.ok_sign` | All Good | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.over_there` | Over There | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.peace_sign` | Peace Sign | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.pogo` | Pogo Jumps | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.45s | action | 250 |
+| `emote.point_down` | Point At The Ground | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.point_forward` | Point Ahead | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.point_up` | Point Skyward | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.ponder` | Pondering, Hand On Chin | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.pout` | Pout | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.pray` | Hands Together | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.proud` | Proud Chest Out | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.rage` | Furious Stomping | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.raise_the_roof` | Raise The Roof | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.80s | action | 250 |
+| `emote.relieved` | Wipe Of Relief | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.robot` | The Robot | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.rock_on` | Rock On | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.running_man` | Running Man | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.80s | action | 250 |
+| `emote.salsa` | Salsa Step | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.salute` | Salute | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.shake_no` | Shake No | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.shiver_fright` | Trembling With Fright | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.20s | action | 250 |
+| `emote.shrug` | Shrug | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.shuffle` | Shuffle | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.shush` | Shush | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.shy_wave` | Shy Little Wave | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.slam_dunk` | Slam Dunk | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.slow_dance` | Slow Dance | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.slump` | Dejected Slump | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 3.00s | action | 250 |
+| `emote.smug` | Smug | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.snap_fingers` | Snap Fingers | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.sneeze` | Big Sneeze | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.sniff` | Sniff The Air | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.sob` | Sob | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.spin` | Celebratory Spin | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.20s | action | 250 |
+| `emote.sprinkler` | The Sprinkler | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.startled` | Startled Jump | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.stir_the_pot` | Stir The Pot | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.00s | action | 250 |
+| `emote.sway` | Gentle Sway | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.sword_raise` | Raise A Blade In Triumph | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.tap_dance` | Tap Dance | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
+| `emote.think_hard` | Thinking Very Hard | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.thumbs_down` | Thumbs Down | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.thumbs_up` | Thumbs Up | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.tip_hat` | Tip Of The Hat | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.40s | action | 250 |
+| `emote.toprock` | Breakdance Toprock | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.80s | action | 250 |
+| `emote.trophy_lift` | Lift The Trophy | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.twist` | The Twist | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.60s | action | 250 |
+| `emote.victory_v` | Victory Pose | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.00s | action | 250 |
+| `emote.vogue` | Vogue | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 2.40s | action | 250 |
+| `emote.wave` | Wave | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.wave_both` | Big Two-Handed Wave | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.80s | action | 250 |
+| `emote.whistle` | Whistle For Attention | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 1.60s | action | 250 |
+| `emote.wiggle` | Silly Wiggle | `@player` | manual (stops when `q.ground_speed > 0.06 \|\| q.recent_hurt < 0.4 \|\| q.is_riding \|\| q.is_swimming \|\| !q.is_on_ground`) | 0.50s | action | 250 |
 
 ## Mounts, vehicles and riding
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `camel.ridden_dash` | Camel Dashing With Riders | `minecraft:camel` | state `!q.is_dead && q.has_rider && q.is_charging` | 0.55s | additive | 75 |
+| `camel.ridden_kneel_sway` | Camel Settling With Riders Aboard | `minecraft:camel` | state `!q.is_dead && q.has_rider && q.is_sitting` | 4.00s | additive | 72 |
+| `camel.ridden_walk` | Camel Walking Under Riders | `minecraft:camel` | state `!q.is_dead && q.has_rider && q.ground_speed >= 0.01 && !q.is_charging` | 2.00s | base | 110 |
+| `chicken.carrying_jockey` | Chicken Scampering Under A Tiny Rider | `minecraft:chicken` | state `!q.is_dead && q.has_rider` | 0.30s | additive | 75 |
+| `donkey.ridden_balk` | Donkey Balking Under Its Rider | `minecraft:donkey` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01 && q.trait_confidence > 0.5` | 2.00s | overlay | 106 |
+| `donkey.ridden_trot` | Donkey Ridden Trot | `minecraft:donkey` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.09` | 0.90s | base | 111 |
+| `donkey.ridden_walk` | Donkey Collected Walk Under Saddle | `minecraft:donkey` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.09` | 1.50s | base | 110 |
+| `equine.ridden_collection` | Head Collected For The Rider | `@equine` | state `!q.is_dead && q.has_rider && q.ground_speed >= 0.01` | 1.00s | additive | 70 |
+| `horse.ridden_canter` | Horse Ridden Canter | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.2 && q.ground_speed < 0.3` | 0.75s | base | 112 |
+| `horse.ridden_gallop` | Horse Ridden Gallop | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.3` | 0.55s | base | 113 |
+| `horse.ridden_idle_shift` | Horse Shifting Under Its Rider | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01` | 3.00s | overlay | 105 |
+| `horse.ridden_landing` | Horse Landing Heavily With A Rider | `minecraft:horse` | event `land` when `!q.is_dead && q.has_rider` | 0.60s | gesture | 150 |
+| `horse.ridden_leap` | Horse Clearing A Jump | `minecraft:horse` | event `jump` when `!q.is_dead && q.has_rider` | 1.00s | action | 160 |
+| `horse.ridden_pivot` | Horse Pivoting On Its Haunches | `minecraft:horse` | state `!q.is_dead && q.has_rider && math.abs(q.turn_rate) > 8 && q.ground_speed < 0.1` | 0.50s | additive | 73 |
+| `horse.ridden_prance` | Horse Prancing Nervously | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.near_hostile && q.ground_speed < 0.05` | 0.70s | overlay | 112 |
+| `horse.ridden_rear` | Horse Rearing With A Rider | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.is_standing` | 0.80s | additive | 75 |
+| `horse.ridden_trot` | Horse Ridden Trot | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.09 && q.ground_speed < 0.2` | 0.90s | base | 111 |
+| `horse.ridden_walk` | Horse Collected Walk Under Saddle | `minecraft:horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.09` | 1.50s | base | 110 |
+| `llama.carrying_rider` | Llama Patiently Carrying A Rider | `minecraft:llama` | state `!q.is_dead && q.has_rider` | 3.00s | additive | 70 |
+| `mule.ridden_idle` | Mule Flicking Its Ears Under A Rider | `minecraft:mule` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01` | 2.40s | overlay | 105 |
+| `mule.ridden_trot` | Mule Ridden Trot | `minecraft:mule` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.09` | 0.90s | base | 111 |
+| `mule.ridden_walk` | Mule Collected Walk Under Saddle | `minecraft:mule` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.09` | 1.50s | base | 110 |
+| `pig.ridden_idle` | Pig Grumbling Under Its Rider | `minecraft:pig` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01` | 2.00s | overlay | 105 |
+| `pig.ridden_trot` | Pig Trotting Toward The Carrot | `minecraft:pig` | state `!q.is_dead && q.has_rider && q.ground_speed >= 0.01` | 0.60s | base | 110 |
+| `piglin.hoglin_rider` | Baby Piglin Riding A Hoglin | `minecraft:piglin` | state `!q.is_dead && q.is_riding` | 0.50s | overlay | 150 |
+| `player.dismount.boat` | Climbing Out Of A Boat | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'boat'` | 0.80s | action | 300 |
+| `player.dismount.camel` | Sliding Down From A Camel | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'camel'` | 1.00s | action | 300 |
+| `player.dismount.horse` | Swinging Down From The Saddle | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'horse'` | 1.00s | action | 300 |
+| `player.dismount.minecart` | Vaulting Out Of A Minecart | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'minecart'` | 0.70s | action | 300 |
+| `player.dismount.pig` | Tumbling Off A Pig | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'pig'` | 0.80s | action | 300 |
+| `player.dismount.strider` | Hopping Off A Strider | `@player` | event `dismount` when `!q.is_dead && q.last_vehicle == 'strider'` | 0.70s | action | 300 |
+| `player.mount.boat` | Stepping Into A Boat | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'boat'` | 0.80s | action | 300 |
+| `player.mount.camel` | Clambering Onto A Camel | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'camel'` | 1.20s | action | 300 |
+| `player.mount.horse` | Swinging Into The Saddle | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'horse'` | 1.00s | action | 300 |
+| `player.mount.minecart` | Hopping Into A Minecart | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'minecart'` | 0.70s | action | 300 |
+| `player.mount.pig` | Plopping Onto A Pig | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'pig'` | 0.60s | action | 300 |
+| `player.mount.strider` | Stepping Gingerly Onto A Strider | `@player` | event `mount` when `!q.is_dead && q.vehicle == 'strider'` | 1.00s | action | 300 |
+| `player.ride.boat_backpaddle` | Back-Paddling | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.forward_speed < -0.02` | 1.20s | overlay | 264 |
+| `player.ride.boat_drift` | Drifting In A Boat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.vehicle_speed < 0.03 && q.idle_time < 15 && !q.is_fishing` | 4.00s | overlay | 260 |
+| `player.ride.boat_fishing` | Fishing From A Boat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.is_fishing` | 3.00s | additive | 264 |
+| `player.ride.boat_ice_glide` | Ice-Boat Speed Tuck | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.vehicle_speed >= 0.6` | 0.50s | overlay | 266 |
+| `player.ride.boat_lounge` | Lounging Back In A Boat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.vehicle_speed < 0.03 && q.idle_time >= 15 && !q.is_fishing` | 5.00s | overlay | 260 |
+| `player.ride.boat_passenger` | Riding As A Boat Passenger | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.seat == 1` | 3.00s | overlay | 266 |
+| `player.ride.boat_row` | Rowing Forward | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.vehicle_speed >= 0.03 && math.abs(q.turn_rate) < 3` | 1.00s | overlay | 262 |
+| `player.ride.boat_snack` | Snacking In A Boat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.is_using_item && q.use_anim == 'eat'` | 0.60s | overlay | 267 |
+| `player.ride.boat_storm` | Bracing In A Storm-Tossed Boat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && q.is_thundering && q.sky_exposed` | 1.40s | overlay | 265 |
+| `player.ride.boat_turn_stroke` | Rowing One Side To Turn | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'boat' && math.abs(q.turn_rate) >= 3` | 1.00s | overlay | 263 |
+| `player.ride.camel_back_seat` | Holding On From The Camel's Back Seat | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'camel' && q.seat == 1` | 1.80s | overlay | 265 |
+| `player.ride.camel_dash` | Holding On Through A Camel Dash | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'camel' && q.vehicle_speed >= 0.3` | 0.60s | overlay | 262 |
+| `player.ride.camel_idle` | Surveying From Camel Height | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'camel' && q.vehicle_speed < 0.01 && !q.vehicle_sitting` | 4.00s | overlay | 260 |
+| `player.ride.camel_kneel` | Riding A Kneeling Camel | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'camel' && q.vehicle_sitting` | 3.00s | overlay | 264 |
+| `player.ride.camel_sway` | Swaying Atop A Camel | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'camel' && q.vehicle_speed >= 0.01 && q.vehicle_speed < 0.3` | 1.80s | overlay | 260 |
+| `player.ride.cart_climb` | Leaning Forward On An Uphill Rail | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.vehicle_vertical > 0.05` | 1.00s | additive | 263 |
+| `player.ride.cart_corner` | Thrown Sideways On A Rail Bend | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && math.abs(q.turn_rate) > 5` | 0.50s | additive | 91 |
+| `player.ride.cart_cruise` | Cruising The Rails | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.vehicle_speed >= 0.05 && q.vehicle_speed < 0.4` | 1.00s | overlay | 261 |
+| `player.ride.cart_doze` | Nodding Off In A Minecart | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.idle_time > 30` | 4.00s | overlay | 259 |
+| `player.ride.cart_drop` | Stomach-Lurching Rail Drop | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.vehicle_vertical < -0.1` | 0.60s | overlay | 264 |
+| `player.ride.cart_idle` | Sitting In A Minecart | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.vehicle_speed < 0.05` | 4.00s | overlay | 260 |
+| `player.ride.cart_rush` | Hanging On In A Speeding Minecart | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'minecart' && q.vehicle_speed >= 0.4` | 0.40s | overlay | 262 |
+| `player.ride.drink_in_saddle` | Drinking On The Move | `@player` | state `!q.is_dead && q.is_riding && q.is_using_item && q.use_anim == 'drink'` | 1.00s | overlay | 267 |
+| `player.ride.eat_in_saddle` | Eating In The Saddle | `@player` | state `!q.is_dead && q.is_riding && q.is_using_item && q.use_anim == 'eat'` | 0.60s | overlay | 267 |
+| `player.ride.horse_canter` | Rocking With The Canter | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed >= 0.2 && q.vehicle_speed < 0.3` | 0.75s | overlay | 262 |
+| `player.ride.horse_gallop` | Jockey Crouch At The Gallop | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed >= 0.3` | 0.55s | overlay | 263 |
+| `player.ride.horse_idle` | Sitting Easy In The Saddle | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed < 0.01 && q.idle_time < 8` | 3.00s | overlay | 260 |
+| `player.ride.horse_jump` | Two-Point Seat Over A Jump | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_vertical > 0.15` | 0.80s | overlay | 266 |
+| `player.ride.horse_landing` | Absorbing The Landing | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_vertical < -0.2` | 0.50s | overlay | 265 |
+| `player.ride.horse_pat_neck` | Patting The Horse's Neck | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed < 0.01 && q.idle_time >= 8` | 2.00s | overlay | 260 |
+| `player.ride.horse_posting_trot` | Posting To The Trot | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed >= 0.1 && q.vehicle_speed < 0.2` | 0.60s | overlay | 261 |
+| `player.ride.horse_rain_hunch` | Hunched In The Saddle Against The Rain | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.is_raining && q.sky_exposed && q.vehicle_speed < 0.2` | 1.60s | overlay | 264 |
+| `player.ride.horse_rear_cling` | Clinging On As The Horse Rears | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_standing` | 0.80s | overlay | 270 |
+| `player.ride.horse_swim` | Lifting Your Legs As The Horse Swims | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.is_in_water` | 1.20s | overlay | 269 |
+| `player.ride.horse_walk` | Riding At A Walk | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed >= 0.01 && q.vehicle_speed < 0.1` | 1.30s | overlay | 260 |
+| `player.ride.llama_passenger` | Riding Along On A Llama | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed < 0.01 && q.main_hand == 'empty' && q.idle_time > 20` | 3.00s | overlay | 259 |
+| `player.ride.look_back` | Twisting Round In The Saddle | `@player` | state `!q.is_dead && q.is_riding && math.abs(q.head_yaw) > 70 && q.vehicle != 'minecart'` | 1.00s | additive | 92 |
+| `player.ride.mounted_archery` | Mounted Archery Draw | `@player` | state `!q.is_dead && q.is_riding && q.is_using_item && q.main_hand == 'bow'` | 1.00s | additive | 268 |
+| `player.ride.mounted_bow_release` | Loosing An Arrow From Horseback | `@player` | event `use_stop` when `!q.is_dead && q.is_riding && q.main_hand == 'bow'` | 0.60s | action | 301 |
+| `player.ride.mounted_crossbow` | Mounted Crossbow Shot | `@player` | event `crossbow_fire` when `!q.is_dead && q.is_riding` | 0.60s | reaction | 301 |
+| `player.ride.mounted_punch` | Bareback Swipe | `@player` | event `attack` when `!q.is_dead && q.is_riding && q.main_hand == 'empty'` | 0.50s | action | 299 |
+| `player.ride.mounted_slash` | Mounted Sabre Slash | `@player` | event `attack` when `!q.is_dead && q.is_riding && q.vehicle == 'horse' && (q.main_hand == 'sword' \|\| q.main_hand == 'axe')` | 0.80s | action | 300 |
+| `player.ride.pig_bareback` | Bouncing Along On A Pig | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'pig' && q.main_hand != 'steering_stick'` | 0.50s | overlay | 260 |
+| `player.ride.pig_carrot_lure` | Dangling A Carrot On A Stick | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'pig' && q.main_hand == 'steering_stick'` | 1.00s | overlay | 262 |
+| `player.ride.pig_whoop` | Whooping On A Speeding Pig | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'pig' && q.vehicle_speed > 0.15` | 0.80s | overlay | 264 |
+| `player.ride.saddle_doze` | Dozing In The Saddle | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'horse' && q.vehicle_speed < 0.01 && q.is_night && q.idle_time > 30` | 4.00s | overlay | 258 |
+| `player.ride.spyglass_scout` | Scouting With A Spyglass From The Saddle | `@player` | state `!q.is_dead && q.is_riding && q.is_using_item && q.use_anim == 'spyglass'` | 2.00s | additive | 268 |
+| `player.ride.strider_fungus` | Steering A Strider With Warped Fungus | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'strider' && q.main_hand == 'steering_stick'` | 1.40s | overlay | 262 |
+| `player.ride.strider_lava_balance` | Balancing Over Lava | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'strider' && q.main_hand != 'steering_stick'` | 1.60s | overlay | 260 |
+| `player.ride.strider_lava_peer` | Peering Down Into The Lava | `@player` | state `!q.is_dead && q.is_riding && q.vehicle == 'strider' && q.vehicle_speed < 0.01 && q.head_pitch > 30` | 3.00s | overlay | 263 |
+| `player.ride.turn_lean` | Leaning Into A Turn | `@player` | state `!q.is_dead && q.is_riding && (q.vehicle == 'horse' \|\| q.vehicle == 'camel' \|\| q.vehicle == 'pig') && math.abs(q.turn_rate) > 4` | 0.60s | additive | 90 |
+| `skeleton.spider_jockey` | Skeleton Riding A Spider | `minecraft:skeleton` | state `!q.is_dead && q.is_riding` | 1.00s | additive | 80 |
+| `skeleton_horse.ridden_rattle` | Skeleton Horse Jarring Under A Rider | `minecraft:skeleton_horse` | state `!q.is_dead && q.has_rider` | 0.40s | additive | 60 |
+| `skeleton_horse.ridden_trot` | Skeleton Horse Ridden Trot | `minecraft:skeleton_horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.09` | 0.90s | base | 111 |
+| `skeleton_horse.ridden_walk` | Skeleton Horse Collected Walk Under Saddle | `minecraft:skeleton_horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.09` | 1.50s | base | 110 |
+| `spider.carrying_skeleton` | Spider Carrying A Skeleton | `minecraft:spider` | state `!q.is_dead && q.has_rider` | 1.00s | additive | 72 |
+| `strider.ridden_cold` | Strider Shivering Under A Rider | `minecraft:strider` | state `!q.is_dead && q.has_rider && q.is_suffocating` | 0.25s | overlay | 131 |
+| `strider.ridden_idle` | Strider Waiting With A Rider | `minecraft:strider` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01 && !q.is_suffocating` | 3.00s | overlay | 105 |
+| `strider.ridden_stride` | Strider Striding Under A Rider | `minecraft:strider` | state `!q.is_dead && q.has_rider && q.ground_speed >= 0.01` | 1.40s | base | 110 |
+| `zombie.chicken_jockey` | Baby Zombie Riding A Chicken | `minecraft:zombie` | state `!q.is_dead && q.is_riding && q.is_baby` | 0.60s | overlay | 150 |
+| `zombie_horse.ridden_idle` | Zombie Horse Swaying Under A Rider | `minecraft:zombie_horse` | state `!q.is_dead && q.has_rider && q.ground_speed < 0.01` | 3.40s | overlay | 105 |
+| `zombie_horse.ridden_trot` | Zombie Horse Ridden Trot | `minecraft:zombie_horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.09` | 0.90s | base | 111 |
+| `zombie_horse.ridden_walk` | Zombie Horse Collected Walk Under Saddle | `minecraft:zombie_horse` | state `!q.is_dead && q.has_rider && q.is_on_ground && q.ground_speed >= 0.01 && q.ground_speed < 0.09` | 1.50s | base | 110 |
+| `zombified_piglin.strider_jockey` | Zombified Piglin Riding A Strider | `minecraft:zombified_piglin` | state `!q.is_dead && q.is_riding` | 2.00s | overlay | 150 |
 
 ## Swimming and underwater behaviour
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `camel.swim` | Camel Swimming Head-High | `minecraft:camel` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.80s | base | 120 |
+| `cat.swim_paddle` | Cat Paddling | `minecraft:cat` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `cat.water_panic` | Cat Scrabbling In Water | `minecraft:cat` | state `!q.is_dead && q.is_in_water` | 0.30s | additive | 90 |
+| `chicken.float_bob` | Chicken Bobbing Afloat | `minecraft:chicken` | state `!q.is_dead && q.is_in_water` | 1.00s | base | 120 |
+| `cow.swim_paddle` | Cow Paddling | `minecraft:cow` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `creeper.swim_paddle` | Creeper Paddling | `minecraft:creeper` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `donkey.swim` | Donkey Bobbing Swim | `minecraft:donkey` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.30s | base | 120 |
+| `drowned.surface_lurk` | Drowned Lurking At The Surface | `minecraft:drowned` | state `!q.is_dead && q.is_in_water && !q.is_underwater && q.is_night` | 3.00s | overlay | 125 |
+| `enderman.water_agony` | Enderman Water Agony | `minecraft:enderman` | state `!q.is_dead && q.is_in_water` | 0.30s | action | 160 |
+| `fox.swim_paddle` | Fox Paddling | `minecraft:fox` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `goat.swim_paddle` | Goat Paddling | `minecraft:goat` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `hoglin.swim_paddle` | Hoglin Paddling | `minecraft:hoglin` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `horse.swim` | Horse Swimming Head-High | `minecraft:horse` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.10s | base | 120 |
+| `husk.sinking_drift` | Husk Clawing At The Surface | `minecraft:husk` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `iron_golem.riverbed_march` | Iron Golem Marching Along The Riverbed | `minecraft:iron_golem` | state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.01` | 3.00s | base | 110 |
+| `llama.swim_paddle` | Llama Paddling | `minecraft:llama` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `mooshroom.swim_paddle` | Mooshroom Paddling | `minecraft:mooshroom` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `mule.swim` | Mule Steady Swim | `minecraft:mule` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.20s | base | 120 |
+| `ocelot.swim_paddle` | Ocelot Paddling | `minecraft:ocelot` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `panda.swim_paddle` | Panda Paddling | `minecraft:panda` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `pig.swim_paddle` | Pig Paddling | `minecraft:pig` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `piglin.dog_paddle` | Piglin Dog Paddle | `minecraft:piglin` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.60s | base | 120 |
+| `pillager.dog_paddle` | Pillager Dog Paddle | `minecraft:pillager` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `player.swim.air_running_out` | Holding Breath Anxiously | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.air >= 0.15 && q.air < 0.3` | 1.00s | base | 320 |
+| `player.swim.armoured_slog` | Armoured Swimming Slog | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.armor_weight > 0.5` | 1.80s | base | 302 |
+| `player.swim.backstroke` | Lazy Backstroke | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed >= 0.02 && q.head_pitch < -40` | 1.80s | base | 311 |
+| `player.swim.breaststroke_surface` | Surface Breaststroke | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed >= 0.02` | 1.40s | base | 304 |
+| `player.swim.breaststroke_under` | Underwater Breaststroke | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed >= 0.02` | 1.60s | base | 303 |
+| `player.swim.bubble_drag` | Dragged Down A Whirlpool Column | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.feet_block == 'bubble_column' && q.vertical_speed < -0.1` | 1.40s | base | 316 |
+| `player.swim.bubble_lift` | Riding A Rising Bubble Column | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.feet_block == 'bubble_column' && q.vertical_speed > 0.1` | 0.40s | base | 315 |
+| `player.swim.cannonball` | Cannonball | `@player` | event `enter_water` when `!q.is_dead && !q.is_riding && q.vertical_speed < -0.5 && q.is_sneaking` | 1.00s | action | 344 |
+| `player.swim.cheeks_puffed` | Cheeks Puffed Holding Breath | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && q.air < 0.7 && q.air >= 0.3` | 1.20s | additive | 60 |
+| `player.swim.chest_deep_wade` | Chest-Deep Wade | `@player` | state `!q.is_dead && !q.is_riding && q.is_on_ground && q.fluid_depth > 1.0 && !q.is_underwater && q.ground_speed >= 0.02` | 1.60s | base | 299 |
+| `player.swim.climb_out` | Hauling Out Of The Water | `@player` | event `exit_water` when `!q.is_dead && !q.is_riding && q.vertical_speed > 0.1` | 1.00s | action | 345 |
+| `player.swim.cold_water_shiver` | Shivering In Icy Water | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_cold` | 0.25s | additive | 60 |
+| `player.swim.dark_water_caution` | Cautious Swim In Dark Water | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.light < 5 && q.ground_speed >= 0.02` | 2.00s | base | 313 |
+| `player.swim.dive_tuck` | Duck Dive | `@player` | event `submerge` when `!q.is_dead && !q.is_riding && q.vertical_speed < -0.05` | 0.80s | action | 340 |
+| `player.swim.drowning` | Drowning Struggle | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && q.air < 0.15` | 0.50s | base | 330 |
+| `player.swim.float_back` | Floating On Your Back | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && q.idle_time > 10 && q.health >= 0.35` | 4.00s | base | 312 |
+| `player.swim.front_crawl` | Front Crawl | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.exertion <= 0.8 && q.armor_weight <= 0.5` | 1.20s | base | 300 |
+| `player.swim.front_crawl_tired` | Laboured Front Crawl | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.exertion > 0.8` | 1.60s | base | 301 |
+| `player.swim.gasp` | Gasping For Air | `@player` | event `surface` when `!q.is_dead && !q.is_riding && q.air < 0.35` | 1.60s | gesture | 342 |
+| `player.swim.glide_stop` | Gliding To A Stop | `@player` | event `sprint_stop` when `!q.is_dead && !q.is_riding && q.is_in_water` | 1.00s | action | 347 |
+| `player.swim.head_first_dive` | Head-First Dive Entry | `@player` | event `enter_water` when `!q.is_dead && !q.is_riding && q.vertical_speed < -0.5 && !q.is_sneaking` | 0.90s | action | 343 |
+| `player.swim.hover` | Underwater Hover | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && q.air >= 0.3` | 3.00s | base | 307 |
+| `player.swim.kick_up` | Kicking Upward | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.vertical_speed > 0.05` | 0.70s | base | 308 |
+| `player.swim.lava_thrash` | Thrashing In Lava | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_lava && !q.is_on_ground` | 0.35s | base | 335 |
+| `player.swim.lava_wade` | Desperate Lava Wade | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_lava && q.is_on_ground` | 0.60s | base | 334 |
+| `player.swim.look_around_reef` | Gazing Around Underwater | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && q.air >= 0.3 && q.light >= 6` | 5.00s | base | 307 |
+| `player.swim.push_off` | Pushing Off Into A Sprint Swim | `@player` | event `sprint_start` when `!q.is_dead && !q.is_riding && q.is_in_water` | 0.60s | action | 346 |
+| `player.swim.reach_for_surface` | Reaching For The Surface | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.vertical_speed > 0.1 && q.air < 0.5` | 0.90s | base | 321 |
+| `player.swim.seabed_stand` | Standing On The Seabed | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && q.is_on_ground && q.ground_speed < 0.01` | 3.00s | base | 300 |
+| `player.swim.seabed_walk` | Slow Seabed Walk | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && q.is_on_ground && q.ground_speed >= 0.01` | 1.80s | base | 300 |
+| `player.swim.seagrass_brush` | Brushing Through Seagrass | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.feet_block == 'foliage' && q.ground_speed >= 0.02` | 1.00s | additive | 95 |
+| `player.swim.shake_off` | Shaking Off Water | `@player` | event `exit_water` when `!q.is_dead && !q.is_riding && q.vertical_speed <= 0.1` | 1.20s | gesture | 200 |
+| `player.swim.sidestroke_carry` | Sidestroke Carrying An Item | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.main_hand != 'empty' && q.main_hand != 'trident'` | 1.50s | base | 309 |
+| `player.swim.sink_down` | Sinking Deliberately | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.vertical_speed < -0.05 && q.is_sneaking` | 2.00s | base | 309 |
+| `player.swim.sneak_sink_surface` | Letting Yourself Sink | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.is_sneaking` | 1.40s | base | 314 |
+| `player.swim.splash_play` | Splashing Water Playfully | `@player` | event `swing` when `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && q.main_hand == 'empty'` | 0.60s | action | 352 |
+| `player.swim.storm_swell` | Riding Storm Swells | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.is_thundering && q.sky_exposed` | 2.60s | base | 317 |
+| `player.swim.surface_burst` | Bursting To The Surface | `@player` | event `surface` when `!q.is_dead && !q.is_riding && q.vertical_speed > 0.05` | 0.90s | action | 341 |
+| `player.swim.surface_rest_ledge` | Resting Arms On A Ledge | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && q.exertion > 0.6` | 2.40s | base | 318 |
+| `player.swim.tread_calm` | Calm Treading Water | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && q.health >= 0.35 && q.armor_weight <= 0.5` | 1.60s | base | 305 |
+| `player.swim.tread_struggle` | Struggling To Stay Afloat | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.ground_speed < 0.02 && (q.health < 0.35 \|\| q.armor_weight > 0.5)` | 0.80s | base | 306 |
+| `player.swim.trident_stroke` | One-Arm Stroke Holding A Trident | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.main_hand == 'trident'` | 1.30s | base | 310 |
+| `player.swim.turn_bank` | Banking Swim Turn | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && math.abs(q.turn_rate) > 4` | 0.60s | additive | 90 |
+| `player.swim.underwater_mining` | Slow Underwater Mining | `@player` | state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && q.is_mining` | 1.00s | action | 351 |
+| `player.swim.underwater_swing` | Water-Resisted Swing | `@player` | event `attack` when `!q.is_dead && !q.is_riding && q.is_underwater` | 0.90s | action | 350 |
+| `polar_bear.swim_paddle` | Polar Bear Paddling | `minecraft:polar_bear` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `rabbit.frantic_paddle` | Rabbit Frantic Paddle | `minecraft:rabbit` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.30s | base | 120 |
+| `ravager.swim_paddle` | Ravager Paddling | `minecraft:ravager` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `salmon.upstream_leap` | Salmon Upstream Leap | `minecraft:salmon` | event `exit_water` when `!q.is_dead && q.vertical_speed > 0` | 0.80s | action | 150 |
+| `sheep.swim_paddle` | Sheep Paddling | `minecraft:sheep` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `skeleton.sinking_drift` | Skeleton Sinking Bone Drift | `minecraft:skeleton` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 2.40s | base | 120 |
+| `spider.leg_scull` | Spider Sculling Its Legs | `minecraft:spider` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.70s | base | 120 |
+| `villager.swim_bob` | Villager Bobbing Swim | `minecraft:villager` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.00s | base | 120 |
+| `wandering_trader.swim_bob` | Wandering Trader Bobbing Swim | `minecraft:wandering_trader` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.25s | base | 120 |
+| `witch.swim_bob` | Witch Paddling With Her Hat Askew | `minecraft:witch` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 1.40s | base | 120 |
+| `wolf.swim_paddle` | Wolf Paddling | `minecraft:wolf` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 0.80s | base | 120 |
+| `zombie.sinking_drift` | Zombie Sinking Drift | `minecraft:zombie` | state `!q.is_dead && q.is_in_water && !q.is_on_ground` | 2.40s | base | 120 |
 
 ## Flying and aerial movement
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `allay.descend` | Allay Floating Down | `minecraft:allay` | state `!q.is_dead && q.vertical_speed < -0.05` | 1.60s | base | 112 |
+| `allay.loop_de_loop` | Allay Loop-The-Loop | `minecraft:allay` | state `!q.is_dead && q.trait_energy > 0.7 && q.ground_speed >= 0.05 && !q.is_holding` | 1.40s | base | 113 |
+| `allay.rise` | Allay Spiralling Up | `minecraft:allay` | state `!q.is_dead && q.vertical_speed > 0.05` | 1.20s | base | 112 |
+| `bat.climb` | Bat Climbing Wingbeats | `minecraft:bat` | state `!q.is_dead && !q.is_sleeping && q.vertical_speed > 0.08` | 0.20s | base | 108 |
+| `bat.drop_from_roost` | Bat Dropping From Its Roost | `minecraft:bat` | event `wake` | 0.70s | action | 150 |
+| `bat.figure_eight` | Bat Figure-Eight Weave | `minecraft:bat` | state `!q.is_dead && !q.is_sleeping && q.ground_speed > 0.05` | 1.60s | additive | 63 |
+| `bee.climb` | Bee Climbing | `minecraft:bee` | state `!q.is_dead && q.is_flying && q.vertical_speed > 0.05` | 0.60s | base | 104 |
+| `bee.dart_turn` | Bee Darting Turn | `minecraft:bee` | state `!q.is_dead && q.is_flying && math.abs(q.turn_rate) > 8` | 0.30s | additive | 66 |
+| `bee.descend` | Bee Descending | `minecraft:bee` | state `!q.is_dead && q.is_flying && q.vertical_speed < -0.05` | 0.60s | base | 104 |
+| `bee.touchdown` | Bee Touching Down | `minecraft:bee` | event `land` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `blaze.descend` | Blaze Descending | `minecraft:blaze` | state `!q.is_dead && q.vertical_speed < -0.05` | 1.00s | additive | 104 |
+| `blaze.rise` | Blaze Ascending | `minecraft:blaze` | state `!q.is_dead && q.vertical_speed > 0.05` | 0.80s | additive | 104 |
+| `blaze.strafe_sway` | Blaze Strafing Sway | `minecraft:blaze` | state `!q.is_dead && q.is_aggressive && q.ground_speed > 0.03` | 1.00s | additive | 66 |
+| `chicken.flight_burst` | Chicken Flight Burst | `minecraft:chicken` | event `jump` when `!q.is_dead` | 0.60s | action | 150 |
+| `ender_dragon.hover_hold` | Ender Dragon Hover Hold | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'hovering'` | 2.40s | additive | 65 |
+| `ender_dragon.takeoff_surge` | Ender Dragon Takeoff Surge | `minecraft:ender_dragon` | state `!q.is_dead && q.phase == 'takeoff'` | 1.60s | additive | 66 |
+| `ghast.rise` | Ghast Rising | `minecraft:ghast` | state `!q.is_dead && q.vertical_speed > 0.03` | 2.00s | additive | 104 |
+| `ghast.sink` | Ghast Sinking | `minecraft:ghast` | state `!q.is_dead && q.vertical_speed < -0.03` | 2.00s | additive | 104 |
+| `ghast.turn_drift` | Ghast Turning Drift | `minecraft:ghast` | state `!q.is_dead && math.abs(q.turn_rate) > 2` | 2.00s | additive | 66 |
+| `parrot.climb_flap` | Parrot Climbing Flight | `minecraft:parrot` | state `!q.is_dead && q.is_flying && q.vertical_speed > 0.05` | 0.25s | base | 110 |
+| `parrot.glide_descent` | Parrot Gliding Descent | `minecraft:parrot` | state `!q.is_dead && q.is_flying && q.vertical_speed < -0.05` | 1.00s | base | 111 |
+| `parrot.hover_flutter` | Parrot Hovering Flutter | `minecraft:parrot` | state `!q.is_dead && q.is_flying && q.ground_speed < 0.02 && math.abs(q.vertical_speed) <= 0.05` | 0.18s | base | 112 |
+| `parrot.landing_approach` | Parrot Landing Approach | `minecraft:parrot` | state `!q.is_dead && q.is_flying && q.vertical_speed < -0.05 && q.ground_speed < 0.05` | 0.50s | base | 113 |
+| `phantom.climb` | Phantom Climbing Beat | `minecraft:phantom` | state `!q.is_dead && q.vertical_speed > 0.15` | 0.70s | base | 102 |
+| `phantom.steep_dive` | Phantom Wings-Tucked Plunge | `minecraft:phantom` | state `!q.is_dead && q.vertical_speed < -0.6` | 0.40s | base | 103 |
+| `player.aerial.boost_pad_launch` | Slime Launch Tuck | `@player` | event `jump` when `!q.is_dead && !q.is_riding && q.surface == 'slime' && q.vertical_speed > 0.6` | 1.20s | action | 290 |
+| `player.elytra.air_brake` | Elytra Air Brake | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.head_pitch < -40 && q.ground_speed < 0.8` | 0.80s | base | 326 |
+| `player.elytra.armoured_glide` | Rigid Armoured Glide | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.armor_weight > 0.6 && math.abs(q.vertical_speed) <= 0.5` | 2.00s | base | 328 |
+| `player.elytra.bank` | Elytra Banking Turn | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && math.abs(q.turn_rate) > 3` | 0.80s | additive | 90 |
+| `player.elytra.barrel_roll` | Elytra Barrel Roll | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && math.abs(q.turn_rate) > 18` | 0.90s | additive | 91 |
+| `player.elytra.cargo` | Gliding With Something In Hand | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.main_hand != 'empty' && q.main_hand != 'firework' && math.abs(q.vertical_speed) <= 0.5` | 2.00s | base | 330 |
+| `player.elytra.climb` | Elytra Climb | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.vertical_speed > 0.15` | 1.40s | base | 321 |
+| `player.elytra.dive` | Elytra Power Dive | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.vertical_speed < -0.5` | 0.80s | base | 322 |
+| `player.elytra.firework_boost` | Firework Boost | `@player` | event `boost` when `!q.is_dead && !q.is_riding && q.is_fall_flying` | 0.90s | action | 360 |
+| `player.elytra.glide` | Elytra Glide | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && math.abs(q.vertical_speed) <= 0.5 && q.ground_speed <= 1.2 && q.ground_speed >= 0.5` | 2.40s | base | 320 |
+| `player.elytra.landing_flare` | Elytra Landing Flare | `@player` | event `glide_stop` when `!q.is_dead && !q.is_riding && q.ground_speed > 0.15` | 0.90s | action | 362 |
+| `player.elytra.look_back` | Glancing Back Mid-Flight | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && math.abs(q.head_yaw) > 55` | 1.00s | additive | 92 |
+| `player.elytra.nose_down` | Elytra Pitching Into A Dive | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.head_pitch > 55 && q.vertical_speed >= -0.5` | 1.00s | base | 325 |
+| `player.elytra.slow_drift` | Elytra Lazy Drift | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.ground_speed < 0.5 && q.vertical_speed >= -0.5` | 3.00s | base | 320 |
+| `player.elytra.speed_buffet` | High-Speed Buffeting | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.ground_speed > 1.6` | 0.15s | additive | 93 |
+| `player.elytra.speed_tuck` | Elytra Superman Tuck | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.ground_speed > 1.2 && q.vertical_speed >= -0.5` | 1.00s | base | 323 |
+| `player.elytra.stall_recover` | Elytra Stall Recovery | `@player` | event `glide_stop` when `!q.is_dead && !q.is_riding && q.ground_speed <= 0.15 && !q.is_on_ground` | 1.00s | action | 363 |
+| `player.elytra.stargaze` | Gliding Beneath The Stars | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.is_night && q.head_pitch < -30 && q.vertical_speed > -0.3` | 4.00s | base | 329 |
+| `player.elytra.storm_tuck` | Elytra Flight Through Rain | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.is_raining && q.sky_exposed && math.abs(q.vertical_speed) <= 0.5` | 1.60s | base | 324 |
+| `player.elytra.takeoff` | Elytra Spread And Takeoff | `@player` | event `glide_start` when `!q.is_dead && !q.is_riding` | 0.70s | action | 361 |
+| `player.elytra.wall_crash` | Elytra Wall Crash | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'kinetic'` | 1.20s | reaction | 380 |
+| `player.elytra.wounded_wobble` | Wounded Unsteady Glide | `@player` | state `!q.is_dead && !q.is_riding && q.is_fall_flying && q.health < 0.3` | 1.40s | base | 327 |
+| `player.fall.end_low_gravity` | Floaty End Jump | `@player` | state `!q.is_dead && !q.is_riding && q.dimension == 'the_end' && !q.is_on_ground && q.vertical_speed > 0 && !q.is_fall_flying && !q.is_flying` | 1.00s | base | 290 |
+| `player.fly.ascend` | Creative Ascent | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.vertical_speed >= 0.1` | 1.00s | base | 315 |
+| `player.fly.backward` | Creative Backward Float | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.forward_speed < -0.03` | 1.60s | base | 316 |
+| `player.fly.build_peer` | Peering Down While Building | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && q.head_pitch > 50` | 2.00s | base | 317 |
+| `player.fly.carry_block` | Flying With Building Blocks | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed >= 0.02 && q.main_hand == 'block'` | 1.60s | base | 318 |
+| `player.fly.cross_legged` | Floating Cross-Legged | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && q.idle_time >= 10 && q.idle_time < 40` | 4.00s | base | 311 |
+| `player.fly.descend` | Creative Descent | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.vertical_speed <= -0.1` | 1.20s | base | 315 |
+| `player.fly.forward` | Creative Flight Forward | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed >= 0.02 && !q.is_sprinting && q.forward_speed >= 0` | 1.60s | base | 313 |
+| `player.fly.hover` | Creative Hover | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && math.abs(q.vertical_speed) < 0.05 && q.idle_time < 10` | 3.00s | base | 310 |
+| `player.fly.idle_spin` | Idly Spinning In Place | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && q.idle_time >= 6 && q.trait_energy > 0.7` | 6.00s | base | 311 |
+| `player.fly.liftoff` | Creative Liftoff | `@player` | event `fly_start` when `!q.is_dead && !q.is_riding` | 0.60s | action | 360 |
+| `player.fly.look_around` | Hovering Survey | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && math.abs(q.vertical_speed) < 0.05 && q.idle_time < 10` | 5.00s | base | 310 |
+| `player.fly.lounge` | Lounging In Mid-Air | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.ground_speed < 0.02 && q.idle_time >= 40` | 6.00s | base | 312 |
+| `player.fly.sneak_curl` | Curling Up For A Flying Descent | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.is_sneaking` | 1.60s | base | 319 |
+| `player.fly.sprint` | Creative Superhero Flight | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.is_sprinting` | 1.00s | base | 314 |
+| `player.fly.sprint_bank` | Banking At Flight Speed | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && q.is_sprinting && math.abs(q.turn_rate) > 4` | 0.60s | additive | 94 |
+| `player.fly.strafe` | Creative Sideways Drift | `@player` | state `!q.is_dead && !q.is_riding && q.is_flying && !q.is_fall_flying && math.abs(q.strafe_speed) > 0.05 && math.abs(q.forward_speed) < 0.05` | 1.40s | base | 316 |
+| `player.fly.touchdown` | Creative Touchdown | `@player` | event `fly_stop` when `!q.is_dead && !q.is_riding` | 0.60s | action | 361 |
+| `player.levitate.flail` | Levitation Flailing | `@player` | state `!q.is_dead && !q.is_riding && q.is_levitating && q.trait_confidence <= 0.6` | 1.20s | base | 330 |
+| `player.levitate.serene` | Serene Levitation | `@player` | state `!q.is_dead && !q.is_riding && q.is_levitating && q.trait_confidence > 0.6` | 4.00s | base | 331 |
+| `player.pearl.arrival` | Ender Pearl Arrival | `@player` | event `teleport:pearl` when `!q.is_dead && !q.is_riding` | 0.90s | action | 367 |
+| `player.riptide.launch` | Riptide Launch | `@player` | event `riptide_start` when `!q.is_dead && !q.is_riding` | 0.40s | action | 365 |
+| `player.riptide.spin` | Riptide Corkscrew | `@player` | state `!q.is_dead && !q.is_riding && q.is_spin_attack` | 0.50s | base | 340 |
+| `player.riptide.tumble_out` | Riptide Tumble Out | `@player` | event `riptide_stop` when `!q.is_dead && !q.is_riding` | 1.00s | action | 366 |
+| `player.slow_fall.drift` | Slow-Falling Drift | `@player` | state `!q.is_dead && !q.is_riding && q.slow_falling && !q.is_on_ground && !q.is_fall_flying && q.vertical_speed < 0` | 3.00s | base | 332 |
+| `player.slow_fall.feather_land` | Feather-Light Landing | `@player` | event `land` when `!q.is_dead && !q.is_riding && q.slow_falling` | 0.90s | gesture | 200 |
+| `player.slow_fall.twirl` | Twirling Slow-Fall Descent | `@player` | state `!q.is_dead && !q.is_riding && q.slow_falling && !q.is_on_ground && q.vertical_speed < 0 && q.trait_energy > 0.6` | 3.00s | base | 333 |
+| `player.void.fall` | Falling Into The Void | `@player` | state `!q.is_dead && !q.is_riding && q.altitude < 0 && q.dimension == 'the_end' && !q.is_on_ground` | 1.20s | base | 345 |
+| `vex.swoop_turn` | Vex Swooping Turn | `minecraft:vex` | state `!q.is_dead && math.abs(q.turn_rate) > 6` | 0.50s | additive | 66 |
+| `vex.zigzag` | Vex Zigzag Flight | `minecraft:vex` | state `!q.is_dead && q.ground_speed >= 0.1 && !q.is_charging` | 0.60s | base | 106 |
+| `wither.rise` | Wither Rising | `minecraft:wither` | state `!q.is_dead && q.vertical_speed > 0.05 && !q.invulnerable` | 1.20s | additive | 106 |
+| `wither.strafe_sway` | Wither Strafing Sway | `minecraft:wither` | state `!q.is_dead && !q.invulnerable && q.ground_speed > 0.05` | 1.40s | additive | 67 |
+| `wither.swoop` | Wither Swooping Down | `minecraft:wither` | state `!q.is_dead && q.vertical_speed < -0.05 && !q.invulnerable` | 1.00s | additive | 106 |
 
 ## Damage, reactions and recovery
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `blaze.death` | Blaze Rods Scattering | `minecraft:blaze` | event `death` | 0.60s | action | 300 |
+| `cat.yelp_flinch` | Cat Hissing Flinch | `minecraft:cat` | event `hurt` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `chicken.death` | Chicken Death Flutter | `minecraft:chicken` | event `death` | 0.60s | action | 300 |
+| `chicken.hurt_flinch` | Chicken Feathers Flying | `minecraft:chicken` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `cow.death_buckle` | Cow Kneeling Front-First In Death | `minecraft:cow` | event `death` | 1.40s | action | 300 |
+| `cow.hurt_jolt` | Cow Bellowing Kick | `minecraft:cow` | event `hurt` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `creeper.hurt_flinch` | Creeper Hissing Swell | `minecraft:creeper` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `enderman.death` | Enderman Death Collapse | `minecraft:enderman` | event `death` | 1.00s | action | 300 |
+| `enderman.hurt_glitch` | Enderman Flickering Recoil | `minecraft:enderman` | event `hurt` when `!q.is_dead` | 0.50s | reaction | 200 |
+| `fox.yelp_flinch` | Fox Spinning Hop Away | `minecraft:fox` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `goat.death_buckle` | Goat Keeling Over Stiff-Legged | `minecraft:goat` | event `death` | 0.70s | action | 300 |
+| `goat.hurt_jolt` | Goat Dropping Into A Defensive Brace | `minecraft:goat` | event `hurt` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `hoglin.hurt_flinch` | Hoglin Squealing Buck | `minecraft:hoglin` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `horse.death_collapse` | Horse Collapsing In Death | `minecraft:horse` | event `death` | 1.20s | action | 300 |
+| `horse.yelp_flinch` | Horse Shying From Pain | `minecraft:horse` | event `hurt` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `husk.hurt_lurch` | Husk Lurching From A Blow Behind | `minecraft:husk` | event `hurt_back` when `!q.is_dead` | 0.90s | reaction | 200 |
+| `husk.hurt_reel` | Husk Reeling From A Hit | `minecraft:husk` | event `hurt_front` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `iron_golem.hurt_crack` | Iron Golem Shrugging Off A Crack | `minecraft:iron_golem` | event `hurt` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `pig.death_buckle` | Pig Rolling Over Legs Out | `minecraft:pig` | event `death` | 0.90s | action | 300 |
+| `pig.hurt_jolt` | Pig Squealing Hop | `minecraft:pig` | event `hurt` when `!q.is_dead` | 0.50s | reaction | 200 |
+| `piglin.death` | Piglin Death Collapse | `minecraft:piglin` | event `death` | 1.00s | action | 300 |
+| `piglin.hurt_lurch` | Piglin Lurching From A Blow Behind | `minecraft:piglin` | event `hurt_back` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `piglin.hurt_reel` | Piglin Reeling From A Hit | `minecraft:piglin` | event `hurt_front` when `!q.is_dead` | 0.50s | reaction | 200 |
+| `piglin_brute.hurt_flinch` | Piglin Brute Stomping Through Pain | `minecraft:piglin_brute` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `pillager.death` | Pillager Death Collapse | `minecraft:pillager` | event `death` | 1.00s | action | 300 |
+| `player.burning.flail_run` | Running While On Fire | `@player` | state `!q.is_dead && q.is_on_fire && !q.is_in_water && q.ground_speed >= 0.05` | 0.50s | action | 410 |
+| `player.burning.pat_down` | Patting Out Flames | `@player` | state `!q.is_dead && q.is_on_fire && !q.is_in_water && q.ground_speed < 0.05` | 0.60s | action | 411 |
+| `player.death.blasted` | Death: Blown Apart | `@player` | event `death` when `q.hurt_kind == 'explosion'` | 1.00s | action | 500 |
+| `player.death.burning` | Death: Consumed By Fire | `@player` | event `death` when `q.hurt_kind == 'fire'` | 1.40s | action | 500 |
+| `player.death.crumple` | Death: Crumpling | `@player` | event `death` when `q.hurt_kind != 'melee' && q.hurt_kind != 'fire' && q.hurt_kind != 'fall' && q.hurt_kind != 'explosion' && q.hurt_kind != 'drown'` | 1.40s | action | 500 |
+| `player.death.drowned` | Death: Going Limp Underwater | `@player` | event `death` when `q.hurt_kind == 'drown'` | 2.00s | action | 500 |
+| `player.death.fall_back` | Death: Falling Backwards | `@player` | event `death` when `q.hurt_kind == 'melee' && math.abs(q.hurt_dir) <= 45` | 1.20s | action | 500 |
+| `player.death.fall_forward` | Death: Pitching Forward | `@player` | event `death` when `q.hurt_kind == 'melee' && math.abs(q.hurt_dir) > 45` | 1.20s | action | 500 |
+| `player.death.impact` | Death: Fatal Fall | `@player` | event `death` when `q.hurt_kind == 'fall'` | 0.80s | action | 500 |
+| `player.hurt.airborne_flail` | Knocked Into The Air | `@player` | event `hurt` when `!q.is_dead && !q.is_on_ground && q.hurt_amount >= 4` | 1.00s | reaction | 409 |
+| `player.hurt.armour_clank` | Blow Glancing Off Heavy Armour | `@player` | event `hurt` when `!q.is_dead && q.armor_weight > 0.6 && q.hurt_amount < 3` | 0.50s | reaction | 397 |
+| `player.hurt.arrow_back` | Arrow In The Back | `@player` | event `hurt_back` when `!q.is_dead && q.hurt_kind == 'projectile'` | 0.70s | reaction | 402 |
+| `player.hurt.arrow_front` | Arrow Strike To The Chest | `@player` | event `hurt_front` when `!q.is_dead && q.hurt_kind == 'projectile'` | 0.60s | reaction | 400 |
+| `player.hurt.back_heavy` | Stumbling Forward From Behind | `@player` | event `hurt_back` when `!q.is_dead && q.hurt_amount >= 4` | 1.00s | reaction | 401 |
+| `player.hurt.back_light` | Jolt From Behind | `@player` | event `hurt_back` when `!q.is_dead && q.hurt_amount < 4` | 0.50s | reaction | 400 |
+| `player.hurt.blast` | Thrown Back By An Explosion | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'explosion'` | 1.40s | reaction | 404 |
+| `player.hurt.burn` | Scorched | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'fire'` | 0.70s | reaction | 400 |
+| `player.hurt.choking` | Choking For Air | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'drown'` | 1.00s | reaction | 400 |
+| `player.hurt.crushed` | Crushed By A Falling Block | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'crush'` | 1.20s | reaction | 407 |
+| `player.hurt.dragon_breath` | Scalded By Dragon's Breath | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'breath'` | 1.00s | reaction | 400 |
+| `player.hurt.fall_heavy` | Crumpling To A Knee From A Fall | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'fall' && q.hurt_amount >= 4` | 1.60s | reaction | 403 |
+| `player.hurt.fall_light` | Knees Buckle On Landing | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'fall' && q.hurt_amount < 4` | 0.70s | reaction | 400 |
+| `player.hurt.front_crushing` | Staggered By A Crushing Blow | `@player` | event `hurt_front` when `!q.is_dead && q.hurt_kind == 'melee' && q.hurt_amount >= 8` | 1.30s | reaction | 401 |
+| `player.hurt.front_heavy` | Rocked Back By A Heavy Blow | `@player` | event `hurt_front` when `!q.is_dead && q.hurt_kind == 'melee' && q.hurt_amount >= 4 && q.hurt_amount < 8` | 0.80s | reaction | 400 |
+| `player.hurt.front_light` | Flinch From A Frontal Hit | `@player` | event `hurt_front` when `!q.is_dead && q.hurt_kind == 'melee' && q.hurt_amount < 4` | 0.45s | reaction | 400 |
+| `player.hurt.frostbite` | Frostbite Seizes Up | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'freeze'` | 1.00s | reaction | 400 |
+| `player.hurt.lightning` | Struck By Lightning | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'lightning'` | 1.60s | reaction | 405 |
+| `player.hurt.magic` | Reeling From Magic | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'magic'` | 1.40s | reaction | 400 |
+| `player.hurt.mid_meal` | Choking On A Bite | `@player` | event `hurt` when `!q.is_dead && q.is_using_item && q.use_anim == 'eat'` | 1.00s | reaction | 410 |
+| `player.hurt.prick` | Yelping At A Thorn | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'prick'` | 0.60s | reaction | 400 |
+| `player.hurt.pummelled` | Turtling Under A Barrage | `@player` | event `hurt` when `!q.is_dead && q.recent_hurt < 1.0 && q.hurt_kind == 'melee'` | 0.90s | reaction | 413 |
+| `player.hurt.shrug_off` | Shrugging Off A Scratch | `@player` | event `hurt` when `!q.is_dead && q.hurt_amount < 1.5 && q.trait_confidence > 0.7` | 0.90s | reaction | 398 |
+| `player.hurt.side` | Knocked Sideways | `@player` | event `hurt` when `!q.is_dead && math.abs(q.hurt_dir) > 45 && math.abs(q.hurt_dir) <= 135 && q.hurt_amount < 5` | 0.60s | reaction | 400 |
+| `player.hurt.side_heavy` | Spun Around By A Side Blow | `@player` | event `hurt` when `!q.is_dead && math.abs(q.hurt_dir) > 45 && math.abs(q.hurt_dir) <= 135 && q.hurt_amount >= 5` | 1.00s | reaction | 401 |
+| `player.hurt.sonic_boom` | Hit By A Sonic Boom | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'sonic'` | 1.60s | reaction | 406 |
+| `player.hurt.sprint_trip` | Tripping Mid-Sprint | `@player` | event `hurt_front` when `!q.is_dead && q.is_sprinting && q.hurt_amount >= 3` | 1.00s | reaction | 408 |
+| `player.hurt.starving` | Doubling Over With Hunger | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'starve'` | 1.40s | reaction | 400 |
+| `player.hurt.sting` | Stung | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'sting'` | 0.80s | reaction | 400 |
+| `player.hurt.suffocating` | Suffocating In A Wall | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'suffocate'` | 0.80s | reaction | 400 |
+| `player.hurt.swimming_jerk` | Jerked In The Water | `@player` | event `hurt` when `!q.is_dead && q.is_in_water` | 0.60s | reaction | 400 |
+| `player.hurt.thorns` | Recoiling From Thorns Armour | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'thorns'` | 0.60s | reaction | 400 |
+| `player.hurt.wither` | Wither Blight Spasm | `@player` | event `hurt` when `!q.is_dead && q.hurt_kind == 'wither'` | 1.00s | reaction | 400 |
+| `player.reaction.blast_cover` | Covering Up From A Nearby Blast | `@player` | event `explosion_flinch` when `!q.is_dead` | 0.90s | reaction | 399 |
+| `player.recover.catch_balance` | Catching Your Balance | `@player` | event `staggered` when `!q.is_dead` | 1.20s | action | 412 |
+| `player.recover.totem_revival` | Totem Of Undying Revival | `@player` | event `totem` | 2.40s | action | 450 |
+| `player.status.frozen_stiff` | Frozen Stiff | `@player` | state `!q.is_dead && q.freezing > 0.6` | 0.18s | additive | 95 |
+| `player.status.near_death_kneel` | Kneeling At Death's Door | `@player` | state `!q.is_dead && q.health < 0.15 && q.is_on_ground && q.ground_speed < 0.02 && !q.is_using_item` | 2.00s | overlay | 380 |
+| `player.status.poisoned_sway` | Poisoned Nausea Sway | `@player` | state `!q.is_dead && q.is_poisoned` | 3.00s | additive | 96 |
+| `player.status.withering` | Withering Decay | `@player` | state `!q.is_dead && q.is_withering` | 2.00s | additive | 97 |
+| `player.status.wounded_breath` | Heavy Wounded Breathing | `@player` | state `!q.is_dead && q.health >= 0.15 && q.health < 0.3 && q.ground_speed < 0.02` | 1.20s | additive | 98 |
+| `polar_bear.death_buckle` | Polar Bear Heavy Slump | `minecraft:polar_bear` | event `death` | 1.60s | action | 300 |
+| `polar_bear.hurt_jolt` | Polar Bear Rearing Snarl | `minecraft:polar_bear` | event `hurt` when `!q.is_dead` | 1.00s | reaction | 200 |
+| `rabbit.death` | Rabbit Going Still | `minecraft:rabbit` | event `death` | 0.60s | action | 300 |
+| `rabbit.hurt_flinch` | Rabbit Panic Leap | `minecraft:rabbit` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `ravager.hurt_flinch` | Ravager Pained Bellow | `minecraft:ravager` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `sheep.death_buckle` | Sheep Sitting Back In Death | `minecraft:sheep` | event `death` | 1.20s | action | 300 |
+| `sheep.hurt_jolt` | Sheep Startled Sideways Skip | `minecraft:sheep` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `skeleton.death` | Skeleton Death Collapse | `minecraft:skeleton` | event `death` | 1.00s | action | 300 |
+| `skeleton.hurt_lurch` | Skeleton Lurching From A Blow Behind | `minecraft:skeleton` | event `hurt_back` when `!q.is_dead` | 0.70s | reaction | 200 |
+| `skeleton.hurt_reel` | Skeleton Reeling From A Hit | `minecraft:skeleton` | event `hurt_front` when `!q.is_dead` | 0.50s | reaction | 200 |
+| `slime.hurt_flinch` | Slime Squashed By A Hit | `minecraft:slime` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `spider.death` | Spider Legs Curling In Death | `minecraft:spider` | event `death` | 0.60s | action | 300 |
+| `spider.hurt_flinch` | Spider Legs Snapping Inward | `minecraft:spider` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `villager.death` | Villager Death | `minecraft:villager` | event `death` | 1.00s | action | 300 |
+| `villager.hurt_from_behind` | Villager Hit From Behind | `minecraft:villager` | event `hurt_back` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `vindicator.hurt_lurch` | Vindicator Lurching From A Blow Behind | `minecraft:vindicator` | event `hurt_back` when `!q.is_dead` | 0.75s | reaction | 200 |
+| `vindicator.hurt_reel` | Vindicator Reeling From A Hit | `minecraft:vindicator` | event `hurt_front` when `!q.is_dead` | 0.55s | reaction | 200 |
+| `warden.hurt_flinch` | Warden Enraged By Pain | `minecraft:warden` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `witch.hurt_flinch` | Witch Shrieking Recoil | `minecraft:witch` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `wither_skeleton.hurt_lurch` | Wither Skeleton Lurching From A Blow Behind | `minecraft:wither_skeleton` | event `hurt_back` when `!q.is_dead` | 0.75s | reaction | 200 |
+| `wither_skeleton.hurt_reel` | Wither Skeleton Reeling From A Hit | `minecraft:wither_skeleton` | event `hurt_front` when `!q.is_dead` | 0.55s | reaction | 200 |
+| `wolf.yelp_flinch` | Wolf Cowering Yelp | `minecraft:wolf` | event `hurt` when `!q.is_dead` | 0.90s | reaction | 200 |
+| `zombie.death` | Zombie Death Collapse | `minecraft:zombie` | event `death` | 1.00s | action | 300 |
+| `zombie.hurt_lurch` | Zombie Lurching From A Blow Behind | `minecraft:zombie` | event `hurt_back` when `!q.is_dead` | 0.80s | reaction | 200 |
+| `zombie.hurt_reel` | Zombie Reeling From A Hit | `minecraft:zombie` | event `hurt_front` when `!q.is_dead` | 0.60s | reaction | 200 |
+| `zombie_villager.hurt_flinch` | Zombie Villager Moaning Recoil | `minecraft:zombie_villager` | event `hurt` when `!q.is_dead` | 0.60s | reaction | 200 |
 
 ## Special, contextual and transition animations
 
 | ID | Name | Target | Trigger | Duration | Layer | Priority |
 |---|---|---|---|---:|---|---:|
+| `axolotl.collapse` | Axolotl Feigning Death | `minecraft:axolotl` | event `play_dead` when `!q.is_dead` | 0.80s | action | 170 |
+| `axolotl.revive` | Axolotl Springing Back To Life | `minecraft:axolotl` | event `revive` when `!q.is_dead` | 0.60s | action | 170 |
+| `bee.calm_down` | Bee Calming Down | `minecraft:bee` | event `calm` when `!q.is_dead` | 0.80s | gesture | 160 |
+| `bee.provoked` | Bee Turning Angry | `minecraft:bee` | event `anger` when `!q.is_dead` | 0.50s | gesture | 160 |
+| `camel.kneel_flourish` | Camel Folding Down With A Grumble | `minecraft:camel` | event `sit_down` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `camel.rise_flourish` | Camel Rising With A Head Toss | `minecraft:camel` | event `stand_up` when `!q.is_dead` | 1.60s | gesture | 150 |
+| `cat.get_up` | Cat Getting Up From A Nap | `minecraft:cat` | event `get_up` when `!q.is_dead` | 1.00s | action | 150 |
+| `cat.lie_down` | Cat Flopping Onto Its Side | `minecraft:cat` | event `lie_down` when `!q.is_dead` | 0.80s | action | 150 |
+| `cat.rise_from_rest` | Cat Rising From A Loaf | `minecraft:cat` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 0.60s | action | 140 |
+| `cat.sit_down` | Cat Settling Onto Its Haunches | `minecraft:cat` | event `sit_down` when `!q.is_dead` | 0.70s | action | 150 |
+| `cat.stand_up` | Cat Rising And Stretching | `minecraft:cat` | event `stand_up` when `!q.is_dead` | 1.20s | action | 150 |
+| `chicken.grow_up` | Chick Ruffling Into A Hen | `minecraft:chicken` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `chicken.rise_from_rest` | Chicken Popping Up From A Dust Bath | `minecraft:chicken` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 0.50s | action | 140 |
+| `cow.grow_up` | Calf Growing Into A Cow | `minecraft:cow` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `cow.rise_from_rest` | Cow Heaving Up Hind-First | `minecraft:cow` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 1.20s | action | 140 |
+| `creeper.fuse_lit` | Creeper Fuse Catching | `minecraft:creeper` | event `charge_start` when `!q.is_dead` | 0.40s | gesture | 170 |
+| `creeper.fuse_out` | Creeper Fuse Fizzling Out | `minecraft:creeper` | event `charge_stop` when `!q.is_dead` | 0.80s | gesture | 170 |
+| `enderman.provoked` | Enderman Provoked | `minecraft:enderman` | event `anger` when `!q.is_dead` | 0.60s | gesture | 160 |
+| `fox.grow_up` | Kit Growing Into A Fox | `minecraft:fox` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `fox.sit_down` | Fox Curling Its Tail To Sit | `minecraft:fox` | event `sit_down` when `!q.is_dead` | 0.60s | action | 150 |
+| `fox.stand_up` | Fox Uncurling Its Tail To Stand | `minecraft:fox` | event `stand_up` when `!q.is_dead` | 0.60s | action | 150 |
+| `fox.wake_shake` | Fox Shaking Off Sleep | `minecraft:fox` | event `wake` when `!q.is_dead` | 1.00s | gesture | 150 |
+| `goat.ram_release` | Goat Shaking Its Head After A Ram | `minecraft:goat` | event `stop_moving` when `!q.is_dead && q.is_ramming == 0 && q.recent_hurt > 1 && q.move_time > 0 && q.trait_energy > 0.5` | 0.80s | gesture | 150 |
+| `horse.graze_rise` | Horse Lifting Its Head, Chewing | `minecraft:horse` | event `eat_stop` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `horse.grow_up` | Foal Rising Into A Horse | `minecraft:horse` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `horse.rear_end` | Horse Coming Down From A Rear | `minecraft:horse` | event `rear_down` when `!q.is_dead` | 0.70s | gesture | 150 |
+| `horse.rear_start` | Horse Rearing Up | `minecraft:horse` | event `rear_up` when `!q.is_dead` | 0.70s | gesture | 150 |
+| `iron_golem.provoked` | Iron Golem Turning Hostile | `minecraft:iron_golem` | event `anger` when `!q.is_dead` | 0.90s | gesture | 160 |
+| `llama.rise_from_rest` | Llama Unfolding From A Kneel | `minecraft:llama` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 1.00s | action | 140 |
+| `mooshroom.rise_from_rest` | Mooshroom Lurching Upright | `minecraft:mooshroom` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 1.00s | action | 140 |
+| `panda.flop_sit` | Panda Flopping Down To Sit | `minecraft:panda` | event `sit_down` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `panda.heave_up` | Panda Heaving Itself Up | `minecraft:panda` | event `stand_up` when `!q.is_dead` | 1.20s | gesture | 150 |
+| `panda.rise_from_rest` | Lazy Panda Reluctantly Rising | `minecraft:panda` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 1.80s | action | 140 |
+| `pig.grow_up` | Piglet Puffing Up Proud | `minecraft:pig` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `pig.rise_from_rest` | Pig Rolling Back To Its Feet | `minecraft:pig` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 0.90s | action | 140 |
+| `piglin.gold_verdict` | Piglin Finishing Its Appraisal | `minecraft:piglin` | event `admire_stop` when `!q.is_dead` | 1.00s | gesture | 160 |
+| `piglin.spot_gold` | Piglin Spotting Gold | `minecraft:piglin` | event `admire_start` when `!q.is_dead` | 0.60s | gesture | 160 |
+| `player.afk.dust_off` | Dusting Off After Sitting | `@player` | event `start_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.last_idle > 20 && q.last_idle <= 60` | 1.20s | gesture | 280 |
+| `player.afk.lie_back` | Lying Back To Watch The Sky | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 180 && !q.is_sneaking` | 8.00s | overlay | 151 |
+| `player.afk.sit_ground` | Sitting Down To Wait | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.idle_time > 60 && q.idle_time <= 180 && !q.is_sneaking` | 6.00s | overlay | 150 |
+| `player.afk.stand_up` | Getting Up After A Long Wait | `@player` | event `start_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.last_idle > 60` | 1.40s | action | 290 |
+| `player.combat.ready_up` | Snapping To Readiness | `@player` | event `combat_enter` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.60s | gesture | 280 |
+| `player.combat.stand_down` | Standing Down After A Fight | `@player` | event `combat_exit` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.60s | gesture | 280 |
+| `player.context.body_follow_head` | Body Turning To Follow The Gaze | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.02 && math.abs(q.head_yaw) > 70` | 0.80s | additive | 60 |
+| `player.life.bed_climb` | Climbing Into Bed | `@player` | event `sleep` when `!q.is_dead` | 1.20s | action | 300 |
+| `player.life.end_return` | Returning From The End | `@player` | event `respawn:end` when `!q.is_dead` | 3.00s | action | 321 |
+| `player.life.enter_end` | Disoriented Arrival In The End | `@player` | event `dimension_enter:the_end` when `!q.is_dead` | 2.40s | action | 312 |
+| `player.life.enter_nether` | Shielding From Nether Heat | `@player` | event `dimension_enter:the_nether` when `!q.is_dead` | 2.00s | action | 311 |
+| `player.life.home_again` | Relieved To Be Back In The Overworld | `@player` | event `dimension_enter:overworld` when `!q.is_dead` | 2.00s | action | 313 |
+| `player.life.join_arrive` | Arriving In The World | `@player` | event `join` when `!q.is_dead` | 2.60s | action | 310 |
+| `player.life.respawn_rise` | Rising From Respawn | `@player` | event `respawn:death` when `!q.is_dead` | 2.40s | action | 320 |
+| `player.menu.close_book` | Snapping A Book Shut | `@player` | event `menu_close:book_edit` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.60s | gesture | 285 |
+| `player.menu.close_pack` | Shrugging The Pack Back On | `@player` | event `menu_close:inventory` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.70s | gesture | 284 |
+| `player.menu.finish_typing` | Lowering Hands After Speaking | `@player` | event `menu_close:chat` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.60s | gesture | 285 |
+| `player.menu.open_book` | Opening A Book To Write | `@player` | event `menu_open:book_edit` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.80s | gesture | 285 |
+| `player.menu.open_pack` | Swinging The Pack Round | `@player` | event `menu_open:inventory` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.70s | gesture | 285 |
+| `player.menu.start_typing` | Raising Hands To Type | `@player` | event `menu_open:chat` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.50s | gesture | 285 |
+| `player.move.backward_start` | Backing Away | `@player` | event `start_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.forward_speed < -0.02` | 0.60s | gesture | 280 |
+| `player.move.portal_step` | Steeling Yourself At A Portal | `@player` | event `start_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.feet_block == 'portal'` | 1.20s | gesture | 280 |
+| `player.move.sprint_to_crouch` | Dropping From A Sprint Into A Crouch | `@player` | event `sneak_start` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed > 0.15` | 0.60s | action | 296 |
+| `player.move.stop_and_look` | Stopping To Take In The View | `@player` | event `stop_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.trait_curiosity > 0.7 && q.move_time > 0` | 2.40s | gesture | 279 |
+| `player.move.turn_and_go` | Turning On The Spot And Setting Off | `@player` | event `start_moving` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && math.abs(q.head_yaw) > 90` | 0.70s | gesture | 280 |
+| `player.trade.open` | Leaning In To Trade | `@player` | event `trade_open` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.80s | gesture | 280 |
+| `player.transition.fight_begins_bow` | Nocking Ready As A Fight Begins | `@player` | event `combat_enter` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.main_hand == 'bow'` | 0.80s | gesture | 297 |
+| `player.transition.fight_begins_shield` | Bringing The Shield Up As A Fight Begins | `@player` | event `combat_enter` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.off_hand == 'shield'` | 0.70s | gesture | 297 |
+| `player.world.danger_passed` | Exhaling As Danger Passes | `@player` | event `danger_clear` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.40s | gesture | 280 |
+| `player.world.danger_spotted` | Spotting Danger | `@player` | event `danger_near` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 0.90s | gesture | 280 |
+| `player.world.hungry` | Stomach Growling | `@player` | event `hungry` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.20s | gesture | 280 |
+| `player.world.into_darkness` | Stepping Into Darkness | `@player` | event `enter_dark` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.20s | gesture | 280 |
+| `player.world.into_light` | Squinting Into The Light | `@player` | event `exit_dark` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.00s | gesture | 280 |
+| `player.world.ledge_inch` | Inching Up To An Edge | `@player` | event `ledge_reached` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.is_sneaking` | 1.00s | gesture | 280 |
+| `player.world.ledge_peek` | Peering Over The Edge | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.at_ledge && q.is_sneaking && q.ground_speed < 0.01` | 2.40s | overlay | 245 |
+| `player.world.ledge_teeter` | Teetering At A Ledge | `@player` | event `ledge_reached` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && !q.is_sneaking && q.ground_speed > 0.05` | 1.20s | action | 295 |
+| `player.world.nightfall` | Noticing Nightfall | `@player` | event `nightfall` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.sky_exposed` | 2.20s | gesture | 280 |
+| `player.world.portal_nausea` | Swaying In A Nether Portal | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.feet_block == 'portal'` | 2.00s | additive | 99 |
+| `player.world.rain_begins` | Feeling The First Raindrops | `@player` | event `rain_start` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.sky_exposed` | 2.00s | gesture | 280 |
+| `player.world.rain_ends` | Shaking Off The Last Of The Rain | `@player` | event `rain_stop` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.sky_exposed` | 1.20s | gesture | 280 |
+| `player.world.recovered` | Straightening Up, Healed | `@player` | event `recovered` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.40s | gesture | 280 |
+| `player.world.sated` | Patting A Full Stomach | `@player` | event `sated` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.40s | gesture | 280 |
+| `player.world.step_back_from_ledge` | Stepping Back From The Edge | `@player` | event `ledge_left` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.forward_speed < 0` | 0.80s | gesture | 280 |
+| `player.world.sunrise_stretch` | Stretching At Sunrise | `@player` | event `daybreak` when `!q.is_dead && !q.is_riding && !q.is_sleeping && q.sky_exposed` | 2.60s | action | 281 |
+| `player.world.wounded` | Clutching A Wound | `@player` | event `wounded` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.60s | gesture | 280 |
+| `polar_bear.rear_end` | Polar Bear Dropping Back To All Fours | `minecraft:polar_bear` | event `rear_down` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `polar_bear.rear_start` | Polar Bear Rising Onto Its Hind Legs | `minecraft:polar_bear` | event `rear_up` when `!q.is_dead` | 0.60s | gesture | 150 |
+| `polar_bear.rise_from_rest` | Polar Bear Rocking Up From Sitting | `minecraft:polar_bear` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 1.00s | action | 140 |
+| `ravager.shake_off_stun` | Ravager Shaking Off A Stun | `minecraft:ravager` | event `unstunned` when `!q.is_dead` | 1.00s | gesture | 160 |
+| `sheep.graze_dip` | Sheep Dipping Down To Graze | `minecraft:sheep` | event `eat_start` when `!q.is_dead` | 0.50s | gesture | 150 |
+| `sheep.graze_rise` | Sheep Lifting Its Head From Grazing | `minecraft:sheep` | event `eat_stop` when `!q.is_dead` | 0.80s | gesture | 150 |
+| `sheep.grow_up` | Lamb Shaking Into Adulthood | `minecraft:sheep` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `sheep.rise_from_rest` | Sheep Springing Up From Rest | `minecraft:sheep` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 0.60s | action | 140 |
+| `sniffer.dig_finish` | Sniffer Unearthing A Seed | `minecraft:sniffer` | event `dig_end` when `!q.is_dead` | 1.40s | action | 160 |
+| `sniffer.dig_start` | Sniffer Lowering Its Nose To Dig | `minecraft:sniffer` | event `dig_start` when `!q.is_dead` | 1.00s | action | 160 |
+| `turtle.leave_nest` | Turtle Patting Down Its Nest | `minecraft:turtle` | event `lay_end` when `!q.is_dead` | 1.60s | gesture | 160 |
+| `villager.grow_up` | Village Child Growing Up | `minecraft:villager` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `villager.trade_farewell` | Villager Nodding Farewell | `minecraft:villager` | event `trade_close` when `!q.is_dead` | 1.00s | gesture | 160 |
+| `villager.trade_greeting` | Villager Opening Its Wares | `minecraft:villager` | event `trade_open` when `!q.is_dead` | 1.00s | gesture | 160 |
+| `wolf.calm_down` | Wolf Calming Down | `minecraft:wolf` | event `calm` when `!q.is_dead` | 1.00s | gesture | 155 |
+| `wolf.grow_up` | Pup Coming Of Age | `minecraft:wolf` | event `grow_up` when `!q.is_dead` | 1.40s | gesture | 160 |
+| `wolf.hackles_rise` | Wolf's Hackles Rising | `minecraft:wolf` | event `anger` when `!q.is_dead` | 0.80s | gesture | 155 |
+| `wolf.rise_from_rest` | Wolf Uncurling From Sleep | `minecraft:wolf` | event `start_moving` when `!q.is_dead && q.last_idle > 18` | 0.80s | action | 140 |
+| `wolf.sit_down` | Wolf Sitting Down | `minecraft:wolf` | event `sit_down` when `!q.is_dead` | 0.60s | action | 150 |
+| `wolf.stand_up` | Wolf Standing Up Eagerly | `minecraft:wolf` | event `stand_up` when `!q.is_dead` | 0.50s | action | 150 |

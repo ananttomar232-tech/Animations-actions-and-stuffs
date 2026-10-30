@@ -1,0 +1,93 @@
+{
+ "name": "cinematic.village_welcome",
+ "anchor": "@nearest:minecraft:villager",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 4.0
+  },
+  {
+   "type": "over_shoulder",
+   "duration": 4.0,
+   "target": "@anchor",
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  },
+  {
+   "type": "wide",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.villager.announce"
+  },
+  {
+   "time": 3.6,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.villager.gift_offer"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.wave_farewell_far"
+  },
+  {
+   "time": 6.2,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.villager.point_the_way"
+  },
+  {
+   "time": 6.4,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.point_destination"
+  },
+  {
+   "time": 8.6,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.villager.beckon_inside"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:iron_golem",
+   "clip": "cine.iron_golem.shield_villagers"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:cat",
+   "clip": "cine.cat.window_watch"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:chicken",
+   "clip": "cine.chicken.dawn_crow"
+  },
+  {
+   "time": 9.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.elder_storytell"
+  }
+ ]
+}

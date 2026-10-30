@@ -1,0 +1,60 @@
+{
+ "name": "boss.wither.title",
+ "anchor": "@anchor",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "low_angle",
+   "duration": 3.0,
+   "target": "@anchor"
+  },
+  {
+   "type": "orbit",
+   "duration": 3.5,
+   "radius": 9,
+   "height": 3,
+   "from_angle": -40,
+   "to_angle": 40,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "fade",
+   "from": 1,
+   "to": 0,
+   "duration": 0.8
+  },
+  {
+   "time": 0.2,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.wither.intro_rise"
+  },
+  {
+   "time": 3.4,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.wither.charge_burst"
+  },
+  {
+   "time": 3.8,
+   "type": "title",
+   "title": "motionworks.boss.wither.title",
+   "subtitle": "motionworks.boss.wither.subtitle",
+   "duration": 2.6
+  },
+  {
+   "time": 3.8,
+   "type": "sound",
+   "sound": "motionworks:cinematic.boom"
+  }
+ ]
+}

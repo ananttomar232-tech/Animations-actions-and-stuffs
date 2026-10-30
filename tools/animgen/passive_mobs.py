@@ -21,7 +21,7 @@ def f(name):
 T, F = "minecraft:cow", f("cow")
 gait("cow.walk", "Cow Plodding Walk", CAT, T, WALKING + CALM + " && !q.is_baby", 1.6, F, gait="walk", stride=22, duty=0.64, bob=0.5, pitch=1.2, roll=2.2, yaw=1.5)
 gait("cow.panic", "Cow Lumbering Stampede", CAT, T, WALKING + PANIC + " && !q.is_baby", 0.9, F, pri=101, gait="trot", stride=34, duty=0.5, bob=1.5, pitch=3, roll=1.0)
-gait("cow.calf_frolic", "Calf Frolic", CAT, T, WALKING + " && q.is_baby", 0.7, F, pri=102, gait="bound", stride=30, duty=0.45, bob=2.6, pitch=5, roll=0.5)
+gait("cow.calf_frolic", "Calf Frolic", CAT, T, WALKING + " && q.is_baby", 0.7, F, pri=102, gait="bound", stride=30, duty=0.45, bob=2.6, pitch=5, roll=0.5, yaw=3, snap=0.2)
 loop_state("cow.graze", "Cow Grazing", CAT, T, STILL + " && q.idle_time > 3", 4.0, F, {
     "head:rot": lambda u: [52 + 4 * wave(u, 0, 2), 6 * wave(u), chew(u, 6, 2)], "mw_center:rot": lambda u: tilt(4, 0, 0),
     "left_front_leg:rot": lambda u: [-6, 0, 0]}, group="cow_idle", weight=3)
@@ -100,7 +100,7 @@ loop_state("pig.beg_carrot", "Pig Following Food Eagerly", CAT, T, ALIVE + " && 
 # ============================================================================ sheep
 T, F = "minecraft:sheep", f("sheep")
 gait("sheep.walk", "Sheep Woolly Walk", CAT, T, WALKING + CALM + " && !q.is_baby", 1.3, F, gait="walk", stride=20, duty=0.6, bob=0.6, pitch=1.0, roll=1.6, splay=5, roll_phase=0.15)
-gait("sheep.flee", "Sheep Flock Flight", CAT, T, WALKING + PANIC + " && !q.is_baby", 0.6, F, pri=101, gait="bound", stride=32, duty=0.42, bob=2.2, pitch=5, roll=0.6)
+gait("sheep.flee", "Sheep Flock Flight", CAT, T, WALKING + PANIC + " && !q.is_baby", 0.6, F, pri=101, gait="bound", stride=32, duty=0.42, bob=2.2, pitch=5, roll=0.6, lift=14, splay=6)
 gait("sheep.lamb_skip", "Lamb Skipping", CAT, T, WALKING + " && q.is_baby", 0.55, F, pri=102, gait="canter", stride=28, duty=0.45, bob=3.0, pitch=3, roll=2)
 loop_state("sheep.graze", "Sheep Cropping Grass", CAT, T, ALIVE + " && q.is_eating", 2.0, F, {
     "head:rot": lambda u: [62 + 4 * wave(u, 0, 5), 8 * wave(u, 0, 0.5), 0], "mw_center:rot": lambda u: tilt(5, 0, 0), "mw_center:pos": lambda u: move(0, 0, 0.5)}, pri=130)

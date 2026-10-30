@@ -37,7 +37,8 @@ air("player.elytra.slow_drift", "Elytra Lazy Drift", GLIDE + " && q.ground_speed
 life("player.elytra.bank", "Elytra Banking Turn", CAT, P, GLIDE + " && math.abs(q.turn_rate) > 3", 0.8, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? -16 : 16"],
                                                                                                         "head:rot": lambda u: [0, 0, "q.turn_rate > 0 ? 8 : -8"]}, pri=90)
 loop_state("player.elytra.barrel_roll", "Elytra Barrel Roll", CAT, P, GLIDE + " && math.abs(q.turn_rate) > 18", 0.9, FP, {"mw_root:rot": lambda u: [0, 0, 360 * u]}, layer="additive", pri=91, min_time=0.9)
-life("player.elytra.look_back", "Glancing Back Mid-Flight", CAT, P, GLIDE + " && math.abs(q.head_yaw) > 55", 1.0, FP, {"body:rot": lambda u: tilt(0, "q.head_yaw * 0.3", 0)}, pri=92)
+life("player.elytra.look_back", "Glancing Back Mid-Flight", CAT, P, GLIDE + " && math.abs(q.head_yaw) > 55", 1.0, FP, {"body:rot": lambda u: [0, "q.head_yaw * 0.3", "q.head_yaw * -0.15"],
+                                                                                                    "right_arm:rot": lambda u: [10, 0, "q.head_yaw > 0 ? 40 : 20"]}, pri=92)
 air("player.elytra.storm_tuck", "Elytra Flight Through Rain", GLIDE + " && q.is_raining && q.sky_exposed && math.abs(q.vertical_speed) <= 0.5", 1.6, {
     "right_arm:rot": lambda u: arm('r', -25, 18), "left_arm:rot": lambda u: arm('l', -25, 18), "head:rot": lambda u: [8, 0, 0], "body:rot": lambda u: tilt(0, 0, 3 * wave(u, 0, 2))}, pri=324)
 beat("player.elytra.firework_boost", "Firework Boost", CAT, P, event("boost", GLIDE), 0.9, FP, {
@@ -209,7 +210,8 @@ air("player.fly.sneak_curl", "Curling Up For A Flying Descent", FLY + " && q.is_
     "right_leg:rot": lambda u: leg('r', 70), "left_leg:rot": lambda u: leg('l', 70), "right_arm:rot": lambda u: arm('r', 40, -10), "left_arm:rot": lambda u: arm('l', 40, -10), "body:rot": lambda u: tilt(20, 0, 0)}, pri=319)
 air("player.fly.idle_spin", "Idly Spinning In Place", FLY + " && q.ground_speed < 0.02 && q.idle_time >= 6 && q.trait_energy > 0.7", 6.0, {
     "mw_root:rot": lambda u: [0, 360 * u, 0], "right_arm:rot": lambda u: arm('r', 0, 30), "left_arm:rot": lambda u: arm('l', 0, 30), "right_leg:rot": lambda u: leg('r', 10)}, pri=311)
-life("player.fly.sprint_bank", "Banking At Flight Speed", CAT, P, FLY + " && q.is_sprinting && math.abs(q.turn_rate) > 4", 0.6, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? -22 : 22"]}, pri=94)
+life("player.fly.sprint_bank", "Banking At Flight Speed", CAT, P, FLY + " && q.is_sprinting && math.abs(q.turn_rate) > 4", 0.6, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? -22 : 22"],
+                                                                                                                    "head:rot": lambda u: [0, "q.turn_rate > 0 ? 20 : -20", 0], "right_leg:rot": lambda u: [10, 0, "q.turn_rate > 0 ? 8 : 0"]}, pri=94)
 air("player.slow_fall.twirl", "Twirling Slow-Fall Descent", LIVE + " && q.slow_falling && !q.is_on_ground && q.vertical_speed < 0 && q.trait_energy > 0.6", 3.0, {
     "mw_root:rot": lambda u: [0, 360 * u, 0], "right_arm:rot": lambda u: arm('r', 0, 90), "left_arm:rot": lambda u: arm('l', 0, 90), "right_leg:rot": lambda u: leg('r', 0, 6), "left_leg:rot": lambda u: leg('l', 0, 6)}, pri=333)
 T, F = "minecraft:bee", FM + "/bee"

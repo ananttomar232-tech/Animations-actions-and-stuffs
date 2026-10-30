@@ -1,0 +1,83 @@
+{
+ "name": "cinematic.homecoming",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "track",
+   "duration": 4.0,
+   "offset": [
+    0,
+    1.2,
+    -5
+   ]
+  },
+  {
+   "type": "close_up",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.vanish_into_fog"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.embrace"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:wolf",
+   "clip": "cine.wolf.loyal_guard"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:wolf",
+   "clip": "cine.wolf.pack_howl"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:horse",
+   "clip": "cine.horse.nuzzle_owner"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:horse",
+   "clip": "cine.horse.rear_silhouette"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:parrot",
+   "clip": "cine.parrot.perch_land"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:cow",
+   "clip": "cine.cow.pasture_low"
+  },
+  {
+   "time": 5.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:sheep",
+   "clip": "cine.sheep.shepherds_flock"
+  }
+ ]
+}

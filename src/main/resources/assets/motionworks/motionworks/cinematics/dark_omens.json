@@ -1,0 +1,72 @@
+{
+ "name": "cinematic.dark_omens",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "high_angle",
+   "duration": 4.0
+  },
+  {
+   "type": "low_angle",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:warden",
+   "clip": "cine.warden.listen_then_leave"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:wither",
+   "clip": "cine.wither.armour_phase"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:ender_dragon",
+   "clip": "cine.ender_dragon.perch_breath"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:evoker",
+   "clip": "cine.evoker.fang_line"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:piglin",
+   "clip": "cine.piglin.gold_sneer"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:enderman",
+   "clip": "cine.enderman.place_block_gently"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:llama",
+   "clip": "cine.llama.spit_at_trader"
+  },
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.startled_turn"
+  }
+ ]
+}

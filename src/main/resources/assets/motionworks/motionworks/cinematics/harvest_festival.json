@@ -1,0 +1,67 @@
+{
+ "name": "cinematic.harvest_festival",
+ "anchor": "@nearest:minecraft:villager",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 5.0
+  },
+  {
+   "type": "orbit",
+   "duration": 6.0,
+   "radius": 6,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.villager.harvest_dance"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.pray_rain"
+  },
+  {
+   "time": 2.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.read_prophecy"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.bless_hero"
+  },
+  {
+   "time": 5.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.present_armour"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.child_runs_to_hero"
+  },
+  {
+   "time": 7.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.bell_rope"
+  }
+ ]
+}

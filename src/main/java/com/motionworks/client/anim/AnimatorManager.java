@@ -120,6 +120,20 @@ public final class AnimatorManager {
         }
     }
 
+    /**
+     * Fires a positional event on every live animator within range. dir is the source's yaw relative to each body,
+     * the argument is "near" (under 16 blocks) or "far", so clips can listen to e.g. "thunderclap:near".
+     */
+    public static void fireNear(Vec3 at, double range, String event) {
+        for (EntityAnimator a : ANIMATORS.values()) {
+            LivingEntity e = a.entity;
+            if (e.isRemoved() || e.position().distanceToSqr(at) > range * range) continue;
+            float dir = com.motionworks.common.InteractionClassifier.relativeYaw(e, at.x, at.z);
+            String proximity = e.position().distanceToSqr(at) < 16 * 16 ? "near" : "far";
+            a.fire(event, proximity, dir, (float) (at.y - e.getEyeY()));
+        }
+    }
+
     public static void fire(int entityId, String event, String arg, float dir) {
         fire(entityId, event, arg, dir, 0f);
     }

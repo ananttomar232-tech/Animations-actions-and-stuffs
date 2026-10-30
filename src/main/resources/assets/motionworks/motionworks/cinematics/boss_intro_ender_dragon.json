@@ -1,0 +1,60 @@
+{
+ "name": "boss.ender_dragon.title",
+ "anchor": "@anchor",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 4.0,
+   "target": "@anchor"
+  },
+  {
+   "type": "track",
+   "duration": 3.0,
+   "offset": [
+    0,
+    6,
+    18
+   ],
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.ender_dragon.intro_roar"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.ender_dragon.flyover"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.look_up_awe"
+  },
+  {
+   "time": 1.2,
+   "type": "sound",
+   "sound": "motionworks:cinematic.riser"
+  },
+  {
+   "time": 4.2,
+   "type": "title",
+   "title": "motionworks.boss.ender_dragon.title",
+   "subtitle": "motionworks.boss.ender_dragon.subtitle",
+   "duration": 2.6
+  }
+ ]
+}

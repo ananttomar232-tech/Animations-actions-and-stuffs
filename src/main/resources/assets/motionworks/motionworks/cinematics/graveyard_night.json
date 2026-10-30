@@ -1,0 +1,78 @@
+{
+ "name": "cinematic.graveyard_night",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "high_angle",
+   "duration": 4.0
+  },
+  {
+   "type": "low_angle",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:zombie",
+   "clip": "cine.zombie.window_pound"
+  },
+  {
+   "time": 1.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:zombie",
+   "clip": "zombie.rise_from_ground"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:zombie",
+   "clip": "cine.zombie.lurch_reveal"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:skeleton",
+   "clip": "cine.skeleton.bone_salute"
+  },
+  {
+   "time": 4.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:skeleton",
+   "clip": "cine.skeleton.volley_aim"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.draw_sword_slow"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:phantom",
+   "clip": "cine.phantom.moon_silhouette"
+  },
+  {
+   "time": 2.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:zombie_villager",
+   "clip": "cine.zombie_villager.lost_memory"
+  },
+  {
+   "time": 3.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:drowned",
+   "clip": "cine.drowned.trident_rise"
+  }
+ ]
+}

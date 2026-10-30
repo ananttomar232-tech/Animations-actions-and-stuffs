@@ -78,7 +78,8 @@ beat("player.swim.cannonball", "Cannonball", CAT, P, event("enter_water", LIVE +
     "right_leg:rot": [(0, leg('r', 100)), (0.5, leg('r', 90)), (1.0, Z)], "left_leg:rot": [(0, leg('l', 100)), (0.5, leg('l', 90)), (1.0, Z)], "right_arm:rot": [(0, arm('r', 60, -20)), (0.5, arm('r', 50, -10)), (1.0, Z)],
     "left_arm:rot": [(0, arm('l', 60, -20)), (0.5, arm('l', 50, -10)), (1.0, Z)], "body:rot": [(0, tilt(30)), (1.0, Z)]}, pri=344,
      events=[(0.0, "particle", {"particle": "splash", "count": "30", "at": "body", "spread": "0.9"}), (0.0, "shake", {"intensity": "0.2", "duration": "0.2"})])
-life("player.swim.turn_bank", "Banking Swim Turn", CAT, P, SPRINT_SWIM + " && math.abs(q.turn_rate) > 4", 0.6, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? -14 : 14"]}, pri=90)
+life("player.swim.turn_bank", "Banking Swim Turn", CAT, P, SPRINT_SWIM + " && math.abs(q.turn_rate) > 4", 0.6, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? -14 : 14"],
+                                                                                                         "right_leg:rot": lambda u: [12 * wave(u, 0, 2), 0, 0], "left_leg:rot": lambda u: [-12 * wave(u, 0, 2), 0, 0]}, pri=90)
 swim("player.swim.kick_up", "Kicking Upward", UNDER + " && q.vertical_speed > 0.05", 0.7, {
     "right_leg:rot": lambda u: leg('r', 40 * wave(u)), "left_leg:rot": lambda u: leg('l', 40 * wave(u, 0.5)), "right_arm:rot": lambda u: arm('r', 20 - 20 * wave(u, 0.25), 30), "left_arm:rot": lambda u: arm('l', 20 - 20 * wave(u, 0.25), 30),
     "head:rot": lambda u: [-35, 0, 0], "body:rot": lambda u: tilt(-10, 0, 0)}, pri=308)

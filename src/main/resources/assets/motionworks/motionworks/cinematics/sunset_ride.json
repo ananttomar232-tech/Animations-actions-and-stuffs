@@ -1,0 +1,53 @@
+{
+ "name": "cinematic.sunset_ride",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "track",
+   "duration": 5.0,
+   "offset": [
+    4,
+    1.5,
+    6
+   ]
+  },
+  {
+   "type": "wide",
+   "duration": 5.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.2
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.tie_horse"
+  },
+  {
+   "time": 0.5,
+   "type": "animate",
+   "actor": "@nearest:minecraft:horse",
+   "clip": "cine.horse.sunset_graze"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.spyglass_hold"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.cradle_wounded"
+  }
+ ]
+}

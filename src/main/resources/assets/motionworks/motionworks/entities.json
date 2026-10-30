@@ -48,6 +48,13 @@
    "@living"
   ]
  },
+ "minecraft:cave_spider": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:cave_spider",
+   "@living"
+  ]
+ },
  "minecraft:chicken": {
   "rig": "generic",
   "targets": [
@@ -100,6 +107,13 @@
    "minecraft:drowned",
    "@humanoid",
    "@undead_humanoid",
+   "@living"
+  ]
+ },
+ "minecraft:elder_guardian": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:elder_guardian",
    "@living"
   ]
  },
@@ -552,6 +566,13 @@
   "rig": "wolf",
   "targets": [
    "minecraft:wolf",
+   "@living"
+  ]
+ },
+ "minecraft:zoglin": {
+  "rig": "generic",
+  "targets": [
+   "minecraft:zoglin",
    "@living"
   ]
  },

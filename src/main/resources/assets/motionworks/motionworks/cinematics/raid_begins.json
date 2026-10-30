@@ -1,0 +1,67 @@
+{
+ "name": "cinematic.raid_begins",
+ "anchor": "@nearest:minecraft:pillager",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "establishing",
+   "duration": 3.5
+  },
+  {
+   "type": "low_angle",
+   "duration": 3.0,
+   "target": "@anchor",
+   "transition": {
+    "type": "blend",
+    "duration": 0.6
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.4,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.pillager.captain_command"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:vindicator",
+   "clip": "cine.vindicator.war_cry"
+  },
+  {
+   "time": 1.2,
+   "type": "animate",
+   "actor": "@nearest:minecraft:villager",
+   "clip": "cine.villager.cower_raid"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:evoker",
+   "clip": "cine.evoker.entrance"
+  },
+  {
+   "time": 2.6,
+   "type": "animate",
+   "actor": "@nearest:minecraft:vex",
+   "clip": "cine.vex.spectral_swarm"
+  },
+  {
+   "time": 3.5,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.brace_for_wave"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:witch",
+   "clip": "cine.witch.hut_cackle"
+  }
+ ]
+}

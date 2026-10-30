@@ -1,0 +1,49 @@
+{
+ "name": "cinematic.wilderness_camp",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "orbit",
+   "duration": 5.0,
+   "radius": 5
+  },
+  {
+   "type": "close_up",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.drink_from_stream"
+  },
+  {
+   "time": 3.8,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.feed_kneel"
+  },
+  {
+   "time": 7.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.catch_falling"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:fox",
+   "clip": "cine.fox.snow_frolic"
+  }
+ ]
+}

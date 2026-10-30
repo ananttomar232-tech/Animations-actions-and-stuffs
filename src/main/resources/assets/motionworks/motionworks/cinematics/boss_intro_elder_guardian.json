@@ -1,0 +1,51 @@
+{
+ "name": "boss.elder_guardian.title",
+ "anchor": "@anchor",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "push_in",
+   "duration": 3.2,
+   "target": "@anchor"
+  },
+  {
+   "type": "orbit",
+   "duration": 3.0,
+   "radius": 8,
+   "height": 1,
+   "transition": {
+    "type": "blend",
+    "duration": 0.8
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.2,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.elder_guardian.intro_glare"
+  },
+  {
+   "time": 3.2,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.elder_guardian.circle_menace"
+  },
+  {
+   "time": 1.2,
+   "type": "flash",
+   "strength": 0.4
+  },
+  {
+   "time": 3.4,
+   "type": "title",
+   "title": "motionworks.boss.elder_guardian.title",
+   "subtitle": "motionworks.boss.elder_guardian.subtitle",
+   "duration": 2.4
+  }
+ ]
+}

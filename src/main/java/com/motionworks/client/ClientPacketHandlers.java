@@ -19,6 +19,10 @@ public final class ClientPacketHandlers {
     public static void animationEvent(AnimationEventPacket p) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
+        if (p.entityId() < 0) {
+            worldEvent(p);
+            return;
+        }
         Entity e = mc.level.getEntity(p.entityId());
         if (!(e instanceof LivingEntity le)) return;
         EntityAnimator a = AnimatorManager.get(le);
@@ -31,6 +35,18 @@ public final class ClientPacketHandlers {
             default -> a.fire(p.event(), p.arg(), p.dir(), p.height());
         }
         if (le == mc.player && "dodge".equals(p.event())) FirstPersonAnimator.INSTANCE.fire("dodge:" + p.arg(), a.scope());
+    }
+
+    /** Positional world events (arg "x,y,z"): every animated entity within 48 blocks reacts, facing data included. */
+    static void worldEvent(AnimationEventPacket p) {
+        String[] xyz = p.arg().split(",");
+        if (xyz.length != 3) return;
+        try {
+            net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(Double.parseDouble(xyz[0]), Double.parseDouble(xyz[1]), Double.parseDouble(xyz[2]));
+            AnimatorManager.fireNear(at, 48.0, p.event());
+        } catch (NumberFormatException ignored) {
+            // malformed position from a mismatched server version: ignore the event
+        }
     }
 
     public static void cinematic(CinematicPacket p) {

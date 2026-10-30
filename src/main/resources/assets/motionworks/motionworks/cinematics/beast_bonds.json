@@ -1,0 +1,62 @@
+{
+ "name": "cinematic.beast_bonds",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "orbit",
+   "duration": 6.0,
+   "radius": 4,
+   "height": 0.8
+  },
+  {
+   "type": "close_up",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:cat",
+   "clip": "cine.cat.rub_legs"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:wolf",
+   "clip": "cine.wolf.fetch_return"
+  },
+  {
+   "time": 2.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:parrot",
+   "clip": "cine.parrot.record_dance"
+  },
+  {
+   "time": 3.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:bee",
+   "clip": "cine.bee.hive_return"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:dolphin",
+   "clip": "cine.dolphin.lead_to_treasure"
+  },
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.feed_kneel"
+  }
+ ]
+}

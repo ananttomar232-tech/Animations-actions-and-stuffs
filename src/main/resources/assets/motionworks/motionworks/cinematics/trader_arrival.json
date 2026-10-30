@@ -1,0 +1,53 @@
+{
+ "name": "cinematic.trader_arrival",
+ "anchor": "@nearest:minecraft:wandering_trader",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "track",
+   "duration": 4.0,
+   "offset": [
+    3,
+    1.5,
+    5
+   ]
+  },
+  {
+   "type": "close_up",
+   "duration": 3.0,
+   "transition": {
+    "type": "blend",
+    "duration": 0.6
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0.2,
+   "type": "animate",
+   "actor": "@nearest:minecraft:llama",
+   "clip": "cine.llama.caravan_halt"
+  },
+  {
+   "time": 1.6,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.wandering_trader.reveal_wares"
+  },
+  {
+   "time": 5.0,
+   "type": "animate",
+   "actor": "@anchor",
+   "clip": "cine.wandering_trader.farewell"
+  },
+  {
+   "time": 1.0,
+   "type": "animate",
+   "actor": "@nearest:minecraft:camel",
+   "clip": "cine.camel.kneel_welcome"
+  }
+ ]
+}

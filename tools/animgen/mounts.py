@@ -115,7 +115,8 @@ ride("player.ride.cart_cruise", "Cruising The Rails", CART + " && q.vehicle_spee
 ride("player.ride.cart_climb", "Leaning Forward On An Uphill Rail", CART + " && q.vehicle_vertical > 0.05", 1.0, {"body:rot": lambda u: tilt(16, 0, 0), "head:rot": lambda u: [-10, 0, 0]}, pri=263, layer="additive")
 ride("player.ride.cart_drop", "Stomach-Lurching Rail Drop", CART + " && q.vehicle_vertical < -0.1", 0.6, {
     "body:rot": lambda u: tilt(-20, 0, 0), "right_arm:rot": lambda u: arm('r', 150, 30), "left_arm:rot": lambda u: arm('l', 150, 30), "head:rot": lambda u: [-25, 0, 0]}, pri=264)
-life("player.ride.cart_corner", "Thrown Sideways On A Rail Bend", CAT, P, CART + " && math.abs(q.turn_rate) > 5", 0.5, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? 16 : -16"]}, pri=91)
+life("player.ride.cart_corner", "Thrown Sideways On A Rail Bend", CAT, P, CART + " && math.abs(q.turn_rate) > 5", 0.5, FP, {"body:rot": lambda u: [0, 0, "q.turn_rate > 0 ? 16 : -16"],
+                                                                                                                    "right_arm:rot": lambda u: [-40, 0, "q.turn_rate > 0 ? 30 : 5"], "left_arm:rot": lambda u: [-40, 0, "q.turn_rate > 0 ? -5 : -30"]}, pri=91)
 
 # ============================================================================ mounting and dismounting
 MOUNTS = {
@@ -215,7 +216,8 @@ loop_state("equine.ridden_collection", "Head Collected For The Rider", CAT, "@eq
            layer="additive", pri=70)
 
 # ============================================================================ riding: more situations
-ride("player.ride.look_back", "Twisting Round In The Saddle", R + " && math.abs(q.head_yaw) > 70 && q.vehicle != 'minecart'", 1.0, {"body:rot": lambda u: tilt(0, "q.head_yaw * 0.35", 0)}, layer="additive", pri=92)
+ride("player.ride.look_back", "Twisting Round In The Saddle", R + " && math.abs(q.head_yaw) > 70 && q.vehicle != 'minecart'", 1.0, {
+    "body:rot": lambda u: [-8, "q.head_yaw * 0.35", 0], "left_arm:rot": lambda u: ["q.head_yaw > 0 ? -10 : -40", 0, "q.head_yaw > 0 ? 0 : -20"]}, layer="additive", pri=92)
 ride("player.ride.eat_in_saddle", "Eating In The Saddle", R + " && q.is_using_item && q.use_anim == 'eat'", 0.6, {"body:rot": lambda u: tilt(6, 0, 0), "head:rot": lambda u: [10 + 4 * wave(u, 0, 2), 0, 0],
                                                                                                          "left_arm:rot": lambda u: arm('l', 30, 4)}, pri=267)
 ride("player.ride.drink_in_saddle", "Drinking On The Move", R + " && q.is_using_item && q.use_anim == 'drink'", 1.0, {"body:rot": lambda u: tilt(-10, 0, 0), "head:rot": lambda u: [-30, 0, 0],

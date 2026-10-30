@@ -1,0 +1,48 @@
+{
+ "name": "cinematic.fallen_comrade",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "high_angle",
+   "duration": 5.0
+  },
+  {
+   "type": "close_up",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.2
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.kneel_grief"
+  },
+  {
+   "time": 4.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.rise_from_kneel"
+  },
+  {
+   "time": 6.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.toast"
+  },
+  {
+   "time": 8.0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.read_letter"
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "name": "cinematic.knight_oath",
+ "anchor": "@self",
+ "letterbox": true,
+ "skippable": true,
+ "hide_hud": true,
+ "cancel_on_damage": true,
+ "shots": [
+  {
+   "type": "low_angle",
+   "duration": 5.0
+  },
+  {
+   "type": "close_up",
+   "duration": 4.0,
+   "transition": {
+    "type": "blend",
+    "duration": 1.0
+   }
+  },
+  {
+   "type": "crane",
+   "duration": 4.0
+  }
+ ],
+ "events": [
+  {
+   "time": 0,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.knight_oath"
+  },
+  {
+   "time": 4.2,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.raise_banner"
+  },
+  {
+   "time": 7.4,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.sheathe_slow"
+  },
+  {
+   "time": 9.8,
+   "type": "animate",
+   "actor": "@self",
+   "clip": "cine.player.sunset_silhouette"
+  }
+ ]
+}
