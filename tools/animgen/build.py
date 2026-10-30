@@ -216,10 +216,42 @@ def check_events():
     return errors
 
 
+def sequences():
+    try:
+        return importlib.import_module("cinematic").SEQUENCES
+    except ImportError:
+        return {}
+
+
+def check_sequences():
+    """Every clip a sequence animates must exist, and every manual cinematic clip must be performed by a sequence."""
+    ids = {c.id for c in core.CLIPS}
+    used = set()
+    errors = []
+    for sid, sq in sequences().items():
+        for e in sq["events"]:
+            if e["type"] == "animate" and "clip" in e:
+                used.add(e["clip"])
+                if e["clip"] not in ids:
+                    errors.append("sequence %s: unknown clip %s" % (sid, e["clip"]))
+    for c in core.CLIPS:
+        if c.category == "cinematic" and c.trigger.get("type") == "manual" and c.id not in used:
+            errors.append("%s: manual cinematic clip is not performed by any sequence" % c.id)
+    return errors
+
+
+def write_sequences():
+    out = os.path.join(ROOT, "src/main/resources/assets/motionworks/motionworks/cinematics")
+    os.makedirs(out, exist_ok=True)
+    for sid, sq in sequences().items():
+        with open(os.path.join(out, sid + ".json"), "w") as fh:
+            json.dump(sq, fh, indent=1)
+
+
 def main():
     check_only = "--check" in sys.argv
     load_modules()
-    errors = core.check_bones() + check_vars() + check_events()
+    errors = core.check_bones() + check_vars() + check_events() + check_sequences()
     counts = {}
     for c in core.CLIPS:
         counts[c.category] = counts.get(c.category, 0) + 1
@@ -248,6 +280,7 @@ def main():
             if f.endswith(".json"):
                 os.remove(os.path.join(dirpath, f))
     core.emit(out, None, None)
+    write_sequences()
     write_families()
     write_docs(counts)
 

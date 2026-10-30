@@ -102,6 +102,18 @@ public final class ServerTriggers {
         send(mob, "vocalize", "", 0f, true);
     }
 
+    /** The player who lands the killing blow on a boss gets "boss_slain:<boss>". */
+    @SubscribeEvent
+    public static void onBossDeath(net.minecraftforge.event.entity.living.LivingDeathEvent e) {
+        LivingEntity dead = e.getEntity();
+        if (dead.level().isClientSide || !(e.getSource().getEntity() instanceof Player killer)) return;
+        String boss = dead instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon ? "ender_dragon"
+                : dead instanceof net.minecraft.world.entity.boss.wither.WitherBoss ? "wither"
+                : dead instanceof net.minecraft.world.entity.monster.warden.Warden ? "warden"
+                : dead instanceof net.minecraft.world.entity.monster.ElderGuardian ? "elder_guardian" : null;
+        if (boss != null && killer.getServer() != null) later(killer.getServer(), 10, () -> send(killer, "boss_slain", boss, 0f, true));
+    }
+
     /** A totem of undying saves its holder: everyone nearby sees the revival. */
     @SubscribeEvent
     public static void onTotem(net.minecraftforge.event.entity.living.LivingUseTotemEvent e) {
