@@ -80,6 +80,7 @@ public final class ItemCategories {
         }
         if (item instanceof net.minecraft.world.item.NameTagItem) return "name_tag";
         if (item instanceof net.minecraft.world.item.SaddleItem) return "saddle";
+        if (item instanceof net.minecraft.world.item.FoodOnAStickItem<?>) return "steering_stick";
         if (item instanceof net.minecraft.world.item.DyeItem) return "dye";
         if (item instanceof net.minecraft.world.item.RecordItem) return "record";
         if (item instanceof net.minecraft.world.item.HoneycombItem) return "honeycomb";

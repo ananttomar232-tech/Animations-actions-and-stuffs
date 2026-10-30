@@ -170,6 +170,11 @@ public final class CtxVars {
     public static final int PLAYING_DEAD = Vars.id("q.is_playing_dead");
     public static final int SITTING_POSE = Vars.id("q.is_sitting_pose");
     public static final int HAS_RIDER = Vars.id("q.has_rider");
+    public static final int VEHICLE_VERTICAL = Vars.id("q.vehicle_vertical");
+    public static final int VEHICLE_STANDING = Vars.id("q.vehicle_standing");
+    public static final int VEHICLE_SITTING = Vars.id("q.vehicle_sitting");
+    public static final int LAST_VEHICLE = Vars.id("q.last_vehicle");
+    public static final int SEAT = Vars.id("q.seat");
 
     // Environment detail
     public static final int FEET_BLOCK = Vars.id("q.feet_block");

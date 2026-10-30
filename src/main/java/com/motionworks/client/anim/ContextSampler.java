@@ -150,6 +150,9 @@ public final class ContextSampler {
         float terrainPitch;
         float[] traits;
         int envCheck;
+        Vec3 lastVehiclePos;
+        String lastVehicleKind = "none";
+        int lastVehicleId;
         boolean nearFire;
         boolean skyExposed = true;
     }
@@ -236,11 +239,27 @@ public final class ContextSampler {
         Entity vehicle = e.getVehicle();
         s.setBool(CtxVars.RIDING, vehicle != null);
         s.setString(CtxVars.VEHICLE, vehicleKind(vehicle));
+        if (vehicle != null) h.lastVehicleKind = vehicleKind(vehicle);
+        s.setString(CtxVars.LAST_VEHICLE, h.lastVehicleKind);
         if (vehicle != null) {
-            Vec3 v = vehicle.getDeltaMovement();
-            s.set(CtxVars.VEHICLE_SPEED, (float) Math.sqrt(v.x * v.x + v.z * v.z));
+            // Measured from position change: remote vehicles are interpolated, so their delta movement is unreliable.
+            Vec3 vp = vehicle.position();
+            if (h.lastVehiclePos == null || h.lastVehicleId != vehicle.getId()) h.lastVehiclePos = vp;
+            double vx = vp.x - h.lastVehiclePos.x, vz = vp.z - h.lastVehiclePos.z;
+            s.set(CtxVars.VEHICLE_SPEED, (float) Math.sqrt(vx * vx + vz * vz));
+            s.set(CtxVars.VEHICLE_VERTICAL, (float) (vp.y - h.lastVehiclePos.y));
+            h.lastVehiclePos = vp;
+            h.lastVehicleId = vehicle.getId();
+            s.set(CtxVars.SEAT, vehicle.getPassengers().indexOf(e));
+            s.setBool(CtxVars.VEHICLE_STANDING, vehicle instanceof AbstractHorse ah && ah.isStanding());
+            s.setBool(CtxVars.VEHICLE_SITTING, vehicle instanceof Camel camel && camel.isCamelVisuallySitting());
         } else {
+            h.lastVehiclePos = null;
+            s.set(CtxVars.SEAT, -1f);
             s.set(CtxVars.VEHICLE_SPEED, 0f);
+            s.set(CtxVars.VEHICLE_VERTICAL, 0f);
+            s.setBool(CtxVars.VEHICLE_STANDING, false);
+            s.setBool(CtxVars.VEHICLE_SITTING, false);
         }
         s.setBool(CtxVars.SLEEPING, e.isSleeping());
         s.setBool(CtxVars.BABY, e.isBaby());
