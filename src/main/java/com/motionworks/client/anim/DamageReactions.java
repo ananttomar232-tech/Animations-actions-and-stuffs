@@ -39,6 +39,15 @@ public final class DamageReactions {
     }
 
     static String kind(DamageSource s) {
+        if (s.is(DamageTypes.FLY_INTO_WALL)) return "kinetic";
+        if (s.is(DamageTypes.THORNS)) return "thorns";
+        if (s.is(DamageTypes.SONIC_BOOM)) return "sonic";
+        if (s.is(DamageTypes.STARVE)) return "starve";
+        if (s.is(DamageTypes.IN_WALL) || s.is(DamageTypes.CRAMMING)) return "suffocate";
+        if (s.is(DamageTypes.FALLING_BLOCK) || s.is(DamageTypes.FALLING_ANVIL) || s.is(DamageTypes.FALLING_STALACTITE) || s.is(DamageTypes.STALAGMITE)) return "crush";
+        if (s.is(DamageTypes.DRAGON_BREATH)) return "breath";
+        if (s.is(DamageTypes.WITHER) || s.is(DamageTypes.WITHER_SKULL)) return "wither";
+        if (s.is(DamageTypes.STING)) return "sting";
         if (s.is(DamageTypeTags.IS_FALL)) return "fall";
         if (s.is(DamageTypeTags.IS_EXPLOSION)) return "explosion";
         if (s.is(DamageTypeTags.IS_FIRE)) return "fire";

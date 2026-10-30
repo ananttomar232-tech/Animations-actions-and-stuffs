@@ -210,12 +210,19 @@ public final class EntityAnimator {
         boolean riding = entity.isPassenger();
         edge(riding, wasRiding, "mount", "dismount");
         wasRiding = riding;
-        boolean sleeping = entity.isSleeping();
+        // Sampled state, so species that "sleep" outside a bed (resting bats, sleeping foxes) also fire sleep/wake.
+        boolean sleeping = s.get(CtxVars.SLEEPING) != 0f;
         edge(sleeping, wasSleeping, "sleep", "wake");
         wasSleeping = sleeping;
         boolean flying = entity.isFallFlying();
         edge(flying, wasFlying, "glide_start", "glide_stop");
         wasFlying = flying;
+        boolean creativeFlight = entity instanceof Player && s.get(CtxVars.FLYING) != 0f;
+        edge(creativeFlight, wasCreativeFlying, "fly_start", "fly_stop");
+        wasCreativeFlying = creativeFlight;
+        boolean spin = entity.isAutoSpinAttack();
+        edge(spin, wasSpinning, "riptide_start", "riptide_stop");
+        wasSpinning = spin;
         boolean climbing = s.get(CtxVars.CLIMBING) != 0f;
         edge(climbing, wasClimbing, "climb_start", "climb_stop");
         wasClimbing = climbing;
@@ -233,6 +240,8 @@ public final class EntityAnimator {
         }
         lastHurtTime = entity.hurtTime;
     }
+
+    private boolean wasCreativeFlying, wasSpinning;
 
     private void edge(boolean now, boolean before, String on, String off) {
         if (now && !before) fire(on);

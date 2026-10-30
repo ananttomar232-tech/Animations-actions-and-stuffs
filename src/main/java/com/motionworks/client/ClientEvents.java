@@ -158,6 +158,7 @@ public final class ClientEvents {
         else if ("throwable".equals(cat)) a.fire("throw");
         else if ("map".equals(cat) || "book".equals(cat) || "device".equals(cat)) a.fire("inspect_item", cat, 0f);
         else if ("glass_bottle".equals(cat)) a.fire("fill_bottle");
+        else if ("firework".equals(cat) && e.getEntity().isFallFlying()) a.fire("boost");
     }
 
     private static String localMenu;

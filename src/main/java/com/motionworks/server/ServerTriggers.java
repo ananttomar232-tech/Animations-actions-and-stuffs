@@ -102,6 +102,20 @@ public final class ServerTriggers {
         send(mob, "vocalize", "", 0f, true);
     }
 
+    /** A totem of undying saves its holder: everyone nearby sees the revival. */
+    @SubscribeEvent
+    public static void onTotem(net.minecraftforge.event.entity.living.LivingUseTotemEvent e) {
+        LivingEntity le = e.getEntity();
+        if (!le.level().isClientSide) send(le, "totem", "", 0f, true);
+    }
+
+    /** Ender pearl arrival: the thrower lands at the destination ("teleport:pearl"). */
+    @SubscribeEvent
+    public static void onPearlTeleport(net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl e) {
+        Player p = e.getPlayer();
+        if (p.getServer() != null) later(p.getServer(), 1, () -> send(p, "teleport", "pearl", 0f, true));
+    }
+
     /** Endermen and shulkers teleport without any client-visible cue; announce it so the vanish/arrive clips play. */
     @SubscribeEvent
     public static void onEnderTeleport(net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity e) {
@@ -153,6 +167,7 @@ public final class ServerTriggers {
         else if ("throwable".equals(cat)) send(e.getEntity(), "throw", "", 0f, false);
         else if ("map".equals(cat) || "book".equals(cat) || "device".equals(cat)) send(e.getEntity(), "inspect_item", cat, 0f, false);
         else if ("glass_bottle".equals(cat)) send(e.getEntity(), "fill_bottle", "", 0f, false);
+        else if ("firework".equals(cat) && e.getEntity().isFallFlying()) send(e.getEntity(), "boost", "", 0f, false);
     }
 
     @SubscribeEvent
