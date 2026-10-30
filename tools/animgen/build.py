@@ -20,7 +20,7 @@ import rigs  # noqa: E402
 
 MODULES = [
     "player_locomotion", "player_locomotion_more", "player_combat", "player_combat_more", "player_combat_handling", "player_interactions", "player_interactions_more", "player_interactions_work", "first_person", "first_person_more", "first_person_world",
-    "passive_mobs", "passive_mobs_more", "hostile_mobs", "villagers", "environment_interactions", "cinematic", "emotes",
+    "passive_mobs", "passive_mobs_more", "hostile_mobs", "villagers", "villagers_more", "environment_interactions", "cinematic", "emotes",
     "mounts", "swimming", "aerial", "damage", "contextual",
 ]
 
@@ -175,10 +175,45 @@ def check_duplicates(threshold=0.995):
     return dups
 
 
+JAVA_SRC = os.path.join(ROOT, "src/main/java")
+CALL_RE = re.compile(r"\b(?:fire|send|edge|broadcast|fireEvent)\s*\(([^;]*)\)\s*;")
+LIT_RE = re.compile(r'"([a-z][a-z0-9_]*(?::[a-z0-9_]*)?)"')
+
+
+def fired_events():
+    """Event names the Java side can fire: string literals passed to fire()/send()/edge() calls.
+
+    An event fired with an argument is also exposed as "event:arg", so any "name:..." form whose
+    name is fired counts as reachable.
+    """
+    names = set()
+    for dirpath, _, files in os.walk(JAVA_SRC):
+        for fn in files:
+            if fn.endswith(".java"):
+                src = open(os.path.join(dirpath, fn)).read()
+                for call in CALL_RE.findall(src):
+                    names.update(LIT_RE.findall(call))
+    return names
+
+
+def check_events():
+    fired = fired_events()
+    errors = []
+    for c in core.CLIPS:
+        t = c.trigger
+        if t.get("type") != "event":
+            continue
+        ev = t["event"]
+        base = ev.split(":", 1)[0]
+        if ev not in fired and base not in fired and (base + ":") not in fired:
+            errors.append("%s: event '%s' is never fired by the runtime" % (c.id, ev))
+    return errors
+
+
 def main():
     check_only = "--check" in sys.argv
     load_modules()
-    errors = core.check_bones() + check_vars()
+    errors = core.check_bones() + check_vars() + check_events()
     counts = {}
     for c in core.CLIPS:
         counts[c.category] = counts.get(c.category, 0) + 1

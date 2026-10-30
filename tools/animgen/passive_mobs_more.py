@@ -312,7 +312,7 @@ c.cycle("left_wing_tip", "rotation", lambda u: [0, 25 * wave(u, 0.15), 0])
 c.cycle("mw_root", "position", lambda u: move(0.3 * wave(u, 0, 0.5), 0.5 * wave(u), 0))
 loop_state("bat.swoop", "Bat Swooping Dive", CAT, T, ALIVE + " && !q.is_sleeping && q.vertical_speed < -0.15", 0.4, F, {
     "right_wing:rot": lambda u: [0, -30, 0], "left_wing:rot": lambda u: [0, 30, 0], "mw_root:rot": lambda u: tilt(30, 0, 0)}, pri=110)
-life("bat.banking_turn", "Bat Banking Turn", CAT, T, ALIVE + " && !q.is_sleeping && math.abs(q.turn_rate) > 6", 0.5, F, {"mw_root:rot": lambda u: tilt(0, 0, 20)}, pri=62)
+life("bat.banking_turn", "Bat Banking Turn", CAT, T, ALIVE + " && !q.is_sleeping && math.abs(q.turn_rate) > 6", 0.5, F, {"mw_root:rot": lambda u: tilt(-5, 0, 20 + 10 * wave(u, 0, 4))}, pri=62)
 beat("bat.startle", "Bat Startled Awake", CAT, T, event("hurt", ALIVE), 0.5, F, {"right_wing:rot": [(0, Z), (0.1, [0, -80, 0]), (0.5, Z)], "left_wing:rot": [(0, Z), (0.1, [0, 80, 0]), (0.5, Z)],
                                                                                "head:rot": [(0, Z), (0.1, [-20, 0, 0]), (0.5, Z)]}, pri=200, layer="reaction")
 beat("bat.squeak", "Bat Squeak", CAT, T, event("vocalize", ALIVE), 0.4, F, {"head:rot": [(0, Z), (0.1, [-15, 10, 0]), (0.4, Z)], "right_ear:rot": [(0, Z), (0.1, [0, 0, 20]), (0.4, Z)]}, layer="gesture")

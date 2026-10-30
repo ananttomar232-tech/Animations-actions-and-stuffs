@@ -452,6 +452,14 @@ public final class ContextSampler {
         return false;
     }
 
+    /** Stable names for the dragon's phase ids (EnderDragonPhase.toString() embeds the id, unsuitable for matching). */
+    private static final String[] DRAGON_PHASES = {"holding_pattern", "strafe_player", "landing_approach", "landing", "takeoff", "sitting_flaming",
+            "sitting_scanning", "sitting_attacking", "charging_player", "dying", "hovering"};
+
+    static String dragonPhase(int id) {
+        return id >= 0 && id < DRAGON_PHASES.length ? DRAGON_PHASES[id] : "unknown";
+    }
+
     private static boolean started(AnimationState a) {
         return a.isStarted();
     }
@@ -550,6 +558,8 @@ public final class ContextSampler {
             s.setBool(CtxVars.DIGGING, started(wd.diggingAnimationState));
             s.setBool(CtxVars.ROARING, started(wd.roarAnimationState));
             s.setBool(CtxVars.SNIFFING, started(wd.sniffAnimationState));
+            s.setBool(CtxVars.CHARGING, started(wd.sonicBoomAnimationState));
+            s.setBool(CtxVars.ATTACKING, started(wd.attackAnimationState));
             s.set(CtxVars.ATTACK_TICK, wd.getClientAngerLevel() / 80f);
         } else if (e instanceof Piglin pg) {
             s.setBool(CtxVars.DANCING, pg.isDancing());
@@ -565,7 +575,7 @@ public final class ContextSampler {
             s.setBool(CtxVars.INVULNERABLE, wb.getInvulnerableTicks() > 0);
             s.setBool(CtxVars.POWERED, wb.isPowered());
         } else if (e instanceof EnderDragon dr) {
-            s.setString(CtxVars.PHASE, dr.getPhaseManager().getCurrentPhase().getPhase().toString().toLowerCase(Locale.ROOT));
+            s.setString(CtxVars.PHASE, dragonPhase(dr.getPhaseManager().getCurrentPhase().getPhase().getId()));
         } else if (e instanceof Vex vx) {
             s.setBool(CtxVars.CHARGING, vx.isCharging());
         }

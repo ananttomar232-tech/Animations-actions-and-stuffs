@@ -51,6 +51,9 @@ ENTITY_BONES = {
     "minecraft:silverfish": [f"segment{i}" for i in range(7)] + [f"layer{i}" for i in range(3)],
     "minecraft:endermite": [f"segment{i}" for i in range(4)],
     "minecraft:ender_dragon": [],
+    "minecraft:cave_spider": ["head", "body0", "body1"] + [f"{s}_{p}_leg" for s in ("right", "left") for p in ("hind", "middle_hind", "middle_front", "front")],
+    "minecraft:zoglin": ["head", "left_ear", "right_ear", "left_horn", "right_horn", "body", "mane", "right_hind_leg", "left_hind_leg", "right_front_leg", "left_front_leg"],
+    "minecraft:elder_guardian": ["root", "head", "eye", "tail0", "tail1", "tail2"] + [f"spike{i}" for i in range(12)],
     # passive
     "minecraft:cow": QUAD, "minecraft:mooshroom": QUAD, "minecraft:pig": QUAD, "minecraft:sheep": QUAD,
     "minecraft:polar_bear": QUAD, "minecraft:panda": QUAD,

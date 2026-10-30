@@ -218,7 +218,7 @@ for T, sp, heavy in (("minecraft:llama", "llama", 0.0), ("minecraft:trader_llama
          lift=12 * (1 - heavy), pitch_phase=0.1 + 0.3 * heavy)
     gait(sp + ".caravan", label + " Caravan Step", CAT, T, WALKING + " && q.is_leashed", 1.6 + 0.2 * heavy, F, pri=101,
          gait="walk", stride=18, duty=0.68, bob=0.4 + 0.3 * heavy, pitch=0.4 + 0.6 * heavy, roll=1.5, snap=0.3 * heavy, yaw=2 * (1 - heavy), roll_phase=0.2 * heavy)
-    beat(sp + ".spit", label + " Spit", CAT, T, event("spit", ALIVE), 0.8, F, {
+    beat(sp + ".spit", label + " Spit", CAT, T, event("shoot:spit", ALIVE), 0.8, F, {
         "head:rot": [(0, Z), (0.25, [-25 + 5 * heavy, 0, 0], "out_quad"), (0.34, [15, 0, 0], "out_expo"), (0.8, Z)], "mw_center:pos": [(0, Z), (0.25, move(0, 0, -0.8)), (0.34, move(0, 0, 0.8)), (0.8, Z)]},
         pri=160)
     c = mob(sp + ".kush", label + (" Weary Kneel" if heavy else " Kneeling Rest"), CAT, T, 5.0, state(STILL + " && q.idle_time > 18", group=sp + "_idle", weight=2), file=F, blend_in=1.6, blend_out=1.2)

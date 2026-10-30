@@ -56,13 +56,37 @@ public final class ServerTriggers {
         send(mob, "vocalize", "", 0f, true);
     }
 
-    /** Llamas spit through a projectile, never a swing; announce it from the spawned spit's owner. */
+    /** Endermen and shulkers teleport without any client-visible cue; announce it so the vanish/arrive clips play. */
+    @SubscribeEvent
+    public static void onEnderTeleport(net.minecraftforge.event.entity.EntityTeleportEvent.EnderEntity e) {
+        LivingEntity le = e.getEntityLiving();
+        if (!le.level().isClientSide) send(le, "teleport", "", 0f, true);
+    }
+
+    /**
+     * Ranged mobs never swing, so their attack clips key off the projectile they launch:
+     * "shoot" with the projectile kind as argument (also exposed as "shoot:<kind>").
+     */
     @SubscribeEvent
     public static void onEntityJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
-        if (e.getLevel().isClientSide) return;
-        if (e.getEntity() instanceof net.minecraft.world.entity.projectile.LlamaSpit spit && spit.getOwner() instanceof LivingEntity owner) {
-            send(owner, "spit", "", 0f, true);
-        }
+        if (e.getLevel().isClientSide || e.loadedFromDisk()) return;
+        Entity owner = e.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile proj ? proj.getOwner()
+                : e.getEntity() instanceof net.minecraft.world.entity.projectile.EvokerFangs fangs ? fangs.getOwner() : null;
+        if (owner instanceof Mob mob) send(mob, "shoot", projectileKind(e.getEntity()), 0f, true);
+    }
+
+    static String projectileKind(Entity p) {
+        if (p instanceof net.minecraft.world.entity.projectile.LlamaSpit) return "spit";
+        if (p instanceof net.minecraft.world.entity.projectile.ThrownTrident) return "trident";
+        if (p instanceof net.minecraft.world.entity.projectile.AbstractArrow) return "arrow";
+        if (p instanceof net.minecraft.world.entity.projectile.WitherSkull) return "skull";
+        if (p instanceof net.minecraft.world.entity.projectile.DragonFireball) return "dragon_fireball";
+        if (p instanceof net.minecraft.world.entity.projectile.AbstractHurtingProjectile) return "fireball";
+        if (p instanceof net.minecraft.world.entity.projectile.Snowball) return "snowball";
+        if (p instanceof net.minecraft.world.entity.projectile.ThrownPotion) return "potion";
+        if (p instanceof net.minecraft.world.entity.projectile.ShulkerBullet) return "bullet";
+        if (p instanceof net.minecraft.world.entity.projectile.EvokerFangs) return "fangs";
+        return "other";
     }
 
     @SubscribeEvent
