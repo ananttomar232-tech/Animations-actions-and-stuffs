@@ -1,7 +1,7 @@
 """Environmental interactions (category: environmental_interactions).
 
 How players and creatures react to the world around them: what they stand in (q.feet_block,
-q.surface), weather (rain, snow, storms, the positional "thunderclap" world event), temperature,
+q.surface), weather (rain, snow, storms, the positional "thunderclap" world event), explosions heard from afar (the "explosion" world event), temperature,
 light, wind, fire, altitude and status effects. Foliage sway, wind and banners are handled by the
 shader/wind systems; these clips are the bodies responding to the same conditions.
 """
@@ -213,6 +213,42 @@ THUNDER = {
 }
 for T, (name, tracks) in THUNDER.items():
     mev(T, "thunder", name, event("thunderclap", "!q.is_dead"), max(t for seq in tracks.values() for t, *_ in seq), tracks, pri=210, layer="reaction")
+
+# ============================================================================ explosions (positional "explosion" world event)
+# Entities caught in the blast also get explosion_flinch and a hurt reaction; these are for everyone who only hears it.
+pev("blast_far_shield_eyes", "Shading Your Eyes Toward A Distant Blast", event("explosion:far", LIVE), 1.8, {
+    "head:rot": [(0, Z), (0.15, [-8, "q.event_dir * 0.6", 0], "out_expo"), (1.3, [-8, "q.event_dir * 0.6", 0]), (1.8, Z)],
+    "right_arm:rot": [(0, Z), (0.25, R(150, -20, 50)), (1.3, R(150, -20, 50)), (1.8, Z)], "body:rot": [(0, Z), (0.2, tilt(-4, "q.event_dir * 0.25", 0)), (1.3, tilt(-4, "q.event_dir * 0.25", 0)), (1.8, Z)],
+    "mw_root:pos": [(0, Z), (0.6, Z), (0.7, move(0, -0.6, 0), "out_expo"), (1.0, Z)]}, pri=287)
+AWAY = "q.event_dir > 0 ? -70 : 70"
+BLAST = {
+    "minecraft:cow": ("Cow Wheeling Away From A Blast", {"mw_center:rot": [(0, Z), (0.25, [0, AWAY, 0], "out_back"), (1.2, [0, AWAY, 0]), (1.8, Z)],
+                                                         "head:rot": [(0, Z), (0.1, [-25, "q.event_dir * 0.5", 0]), (0.6, [10, 0, 0]), (1.8, Z)], "right_front_leg:rot": [(0, Z), (0.1, [-30, 0, 0]), (0.3, [10, 0, 0]), (0.5, Z)]}),
+    "minecraft:sheep": ("Sheep Bunching Low After A Blast", {"mw_center:pos": [(0, Z), (0.15, move(0, -1, 0)), (1.4, move(0, -1, 0)), (2.0, Z)],
+                                                             "head:rot": [(0, Z), (0.15, [20, "q.event_dir * 0.4", 0]), (1.4, [20, "q.event_dir * 0.4", 0]), (2.0, Z)]}),
+    "minecraft:pig": ("Pig Dropping Flat At A Blast", {"mw_center:pos": [(0, Z), (0.1, move(0, -2, 0), "out_expo"), (1.0, move(0, -2, 0)), (1.6, Z)], "head:rot": [(0, Z), (0.1, [25, 0, 0]), (1.0, [25, 0, 0]), (1.6, Z)],
+                                                       "right_front_leg:rot": [(0, Z), (0.1, [-50, 0, 20]), (1.0, [-50, 0, 20]), (1.6, Z)], "left_front_leg:rot": [(0, Z), (0.1, [-50, 0, -20]), (1.0, [-50, 0, -20]), (1.6, Z)]}),
+    "minecraft:horse": ("Horse Rearing At A Blast", {"mw_center:rot": [(0, Z), (0.3, tilt(-35, 0, 0), "out_back"), (0.9, tilt(-30, 0, 0)), (1.4, Z)], "head_parts:rot": [(0, Z), (0.3, [-20, "q.event_dir * 0.3", 0]), (1.4, Z)],
+                                                     "right_front_leg:rot": [(0, Z), (0.3, [-60, 0, 0]), (0.6, [-30, 0, 0]), (0.9, [-60, 0, 0]), (1.4, Z)],
+                                                     "left_front_leg:rot": [(0, Z), (0.45, [-60, 0, 0]), (0.75, [-30, 0, 0]), (1.05, [-60, 0, 0]), (1.4, Z)]}),
+    "minecraft:wolf": ("Wolf Barking Toward A Blast", {"head:rot": [(0, Z), (0.2, [-10, "q.event_dir * 0.6", 0]), (0.35, [5, "q.event_dir * 0.6", 0]), (0.5, [-10, "q.event_dir * 0.6", 0]), (0.65, [5, "q.event_dir * 0.6", 0]), (1.2, Z)],
+                                                       "mw_center:pos": [(0, Z), (0.2, move(0, 0, -1)), (1.2, Z)], "tail:rot": [(0, Z), (0.2, [-30, 0, 0]), (1.2, Z)]}),
+    "minecraft:cat": ("Cat Bolting Low From A Blast", {"mw_center:pos": [(0, Z), (0.1, move(0, -1.5, -2), "out_expo"), (1.0, move(0, -1.5, -2)), (1.5, Z)], "tail1:rot": [(0, Z), (0.1, [40, 0, 0]), (1.5, Z)],
+                                                       "head:rot": [(0, Z), (0.1, [15, "q.event_dir * 0.5", 0]), (1.5, Z)]}),
+    "minecraft:chicken": ("Chicken Flapping Wildly At A Blast", {"right_wing:rot": [(0, Z), (0.05, [0, 0, 70]), (0.15, [0, 0, 10]), (0.25, [0, 0, 70]), (0.35, [0, 0, 10]), (0.45, [0, 0, 70]), (0.7, Z)],
+                                                                 "left_wing:rot": [(0, Z), (0.05, [0, 0, -70]), (0.15, [0, 0, -10]), (0.25, [0, 0, -70]), (0.35, [0, 0, -10]), (0.45, [0, 0, -70]), (0.7, Z)],
+                                                                 "mw_center:pos": [(0, Z), (0.2, move(0, 3, 0), "out_expo"), (0.5, Z)]}),
+    "minecraft:villager": ("Villager Hiding Its Face From A Blast", {"arms:rot": [(0, Z), (0.12, [-90, 0, 0], "out_expo"), (1.4, [-85, 0, 0]), (1.8, Z)], "head:rot": [(0, Z), (0.12, [35, "q.event_dir * -0.3", 0]), (1.4, [30, "q.event_dir * -0.3", 0]), (1.8, Z)],
+                                                                     "body:rot": [(0, Z), (0.12, tilt(15)), (1.4, tilt(12)), (1.8, Z)], "mw_root:pos": [(0, Z), (0.12, move(0, -1, 0)), (1.4, move(0, -1, 0)), (1.8, Z)]}),
+    "minecraft:iron_golem": ("Iron Golem Turning To Face A Blast", {"mw_root:rot": [(0, Z), (0.6, [0, "q.event_dir * 0.5", 0]), (1.8, [0, "q.event_dir * 0.5", 0]), (2.4, Z)], "right_arm:rot": [(0, Z), (0.6, [-30, 0, 0]), (1.8, [-30, 0, 0]), (2.4, Z)],
+                                                                    "left_arm:rot": [(0, Z), (0.6, [-30, 0, 0]), (1.8, [-30, 0, 0]), (2.4, Z)], "head:rot": [(0, Z), (0.6, [-5, "q.event_dir * 0.3", 0]), (2.4, Z)]}),
+    "minecraft:creeper": ("Creeper Swelling In Sympathy With A Blast", {"body:scl": [(0, [1, 1, 1]), (0.6, [1.12, 1.12, 1.12]), (0.8, [1.05, 1.05, 1.05]), (1.0, [1.12, 1.12, 1.12]), (1.6, [1, 1, 1])],
+                                                                        "head:rot": [(0, Z), (0.4, [0, "q.event_dir * 0.5", 0]), (1.6, Z)]}),
+    "minecraft:zombie": ("Zombie Lurching Toward The Sound Of A Blast", {"mw_root:rot": [(0, Z), (0.5, [0, "q.event_dir * 0.6", 0]), (1.6, [0, "q.event_dir * 0.6", 0]), (2.0, Z)],
+                                                                         "head:rot": [(0, Z), (0.3, [-10, "q.event_dir * 0.3", 0]), (2.0, Z)], "body:rot": [(0, Z), (0.5, tilt(12)), (1.6, tilt(12)), (2.0, Z)]}),
+}
+for T, (name, tracks) in BLAST.items():
+    mev(T, "blast", name, event("explosion", "!q.is_dead"), max(t for seq in tracks.values() for t, *_ in seq), tracks, pri=212, layer="reaction")
 
 # ============================================================================ creatures: rain
 RAIN = "q.is_raining && q.sky_exposed && !q.is_cold"

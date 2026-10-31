@@ -3,6 +3,7 @@ package com.motionworks.server;
 import com.motionworks.MotionWorks;
 import com.motionworks.common.InteractionClassifier;
 import com.motionworks.common.ItemCategories;
+import com.motionworks.common.WorldEventArgs;
 import com.motionworks.config.MWConfig;
 import com.motionworks.network.AnimationEventPacket;
 import com.motionworks.network.MWNetwork;
@@ -145,7 +146,7 @@ public final class ServerTriggers {
         if (e.getEntity() instanceof net.minecraft.world.entity.LightningBolt bolt) {
             // One world-event packet per strike (entity id -1); clients fan it out to every nearby animated entity.
             net.minecraft.world.phys.Vec3 at = bolt.position();
-            MWNetwork.toTrackers(bolt, new AnimationEventPacket(-1, "thunderclap", String.format(java.util.Locale.ROOT, "%.1f,%.1f,%.1f", at.x, at.y, at.z), 0f), false);
+            MWNetwork.toTrackers(bolt, new AnimationEventPacket(-1, "thunderclap", WorldEventArgs.encode(at.x, at.y, at.z), 0f), false);
             return;
         }
         Entity owner = e.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile proj ? proj.getOwner()
@@ -356,8 +357,11 @@ public final class ServerTriggers {
 
     @SubscribeEvent
     public static void onExplosion(ExplosionEvent.Detonate e) {
-        if (e.getLevel().isClientSide) return;
+        if (e.getLevel().isClientSide || !(e.getLevel() instanceof net.minecraft.server.level.ServerLevel level)) return;
         var pos = e.getExplosion().getPosition();
+        float power = ((com.motionworks.mixin.common.ExplosionAccessor) e.getExplosion()).motionworks$radius();
+        // World event (entity id -1, arg "x,y,z,power"): aftermath effects for everyone in range, startles for distant creatures.
+        MWNetwork.toNearby(level, pos, 96, new AnimationEventPacket(-1, "explosion", WorldEventArgs.encode(pos.x, pos.y, pos.z, power), 0f));
         for (Entity hit : e.getAffectedEntities()) {
             if (hit instanceof LivingEntity le && le.distanceToSqr(pos) < 12 * 12) {
                 send(le, "explosion_flinch", "", InteractionClassifier.relativeYaw(le, pos.x, pos.z), true);

@@ -53,6 +53,13 @@ public final class MWNetwork {
         }
     }
 
+    /** Sends to every MotionWorks player in the level within range of a position (for events with no entity). */
+    public static void toNearby(net.minecraft.server.level.ServerLevel level, net.minecraft.world.phys.Vec3 at, double range, Object msg) {
+        for (ServerPlayer p : level.players()) {
+            if (p.distanceToSqr(at) <= range * range && CHANNEL.isRemotePresent(p.connection.connection)) CHANNEL.send(PacketDistributor.PLAYER.with(() -> p), msg);
+        }
+    }
+
     public static void toPlayer(ServerPlayer p, Object msg) {
         if (CHANNEL.isRemotePresent(p.connection.connection)) CHANNEL.send(PacketDistributor.PLAYER.with(() -> p), msg);
     }

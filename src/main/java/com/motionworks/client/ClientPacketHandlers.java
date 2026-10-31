@@ -4,7 +4,9 @@ import com.motionworks.client.anim.AnimationLibrary;
 import com.motionworks.client.anim.AnimatorManager;
 import com.motionworks.client.anim.EntityAnimator;
 import com.motionworks.client.cinematic.CinematicDirector;
+import com.motionworks.client.environment.AmbientEffects;
 import com.motionworks.client.firstperson.FirstPersonAnimator;
+import com.motionworks.common.WorldEventArgs;
 import com.motionworks.engine.clip.AnimationClip;
 import com.motionworks.network.AnimationEventPacket;
 import com.motionworks.network.CinematicPacket;
@@ -37,16 +39,13 @@ public final class ClientPacketHandlers {
         if (le == mc.player && "dodge".equals(p.event())) FirstPersonAnimator.INSTANCE.fire("dodge:" + p.arg(), a.scope());
     }
 
-    /** Positional world events (arg "x,y,z"): every animated entity within 48 blocks reacts, facing data included. */
+    /** Positional world events (arg "x,y,z[,magnitude]"): every animated entity within 48 blocks reacts, facing data included. */
     static void worldEvent(AnimationEventPacket p) {
-        String[] xyz = p.arg().split(",");
-        if (xyz.length != 3) return;
-        try {
-            net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(Double.parseDouble(xyz[0]), Double.parseDouble(xyz[1]), Double.parseDouble(xyz[2]));
-            AnimatorManager.fireNear(at, 48.0, p.event());
-        } catch (NumberFormatException ignored) {
-            // malformed position from a mismatched server version: ignore the event
-        }
+        double[] v = WorldEventArgs.decode(p.arg());
+        if (v == null) return; // malformed position from a mismatched server version: ignore the event
+        net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(v[0], v[1], v[2]);
+        if ("explosion".equals(p.event())) AmbientEffects.explosionAftermath(at, (float) net.minecraft.util.Mth.clamp(v[3], 0.5, 8.0));
+        AnimatorManager.fireNear(at, 48.0, p.event());
     }
 
     public static void cinematic(CinematicPacket p) {

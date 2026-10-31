@@ -13,7 +13,7 @@ variables, and motion-signature uniqueness: no speed, amplitude, phase or mirror
 | Passive animals and creatures | 318 | 300 |
 | Hostile mobs and monsters | 255 | 250 |
 | Villagers and humanoid NPCs | 160 | 160 |
-| Environmental interactions | 181 | 180 |
+| Environmental interactions | 193 | 180 |
 | Cinematic and storytelling | 155 | 150 |
 | Emotes, gestures and expressions | 122 | 120 |
 | Mounts, vehicles and riding | 101 | 100 |
@@ -21,7 +21,7 @@ variables, and motion-signature uniqueness: no speed, amplitude, phase or mirror
 | Flying and aerial movement | 80 | 80 |
 | Damage, reactions and recovery | 101 | 100 |
 | Special, contextual and transition animations | 102 | 100 |
-| **Total** | **2506** | **2,420** |
+| **Total** | **2518** | **2,420** |
 
 Testing status `auto-validated` means the clip passed the authoring validator and the Java `ShippedLibraryTest`
 (loads with the runtime parser, every bone exists in the target rig, signatures distinct). In-game visual review is tracked
@@ -1661,6 +1661,7 @@ separately in `docs/TESTING.md`.
 | `camel.env_rain_disdain` | Camel Disdaining The Rain | `minecraft:camel` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
 | `camel.env_thunder` | Camel Unfazed By Thunder | `minecraft:camel` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
 | `camel.env_wind_squint` | Camel Squinting Into Blowing Sand | `minecraft:camel` | state `!q.is_dead && q.wind > 0.6 && q.temperature > 1.5` | 2.00s | additive | 76 |
+| `cat.env_blast` | Cat Bolting Low From A Blast | `minecraft:cat` | event `explosion` when `!q.is_dead` | 1.50s | reaction | 212 |
 | `cat.env_dark_eyes` | Cat Perfectly Calm In The Dark | `minecraft:cat` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.01 && !q.is_lying` | 4.00s | overlay | 108 |
 | `cat.env_fire_warm_loaf` | Cat Loafing By The Warm Fire | `minecraft:cat` | state `!q.is_dead && q.near_fire && q.ground_speed < 0.01 && !q.is_sitting && !q.is_lying` | 4.00s | overlay | 124 |
 | `cat.env_flower_bat` | Cat Batting At Flowers | `minecraft:cat` | state `!q.is_dead && q.feet_block == 'foliage' && q.ground_speed < 0.01 && !q.is_sitting` | 1.60s | overlay | 112 |
@@ -1670,6 +1671,7 @@ separately in `docs/TESTING.md`.
 | `cat.env_rain_annoyed` | Cat Hunched And Annoyed In The Rain | `minecraft:cat` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.40s | overlay | 118 |
 | `cat.env_shallows_disgust` | Cat Shaking Each Wet Paw | `minecraft:cat` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.80s | overlay | 126 |
 | `cat.env_thunder` | Cat Puffing Up At Thunder | `minecraft:cat` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `chicken.env_blast` | Chicken Flapping Wildly At A Blast | `minecraft:chicken` | event `explosion` when `!q.is_dead` | 0.70s | reaction | 212 |
 | `chicken.env_cold_puffball` | Chicken Puffed Into A Ball | `minecraft:chicken` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
 | `chicken.env_fire_flap` | Chicken Flapping Away From Fire | `minecraft:chicken` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.30s | overlay | 125 |
 | `chicken.env_heat_wings_out` | Chicken Holding Its Wings Out To Cool | `minecraft:chicken` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
@@ -1677,6 +1679,7 @@ separately in `docs/TESTING.md`.
 | `chicken.env_shallows_hop_out` | Chicken Hopping Out Of Puddles | `minecraft:chicken` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.40s | overlay | 126 |
 | `chicken.env_thunder` | Chicken Freezing Then Puffing Up At Thunder | `minecraft:chicken` | event `thunderclap` when `!q.is_dead` | 1.40s | reaction | 210 |
 | `chicken.env_wind_ruffled` | Chicken Ruffled By The Wind | `minecraft:chicken` | state `!q.is_dead && q.wind > 0.6` | 0.50s | additive | 76 |
+| `cow.env_blast` | Cow Wheeling Away From A Blast | `minecraft:cow` | event `explosion` when `!q.is_dead` | 1.80s | reaction | 212 |
 | `cow.env_cold_breath` | Cow Breathing Steam In The Cold | `minecraft:cow` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.60s | additive | 73 |
 | `cow.env_fire_back_away` | Cow Backing Away From Fire | `minecraft:cow` | state `!q.is_dead && q.near_fire && !q.is_on_fire && q.ground_speed < 0.05` | 1.20s | overlay | 125 |
 | `cow.env_heat_seek_shade` | Cow Drooping In The Heat | `minecraft:cow` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
@@ -1684,6 +1687,7 @@ separately in `docs/TESTING.md`.
 | `cow.env_rain_stoic` | Cow Standing Stoic In The Rain | `minecraft:cow` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
 | `cow.env_shallows_drink` | Cow Drinking At The Water's Edge | `minecraft:cow` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater && q.ground_speed < 0.01` | 2.40s | overlay | 126 |
 | `cow.env_thunder` | Cow Spooked By Thunder | `minecraft:cow` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `creeper.env_blast` | Creeper Swelling In Sympathy With A Blast | `minecraft:creeper` | event `explosion` when `!q.is_dead` | 1.60s | reaction | 212 |
 | `creeper.env_rain_hiss` | Creeper Hissing At The Rain | `minecraft:creeper` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 3.00s | additive | 72 |
 | `creeper.env_thunder` | Creeper Crackling As Lightning Strikes | `minecraft:creeper` | event `thunderclap` when `!q.is_dead` | 0.60s | reaction | 210 |
 | `donkey.env_rain_ears_back` | Donkey Pinning Its Ears In The Rain | `minecraft:donkey` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 2.00s | additive | 72 |
@@ -1702,6 +1706,7 @@ separately in `docs/TESTING.md`.
 | `goat.env_cold_proud` | Goat Standing Proud In The Snow | `minecraft:goat` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 4.00s | overlay | 118 |
 | `goat.env_rain_head_shake` | Goat Shaking Rain From Its Horns | `minecraft:goat` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 3.00s | additive | 72 |
 | `goat.env_thunder` | Goat Answering The Thunder | `minecraft:goat` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `horse.env_blast` | Horse Rearing At A Blast | `minecraft:horse` | event `explosion` when `!q.is_dead` | 1.40s | reaction | 212 |
 | `horse.env_cold_stamp` | Horse Stamping Against The Cold | `minecraft:horse` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
 | `horse.env_dark_skittish` | Horse Skittish In The Dark | `minecraft:horse` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.05` | 0.80s | additive | 74 |
 | `horse.env_fire_shy` | Horse Shying From Fire | `minecraft:horse` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.80s | overlay | 126 |
@@ -1713,6 +1718,7 @@ separately in `docs/TESTING.md`.
 | `horse.env_soul_sand_struggle` | Horse Struggling Through Soul Sand | `minecraft:horse` | state `!q.is_dead && q.surface == 'soul' && q.ground_speed >= 0.01` | 1.00s | additive | 77 |
 | `horse.env_thunder` | Horse Shying At Thunder | `minecraft:horse` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
 | `horse.env_wind_mane` | Horse's Mane Streaming In The Wind | `minecraft:horse` | state `!q.is_dead && q.wind > 0.6` | 0.80s | additive | 76 |
+| `iron_golem.env_blast` | Iron Golem Turning To Face A Blast | `minecraft:iron_golem` | event `explosion` when `!q.is_dead` | 2.40s | reaction | 212 |
 | `iron_golem.env_rain_creak` | Iron Golem Creaking In The Rain | `minecraft:iron_golem` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 4.00s | overlay | 118 |
 | `iron_golem.env_thunder` | Iron Golem Looking To The Storm | `minecraft:iron_golem` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
 | `llama.env_cold_content` | Llama Content In Its Thick Wool | `minecraft:llama` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 3.40s | overlay | 118 |
@@ -1725,6 +1731,7 @@ separately in `docs/TESTING.md`.
 | `parrot.env_cold_shiver` | Parrot Shivering In The Cold | `minecraft:parrot` | state `!q.is_dead && q.is_cold && !q.is_flying` | 0.25s | additive | 73 |
 | `parrot.env_rain_fluffed` | Parrot Fluffed Up In The Rain | `minecraft:parrot` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && !q.is_flying` | 2.00s | overlay | 118 |
 | `parrot.env_thunder` | Parrot Squawking At Thunder | `minecraft:parrot` | event `thunderclap` when `!q.is_dead` | 1.00s | reaction | 210 |
+| `pig.env_blast` | Pig Dropping Flat At A Blast | `minecraft:pig` | event `explosion` when `!q.is_dead` | 1.60s | reaction | 212 |
 | `pig.env_fire_squeal` | Pig Squealing Near Fire | `minecraft:pig` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.50s | overlay | 125 |
 | `pig.env_ice_slide` | Pig Sliding On Ice | `minecraft:pig` | state `!q.is_dead && q.surface == 'glass' && q.ground_speed >= 0.02` | 0.80s | additive | 75 |
 | `pig.env_rain_joy` | Pig Delighting In The Rain | `minecraft:pig` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold` | 1.00s | additive | 72 |
@@ -1733,6 +1740,7 @@ separately in `docs/TESTING.md`.
 | `player.env.ankle_splash` | Splashing Through The Shallows | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && q.is_in_water && q.fluid_depth < 0.4 && q.ground_speed >= 0.02` | 0.80s | overlay | 246 |
 | `player.env.berry_bush_frozen` | Holding Still Amid Thorns | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.feet_block == 'berry_bush'` | 2.00s | overlay | 242 |
 | `player.env.berry_bush_tiptoe` | Wincing Through A Berry Bush | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.feet_block == 'berry_bush'` | 0.80s | overlay | 242 |
+| `player.env.blast_far_shield_eyes` | Shading Your Eyes Toward A Distant Blast | `@player` | event `explosion:far` when `!q.is_dead && !q.is_riding && !q.is_sleeping` | 1.80s | gesture | 287 |
 | `player.env.blind_stumble` | Stumbling Blind | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed >= 0.01 && q.is_blinded` | 1.00s | overlay | 232 |
 | `player.env.bright_squint` | Squinting Up Into Bright Sky | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.ground_speed < 0.01 && q.light >= 15 && !q.is_night && q.head_pitch < -40 && q.sky_exposed` | 2.00s | overlay | 228 |
 | `player.env.brush_crouch` | Creeping Through The Brush | `@player` | state `!q.is_dead && !q.is_riding && !q.is_sleeping && q.is_on_ground && !q.is_in_water && q.feet_block == 'foliage' && q.is_sneaking` | 1.40s | overlay | 228 |
@@ -1800,6 +1808,7 @@ separately in `docs/TESTING.md`.
 | `rabbit.env_rain_ears_flat` | Rabbit Flattening Its Ears In The Rain | `minecraft:rabbit` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
 | `rabbit.env_snow_hop_tracks` | Rabbit Bounding Over Fresh Snow | `minecraft:rabbit` | state `!q.is_dead && q.is_cold && q.ground_speed >= 0.01 && q.surface == 'snow'` | 0.60s | additive | 73 |
 | `rabbit.env_thunder` | Rabbit Bolting From Thunder | `minecraft:rabbit` | event `thunderclap` when `!q.is_dead` | 0.80s | reaction | 210 |
+| `sheep.env_blast` | Sheep Bunching Low After A Blast | `minecraft:sheep` | event `explosion` when `!q.is_dead` | 2.00s | reaction | 212 |
 | `sheep.env_cold_fluffed` | Sheep Fleece Fluffed Against The Cold | `minecraft:sheep` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01` | 3.00s | additive | 73 |
 | `sheep.env_dark_huddle` | Sheep Pressed Together In The Dark | `minecraft:sheep` | state `!q.is_dead && q.light < 4 && q.ground_speed < 0.01` | 2.00s | overlay | 118 |
 | `sheep.env_fire_wary` | Sheep Wary Of The Flames | `minecraft:sheep` | state `!q.is_dead && q.near_fire && !q.is_on_fire && q.ground_speed < 0.05` | 1.00s | overlay | 125 |
@@ -1818,7 +1827,9 @@ separately in `docs/TESTING.md`.
 | `spider.env_web_at_home` | Spider At Home In Its Web | `minecraft:spider` | state `!q.is_dead && q.feet_block == 'cobweb'` | 4.00s | overlay | 128 |
 | `turtle.env_rain_relish` | Turtle Relishing The Rain | `minecraft:turtle` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01` | 3.00s | overlay | 118 |
 | `turtle.env_thunder` | Turtle Pulling In At Thunder | `minecraft:turtle` | event `thunderclap` when `!q.is_dead` | 2.00s | reaction | 210 |
+| `villager.env_blast` | Villager Hiding Its Face From A Blast | `minecraft:villager` | event `explosion` when `!q.is_dead` | 1.80s | reaction | 212 |
 | `villager.env_thunder` | Villager Clutching Its Robes At Thunder | `minecraft:villager` | event `thunderclap` when `!q.is_dead` | 1.20s | reaction | 210 |
+| `wolf.env_blast` | Wolf Barking Toward A Blast | `minecraft:wolf` | event `explosion` when `!q.is_dead` | 1.20s | reaction | 212 |
 | `wolf.env_cold_curl` | Wolf Curled Nose-To-Tail In The Snow | `minecraft:wolf` | state `!q.is_dead && q.is_cold && q.ground_speed < 0.01 && q.idle_time > 12 && !q.is_sitting` | 3.00s | overlay | 118 |
 | `wolf.env_fire_rest` | Wolf Resting By The Campfire | `minecraft:wolf` | state `!q.is_dead && q.near_fire && q.ground_speed < 0.01 && !q.is_sitting && q.is_tame` | 4.00s | overlay | 124 |
 | `wolf.env_heat_pant` | Wolf Panting In The Heat | `minecraft:wolf` | state `!q.is_dead && q.temperature > 1.5 && !q.is_night && q.sky_exposed` | 0.50s | additive | 74 |
@@ -1828,6 +1839,7 @@ separately in `docs/TESTING.md`.
 | `wolf.env_shallows_play` | Wolf Splashing In The Shallows | `minecraft:wolf` | state `!q.is_dead && q.is_in_water && q.is_on_ground && !q.is_underwater` | 0.60s | overlay | 126 |
 | `wolf.env_thunder` | Wolf Flattening Its Ears At Thunder | `minecraft:wolf` | event `thunderclap` when `!q.is_dead` | 1.20s | reaction | 210 |
 | `wolf.env_wind_fur` | Wolf Leaning Into The Wind | `minecraft:wolf` | state `!q.is_dead && q.wind > 0.6 && q.ground_speed < 0.01` | 1.40s | additive | 76 |
+| `zombie.env_blast` | Zombie Lurching Toward The Sound Of A Blast | `minecraft:zombie` | event `explosion` when `!q.is_dead` | 2.00s | reaction | 212 |
 | `zombie.env_fire_recoil` | Zombie Recoiling From Fire | `minecraft:zombie` | state `!q.is_dead && q.near_fire && !q.is_on_fire` | 0.80s | overlay | 135 |
 | `zombie.env_rain_relief` | Zombie Lifting Its Face To Cooling Rain | `minecraft:zombie` | state `!q.is_dead && q.is_raining && q.sky_exposed && !q.is_cold && q.ground_speed < 0.01 && !q.is_aggressive` | 4.00s | overlay | 118 |
 | `zombie.env_thunder` | Zombie Groaning Up At The Storm | `minecraft:zombie` | event `thunderclap` when `!q.is_dead` | 1.80s | reaction | 210 |

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "motionworks.refmap.json",
   "mixins": [
+    "common.ExplosionAccessor",
     "common.MobMixin"
   ],
   "client": [
