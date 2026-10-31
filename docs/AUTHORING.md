@@ -75,8 +75,20 @@ comparisons, `&&`, `||`, `!`, `?:`, `??`, and string comparison against quoted n
 (`q.main_hand == 'sword'`). Any number in a key can be an expression string.
 
 **Bones** are the model's own part names (`head`, `right_arm`, `left_hind_leg`, `tail1` ...) plus two virtual
-bones applied to the whole model: `mw_root` pivots at the ground and `mw_center` at the body centre. Bones the
-entity's model lacks are skipped, so one humanoid clip drives players, zombies and piglins.
+bones applied to the whole model: `mw_root` pivots at the ground and `mw_center` at the body centre (measured
+from the model unless the rig sets `ground` and `center`). Bones the entity's model lacks are skipped, so one
+humanoid clip drives players, zombies and piglins.
+
+A part rotates and scales about its **pivot**. Some vanilla models place a part's box far from its pivot (a
+slime's body hangs 17 px below it, a guardian's eye 15 px), so scaling that part slides its box away from its
+neighbours. For whole-body squash and stretch, scale `mw_root`. To grow such a part in place, add a matching
+position track; `mobkit.anchored(scale_keys, centre)` writes it. `/mw audit` reports any scale track that moves
+a box off its pivot.
+
+**Ground contact.** For a creature standing on the ground, anything but its legs that dips below the feet
+lifts the whole model, so rolls and lying poses rest on the floor. A clip that goes underground on purpose
+(a sniffer digging, a warden emerging) sets meta `"ground": "free"`; the shipped ones are listed with reasons
+in `tools/animgen/ground.py`.
 
 ## Triggers
 
@@ -136,6 +148,8 @@ Timed `events` fire as the clip passes them: `footstep` (`foot`), `sound` (`soun
 - **life_noise** adds small, continuous, per-entity noise so nothing is ever perfectly still.
 - **drivers** set a channel from expressions with smoothing. The shipped four-legged rigs use them for
   terrain alignment.
+- `center` and `ground` are the pivots of `mw_center` and `mw_root` in model pixels. Leave them out to use
+  the centre and bottom centre of the model's rest geometry.
 - `extends` inherits everything; lists you set replace the inherited ones.
 
 `entities.json` maps entity types to a rig and the clip targets they use:
@@ -194,6 +208,11 @@ own module. The validator rejects:
 - category counts below their minimums
 - any pair of clips that are the same motion after normalising speed and amplitude, phase-shifting or
   mirroring
+
+Before validating, `snaps.py` eases any keyed segment that would move a limb further in one 60 fps frame than
+reads as motion (90 degrees, 45 for the first-person camera, 6 px or 0.35 scale). It steps the segment's
+easing down its family (`out_expo` to `out_quint` and so on), sampling curves exactly as the runtime does, so
+a snap keeps its character but spans two or three frames.
 
 `tools/assetgen/` generates the particle textures, the sound effects (synthesised with numpy, encoded to OGG),
 `sounds.json`, the English translations and the GameTest structure.

@@ -16,7 +16,7 @@ Embeddium is installed.
 | Cinematic sequences | 27 authored, skippable, plus your own recorded with `/mw cam` |
 | Entity coverage | 80 entity families on 13 rig profiles: players, every vanilla mob, villagers and illagers |
 | Assets | 18 particle types, 60 sound events (109 generated OGG files), English translations |
-| Tests | 40 JUnit tests, 6 in-game GameTests, 20 toolkit tests, and a headless client smoke test |
+| Tests | 50 JUnit tests, 6 in-game GameTests, 23 toolkit tests, and a headless client smoke test that audits every clip on the real models |
 
 | Category | Clips | Required |
 |---|---:|---:|
@@ -55,7 +55,10 @@ variant. Procedural layers add springs, life noise and expression drivers.
 or modded model without obfuscated field names. Rig profiles add virtual bones (`mw_root` at the ground,
 `mw_center` at the body centre), parent couplings (the torso pivots at the hips and carries head and arms),
 followers (outer skin layers follow their limbs), and terrain alignment. Four-legged mobs pitch to the slope
-under them. Each frame the applier restores whatever vanilla did not rewrite, so poses never accumulate.
+under them. Pivots a profile does not set are measured from the model's own geometry, so a chicken rolls about
+its body rather than a point above it. Each frame the applier restores whatever vanilla did not rewrite, so
+poses never accumulate. **Ground contact** keeps standing bodies out of the floor: a roll, cartwheel or pose
+lying down rests on the ground, while kneels still sink only the feet (a single-block leg has no knee).
 
 **Players and first person.** Locomotion, combat (combos, charged swings, blocking, ranged weapons), every
 interaction, swimming, flying, riding, damage and recovery. A separate first-person animator drives the hands
@@ -114,6 +117,7 @@ Build from source:
 |---|---|---|
 | `/mw play <clip>`, `/mw emote <clip>` | client | Play a clip on yourself (emotes are sent to nearby players) |
 | `/mw list [filter]`, `/mw stats`, `/mw debug`, `/mw export` | client | Browse the library, show load statistics, toggle the debug overlay, export the registry |
+| `/mw audit` | client, in a world | Check every clip against the models the game actually renders (missing bones, clips that move nothing, parts scaled off their bodies, bodies below the feet) and save a report |
 | `/mw cinematic play <id>`, `stop`, `list` | client | Preview cinematics locally |
 | `/mw cam add`, `clear`, `preview`, `save <name>` | client | Record a camera path and save it as `user:<name>` |
 | `/motionworks cinematic <players> <id> [anchor]`, `... stop` | server, op | Play a cinematic for players |
@@ -123,7 +127,7 @@ Build from source:
 ## Configuration
 
 `config/motionworks-client.toml` has sections `animation`, `firstPerson`, `camera`, `cinematics`,
-`environment`, `particles`, `sound`, `faces`, `acting` and `sync`: global and per-system switches, intensity,
+`environment`, `particles`, `sound`, `faces`, `acting` and `sync`: global and per-system switches, ground contact, intensity,
 animation distance, camera shake strength, letterbox and HUD hiding, foliage and banner wind, particle budget,
 footsteps, foley, weapon trails, faces, personality and conversations. `config/motionworks-common.toml` has
 `sync` (trigger broadcasting), `combat` (dodge, parry window, shield bash, counter attacks, landing rolls)

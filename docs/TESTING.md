@@ -6,8 +6,8 @@ Gradle caches exist (one online `./gradlew build` first).
 | Layer | Command | Runs in |
 |---|---|---|
 | Authoring validator | `python3 tools/animgen/build.py --check` | seconds |
-| Toolkit tests (20) | `python3 tools/animgen/test_toolkit.py` | ~25 s |
-| Java unit tests (40) | `./gradlew test` | ~1 min |
+| Toolkit tests (23) | `python3 tools/animgen/test_toolkit.py` | ~25 s |
+| Java unit tests (50) | `./gradlew test` | ~1 min |
 | In-game GameTests (6) | `./gradlew runGameTestServer` | ~1 min |
 | Headless client smoke test | `tools/clienttest/run_client_smoke.sh` | ~4 min |
 
@@ -41,7 +41,10 @@ phase variants).
 | `ControllerTest` | Deterministic idle pools, priority takeover with crossfade, state hysteresis, event selection and interruption, death pre-empting actions, additive stacking, loop events once per cycle, `stop_when`, time scale |
 | `LoaderAndSignatureTest` | Bedrock import (axis flip, events) and duplicate detection |
 | `ShippedLibraryTest` | Every shipped file loads with the runtime parser; no two shipped clips share a motion signature, expressions included |
-| `PlayerRigPoseTest` | Bakes the real vanilla `PlayerModel` and plays all 1,119 player clips through the rig, reproducing exactly the fields vanilla's `setupAnim` rewrites each frame (taken from its bytecode). Shoulders, neck and hips must stay attached, and an ended clip must leave the vanilla pose untouched |
+| `PlayerRigPoseTest` | Bakes the real vanilla `PlayerModel` and plays all 1,119 player clips through the rig, reproducing exactly the fields vanilla's `setupAnim` rewrites each frame (taken from its bytecode). Shoulders, neck and hips must stay attached, and an ended clip must leave the vanilla pose untouched. The Euler extraction must invert ModelPart's rotation order over 200,000 rotations, a head must turn with the torso without rolling over, and ground contact must lift a flipped body but not a kneel |
+| `MotionQualityTest` | Every shipped clip sampled at 240 Hz under zero, realistic and random context values: no non-finite output, no jump at a loop seam, no limb moving more than one 60 fps frame can show (90 degrees, 45 for the first-person camera, 6 px, 0.35 scale), no one-shot ending where its blend-out cannot hide it |
+| `RotationBlendTest` | Spins blend the short way round: against vanilla, between crossfading clips, and when an additive spin fades |
+| `CombatStateTest` | Dodge, parry and counter windows from another world's game time are dropped, not honoured |
 | `WorldEventArgsTest` | Positional world-event encoding, including under a decimal-comma locale |
 | `SourceConventionsTest` | Singletons are the last static field (static initialisation order); every declared context variable is actually written |
 
@@ -70,20 +73,52 @@ by `runGameTestServer` if missing). A datapack then plays a scene:
 - a turntable cinematic (`turntable.json`) that frames the animals from the side and orbits the player, who
   bows partway through
 
+The client also runs the **library audit** (`LibraryAudit`, the same check as `/mw audit`): for every entity
+family it takes the model from the entity's real renderer and reports:
+
+- clips that move nothing on it
+- species clips naming bones it lacks
+- scale tracks that slide a part's box off its pivot
+
+It also lists bodies that dip below the feet (corrected at runtime by ground contact) and lifts off the
+ground, for review.
+
 The script saves screenshots and a contact sheet to `build/clienttest/`. It fails if the log lacks the
-library and world-join markers, or contains a crash report, a mixin failure, an animation error, an event-bus
-exception or a bad cinematic.
+library, world-join and audit markers, or contains a crash report, a mixin failure, an animation error, an
+event-bus exception, a bad cinematic or any audit issue.
+
+`GALLERY=1` also renders every clip on its owner's real model at three moments into numbered contact sheets
+(`build/clienttest/gallery/sheet_*.png` with `index.tsv`), about 2,270 clips in under a minute, for looking at
+the whole library.
 
 Needs `Xvfb`, Mesa (llvmpipe) and, for screenshots, ImageMagick. Tunables: `SHOTS`, `INTERVAL`, `WARMUP`,
 `DISPLAY_NUM`. `./gradlew runClient -PquickPlay=<world>` joins a world directly for manual testing.
 
-The first client runs found two bugs that every other layer missed, both now fixed and covered by tests:
+The client runs, the audit and the gallery found these bugs, which every other layer missed. All are now fixed
+and covered by tests or the audit:
 
 - **A static initialisation-order crash on world join.** `FirstPersonAnimator` built its rig before `BONES`
   was set. `SourceConventionsTest` now guards this.
 - **Players' torsos drifting away from their legs.** `PoseApplier` read last frame's output back as vanilla
   for fields vanilla never rewrites, and the hip coupling compounded every frame. `PlayerRigPoseTest`
   reproduces vanilla's per-frame writes to guard this.
+- **Heads twisting upside down when the torso turned.** JOML 1.10.5's `getEulerAnglesZYX` does not invert
+  `rotationZYX`, ModelPart's rotation order, so the extraction is now done from the rotation matrix.
+- **Rolls, flips and lying poses sinking into the floor** by up to two blocks: fixed by ground contact.
+- **Small creatures pivoting around a point above them** (an axolotl playing dead floated a block up): fixed by
+  measured pivots.
+- **A slime's eyes floating off its squashing body, and the elder guardian's eye sliding off its face.**
+  Fixed by scaling from the model root and holding the eye in place.
+- **Two zombie villager clips animating a nose the model does not have.**
+- From the motion review:
+  - spins whipping backwards during their blend-out
+  - seven loops snapping back at their seam
+  - 95 keyed segments moving a limb up to 160 degrees in one frame
+  - 801 clips overshooting their authored poses (smooth interpolation)
+- From code review:
+  - combat windows leaking between singleplayer worlds (long invulnerability, free parries)
+  - animators of killed mobs never released
+  - remote players' stowed weapons outliving their entity ids
 
 ## Not covered automatically
 
