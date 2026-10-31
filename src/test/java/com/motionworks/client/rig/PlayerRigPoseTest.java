@@ -137,6 +137,41 @@ class PlayerRigPoseTest {
     }
 
     @Test
+    void eulerExtractionInvertsModelPartRotationOrder() {
+        java.util.Random r = new java.util.Random(7);
+        org.joml.Vector3f e = new org.joml.Vector3f();
+        for (int i = 0; i < 200_000; i++) {
+            float ex = (r.nextFloat() - 0.5f) * 7f, ey = (r.nextFloat() - 0.5f) * 7f, ez = (r.nextFloat() - 0.5f) * 7f;
+            org.joml.Quaternionf q = new org.joml.Quaternionf().rotationZYX(ez, ey, ex);
+            PoseApplier.eulerZYX(q, e);
+            float dot = Math.abs(new org.joml.Quaternionf().rotationZYX(e.z, e.y, e.x).dot(q));
+            assertTrue(dot > 0.9999f, "round trip failed for " + ex + "," + ey + "," + ez + ": " + dot);
+        }
+    }
+
+    /** Regression: the head hung down into the chest when its turn and the torso's added up to 90 degrees. */
+    @Test
+    void turningTheTorsoCarriesTheHeadWithoutRollingIt() throws IOException {
+        ModelRig mr = playerRig();
+        AnimationClip c = clip(playerClips(), "player.idle.look_right");
+        for (float t = 0f; t <= c.length(); t += 0.05f) {
+            vanillaFrame(mr);
+            PoseBuffer pose = sample(mr, c, t, new Scope());
+            int head = mr.rig.indexOf("head"), body = mr.rig.indexOf("body");
+            org.joml.Quaternionf local = new org.joml.Quaternionf().rotationZYX(pose.resolve(head, 2, 0f, 0f), pose.resolve(head, 1, 0f, 0f), pose.resolve(head, 0, 0f, 0f));
+            org.joml.Quaternionf torso = new org.joml.Quaternionf().rotationZYX(pose.resolve(body, 2, 0f, 0f), pose.resolve(body, 1, 0f, 0f), pose.resolve(body, 0, 0f, 0f));
+            PoseApplier.apply(mr, pose, 1f);
+            ModelPart h = mr.part("head");
+            org.joml.Quaternionf actual = new org.joml.Quaternionf().rotationZYX(h.zRot, h.yRot, h.xRot);
+            org.joml.Quaternionf expected = new org.joml.Quaternionf(torso).mul(local);
+            assertTrue(Math.abs(actual.dot(expected)) > 0.9999f, "head orientation wrong at t=" + t);
+            // The head box hangs from its neck pivot upwards (model y points down): its top must stay above the neck.
+            org.joml.Vector3f top = actual.transform(new org.joml.Vector3f(0f, -8f, 0f));
+            assertTrue(top.y < -6f, "head turned upside down at t=" + t + ": top at " + top.y);
+        }
+    }
+
+    @Test
     void groundContactLiftsBodiesButLetsFeetSink() throws IOException {
         ModelRig mr = playerRig();
         vanillaFrame(mr);

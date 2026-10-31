@@ -143,7 +143,7 @@ public final class PoseApplier {
                 ch.z = pz + V.z + dPz;
                 QA.rotationZYX(ch.zRot, ch.yRot, ch.xRot);
                 QB.set(QD).mul(QA);
-                QB.getEulerAnglesZYX(V);
+                eulerZYX(QB, V);
                 ch.xRot = V.x;
                 ch.yRot = V.y;
                 ch.zRot = V.z;
@@ -153,6 +153,22 @@ public final class PoseApplier {
                 ch.z += dPz;
             }
         }
+    }
+
+    /**
+     * Euler angles (x, y, z) such that {@code rotationZYX(z, y, x)}, the order ModelPart draws with, reproduces
+     * {@code q}. JOML 1.10.5's getEulerAnglesZYX does not invert rotationZYX (a head turned 90 degrees with the
+     * torso came back rolled upside down), so the extraction is done here from the rotation matrix of Rz*Ry*Rx.
+     */
+    static Vector3f eulerZYX(Quaternionf q, Vector3f out) {
+        float x = q.x, y = q.y, z = q.z, w = q.w;
+        float r00 = 1f - 2f * (y * y + z * z), r01 = 2f * (x * y - w * z), r10 = 2f * (x * y + w * z), r11 = 1f - 2f * (x * x + z * z);
+        float r20 = 2f * (x * z - w * y), r21 = 2f * (y * z + w * x), r22 = 1f - 2f * (x * x + y * y);
+        float sinY = Math.max(-1f, Math.min(1f, -r20));
+        float ay = (float) Math.asin(sinY);
+        if (Math.abs(sinY) < 0.99999f) return out.set((float) Math.atan2(r21, r22), ay, (float) Math.atan2(r10, r00));
+        // Gimbal lock: only z - x (or z + x) is defined; put it all in z.
+        return out.set(0f, ay, (float) Math.atan2(-r01, r11));
     }
 
     /** Applies mw_root (ground pivot) and mw_center (body-centre pivot) to the pose stack. */

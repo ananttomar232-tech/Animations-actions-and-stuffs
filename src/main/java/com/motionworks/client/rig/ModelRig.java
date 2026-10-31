@@ -52,10 +52,14 @@ public final class ModelRig {
         this.couplings = couplings;
         this.couplingPivots = couplingPivots;
         this.couplingMovesParent = movesParent;
-        float[][] measured = profile.center == null || profile.ground == null ? restBounds() : null;
+        float[][] measured = restBounds();
+        this.bounds = measured[2];
         this.center = profile.center != null ? profile.center : measured[0];
         this.ground = profile.ground != null ? profile.ground : measured[1];
     }
+
+    /** Rest-pose geometry extents in model pixels: {minX, minY, minZ, maxX, maxY, maxZ}. */
+    final float[] bounds;
 
     /** Pivot of mw_center (body centre) and mw_root (ground) in model pixels. */
     final float[] center;
@@ -91,9 +95,9 @@ public final class ModelRig {
             });
         }
         for (int i = 0; i < parts.length; i++) if (parts[i] != null) parts[i].loadPose(saved[i]);
-        if (min[0] > max[0]) return new float[][] {{0f, 12f, 0f}, {0f, 24f, 0f}};
+        if (min[0] > max[0]) return new float[][] {{0f, 12f, 0f}, {0f, 24f, 0f}, {-8f, 0f, -8f, 8f, 24f, 8f}};
         float cz = (min[2] + max[2]) / 2f;
-        return new float[][] {{0f, (min[1] + max[1]) / 2f, cz}, {0f, max[1], cz}};
+        return new float[][] {{0f, (min[1] + max[1]) / 2f, cz}, {0f, max[1], cz}, {min[0], min[1], min[2], max[0], max[1], max[2]}};
     }
 
     private ModelPart[] topLevel;

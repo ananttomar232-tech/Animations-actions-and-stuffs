@@ -148,9 +148,10 @@ public final class PoseGallery {
         target.clear(Minecraft.ON_OSX);
         target.bindWrite(true);
         // Frame the model's own rest geometry (a hitbox can sit well away from it, as a bat's does).
-        float centreY = 1.501f - p.rig.center[1] / 16f;
-        float height = Math.max(2f * (p.rig.ground[1] - p.rig.center[1]) / 16f, 0.4f);
-        float extent = Math.max(height, Math.max(p.entity.getBbWidth(), 0.4f)) * 0.8f + 0.3f;
+        float[] b = p.rig.bounds;
+        float centreY = 1.501f - (b[1] + b[4]) / 32f;
+        float size = Math.max(p.entity.getBbHeight(), p.entity.getBbWidth());
+        float extent = size * 0.62f + 0.12f;
         RenderSystem.backupProjectionMatrix();
         RenderSystem.setProjectionMatrix(new Matrix4f().setOrtho(-extent, extent, -extent, extent, -50f, 50f), VertexSorting.ORTHOGRAPHIC_Z);
         PoseStack view = RenderSystem.getModelViewStack();
