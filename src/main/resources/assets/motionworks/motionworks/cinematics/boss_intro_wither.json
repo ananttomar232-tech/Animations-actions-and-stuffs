@@ -1,5 +1,5 @@
 {
- "name": "boss.wither.title",
+ "name": "Boss Intro Wither",
  "anchor": "@anchor",
  "letterbox": true,
  "skippable": true,

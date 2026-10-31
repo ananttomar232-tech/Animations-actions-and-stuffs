@@ -1,5 +1,5 @@
 {
- "name": "cinematic.harvest_festival",
+ "name": "Harvest Festival",
  "anchor": "@nearest:minecraft:villager",
  "letterbox": true,
  "skippable": true,

@@ -1,0 +1,7 @@
+{
+ "description": "Zombies, skeletons, endermen and other HumanoidModel mobs.",
+ "extends": "player",
+ "followers": {
+  "hat": "head"
+ }
+}

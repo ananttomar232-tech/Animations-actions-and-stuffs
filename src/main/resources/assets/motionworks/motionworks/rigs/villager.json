@@ -1,0 +1,47 @@
+{
+ "description": "Villager and wandering trader: hat and nose are children of the head; the crossed arms ride on the torso.",
+ "groups": {
+  "upper": [
+   "head",
+   "body",
+   "arms"
+  ],
+  "lower": [
+   "right_leg",
+   "left_leg"
+  ]
+ },
+ "couplings": [
+  {
+   "parent": "body",
+   "pivot": [
+    0,
+    12,
+    0
+   ],
+   "move_parent": true,
+   "children": [
+    "head",
+    "arms"
+   ]
+  }
+ ],
+ "life_noise": [
+  {
+   "bone": "head",
+   "amplitude": 1.2,
+   "frequency": 0.15,
+   "scale": "q.in_conversation ? 0.3 : 1"
+  }
+ ],
+ "center": [
+  0,
+  12,
+  0
+ ],
+ "ground": [
+  0,
+  24,
+  0
+ ]
+}

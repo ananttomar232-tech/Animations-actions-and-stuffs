@@ -43,6 +43,11 @@ CATEGORY_LABELS = {
 }
 
 
+def read(path):
+    with open(path, encoding="utf-8") as fh:
+        return fh.read()
+
+
 def load_modules():
     for m in MODULES:
         if os.path.exists(os.path.join(HERE, m + ".py")):
@@ -54,8 +59,8 @@ VAR_RE = re.compile(r"\b(?:q|query|v|variable)\.[a-z_][a-z0-9_]*")
 
 def runtime_vars():
     """Variables the runtime defines: every Vars.id(...) in CtxVars.java plus engine locals from context_vars.json."""
-    src = open(os.path.join(ROOT, "src/main/java/com/motionworks/common/CtxVars.java")).read()
-    return set(re.findall(r'Vars\.id\("([^"]+)"\)', src)) | set(json.load(open(os.path.join(HERE, "context_vars.json"))))
+    src = read(os.path.join(ROOT, "src/main/java/com/motionworks/common/CtxVars.java"))
+    return set(re.findall(r'Vars\.id\("([^"]+)"\)', src)) | set(json.loads(read(os.path.join(HERE, "context_vars.json"))))
 
 
 def check_vars():
@@ -196,7 +201,7 @@ def fired_events():
     for dirpath, _, files in os.walk(JAVA_SRC):
         for fn in files:
             if fn.endswith(".java"):
-                src = open(os.path.join(dirpath, fn)).read()
+                src = read(os.path.join(dirpath, fn))
                 for call in CALL_RE.findall(src):
                     names.update(LIT_RE.findall(call))
     return names
@@ -213,6 +218,33 @@ def check_events():
         base = ev.split(":", 1)[0]
         if ev not in fired and base not in fired and (base + ":") not in fired:
             errors.append("%s: event '%s' is never fired by the runtime" % (c.id, ev))
+    return errors
+
+
+def registered(java_file):
+    src = read(os.path.join(ROOT, "src/main/java/com/motionworks/registry", java_file))
+    block = src[src.index("NAMES = {"):src.index("};", src.index("NAMES = {"))]
+    return set(re.findall(r'"([a-z0-9_.]+)"', block))
+
+
+def check_assets():
+    """Sounds and particles named by clip events must be registered by the mod."""
+    sounds, particles = registered("MWSounds.java"), registered("MWParticles.java")
+    errors = []
+    for c in core.CLIPS:
+        for e in c.events:
+            snd = e.get("sound")
+            if snd and snd.startswith("motionworks:") and snd.split(":", 1)[1] not in sounds:
+                errors.append("%s: unregistered sound %s" % (c.id, snd))
+            par = e.get("particle")
+            if par and par not in particles:
+                errors.append("%s: unregistered particle %s" % (c.id, par))
+    for sid, sq in sequences().items():
+        for e in sq["events"]:
+            if e["type"] == "sound" and e["sound"].split(":", 1)[1] not in sounds:
+                errors.append("sequence %s: unregistered sound %s" % (sid, e["sound"]))
+            if e["type"] == "particles" and e.get("particle", "mote") not in particles:
+                errors.append("sequence %s: unregistered particle %s" % (sid, e["particle"]))
     return errors
 
 
@@ -251,7 +283,7 @@ def write_sequences():
 def main():
     check_only = "--check" in sys.argv
     load_modules()
-    errors = core.check_bones() + check_vars() + check_events() + check_sequences()
+    errors = core.check_bones() + check_vars() + check_events() + check_sequences() + check_assets()
     counts = {}
     for c in core.CLIPS:
         counts[c.category] = counts.get(c.category, 0) + 1

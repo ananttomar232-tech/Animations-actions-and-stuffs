@@ -1,5 +1,5 @@
 {
- "name": "cinematic.raid_begins",
+ "name": "Raid Begins",
  "anchor": "@nearest:minecraft:pillager",
  "letterbox": true,
  "skippable": true,

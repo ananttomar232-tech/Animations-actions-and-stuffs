@@ -1,5 +1,5 @@
 {
- "name": "cinematic.trader_arrival",
+ "name": "Trader Arrival",
  "anchor": "@nearest:minecraft:wandering_trader",
  "letterbox": true,
  "skippable": true,

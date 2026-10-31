@@ -290,7 +290,8 @@ for T, sp, cid, name, L, tracks in (
 
 # ============================================================================ sequences (performed by the CinematicDirector)
 def seq(sid, name, anchor, shots, events, letterbox=True, cancel_on_damage=True):
-    SEQUENCES[sid] = {"name": name, "anchor": anchor, "letterbox": letterbox, "skippable": True, "hide_hud": True, "cancel_on_damage": cancel_on_damage,
+    """name is kept as a readable title for /mw cinematic list; the second argument documents the source key."""
+    SEQUENCES[sid] = {"name": sid.replace("_", " ").title(), "anchor": anchor, "letterbox": letterbox, "skippable": True, "hide_hud": True, "cancel_on_damage": cancel_on_damage,
                       "shots": shots, "events": events}
 
 

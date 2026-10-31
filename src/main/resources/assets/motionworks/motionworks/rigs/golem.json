@@ -1,0 +1,36 @@
+{
+ "description": "Iron golem: a tall torso pivoting low, heavy and slow life motion.",
+ "couplings": [
+  {
+   "parent": "body",
+   "pivot": [
+    0,
+    3,
+    0
+   ],
+   "move_parent": true,
+   "children": [
+    "head",
+    "right_arm",
+    "left_arm"
+   ]
+  }
+ ],
+ "life_noise": [
+  {
+   "bone": "head",
+   "amplitude": 0.8,
+   "frequency": 0.08
+  }
+ ],
+ "center": [
+  0,
+  4,
+  0
+ ],
+ "ground": [
+  0,
+  24,
+  0
+ ]
+}

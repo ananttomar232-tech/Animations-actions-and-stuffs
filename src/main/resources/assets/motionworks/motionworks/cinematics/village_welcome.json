@@ -1,5 +1,5 @@
 {
- "name": "cinematic.village_welcome",
+ "name": "Village Welcome",
  "anchor": "@nearest:minecraft:villager",
  "letterbox": true,
  "skippable": true,

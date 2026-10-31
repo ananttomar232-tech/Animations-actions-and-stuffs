@@ -1,0 +1,21 @@
+{
+ "description": "Pillagers, vindicators, evokers and illusioners: crossed arms and free arms both ride on the torso.",
+ "extends": "villager",
+ "couplings": [
+  {
+   "parent": "body",
+   "pivot": [
+    0,
+    12,
+    0
+   ],
+   "move_parent": true,
+   "children": [
+    "head",
+    "arms",
+    "right_arm",
+    "left_arm"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "description": "Wolves: the tail lags behind turns and lifts with speed; the mane rides on the body.",
+ "springs": [
+  {
+   "bone": "real_tail",
+   "targets": [
+    "math.clamp(q.ground_speed * 120, 0, 35)",
+    "math.clamp(-q.turn_rate * 3, -40, 40)",
+    null
+   ],
+   "stiffness": 90,
+   "damping": 0.45,
+   "limit": 45
+  }
+ ],
+ "couplings": [
+  {
+   "parent": "body",
+   "children": [
+    "upper_body"
+   ]
+  }
+ ],
+ "life_noise": [
+  {
+   "bone": "real_head",
+   "amplitude": 1.5,
+   "frequency": 0.2,
+   "scale": "q.ground_speed < 0.01 ? 1 : 0.2"
+  }
+ ],
+ "center": [
+  0,
+  14,
+  0
+ ],
+ "ground": [
+  0,
+  24,
+  0
+ ]
+}

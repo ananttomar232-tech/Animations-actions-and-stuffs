@@ -1,0 +1,45 @@
+{
+ "description": "Horses, donkeys, mules and undead horses: tail and mane respond to turning and speed.",
+ "springs": [
+  {
+   "bone": "tail",
+   "targets": [
+    "math.clamp(q.ground_speed * 120, 0, 35)",
+    "math.clamp(-q.turn_rate * 3, -40, 40)",
+    null
+   ],
+   "stiffness": 50,
+   "damping": 0.35,
+   "limit": 50
+  },
+  {
+   "bone": "mane",
+   "targets": [
+    null,
+    null,
+    "math.clamp(q.turn_rate * 2, -20, 20)"
+   ],
+   "stiffness": 80,
+   "damping": 0.5,
+   "limit": 25
+  }
+ ],
+ "life_noise": [
+  {
+   "bone": "head_parts",
+   "amplitude": 1.0,
+   "frequency": 0.1,
+   "scale": "q.ground_speed < 0.01 ? 1 : 0.2"
+  }
+ ],
+ "center": [
+  0,
+  10,
+  0
+ ],
+ "ground": [
+  0,
+  24,
+  0
+ ]
+}

@@ -1,0 +1,738 @@
+{
+ "footstep.grass": {
+  "subtitle": "subtitles.motionworks.footstep.grass",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/grass_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/grass_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/grass_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.stone": {
+  "subtitle": "subtitles.motionworks.footstep.stone",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/stone_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/stone_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/stone_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.wood": {
+  "subtitle": "subtitles.motionworks.footstep.wood",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/wood_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/wood_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/wood_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.sand": {
+  "subtitle": "subtitles.motionworks.footstep.sand",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/sand_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/sand_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/sand_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.gravel": {
+  "subtitle": "subtitles.motionworks.footstep.gravel",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/gravel_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/gravel_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/gravel_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.snow": {
+  "subtitle": "subtitles.motionworks.footstep.snow",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/snow_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/snow_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/snow_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.metal": {
+  "subtitle": "subtitles.motionworks.footstep.metal",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/metal_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/metal_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/metal_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.wool": {
+  "subtitle": "subtitles.motionworks.footstep.wool",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/wool_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/wool_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/wool_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.mud": {
+  "subtitle": "subtitles.motionworks.footstep.mud",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/mud_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/mud_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/mud_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.water": {
+  "subtitle": "subtitles.motionworks.footstep.water",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/water_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/water_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/water_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "footstep.leaves": {
+  "subtitle": "subtitles.motionworks.footstep.leaves",
+  "sounds": [
+   {
+    "name": "motionworks:footstep/leaves_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/leaves_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:footstep/leaves_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "foley.cloth": {
+  "subtitle": "subtitles.motionworks.foley.cloth",
+  "sounds": [
+   {
+    "name": "motionworks:foley/cloth_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:foley/cloth_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "foley.leather": {
+  "subtitle": "subtitles.motionworks.foley.leather",
+  "sounds": [
+   {
+    "name": "motionworks:foley/leather_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:foley/leather_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "foley.chain": {
+  "subtitle": "subtitles.motionworks.foley.chain",
+  "sounds": [
+   {
+    "name": "motionworks:foley/chain_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:foley/chain_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "foley.plate": {
+  "subtitle": "subtitles.motionworks.foley.plate",
+  "sounds": [
+   {
+    "name": "motionworks:foley/plate_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:foley/plate_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.whoosh_light": {
+  "subtitle": "subtitles.motionworks.weapon.whoosh_light",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/whoosh_light_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_light_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_light_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.whoosh_medium": {
+  "subtitle": "subtitles.motionworks.weapon.whoosh_medium",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/whoosh_medium_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_medium_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_medium_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.whoosh_heavy": {
+  "subtitle": "subtitles.motionworks.weapon.whoosh_heavy",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/whoosh_heavy_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_heavy_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:weapon/whoosh_heavy_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.draw_blade": {
+  "subtitle": "subtitles.motionworks.weapon.draw_blade",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/draw_blade",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.sheathe_blade": {
+  "subtitle": "subtitles.motionworks.weapon.sheathe_blade",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/sheathe_blade",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.draw_haft": {
+  "subtitle": "subtitles.motionworks.weapon.draw_haft",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/draw_haft",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.bow_creak": {
+  "subtitle": "subtitles.motionworks.weapon.bow_creak",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/bow_creak",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.crossbow_crank": {
+  "subtitle": "subtitles.motionworks.weapon.crossbow_crank",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/crossbow_crank",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.shield_raise": {
+  "subtitle": "subtitles.motionworks.weapon.shield_raise",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/shield_raise",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.shield_bash": {
+  "subtitle": "subtitles.motionworks.weapon.shield_bash",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/shield_bash",
+    "volume": 1.0
+   }
+  ]
+ },
+ "weapon.parry": {
+  "subtitle": "subtitles.motionworks.weapon.parry",
+  "sounds": [
+   {
+    "name": "motionworks:weapon/parry",
+    "volume": 1.0
+   }
+  ]
+ },
+ "impact.flesh": {
+  "subtitle": "subtitles.motionworks.impact.flesh",
+  "sounds": [
+   {
+    "name": "motionworks:impact/flesh_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/flesh_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/flesh_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "impact.metal": {
+  "subtitle": "subtitles.motionworks.impact.metal",
+  "sounds": [
+   {
+    "name": "motionworks:impact/metal_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/metal_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/metal_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "impact.wood": {
+  "subtitle": "subtitles.motionworks.impact.wood",
+  "sounds": [
+   {
+    "name": "motionworks:impact/wood_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/wood_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/wood_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "impact.stone": {
+  "subtitle": "subtitles.motionworks.impact.stone",
+  "sounds": [
+   {
+    "name": "motionworks:impact/stone_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/stone_2",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:impact/stone_3",
+    "volume": 1.0
+   }
+  ]
+ },
+ "body.land_soft": {
+  "subtitle": "subtitles.motionworks.body.land_soft",
+  "sounds": [
+   {
+    "name": "motionworks:body/land_soft_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:body/land_soft_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "body.land_hard": {
+  "subtitle": "subtitles.motionworks.body.land_hard",
+  "sounds": [
+   {
+    "name": "motionworks:body/land_hard_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:body/land_hard_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "body.roll": {
+  "subtitle": "subtitles.motionworks.body.roll",
+  "sounds": [
+   {
+    "name": "motionworks:body/roll_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:body/roll_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "body.fall": {
+  "subtitle": "subtitles.motionworks.body.fall",
+  "sounds": [
+   {
+    "name": "motionworks:body/fall_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:body/fall_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "body.dodge": {
+  "subtitle": "subtitles.motionworks.body.dodge",
+  "sounds": [
+   {
+    "name": "motionworks:body/dodge_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:body/dodge_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "creature.heavy_step": {
+  "subtitle": "subtitles.motionworks.creature.heavy_step",
+  "sounds": [
+   {
+    "name": "motionworks:creature/heavy_step",
+    "volume": 1.0
+   }
+  ]
+ },
+ "creature.wing_flap": {
+  "subtitle": "subtitles.motionworks.creature.wing_flap",
+  "sounds": [
+   {
+    "name": "motionworks:creature/wing_flap",
+    "volume": 1.0
+   }
+  ]
+ },
+ "creature.sniff": {
+  "subtitle": "subtitles.motionworks.creature.sniff",
+  "sounds": [
+   {
+    "name": "motionworks:creature/sniff",
+    "volume": 1.0
+   }
+  ]
+ },
+ "water.splash_small": {
+  "subtitle": "subtitles.motionworks.water.splash_small",
+  "sounds": [
+   {
+    "name": "motionworks:water/splash_small_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:water/splash_small_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "water.splash_big": {
+  "subtitle": "subtitles.motionworks.water.splash_big",
+  "sounds": [
+   {
+    "name": "motionworks:water/splash_big_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:water/splash_big_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "water.bubbles": {
+  "subtitle": "subtitles.motionworks.water.bubbles",
+  "sounds": [
+   {
+    "name": "motionworks:water/bubbles_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:water/bubbles_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "water.surface": {
+  "subtitle": "subtitles.motionworks.water.surface",
+  "sounds": [
+   {
+    "name": "motionworks:water/surface_1",
+    "volume": 1.0
+   },
+   {
+    "name": "motionworks:water/surface_2",
+    "volume": 1.0
+   }
+  ]
+ },
+ "interact.handle": {
+  "subtitle": "subtitles.motionworks.interact.handle",
+  "sounds": [
+   {
+    "name": "motionworks:interact/handle",
+    "volume": 1.0
+   }
+  ]
+ },
+ "interact.page": {
+  "subtitle": "subtitles.motionworks.interact.page",
+  "sounds": [
+   {
+    "name": "motionworks:interact/page",
+    "volume": 1.0
+   }
+  ]
+ },
+ "interact.lever_clunk": {
+  "subtitle": "subtitles.motionworks.interact.lever_clunk",
+  "sounds": [
+   {
+    "name": "motionworks:interact/lever_clunk",
+    "volume": 1.0
+   }
+  ]
+ },
+ "interact.rummage": {
+  "subtitle": "subtitles.motionworks.interact.rummage",
+  "sounds": [
+   {
+    "name": "motionworks:interact/rummage",
+    "volume": 1.0
+   }
+  ]
+ },
+ "interact.tool_tap": {
+  "subtitle": "subtitles.motionworks.interact.tool_tap",
+  "sounds": [
+   {
+    "name": "motionworks:interact/tool_tap",
+    "volume": 1.0
+   }
+  ]
+ },
+ "ambient.wind_gust": {
+  "subtitle": "subtitles.motionworks.ambient.wind_gust",
+  "sounds": [
+   {
+    "name": "motionworks:ambient/wind_gust",
+    "volume": 1.0
+   }
+  ]
+ },
+ "ambient.leaves_rustle": {
+  "subtitle": "subtitles.motionworks.ambient.leaves_rustle",
+  "sounds": [
+   {
+    "name": "motionworks:ambient/leaves_rustle",
+    "volume": 1.0
+   }
+  ]
+ },
+ "ambient.chain_jingle": {
+  "subtitle": "subtitles.motionworks.ambient.chain_jingle",
+  "sounds": [
+   {
+    "name": "motionworks:ambient/chain_jingle",
+    "volume": 1.0
+   }
+  ]
+ },
+ "ambient.banner_flap": {
+  "subtitle": "subtitles.motionworks.ambient.banner_flap",
+  "sounds": [
+   {
+    "name": "motionworks:ambient/banner_flap",
+    "volume": 1.0
+   }
+  ]
+ },
+ "ambient.thunder_rumble": {
+  "subtitle": "subtitles.motionworks.ambient.thunder_rumble",
+  "sounds": [
+   {
+    "name": "motionworks:ambient/thunder_rumble",
+    "volume": 1.0
+   }
+  ]
+ },
+ "cinematic.boom": {
+  "subtitle": "subtitles.motionworks.cinematic.boom",
+  "sounds": [
+   {
+    "name": "motionworks:cinematic/boom",
+    "volume": 1.0
+   }
+  ]
+ },
+ "cinematic.riser": {
+  "subtitle": "subtitles.motionworks.cinematic.riser",
+  "sounds": [
+   {
+    "name": "motionworks:cinematic/riser",
+    "volume": 1.0
+   }
+  ]
+ },
+ "cinematic.sting": {
+  "subtitle": "subtitles.motionworks.cinematic.sting",
+  "sounds": [
+   {
+    "name": "motionworks:cinematic/sting",
+    "volume": 1.0
+   }
+  ]
+ },
+ "cinematic.whoosh": {
+  "subtitle": "subtitles.motionworks.cinematic.whoosh",
+  "sounds": [
+   {
+    "name": "motionworks:cinematic/whoosh",
+    "volume": 1.0
+   }
+  ]
+ },
+ "cinematic.drone": {
+  "subtitle": "subtitles.motionworks.cinematic.drone",
+  "sounds": [
+   {
+    "name": "motionworks:cinematic/drone",
+    "volume": 1.0
+   }
+  ]
+ },
+ "emote.clap": {
+  "subtitle": "subtitles.motionworks.emote.clap",
+  "sounds": [
+   {
+    "name": "motionworks:emote/clap",
+    "volume": 1.0
+   }
+  ]
+ },
+ "emote.snap": {
+  "subtitle": "subtitles.motionworks.emote.snap",
+  "sounds": [
+   {
+    "name": "motionworks:emote/snap",
+    "volume": 1.0
+   }
+  ]
+ },
+ "emote.whistle": {
+  "subtitle": "subtitles.motionworks.emote.whistle",
+  "sounds": [
+   {
+    "name": "motionworks:emote/whistle",
+    "volume": 1.0
+   }
+  ]
+ }
+}
