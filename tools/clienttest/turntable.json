@@ -6,13 +6,13 @@
  "hide_hud": true,
  "cancel_on_damage": false,
  "shots": [
+  {"type": "orbit", "target": "@nearest:minecraft:cow", "duration": 3.0, "radius": 4.0, "height": 0.3, "from_angle": -90, "to_angle": -90},
+  {"type": "orbit", "target": "@nearest:minecraft:horse", "duration": 3.0, "radius": 5.0, "height": 0.3, "from_angle": 90, "to_angle": 90},
   {"type": "orbit", "duration": 3.0, "radius": 4.0, "height": 0.0, "from_angle": 0, "to_angle": 0},
   {"type": "orbit", "duration": 3.0, "radius": 4.0, "height": 0.0, "from_angle": 90, "to_angle": 90},
-  {"type": "orbit", "duration": 4.0, "radius": 4.0, "height": 0.0, "from_angle": 0, "to_angle": 0},
   {"type": "orbit", "duration": 4.0, "radius": 4.0, "height": 0.0, "from_angle": 90, "to_angle": 90}
  ],
  "events": [
-  {"time": 6.1, "type": "animate", "actor": "@self", "clip": "emote.bow"},
-  {"time": 10.1, "type": "animate", "actor": "@self", "clip": "emote.bow"}
+  {"time": 12.1, "type": "animate", "actor": "@self", "clip": "emote.bow"}
  ]
 }

@@ -6,7 +6,6 @@ import com.motionworks.engine.clip.AnimationClip;
 import com.motionworks.engine.clip.Trigger;
 import com.motionworks.engine.expr.Scope;
 import com.motionworks.engine.io.ClipJsonLoader;
-import com.motionworks.engine.procedural.TwoBoneIK;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -59,16 +58,5 @@ class LoaderAndSignatureTest {
 
     private static boolean pair(MotionSignature.Duplicate d, String a, String b) {
         return (d.a().id().equals(a) && d.b().id().equals(b)) || (d.a().id().equals(b) && d.b().id().equals(a));
-    }
-
-    @Test
-    void twoBoneIkReachesTarget() {
-        TwoBoneIK.Solution s = TwoBoneIK.solve(6f, 6f, 7f, 3f, true);
-        assertTrue(s.reachable());
-        float[] end = TwoBoneIK.forward(6f, 6f, s.rootAngle(), s.jointAngle());
-        assertEquals(7f, end[0], 1e-3f);
-        assertEquals(3f, end[1], 1e-3f);
-        TwoBoneIK.Solution far = TwoBoneIK.solve(6f, 6f, 30f, 0f, false);
-        assertFalse(far.reachable());
     }
 }

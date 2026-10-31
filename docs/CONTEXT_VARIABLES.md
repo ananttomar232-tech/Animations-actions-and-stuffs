@@ -36,7 +36,8 @@ column is the code that computes the value.
 | `q.idle_time` | number | `h.idleTime = 0f` (ContextSampler.java) |
 | `q.move_time` | number | `h.moveTime += dt` (ContextSampler.java) |
 | `q.is_climbing` | 0 / 1 | `e.onClimbable() && !onGround` (ContextSampler.java)<br>`sp.isClimbing()` (ContextSampler.java) |
-| `q.terrain_pitch` | number | `h.terrainPitch += (terrainPitch(level, e) - h.terrainPitch) * MathUtil.approachFactor(0.15f, dt)` (ContextSampler.java) |
+| `q.terrain_pitch` | number | `h.terrainPitch += (terrain[0] - h.terrainPitch) * k` (ContextSampler.java) |
+| `q.terrain_offset` | number | `h.terrainOffset += (terrain[1] - h.terrainOffset) * k` (ContextSampler.java) |
 
 ## Stance / state
 

@@ -191,6 +191,21 @@ class AssetConsistencyTests(unittest.TestCase):
         for entity, info in families.items():
             self.assertIn(info["rig"], rigs, entity)
 
+    def test_rig_profile_expressions_use_known_variables(self):
+        known = build.runtime_vars()
+        rig_dir = os.path.join(ASSETS, "motionworks/rigs")
+        drivers = 0
+        for fn in sorted(os.listdir(rig_dir)):
+            rig = load_json(os.path.join(rig_dir, fn))
+            exprs = [n["scale"] for n in rig.get("life_noise", []) if "scale" in n]
+            exprs += [e for s in rig.get("springs", []) for e in s.get("targets", []) if e]
+            exprs += [e for d in rig.get("drivers", []) for e in d["exprs"] if e]
+            drivers += len(rig.get("drivers", []))
+            for e in exprs:
+                for var in build.VAR_RE.findall(e):
+                    self.assertIn(var, known, "%s uses unknown %s" % (fn, var))
+        self.assertGreater(drivers, 0, "terrain alignment drivers are shipped")
+
     def test_context_variable_reference_is_current(self):
         import gen_context_doc
         text, _, _ = gen_context_doc.render()

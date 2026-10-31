@@ -149,6 +149,7 @@ public final class ContextSampler {
         float hostileDistance = 99f;
         float playerDistance = 99f;
         float terrainPitch;
+        float terrainOffset;
         float[] traits;
         int envCheck;
         Vec3 lastVehiclePos;
@@ -352,8 +353,12 @@ public final class ContextSampler {
         s.setBool(CtxVars.NAUSEOUS, e.hasEffect(MobEffects.CONFUSION));
         s.setBool(CtxVars.INVISIBLE, e.isInvisible());
         if (e instanceof net.minecraft.world.entity.player.Player p) s.setBool(CtxVars.FLYING, p.getAbilities().flying);
-        h.terrainPitch += (terrainPitch(level, e) - h.terrainPitch) * MathUtil.approachFactor(0.15f, dt);
+        float[] terrain = terrain(level, e);
+        float k = MathUtil.approachFactor(0.15f, dt);
+        h.terrainPitch += (terrain[0] - h.terrainPitch) * k;
+        h.terrainOffset += (terrain[1] - h.terrainOffset) * k;
         s.set(CtxVars.TERRAIN_PITCH, h.terrainPitch);
+        s.set(CtxVars.TERRAIN_OFFSET, h.terrainOffset);
 
         if (--h.hostileCheck <= 0) {
             h.hostileCheck = 10;
@@ -412,18 +417,26 @@ public final class ContextSampler {
         return MathUtil.clamp(m, -1f, 1f);
     }
 
-    private static float terrainPitch(Level level, LivingEntity e) {
-        float width = e.getBbWidth();
-        if (width < 0.8f || !e.onGround()) return 0f;
+    /**
+     * Slope under the body along its facing: {pitch in degrees (positive when the ground ahead is higher),
+     * mean height of the probed ground relative to the feet in blocks}. Probes sit ahead of and behind the
+     * centre, at least 0.45 blocks out so players get a reading too; the face of a wall is not a slope.
+     */
+    private static float[] terrain(Level level, LivingEntity e) {
+        if (!e.onGround()) return new float[] {0f, 0f};
+        double half = Math.max(0.45, e.getBbWidth() * 0.6);
         double yaw = e.yBodyRot * MathUtil.DEG_TO_RAD;
-        double fx = -Math.sin(yaw) * width * 0.6, fz = Math.cos(yaw) * width * 0.6;
-        double front = groundHeight(level, e.getX() + fx, e.getY(), e.getZ() + fz);
-        double back = groundHeight(level, e.getX() - fx, e.getY(), e.getZ() - fz);
-        return (float) Math.toDegrees(Math.atan2(front - back, width * 1.2));
+        double fx = -Math.sin(yaw) * half, fz = Math.cos(yaw) * half;
+        double feet = e.getY();
+        double front = groundHeight(level, e.getX() + fx, feet, e.getZ() + fz);
+        double back = groundHeight(level, e.getX() - fx, feet, e.getZ() - fz);
+        return new float[] {(float) Math.toDegrees(Math.atan2(front - back, half * 2)), (float) ((front + back) / 2 - feet)};
     }
 
+    /** Top of the ground at (x, z) within a step of y; a probe that runs into a wall reads as level ground. */
     private static double groundHeight(Level level, double x, double y, double z) {
         BlockPos p = BlockPos.containing(x, y + 0.5, z);
+        if (!level.getBlockState(p.above()).getCollisionShape(level, p.above()).isEmpty()) return y;
         for (int i = 0; i < 3; i++) {
             BlockState st = level.getBlockState(p);
             if (!st.getCollisionShape(level, p).isEmpty()) {

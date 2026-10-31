@@ -41,5 +41,29 @@
   0,
   24,
   0
+ ],
+ "drivers": [
+  {
+   "bone": "mw_root",
+   "group": "rotation",
+   "exprs": [
+    "math.clamp(-q.terrain_pitch * 0.9, -30, 30)",
+    null,
+    null
+   ],
+   "half_life": 0.12,
+   "description": "Terrain alignment: pitch the body to the slope under it (ground pivot), nose up on the way uphill."
+  },
+  {
+   "bone": "mw_root",
+   "group": "position",
+   "exprs": [
+    null,
+    "math.clamp(-q.terrain_offset * 16, -10, 10)",
+    null
+   ],
+   "half_life": 0.12,
+   "description": "Terrain alignment: settle the feet onto the mean height of the probed ground."
+  }
  ]
 }

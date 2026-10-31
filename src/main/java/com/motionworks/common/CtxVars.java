@@ -30,6 +30,7 @@ public final class CtxVars {
     public static final int MOVE_TIME = Vars.id("q.move_time");
     public static final int CLIMBING = Vars.id("q.is_climbing");
     public static final int TERRAIN_PITCH = Vars.id("q.terrain_pitch");
+    public static final int TERRAIN_OFFSET = Vars.id("q.terrain_offset");
 
     // Stance / state
     public static final int SNEAKING = Vars.id("q.is_sneaking");
