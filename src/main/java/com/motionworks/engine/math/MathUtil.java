@@ -55,6 +55,25 @@ public final class MathUtil {
         return 0.5f * ((2f * p1) + (-p0 + p2) * t + (2f * p0 - 5f * p1 + 4f * p2 - p3) * t2 + (-p0 + 3f * p1 - 3f * p2 + p3) * t3);
     }
 
+    /** Cubic Hermite between p1 and p2 with end tangents m1, m2 already scaled to the segment. */
+    public static float hermite(float p1, float p2, float m1, float m2, float t) {
+        float t2 = t * t;
+        float t3 = t2 * t;
+        return (2f * t3 - 3f * t2 + 1f) * p1 + (t3 - 2f * t2 + t) * m1 + (-2f * t3 + 3f * t2) * p2 + (t3 - t2) * m2;
+    }
+
+    /**
+     * Auto-clamped slope at a key between a segment of duration h0 with slope d0 and one of duration h1 with
+     * slope d1 (Fritsch-Butland, as in pchip): zero at holds and local extrema, otherwise a weighted harmonic
+     * mean that keeps each segment monotone, so the curve never passes an authored value.
+     */
+    public static float clampedSlope(float d0, float d1, float h0, float h1) {
+        if (d0 * d1 <= 0f) return 0f;
+        float w1 = 2f * h1 + h0;
+        float w2 = h1 + 2f * h0;
+        return (w1 + w2) / (w1 / d0 + w2 / d1);
+    }
+
     public static float smoothstep(float e0, float e1, float x) {
         float t = clamp01((x - e0) / (e1 - e0));
         return t * t * (3f - 2f * t);

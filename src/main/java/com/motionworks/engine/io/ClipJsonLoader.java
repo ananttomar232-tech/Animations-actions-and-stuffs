@@ -129,6 +129,12 @@ public final class ClipJsonLoader {
             }
             length = max;
         }
+        if (loop == LoopMode.LOOP) {
+            for (int i = 0; i < tracks.size(); i++) {
+                BoneTrack t = tracks.get(i);
+                tracks.set(i, new BoneTrack(t.bone(), cyclic(t.rotation(), length), cyclic(t.position(), length), cyclic(t.scale(), length)));
+            }
+        }
 
         List<ClipEvent> events = new ArrayList<>();
         if (o.has("events")) {
@@ -155,6 +161,10 @@ public final class ClipJsonLoader {
         return new AnimationClip(id, name, category, target, rig, length, loop, layer, priority, blendIn, blendOut,
                 additive, mask == null ? null : Collections.unmodifiableSet(mask), speed, time, weight, trigger,
                 List.copyOf(tracks), List.copyOf(events), interruptible, interruptAfter, Collections.unmodifiableMap(meta));
+    }
+
+    private static Channel cyclic(Channel c, float length) {
+        return c == null ? null : c.cyclicOver(length);
     }
 
     private static Trigger parseTrigger(JsonObject t) {

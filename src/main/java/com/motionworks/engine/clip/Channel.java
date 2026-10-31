@@ -11,8 +11,15 @@ public final class Channel {
     public final ChannelTarget target;
     private final Keyframe[] keys;
     private final boolean constant;
+    private static final Scope NO_SCOPE = new Scope();
+    /** The curve is one period of a loop: smooth tangents wrap across the seam between last and first key. */
+    private final boolean cyclic;
 
     public Channel(ChannelTarget target, Keyframe[] keys) {
+        this(target, keys, false);
+    }
+
+    private Channel(ChannelTarget target, Keyframe[] keys, boolean cyclic) {
         if (keys.length == 0) throw new IllegalArgumentException("Channel needs at least one keyframe");
         this.target = target;
         this.keys = keys.clone();
@@ -20,6 +27,25 @@ public final class Channel {
         boolean c = true;
         for (Keyframe k : this.keys) c &= k.isConstant();
         this.constant = c;
+        this.cyclic = cyclic;
+    }
+
+    /**
+     * This curve as one period of a loop of the given length, when it spans exactly 0..length and its
+     * first and last keys hold the same constant values; otherwise this curve unchanged.
+     */
+    public Channel cyclicOver(float length) {
+        Keyframe first = keys[0], last = keys[keys.length - 1];
+        if (keys.length < 3 || first.time() > 1e-4f || Math.abs(last.time() - length) > 1e-4f) return this;
+        for (int c = 0; c < 3; c++) {
+            if (!first.post()[c].isConstant() || !last.pre()[c].isConstant()) return this;
+            if (Math.abs(first.post()[c].eval(NO_SCOPE) - last.pre()[c].eval(NO_SCOPE)) > 1e-4f) return this;
+        }
+        return new Channel(target, keys, true);
+    }
+
+    public boolean isCyclic() {
+        return cyclic;
     }
 
     public Keyframe[] keys() {
@@ -66,14 +92,21 @@ public final class Channel {
         }
         u = b.easing().apply(MathUtil.clamp01(u));
         if (b.interp() == Interp.SMOOTH) {
-            Keyframe p = i > 0 ? k[i - 1] : a;
-            Keyframe n = i + 2 <= last ? k[i + 2] : b;
+            // Auto-clamped Hermite: time-aware tangents that are flat at holds, extrema, jump keys and the
+            // ends of non-looping curves, so motion eases through every authored pose without overshooting it.
+            Keyframe p = i > 0 ? k[i - 1] : cyclic ? k[last - 1] : null;
+            float hp = i > 0 ? a.time() - p.time() : cyclic ? k[last].time() - p.time() : 0f;
+            Keyframe n = i + 2 <= last ? k[i + 2] : cyclic ? k[1] : null;
+            float hn = i + 2 <= last ? n.time() - b.time() : cyclic ? k[1].time() - k[0].time() : 0f;
+            boolean flatA = p == null || hp <= 0f || a.pre() != a.post();
+            boolean flatB = n == null || hn <= 0f || b.pre() != b.post();
             for (int c = 0; c < 3; c++) {
-                float p0 = (p == a ? a.post() : p.post())[c].eval(scope);
-                float p1 = a.post()[c].eval(scope);
-                float p2 = b.pre()[c].eval(scope);
-                float p3 = (n == b ? b.pre() : n.pre())[c].eval(scope);
-                out[off + c] = MathUtil.catmullRom(p0, p1, p2, p3, u);
+                float v1 = a.post()[c].eval(scope);
+                float v2 = b.pre()[c].eval(scope);
+                float d = span <= 0f ? 0f : (v2 - v1) / span;
+                float m1 = flatA ? 0f : MathUtil.clampedSlope((v1 - p.post()[c].eval(scope)) / hp, d, hp, span);
+                float m2 = flatB ? 0f : MathUtil.clampedSlope(d, (n.pre()[c].eval(scope) - v2) / hn, span, hn);
+                out[off + c] = MathUtil.hermite(v1, v2, m1 * span, m2 * span, u);
             }
             return;
         }

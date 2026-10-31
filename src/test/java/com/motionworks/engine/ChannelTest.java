@@ -54,8 +54,10 @@ class ChannelTest {
     @Test
     void smoothPassesThroughKeys() {
         assertEquals(10f, sample("smooth", 1f)[0], 1e-4f);
-        float mid = sample("smooth", 0.5f)[0];
-        assertTrue(mid > 5f, "catmull-rom bulges above the linear midpoint: " + mid);
+        // Flat tangents at the rest start and at the peak: a symmetric ease, S-shaped against the linear ramp.
+        assertEquals(5f, sample("smooth", 0.5f)[0], 1e-4f);
+        assertTrue(sample("smooth", 0.25f)[0] < 2.5f, "eases out of the first key");
+        assertTrue(sample("smooth", 0.75f)[0] > 7.5f, "eases into the peak");
     }
 
     @Test
