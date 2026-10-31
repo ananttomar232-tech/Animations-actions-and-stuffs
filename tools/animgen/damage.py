@@ -277,7 +277,7 @@ for T, sp, label, tracks in (
         ("minecraft:creeper", "creeper", "Creeper Hissing Swell", {"body:scl": [(0, [1, 1, 1]), (0.1, [1.1, 1.06, 1.1]), (0.5, [1, 1, 1])], "head:rot": [(0, Z), (0.1, [-10, 0, 0]), (0.5, Z)]}),
         ("minecraft:spider", "spider", "Spider Legs Snapping Inward", {b + ":rot": [(0, Z), (0.06, [0, 0, (-30 if b.startswith("right") else 30)]), (0.5, Z)]
                                                                     for b in [f"{s_}_{p}_leg" for s_ in ("right", "left") for p in ("hind", "middle_hind", "middle_front", "front")]}),
-        ("minecraft:slime", "slime", "Slime Squashed By A Hit", {"cube:scl": [(0, [1, 1, 1]), (0.05, [1.3, 0.7, 1.3]), (0.2, [0.85, 1.2, 0.85]), (0.5, [1, 1, 1])]}),
+        ("minecraft:slime", "slime", "Slime Squashed By A Hit", {"mw_root:scl": [(0, [1, 1, 1]), (0.05, [1.3, 0.7, 1.3]), (0.2, [0.85, 1.2, 0.85]), (0.5, [1, 1, 1])]}),
         ("minecraft:ravager", "ravager", "Ravager Pained Bellow", {"neck:rot": [(0, Z), (0.1, [-20, 0, 0]), (0.6, Z)], "mouth:rot": [(0, Z), (0.1, [40, 0, 0]), (0.6, Z)]}),
         ("minecraft:warden", "warden", "Warden Enraged By Pain", {"left_ribcage:rot": [(0, Z), (0.1, [0, -25, 0]), (0.8, Z)], "right_ribcage:rot": [(0, Z), (0.1, [0, 25, 0]), (0.8, Z)],
                                                                  "head:rot": [(0, Z), (0.1, [-20, 0, 0]), (0.8, Z)], "body:rot": [(0, Z), (0.1, tilt(-8)), (0.8, Z)]}),

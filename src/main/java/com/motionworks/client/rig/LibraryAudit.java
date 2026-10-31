@@ -73,6 +73,7 @@ public final class LibraryAudit {
             for (AnimationClip clip : lib.clips().forTargets(e.getValue().targets())) {
                 clipsChecked++;
                 coverage(clip, id, mr, issues);
+                scaleDrift(clip, id, mr, issues);
                 if (!grounded) continue;
                 boolean free = "free".equals(clip.meta("ground", ""));
                 float worstSink = 0f, worstLift = 0f, sinkAt = 0f, liftAt = 0f;
@@ -151,6 +152,50 @@ public final class LibraryAudit {
     private static Entity create(Level level, String id) {
         EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(id));
         return type == null ? null : type.create(level);
+    }
+
+    /** Pixels a part's geometry may slide when it is scaled before it reads as coming apart. */
+    static final float SCALE_DRIFT_LIMIT = 2f;
+
+    /**
+     * A part scales about its pivot. Some models place a part's boxes away from its pivot (a slime's body hangs
+     * 17 px below its origin), so scaling slides the box away from the parts around it. A box that reaches its
+     * pivot (a tongue, an arm) only stretches. Reports how far the face nearest the pivot moves.
+     */
+    private static void scaleDrift(AnimationClip clip, String entity, ModelRig mr, List<String> issues) {
+        for (BoneTrack t : clip.tracks()) {
+            if (t.scale() == null || t.bone().startsWith("mw_")) continue;
+            int b = mr.rig.indexOf(t.bone());
+            if (b < 2 || mr.parts[b] == null) continue;
+            float[] face = nearestFace(mr.parts[b]);
+            float worst = 0f;
+            float[] v = new float[3], p = new float[3];
+            for (int i = 0; i <= SAMPLES; i++) {
+                float time = clip.length() * i / SAMPLES;
+                t.scale().sample(time, new Scope(), v, 0);
+                if (t.position() != null) t.position().sample(time, new Scope(), p, 0);
+                // Where the nearest face lands: scaled about the pivot, then the pivot moved by any position track.
+                float dx = face[0] * (v[0] - 1f) + p[0], dy = face[1] * (v[1] - 1f) + p[1], dz = face[2] * (v[2] - 1f) + p[2];
+                worst = Math.max(worst, (float) Math.sqrt(dx * dx + dy * dy + dz * dz));
+            }
+            if (worst > SCALE_DRIFT_LIMIT) {
+                issues.add(String.format("SCALE_DRIFT %s on %s: scaling %s moves its box %.1f px off its pivot", clip.id(), entity, t.bone(), worst));
+            }
+        }
+    }
+
+    /** Per axis, the signed position of the part's box face nearest its pivot (0 where a box reaches or spans it). */
+    static float[] nearestFace(ModelPart part) {
+        float[] out = new float[3];
+        part.visit(new com.mojang.blaze3d.vertex.PoseStack(), (pose, path, index, cube) -> {
+            if (!path.isEmpty()) return;
+            float[] lo = {cube.minX, cube.minY, cube.minZ}, hi = {cube.maxX, cube.maxY, cube.maxZ};
+            for (int a = 0; a < 3; a++) {
+                float near = lo[a] * hi[a] <= 0f ? 0f : (Math.abs(lo[a]) < Math.abs(hi[a]) ? lo[a] : hi[a]);
+                if (Math.abs(near) > Math.abs(out[a])) out[a] = near;
+            }
+        });
+        return out;
     }
 
     private static void coverage(AnimationClip clip, String entity, ModelRig mr, List<String> issues) {

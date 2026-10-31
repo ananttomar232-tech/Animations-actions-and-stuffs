@@ -4,7 +4,7 @@ Hostile motion is built around readable threat: every attack has anticipation th
 idles communicate intent (stalking, scanning, swelling), and reactions show weight.
 """
 from core import arm, leg, biped, manual
-from mobkit import mob, gait, life, loop_state, beat, driven, Z, state, event, wave, cwave, tilt, move
+from mobkit import anchored, mob, gait, life, loop_state, beat, driven, Z, state, event, wave, cwave, tilt, move
 
 CAT = "hostile_mobs"
 ALIVE = "!q.is_dead"
@@ -303,6 +303,7 @@ loop_state("blaze.rain_fizzle", "Blaze Fizzling In Rain", CAT, T, ALIVE + " && (
 
 T, F = "minecraft:ghast", f("ghast")
 TENT = ["tentacle%d" % i for i in range(9)]
+EYE_CENTRE = (0, 16, 0)  # the guardian eye's box hangs 16 px below its pivot (see LibraryAudit SCALE_DRIFT)
 c = mob("ghast.drift", "Ghast Mournful Drift", CAT, T, 5.0, state(ALIVE + " && !q.is_charging"), layer="additive", pri=60, file=F)
 for i, b in enumerate(TENT):
     c.cycle(b, "rotation", lambda u, i=i: [10 * wave(u, i / 9.0) + 5, 0, 6 * wave(u, i / 4.5)])
@@ -324,16 +325,16 @@ life("ghast.tear_quiver", "Ghast Quivering Sob", CAT, T, ALIVE + " && q.player_d
 
 # ============================================================================ slime & magma cube
 T, F = "minecraft:slime", f("slime")
-loop_state("slime.jiggle", "Slime Jelly Jiggle", CAT, T, ALIVE + " && q.is_on_ground", 0.9, F, {"cube:scl": lambda u: [1 + 0.05 * wave(u), 1 - 0.05 * wave(u), 1 + 0.05 * wave(u, 0.1)]}, layer="additive", pri=60)
-beat("slime.splat_land", "Slime Splat Landing", CAT, T, event("land", ALIVE), 0.5, F, {"cube:scl": [(0, [1, 1, 1]), (0.06, [1.35, 0.6, 1.35], "out_expo"), (0.2, [0.9, 1.15, 0.9]), (0.32, [1.05, 0.95, 1.05]), (0.5, [1, 1, 1])],
+loop_state("slime.jiggle", "Slime Jelly Jiggle", CAT, T, ALIVE + " && q.is_on_ground", 0.9, F, {"mw_root:scl": lambda u: [1 + 0.05 * wave(u), 1 - 0.05 * wave(u), 1 + 0.05 * wave(u, 0.1)]}, layer="additive", pri=60)
+beat("slime.splat_land", "Slime Splat Landing", CAT, T, event("land", ALIVE), 0.5, F, {"mw_root:scl": [(0, [1, 1, 1]), (0.06, [1.35, 0.6, 1.35], "out_expo"), (0.2, [0.9, 1.15, 0.9]), (0.32, [1.05, 0.95, 1.05]), (0.5, [1, 1, 1])],
                                                                               "right_eye:pos": [(0, Z), (0.06, move(0, -1, 0)), (0.5, Z)], "left_eye:pos": [(0, Z), (0.06, move(0, -1, 0)), (0.5, Z)]}, pri=170,
      events=[(0.0, "particle", {"particle": "splash", "count": "6", "at": "feet", "spread": "0.4"})])
-beat("slime.crouch_spring", "Slime Coiled Spring", CAT, T, event("jump", ALIVE), 0.4, F, {"cube:scl": [(0, [1.15, 0.85, 1.15]), (0.08, [0.8, 1.35, 0.8], "out_expo"), (0.4, [1, 1, 1])]}, pri=160)
+beat("slime.crouch_spring", "Slime Coiled Spring", CAT, T, event("jump", ALIVE), 0.4, F, {"mw_root:scl": [(0, [1.15, 0.85, 1.15]), (0.08, [0.8, 1.35, 0.8], "out_expo"), (0.4, [1, 1, 1])]}, pri=160)
 loop_state("slime.eye_wander", "Slime Wandering Eyes", CAT, T, ALIVE, 3.0, F, {"right_eye:pos": lambda u: move(0.4 * wave(u), 0.3 * wave(u, 0.25), 0), "left_eye:pos": lambda u: move(0.4 * wave(u), 0.3 * wave(u, 0.25), 0),
-                                                                          "mouth:scl": lambda u: [1, 1 + 0.4 * spike(u, 0.6, 6), 1]}, layer="additive", pri=62)
-beat("slime.gulp", "Slime Gulping Strike", CAT, T, event("melee_hit", ALIVE), 0.5, F, {"cube:scl": [(0, [1, 1, 1]), (0.1, [1.2, 1.1, 0.8]), (0.25, [0.9, 0.95, 1.2]), (0.5, [1, 1, 1])],
-                                                                               "mouth:scl": [(0, [1, 1, 1]), (0.1, [1.6, 2.2, 1]), (0.25, [1, 1, 1])]}, pri=170)
-loop_state("slime.dissolve_wobble", "Slime Weakened Wobble", CAT, T, ALIVE + " && q.health < 0.35", 0.5, F, {"cube:scl": lambda u: [1 + 0.1 * wave(u), 1 - 0.1 * wave(u, 0.25), 1 + 0.1 * wave(u, 0.5)]},
+                                                                          "mouth:pos": lambda u: move(0, -0.6 * spike(u, 0.6, 6), 0)}, layer="additive", pri=62)
+beat("slime.gulp", "Slime Gulping Strike", CAT, T, event("melee_hit", ALIVE), 0.5, F, {"mw_root:scl": [(0, [1, 1, 1]), (0.1, [1.2, 1.1, 0.8]), (0.25, [0.9, 0.95, 1.2]), (0.5, [1, 1, 1])],
+                                                                               "mouth:pos": [(0, Z), (0.1, move(0, -1.5, -0.5)), (0.25, Z)]}, pri=170)
+loop_state("slime.dissolve_wobble", "Slime Weakened Wobble", CAT, T, ALIVE + " && q.health < 0.35", 0.5, F, {"mw_root:scl": lambda u: [1 + 0.1 * wave(u), 1 - 0.1 * wave(u, 0.25), 1 + 0.1 * wave(u, 0.5)]},
            layer="additive", pri=64)
 T, F = "minecraft:magma_cube", f("magma_cube")
 CUBES = ["cube%d" % i for i in range(8)]
@@ -377,7 +378,9 @@ for T, sp, label, elder in (("minecraft:guardian", "guardian", "Guardian", False
         c.cycle("mw_center", "rotation", lambda u: tilt(4 * wave(u, 0.15), 0, 0))
         c.cycle("mw_center", "position", lambda u: move(0, 1.2 * wave(u, 0.4), 0))
         loop_state(sp + ".laser_lock", label + " Withering Gaze", CAT, T, ALIVE + " && q.is_attacking", 1.6, F, {
-            "eye:scl": lambda u: [1 + 0.3 * min(1, u * 1.4), 1 + 0.3 * min(1, u * 1.4), 1], "mw_center:rot": lambda u: tilt(-6 * min(1, u * 2), 0, 0)}, pri=140, layer="overlay", loop="hold")
+            "eye:scl": lambda u: [1 + 0.3 * min(1, u * 1.4), 1 + 0.3 * min(1, u * 1.4), 1],
+            "eye:pos": lambda u: [0, -EYE_CENTRE[1] * 0.3 * min(1, u * 1.4), 0], "mw_center:rot": lambda u: tilt(-6 * min(1, u * 2), 0, 0)}, pri=140, layer="overlay",
+            loop="hold")
         beat(sp + ".spike_bristle", label + " Rippling Spikes", CAT, T, event("hurt", ALIVE), 1.4, F, {
             s_ + ":scl": [(0, [1, 1, 1]), (0.05 + 0.07 * i, [1, 1.8, 1], "out_expo"), (0.5 + 0.07 * i, [1, 1, 1]), (1.4, [1, 1, 1])] for i, s_ in enumerate(SPK)}, pri=200, layer="reaction")
         life(sp + ".eye_dart", label + " Eye Slow Sweep", CAT, T, ALIVE + " && !q.is_attacking", 6.0, F, {"eye:pos": lambda u: move(0.8 * wave(u), 0.4 * wave(u, 0.25, 2), 0)})
@@ -387,8 +390,9 @@ T, F = "minecraft:guardian", f("guardian")
 loop_state("guardian.patrol_hover", "Guardian Patrol Hover", CAT, T, ALIVE + " && q.is_in_water && q.ground_speed < 0.02 && !q.is_attacking", 3.0, F, {
     "mw_center:pos": lambda u: move(0, 0.6 * wave(u), 0), "tail1:rot": lambda u: [0, 8 * wave(u, 0, 2), 0]}, pri=99, layer="base")
 T, F = "minecraft:elder_guardian", f("elder_guardian")
+GLARE = [(0, [1, 1, 1]), (0.4, [1.4, 1.4, 1]), (1.6, [1.4, 1.4, 1]), (2.0, [1, 1, 1])]
 beat("elder_guardian.curse_glare", "Elder Guardian Curse Glare", CAT, T, event("vocalize", ALIVE), 2.0, F, {
-    "eye:scl": [(0, [1, 1, 1]), (0.4, [1.4, 1.4, 1]), (1.6, [1.4, 1.4, 1]), (2.0, [1, 1, 1])], "mw_center:rot": [(0, Z), (0.4, tilt(-6, 0, 0)), (1.6, tilt(-6, 0, 0)), (2.0, Z)]}, pri=150)
+    "eye:scl": GLARE, "eye:pos": anchored(GLARE, EYE_CENTRE), "mw_center:rot": [(0, Z), (0.4, tilt(-6, 0, 0)), (1.6, tilt(-6, 0, 0)), (2.0, Z)]}, pri=150)
 
 # ============================================================================ phantom
 T, F = "minecraft:phantom", f("phantom")

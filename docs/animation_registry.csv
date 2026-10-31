@@ -95,7 +95,7 @@ cine.dolphin.lead_to_treasure,Dolphin Leading The Way To Treasure,cinematic,mine
 cine.dolphin.leap_arc,Dolphin Leaping Alongside,cinematic,minecraft:dolphin,manual,1.6,once,500,action,minecraft:dolphin,action,5,0,complete,auto-validated
 cine.drowned.trident_rise,Drowned Rising With A Trident,cinematic,minecraft:drowned,manual,3.0,once,500,action,minecraft:drowned,action,9,0,complete,auto-validated
 cine.elder_guardian.circle_menace,Elder Guardian Circling Menace,cinematic,minecraft:elder_guardian,manual,4.0,loop,500,action,minecraft:elder_guardian,action,52,0,complete,auto-validated
-cine.elder_guardian.intro_glare,Elder Guardian Intro: The Curse Glare,cinematic,minecraft:elder_guardian,event `boss_intro`,3.0,once,500,action,minecraft:elder_guardian,action,42,0,complete,auto-validated
+cine.elder_guardian.intro_glare,Elder Guardian Intro: The Curse Glare,cinematic,minecraft:elder_guardian,event `boss_intro`,3.0,once,500,action,minecraft:elder_guardian,action,45,0,complete,auto-validated
 cine.ender_dragon.flyover,Ender Dragon Flyover Bank,cinematic,minecraft:ender_dragon,manual,2.4,once,500,action,minecraft:ender_dragon,action,6,0,complete,auto-validated
 cine.ender_dragon.intro_roar,Ender Dragon Intro: Sky Roar,cinematic,minecraft:ender_dragon,event `boss_intro`,3.0,once,500,action,minecraft:ender_dragon,action,7,0,complete,auto-validated
 cine.ender_dragon.perch_breath,Ender Dragon Breathing Fire From Its Perch,cinematic,minecraft:ender_dragon,manual,3.0,once,500,action,minecraft:ender_dragon,action,8,0,complete,auto-validated
@@ -1014,9 +1014,9 @@ drowned.seabed_walk,Drowned Seabed Trudge,hostile_mobs,minecraft:drowned,state `
 drowned.swim,Drowned Grasping Swim,hostile_mobs,minecraft:drowned,state `!q.is_dead && q.is_in_water && !q.is_on_ground`,1.4,loop,100,base,minecraft:drowned,base,45,0,complete,auto-validated
 drowned.trident_aim,Drowned Raising Trident,hostile_mobs,minecraft:drowned,state `!q.is_dead && q.main_hand == 'trident' && q.is_aggressive && q.ground_speed < 0.05`,1.2,loop,140,action,minecraft:drowned,action,27,0,complete,auto-validated
 elder_guardian.beached_flop,Elder Guardian Stranded Heave,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && !q.is_in_water`,2.4,loop,130,overlay,minecraft:elder_guardian,overlay,27,0,complete,auto-validated
-elder_guardian.curse_glare,Elder Guardian Curse Glare,hostile_mobs,minecraft:elder_guardian,event `vocalize` when `!q.is_dead`,2.0,once,150,action,minecraft:elder_guardian,action,8,0,complete,auto-validated
+elder_guardian.curse_glare,Elder Guardian Curse Glare,hostile_mobs,minecraft:elder_guardian,event `vocalize` when `!q.is_dead`,2.0,once,150,action,minecraft:elder_guardian,action,12,0,complete,auto-validated
 elder_guardian.eye_dart,Elder Guardian Eye Slow Sweep,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && !q.is_attacking`,6.0,loop,60,additive,minecraft:elder_guardian,additive,9,0,complete,auto-validated
-elder_guardian.laser_lock,Elder Guardian Withering Gaze,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_attacking`,1.6,hold,140,overlay,minecraft:elder_guardian,overlay,18,0,complete,auto-validated
+elder_guardian.laser_lock,Elder Guardian Withering Gaze,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_attacking`,1.6,hold,140,overlay,minecraft:elder_guardian,overlay,27,0,complete,auto-validated
 elder_guardian.spike_bristle,Elder Guardian Rippling Spikes,hostile_mobs,minecraft:elder_guardian,event `hurt` when `!q.is_dead`,1.4,once,200,reaction,minecraft:elder_guardian,reaction,48,0,complete,auto-validated
 elder_guardian.tail_swim,Elder Guardian Ancient Glide,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02`,2.0,loop,100,base,minecraft:elder_guardian,base,45,0,complete,auto-validated
 ender_dragon.charge_dive,Ender Dragon Charging Dive,hostile_mobs,minecraft:ender_dragon,state `!q.is_dead && q.phase == 'charging_player'`,0.8,loop,64,additive,minecraft:ender_dragon,additive,9,0,complete,auto-validated

@@ -5,7 +5,7 @@ referenced by at least one sequence; the rest are bound to story events (boss in
 boss kills). Sequences are skippable, never forced, and are written to assets/.../cinematics.
 """
 from core import arm, leg, manual
-from mobkit import mob, life, loop_state, beat, Z, state, event, wave, cwave, tilt, move
+from mobkit import anchored, mob, life, loop_state, beat, Z, state, event, wave, cwave, tilt, move
 
 CAT = "cinematic"
 P = "@player"
@@ -160,7 +160,8 @@ scene("cine.warden.intro_emerge_roar", "Warden Intro: Emerge And Roar", 4.0, {"m
 scene("cine.warden.sniff_close", "Warden Sniffing Inches Away", 3.0, {"head:rot": [(0, Z), (0.6, [30, 0, 0]), (1.2, [26, 20, 0]), (1.8, [30, -20, 0]), (3.0, Z)], "body:rot": [(0, Z), (0.6, tilt(30)), (2.4, tilt(30)), (3.0, Z)],
                                                                       "left_tendril:rot": [(0, Z), (0.6, [-30, 0, 0]), (2.4, [-30, 0, 0]), (3.0, Z)], "right_tendril:rot": [(0, Z), (0.6, [-30, 0, 0]), (2.4, [-30, 0, 0]), (3.0, Z)]},
       target="minecraft:warden", file=FM + "/bosses")
-scene("cine.elder_guardian.intro_glare", "Elder Guardian Intro: The Curse Glare", 3.0, {"eye:scl": [(0, [0.6, 0.6, 1]), (1.0, [1.5, 1.5, 1], "out_quad"), (3.0, [1.4, 1.4, 1])],
+INTRO_GLARE = [(0, [0.6, 0.6, 1]), (1.0, [1.5, 1.5, 1], "out_quad"), (3.0, [1.4, 1.4, 1])]
+scene("cine.elder_guardian.intro_glare", "Elder Guardian Intro: The Curse Glare", 3.0, {"eye:scl": INTRO_GLARE, "eye:pos": anchored(INTRO_GLARE, (0, 16, 0)),
                                                                                         "mw_center:rot": [(0, Z), (1.0, tilt(-10, 0, 0)), (3.0, tilt(-8, 0, 0))], **{"spike%d:scl" % i: [(0, [1, 0.4, 1]), (1.2 + 0.05 * i, [1, 1.4, 1]), (3.0, [1, 1, 1])] for i in range(12)}},
       target="minecraft:elder_guardian", file=FM + "/bosses", trig=event("boss_intro"))
 scene("cine.elder_guardian.circle_menace", "Elder Guardian Circling Menace", 4.0, fns={"tail0:rot": lambda u: [0, 10 * wave(u), 0], "tail1:rot": lambda u: [0, 16 * wave(u, 0.2), 0], "tail2:rot": lambda u: [0, 22 * wave(u, 0.4), 0],

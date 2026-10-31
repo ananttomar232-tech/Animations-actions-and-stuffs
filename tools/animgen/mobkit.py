@@ -62,6 +62,16 @@ def loop_state(cid, name, cat, target, when, L, file, fns, pri=120, layer="overl
     return c
 
 
+def anchored(scale_keys, centre):
+    """Position keys that hold a box in place while its part scales. A part scales about its pivot, so a box whose
+    centre sits `centre` = (x, y, z) model px from the pivot (a guardian's eye, 16 px below it) would slide."""
+    out = []
+    for item in scale_keys:
+        t, s = item[0], item[1]
+        out.append((t, [round(c * (1 - k), 3) for c, k in zip(centre, s)]) + tuple(item[2:]))
+    return out
+
+
 def beat(cid, name, cat, target, trig, L, file, tracks, pri=150, layer="action", events=(), loop="once", **kw):
     """Keyframed clip: tracks {"bone:rot": [(t, vec, ease?), ...]}."""
     c = mob(cid, name, cat, target, L, trig, layer=layer, pri=pri, file=file, loop=loop, **kw)
