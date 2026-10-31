@@ -70,6 +70,7 @@ public final class AnimatorManager {
         }
         if (mc.level != level) {
             ANIMATORS.clear();
+            com.motionworks.client.rig.StowedEquipment.clear();
             level = mc.level;
         }
         if (mc.isPaused() || !MWConfig.CLIENT.enabled.get()) return;
@@ -88,7 +89,10 @@ public final class AnimatorManager {
                 }
             }
         }
-        ANIMATORS.values().removeIf(a -> a.entity.isRemoved() && !a.entity.isDeadOrDying() || a.entity.level() != mc.level);
+        // A dying mob is not removed until its death animation has played, so removal alone decides; keeping removed
+        // dead entities (as this once did) leaked an animator and its entity for every mob killed.
+        ANIMATORS.values().removeIf(a -> a.entity.isRemoved() || a.entity.level() != mc.level);
+        if (mc.level.getGameTime() % 200L == 0L) com.motionworks.client.rig.StowedEquipment.prune(mc.level);
     }
 
     /**

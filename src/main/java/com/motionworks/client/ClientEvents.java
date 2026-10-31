@@ -136,6 +136,7 @@ public final class ClientEvents {
     @SubscribeEvent
     public static void onLogout(ClientPlayerNetworkEvent.LoggingOut e) {
         AnimatorManager.clear();
+        com.motionworks.client.rig.StowedEquipment.clear();
         CinematicDirector.INSTANCE.stop();
         FirstPersonAnimator.INSTANCE.reset();
     }
