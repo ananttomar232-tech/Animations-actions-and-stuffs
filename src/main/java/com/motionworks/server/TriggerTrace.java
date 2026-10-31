@@ -46,6 +46,10 @@ public final class TriggerTrace {
         else TRACING.remove(player.getUUID());
     }
 
+    static void clearTracing() {
+        TRACING.clear();
+    }
+
     static void entity(Entity e, String event, String arg) {
         if (LISTENERS.isEmpty() && TRACING.isEmpty() || !(e.level() instanceof ServerLevel level)) return;
         publish(level, new Entry(e.getId(), BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()) + " #" + e.getId(), event, arg, e.position()));

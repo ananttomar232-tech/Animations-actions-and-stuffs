@@ -18,6 +18,12 @@ public record EmotePacket(String clipId) {
     /** Client-only screens other players may see the owner using. */
     private static final java.util.Set<String> RELAYED_MENUS = java.util.Set.of("inventory", "chat", "book_edit");
 
+    /** Rate-limit state is per server and per player. */
+    public static void forget(UUID id) {
+        if (id == null) LAST.clear();
+        else LAST.remove(id);
+    }
+
     public static void encode(EmotePacket p, FriendlyByteBuf buf) {
         buf.writeUtf(p.clipId, 128);
     }
@@ -33,7 +39,8 @@ public record EmotePacket(String clipId) {
         if (!p.clipId.matches("[a-z0-9_.:\\-]{1,96}")) return;
         long now = sender.level().getGameTime();
         Long last = LAST.get(sender.getUUID());
-        if (last != null && now - last < 10) return;
+        // A time ahead of now was recorded in another world (singleplayer world switch): ignore it.
+        if (last != null && last <= now && now - last < 10) return;
         LAST.put(sender.getUUID(), now);
         if (p.clipId.startsWith("event:")) {
             String event = p.clipId.substring(6);

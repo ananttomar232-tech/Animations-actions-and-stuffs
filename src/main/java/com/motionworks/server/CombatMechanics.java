@@ -39,12 +39,58 @@ public final class CombatMechanics {
     private static final Map<UUID, Long> COUNTER_UNTIL = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> BASH_READY = new ConcurrentHashMap<>();
 
+    /** The longest any window above can legitimately reach ahead of the current game time, in ticks. */
+    static final long MAX_WINDOW = 400;
+
     private CombatMechanics() {}
+
+    /**
+     * Whether a stored "until" time is still ahead of {@code now}. Times are game ticks of the world the player is
+     * in; one that lies further ahead than any window could reach was recorded in another world (a singleplayer
+     * session keeps these maps when the player switches worlds) and is dropped, so it cannot grant invulnerability,
+     * a free parry or a cooldown in this one.
+     */
+    static boolean pending(Map<UUID, Long> map, UUID id, long now) {
+        Long until = map.get(id);
+        if (until == null) return false;
+        if (until - now > MAX_WINDOW) {
+            map.remove(id);
+            return false;
+        }
+        return until > now;
+    }
+
+    /** Forgets every player's combat state: the server stopped, so game times from it mean nothing any more. */
+    static void reset() {
+        DODGE_READY.clear();
+        INVULNERABLE_UNTIL.clear();
+        BLOCK_STARTED.clear();
+        COUNTER_UNTIL.clear();
+        BASH_READY.clear();
+    }
+
+    static void forget(UUID id) {
+        DODGE_READY.remove(id);
+        INVULNERABLE_UNTIL.remove(id);
+        BLOCK_STARTED.remove(id);
+        COUNTER_UNTIL.remove(id);
+        BASH_READY.remove(id);
+    }
+
+    @SubscribeEvent
+    public static void onServerStopped(net.minecraftforge.event.server.ServerStoppedEvent e) {
+        reset();
+    }
+
+    @SubscribeEvent
+    public static void onLogout(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e) {
+        forget(e.getEntity().getUUID());
+    }
 
     public static void dodge(ServerPlayer p, float forward, float strafe) {
         if (!MWConfig.SERVER.dodge.get() || p.isPassenger() || !p.onGround() || p.isSpectator() || p.isSleeping()) return;
         long now = p.level().getGameTime();
-        if (DODGE_READY.getOrDefault(p.getUUID(), 0L) > now) return;
+        if (pending(DODGE_READY, p.getUUID(), now)) return;
         if (!p.isCreative() && p.getFoodData().getFoodLevel() <= 6) return;
         if (Math.abs(forward) < 0.1f && Math.abs(strafe) < 0.1f) forward = -1f;
         String dir;
@@ -65,7 +111,7 @@ public final class CombatMechanics {
     public static void bash(ServerPlayer p) {
         if (!MWConfig.SERVER.shieldBash.get() || !p.isBlocking()) return;
         long now = p.level().getGameTime();
-        if (BASH_READY.getOrDefault(p.getUUID(), 0L) > now) return;
+        if (pending(BASH_READY, p.getUUID(), now)) return;
         BASH_READY.put(p.getUUID(), now + 40);
         Vec3 look = p.getLookAngle();
         AABB box = p.getBoundingBox().expandTowards(look.scale(2.5)).inflate(0.8);
@@ -96,7 +142,7 @@ public final class CombatMechanics {
         LivingEntity victim = e.getEntity();
         if (victim.level().isClientSide || !(victim instanceof Player p)) return;
         long now = p.level().getGameTime();
-        if (INVULNERABLE_UNTIL.getOrDefault(p.getUUID(), 0L) > now && !e.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+        if (pending(INVULNERABLE_UNTIL, p.getUUID(), now) && !e.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             e.setCanceled(true);
             return;
         }
@@ -104,7 +150,8 @@ public final class CombatMechanics {
         Entity attacker = e.getSource().getDirectEntity();
         if (!(attacker instanceof LivingEntity la) || e.getSource().getEntity() != attacker) return;
         Long started = BLOCK_STARTED.get(p.getUUID());
-        if (started == null || now - started > MWConfig.SERVER.parryWindowTicks.get()) return;
+        // A block that "started" in the future was recorded in another world: it is not a parry.
+        if (started == null || started > now || now - started > MWConfig.SERVER.parryWindowTicks.get()) return;
         Vec3 to = la.position().subtract(p.position()).normalize();
         if (to.dot(p.getLookAngle()) < 0.3) return;
         e.setCanceled(true);
@@ -120,8 +167,9 @@ public final class CombatMechanics {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onHurt(LivingHurtEvent e) {
         if (!(e.getSource().getEntity() instanceof Player p) || p.level().isClientSide) return;
+        long now = p.level().getGameTime();
         Long until = COUNTER_UNTIL.remove(p.getUUID());
-        if (until != null && until >= p.level().getGameTime() && e.getSource().getDirectEntity() == p) {
+        if (until != null && until >= now && until - now <= MAX_WINDOW && e.getSource().getDirectEntity() == p) {
             e.setAmount(e.getAmount() * (1f + MWConfig.SERVER.counterDamageBonus.get().floatValue()));
             ServerTriggers.send(p, "counter", "", 0f, true);
         }

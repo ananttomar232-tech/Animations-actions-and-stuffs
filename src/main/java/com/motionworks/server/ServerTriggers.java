@@ -68,6 +68,19 @@ public final class ServerTriggers {
         if (DELAYED.size() < 4096) DELAYED.add(new Delayed(server.getTickCount() + ticks, task));
     }
 
+    /** Nothing queued for, or remembered from, a stopped server may survive into the next one (singleplayer). */
+    @SubscribeEvent
+    public static void onServerStopped(net.minecraftforge.event.server.ServerStoppedEvent e) {
+        DELAYED.clear();
+        com.motionworks.network.EmotePacket.forget(null);
+        TriggerTrace.clearTracing();
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLeft(net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e) {
+        com.motionworks.network.EmotePacket.forget(e.getEntity().getUUID());
+    }
+
     @SubscribeEvent
     public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent e) {
         if (e.phase != net.minecraftforge.event.TickEvent.Phase.END || DELAYED.isEmpty()) return;
