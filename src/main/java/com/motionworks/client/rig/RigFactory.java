@@ -35,6 +35,15 @@ public final class RigFactory {
         }
     }
 
+    /** Undoes the last frame's writes on every rig bound to this model (see {@link PoseApplier#restore}). */
+    public static void restore(EntityModel<?> model) {
+        Map<RigProfile, ModelRig> byProfile = CACHE.get(model);
+        if (byProfile == null) return;
+        synchronized (byProfile) {
+            for (ModelRig mr : byProfile.values()) PoseApplier.restore(mr);
+        }
+    }
+
     public static void clear() {
         CACHE.clear();
     }

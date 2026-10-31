@@ -19,20 +19,13 @@ public final class PoseApplier {
     private PoseApplier() {}
 
     public static void apply(ModelRig mr, PoseBuffer pose, float strength) {
+        restore(mr);
         ModelPart[] parts = mr.parts;
         float[] van = mr.vanilla;
         for (int b = 2; b < parts.length; b++) {
             ModelPart p = parts[b];
-            int o = b * 9;
-            van[o] = p.xRot;
-            van[o + 1] = p.yRot;
-            van[o + 2] = p.zRot;
-            van[o + 3] = p.x;
-            van[o + 4] = p.y;
-            van[o + 5] = p.z;
-            van[o + 6] = p.xScale;
-            van[o + 7] = p.yScale;
-            van[o + 8] = p.zScale;
+            if (p == null) continue;
+            for (int c = 0; c < 9; c++) van[b * 9 + c] = get(p, c);
         }
         float[] rest = mr.rest;
         for (int b = 2; b < parts.length; b++) {
@@ -51,6 +44,63 @@ public final class PoseApplier {
         }
         for (int c = 0; c < mr.couplings.length; c++) couple(mr, c);
         for (int[] f : mr.followers) parts[f[0]].copyFrom(parts[f[1]]);
+        for (int b = 2; b < parts.length; b++) {
+            ModelPart p = parts[b];
+            if (p == null) continue;
+            for (int c = 0; c < 9; c++) mr.written[b * 9 + c] = get(p, c);
+        }
+        System.arraycopy(van, 0, mr.replaced, 0, van.length);
+        mr.hasOutput = true;
+    }
+
+    /**
+     * Puts back the vanilla value of every channel that still holds what the last apply wrote. Vanilla
+     * models only set the fields they animate (HumanoidModel never writes body x/z/zRot or any scale), so
+     * without this the previous frame's output would be read back as vanilla and compound frame after
+     * frame. Models are shared by every entity of a type, so this also runs for renders MotionWorks does
+     * not animate. A channel vanilla rewrote to exactly the value we wrote is indistinguishable and is
+     * restored to last frame's vanilla value instead, which is the same value for any steady pose.
+     */
+    public static void restore(ModelRig mr) {
+        if (!mr.hasOutput) return;
+        mr.hasOutput = false;
+        ModelPart[] parts = mr.parts;
+        for (int b = 2; b < parts.length; b++) {
+            ModelPart p = parts[b];
+            if (p == null) continue;
+            for (int c = 0; c < 9; c++) {
+                int o = b * 9 + c;
+                if (get(p, c) == mr.written[o]) set(p, c, mr.replaced[o]);
+            }
+        }
+    }
+
+    private static float get(ModelPart p, int c) {
+        return switch (c) {
+            case 0 -> p.xRot;
+            case 1 -> p.yRot;
+            case 2 -> p.zRot;
+            case 3 -> p.x;
+            case 4 -> p.y;
+            case 5 -> p.z;
+            case 6 -> p.xScale;
+            case 7 -> p.yScale;
+            default -> p.zScale;
+        };
+    }
+
+    private static void set(ModelPart p, int c, float v) {
+        switch (c) {
+            case 0 -> p.xRot = v;
+            case 1 -> p.yRot = v;
+            case 2 -> p.zRot = v;
+            case 3 -> p.x = v;
+            case 4 -> p.y = v;
+            case 5 -> p.z = v;
+            case 6 -> p.xScale = v;
+            case 7 -> p.yScale = v;
+            default -> p.zScale = v;
+        }
     }
 
     private static float mix(float a, float b, float t) {

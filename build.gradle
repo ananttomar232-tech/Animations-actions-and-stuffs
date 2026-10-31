@@ -36,6 +36,8 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            // ./gradlew runClient -PquickPlay=<world folder> joins that singleplayer world directly (see TESTING.md)
+            if (project.hasProperty('quickPlay')) args '--quickPlaySingleplayer', project.property('quickPlay')
         }
 
         server {

@@ -35,12 +35,13 @@ import java.util.Map;
  * transform automatically.
  */
 public final class FirstPersonAnimator {
-    public static final FirstPersonAnimator INSTANCE = new FirstPersonAnimator();
     public static final List<String> BONES = List.of("mw_root", "mw_center", "fp_main", "fp_off", "fp_main_item", "fp_off_item", "fp_view");
     private static final int MAIN = 2, OFF = 3, MAIN_ITEM = 4, OFF_ITEM = 5, VIEW = 6;
     private static final int LOOK_YAW = Vars.id("q.look_yaw_delta");
     private static final int LOOK_PITCH = Vars.id("q.look_pitch_delta");
     private static final int EQUIP = Vars.id("q.equip_progress");
+    // Last static field: the constructor reads BONES, and statics initialise in declaration order.
+    public static final FirstPersonAnimator INSTANCE = new FirstPersonAnimator();
 
     private final Rig rig = new Rig("first_person", BONES, null, Map.of(
             "hands", List.of("fp_main", "fp_off"), "items", List.of("fp_main_item", "fp_off_item"), "main", List.of("fp_main", "fp_main_item"),

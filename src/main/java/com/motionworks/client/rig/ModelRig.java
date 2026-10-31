@@ -18,6 +18,10 @@ public final class ModelRig {
     public final ModelPart[] parts;
     public final float[] rest;
     final float[] vanilla;
+    /** What the last apply wrote, and the vanilla values it replaced; see {@link PoseApplier#restore}. */
+    final float[] written;
+    final float[] replaced;
+    boolean hasOutput;
     final int[][] followers;
     final int[][] couplings;
     final float[][] couplingPivots;
@@ -29,6 +33,8 @@ public final class ModelRig {
         this.parts = parts;
         this.rest = new float[parts.length * 9];
         this.vanilla = new float[parts.length * 9];
+        this.written = new float[parts.length * 9];
+        this.replaced = new float[parts.length * 9];
         for (int i = 0; i < parts.length; i++) {
             ModelPart p = parts[i];
             int o = i * 9;

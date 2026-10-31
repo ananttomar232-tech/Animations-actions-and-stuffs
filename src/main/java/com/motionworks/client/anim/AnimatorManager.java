@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.motionworks.MotionWorks;
 import com.motionworks.client.rig.ModelRig;
 import com.motionworks.client.rig.PoseApplier;
+import com.motionworks.client.rig.RigFactory;
 import com.motionworks.config.MWConfig;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -94,6 +95,8 @@ public final class AnimatorManager {
      * and writes the pose onto the model and the pose stack.
      */
     public static void apply(LivingEntity entity, EntityModel<?> model, float partialTicks, PoseStack stack) {
+        // The model is shared by every entity of this type: clear what the previous render wrote first.
+        RigFactory.restore(model);
         if (!MWConfig.CLIENT.enabled.get() || entity.level() == null) return;
         Minecraft mc = Minecraft.getInstance();
         if (!MWConfig.CLIENT.playerAnimations.get() && entity instanceof net.minecraft.world.entity.player.Player) return;

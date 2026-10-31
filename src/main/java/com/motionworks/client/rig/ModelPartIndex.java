@@ -4,6 +4,8 @@ import com.motionworks.mixin.client.ModelPartAccessor;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -27,8 +29,7 @@ public final class ModelPartIndex {
     }
 
     private static void walk(ModelLayerLocation layer, ModelPart part, String path) {
-        Map<String, ModelPart> children = ((ModelPartAccessor) (Object) part).motionworks$children();
-        for (Map.Entry<String, ModelPart> e : children.entrySet()) {
+        for (Map.Entry<String, ModelPart> e : children(part).entrySet()) {
             String p = path.isEmpty() ? e.getKey() : path + "/" + e.getKey();
             INFO.put(e.getValue(), new Info(e.getKey(), p, layer));
             walk(layer, e.getValue(), p);
@@ -39,7 +40,27 @@ public final class ModelPartIndex {
         return INFO.get(part);
     }
 
+    /**
+     * A part's named children. Normally read through the mixin accessor; where mixins are not applied
+     * (unit tests) the map is found by type, as ModelPart holds exactly one Map field.
+     */
+    @SuppressWarnings("unchecked")
     public static Map<String, ModelPart> children(ModelPart part) {
-        return ((ModelPartAccessor) (Object) part).motionworks$children();
+        if ((Object) part instanceof ModelPartAccessor a) return a.motionworks$children();
+        if (childrenField == null) {
+            for (Field f : ModelPart.class.getDeclaredFields()) {
+                if (f.getType() == Map.class && !Modifier.isStatic(f.getModifiers())) {
+                    f.setAccessible(true);
+                    childrenField = f;
+                }
+            }
+        }
+        try {
+            return childrenField == null ? Map.of() : (Map<String, ModelPart>) childrenField.get(part);
+        } catch (IllegalAccessException e) {
+            return Map.of();
+        }
     }
+
+    private static Field childrenField;
 }

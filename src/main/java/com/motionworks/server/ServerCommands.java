@@ -14,7 +14,8 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 
 /**
  * {@code /motionworks cinematic <players> <id> [anchor]}, {@code /motionworks cinematic <players> stop}
- * and {@code /motionworks animate <entities> <clip>} for map makers and servers.
+ * and {@code /motionworks animate <entities> <clip>} for map makers and servers, and
+ * {@code /motionworks trace on|off}, which prints every animation trigger the server sends near you.
  */
 public final class ServerCommands {
     private ServerCommands() {}
@@ -32,6 +33,9 @@ public final class ServerCommands {
                                         .then(Commands.argument("anchor", EntityArgument.entity())
                                                 .executes(c -> cinematic(c.getSource(), EntityArgument.getPlayers(c, "players"),
                                                         StringArgumentType.getString(c, "id"), EntityArgument.getEntity(c, "anchor")))))))
+                .then(Commands.literal("trace")
+                        .then(Commands.literal("on").executes(c -> trace(c.getSource(), true)))
+                        .then(Commands.literal("off").executes(c -> trace(c.getSource(), false))))
                 .then(Commands.literal("animate")
                         .then(Commands.argument("targets", EntityArgument.entities())
                                 .then(Commands.argument("clip", StringArgumentType.greedyString()).executes(c -> {
@@ -45,6 +49,12 @@ public final class ServerCommands {
                                     c.getSource().sendSuccess(() -> Component.translatable("motionworks.command.animate", clip, count), false);
                                     return n;
                                 })))));
+    }
+
+    private static int trace(CommandSourceStack src, boolean on) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        TriggerTrace.setTracing(src.getPlayerOrException(), on);
+        src.sendSuccess(() -> Component.translatable(on ? "motionworks.trace.on" : "motionworks.trace.off", (int) TriggerTrace.CHAT_RANGE), false);
+        return 1;
     }
 
     private static int cinematic(CommandSourceStack src, java.util.Collection<ServerPlayer> players, String id, Entity anchor) {

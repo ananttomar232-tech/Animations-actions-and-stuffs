@@ -187,7 +187,7 @@ def check_duplicates(threshold=0.995):
 
 
 JAVA_SRC = os.path.join(ROOT, "src/main/java")
-CALL_RE = re.compile(r"\b(?:fire|fireNear|send|edge|stateEdge|broadcast|fireEvent|AnimationEventPacket)\s*\(([^;]*)\)\s*;")
+CALL_RE = re.compile(r"\b(?:fire|fireNear|send|sendWorld|edge|stateEdge|broadcast|fireEvent|AnimationEventPacket)\s*\(([^;]*)\)\s*;")
 LIT_RE = re.compile(r'"([a-z][a-z0-9_]*(?::[a-z0-9_]*)?)"')
 
 

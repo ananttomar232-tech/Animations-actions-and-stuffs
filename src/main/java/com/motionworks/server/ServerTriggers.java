@@ -48,7 +48,15 @@ public final class ServerTriggers {
 
     static void send(Entity e, String event, String arg, float dir, float height, boolean includeSelf) {
         if (!MWConfig.SERVER.broadcastTriggers.get()) return;
-        MWNetwork.toTrackers(e, new AnimationEventPacket(e.getId(), event, arg == null ? "" : arg, dir, height), includeSelf);
+        String a = arg == null ? "" : arg;
+        TriggerTrace.entity(e, event, a);
+        MWNetwork.toTrackers(e, new AnimationEventPacket(e.getId(), event, a, dir, height), includeSelf);
+    }
+
+    /** Positional world event (entity id -1, arg "x,y,z[,magnitude]"); clients fan it out to every nearby animated entity. */
+    static void sendWorld(net.minecraft.server.level.ServerLevel level, net.minecraft.world.phys.Vec3 at, double range, String event, String arg) {
+        TriggerTrace.world(level, at, event, arg);
+        MWNetwork.toNearby(level, at, range, new AnimationEventPacket(-1, event, arg, 0f));
     }
 
     /** Server-thread task queue: lifecycle events are sent a tick later, once clients track the entity. */
@@ -143,10 +151,9 @@ public final class ServerTriggers {
     @SubscribeEvent
     public static void onEntityJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
         if (e.getLevel().isClientSide || e.loadedFromDisk()) return;
-        if (e.getEntity() instanceof net.minecraft.world.entity.LightningBolt bolt) {
-            // One world-event packet per strike (entity id -1); clients fan it out to every nearby animated entity.
+        if (e.getEntity() instanceof net.minecraft.world.entity.LightningBolt bolt && e.getLevel() instanceof net.minecraft.server.level.ServerLevel level) {
             net.minecraft.world.phys.Vec3 at = bolt.position();
-            MWNetwork.toTrackers(bolt, new AnimationEventPacket(-1, "thunderclap", WorldEventArgs.encode(at.x, at.y, at.z), 0f), false);
+            sendWorld(level, at, 96, "thunderclap", WorldEventArgs.encode(at.x, at.y, at.z));
             return;
         }
         Entity owner = e.getEntity() instanceof net.minecraft.world.entity.projectile.Projectile proj ? proj.getOwner()
@@ -360,8 +367,8 @@ public final class ServerTriggers {
         if (e.getLevel().isClientSide || !(e.getLevel() instanceof net.minecraft.server.level.ServerLevel level)) return;
         var pos = e.getExplosion().getPosition();
         float power = ((com.motionworks.mixin.common.ExplosionAccessor) e.getExplosion()).motionworks$radius();
-        // World event (entity id -1, arg "x,y,z,power"): aftermath effects for everyone in range, startles for distant creatures.
-        MWNetwork.toNearby(level, pos, 96, new AnimationEventPacket(-1, "explosion", WorldEventArgs.encode(pos.x, pos.y, pos.z, power), 0f));
+        // Aftermath effects for everyone in range, startles for creatures that only hear it.
+        sendWorld(level, pos, 96, "explosion", WorldEventArgs.encode(pos.x, pos.y, pos.z, power));
         for (Entity hit : e.getAffectedEntities()) {
             if (hit instanceof LivingEntity le && le.distanceToSqr(pos) < 12 * 12) {
                 send(le, "explosion_flinch", "", InteractionClassifier.relativeYaw(le, pos.x, pos.z), true);

@@ -31,8 +31,8 @@ import java.util.Map;
  * faint instances (crossfading out) are skipped so nothing doubles up.
  */
 public final class ClipEventDispatcher implements AnimationEventSink {
-    public static final ClipEventDispatcher INSTANCE = new ClipEventDispatcher();
     private static final String[] SURFACE_SOUNDS = {"grass", "stone", "wood", "sand", "gravel", "snow", "metal", "wool", "mud", "water", "leaves"};
+    public static final ClipEventDispatcher INSTANCE = new ClipEventDispatcher();
 
     private final Map<AnimationController, LivingEntity> owners = new IdentityHashMap<>();
     private final Map<String, Long> lastPlayed = new HashMap<>();
