@@ -16,8 +16,8 @@ def spike(u, phase, power=8, harmonic=1):
     return max(0.0, wave(u, phase, harmonic)) ** power
 
 
-def swim(cid, name, when, L, fns, pri=300, layer="base", file=FP, target=P, group=None, weight=1):
-    return loop_state(cid, name, CAT, target, when, L, file, fns, pri=pri, layer=layer, group=group, weight=weight)
+def swim(cid, name, when, L, fns, pri=300, layer="base", file=FP, target=P, group=None, weight=1, loop=None):
+    return loop_state(cid, name, CAT, target, when, L, file, fns, pri=pri, layer=layer, group=group, weight=weight, loop=loop)
 
 
 # ============================================================================ player strokes
@@ -140,7 +140,8 @@ swim("player.swim.dark_water_caution", "Cautious Swim In Dark Water", UNDER + " 
     "head:rot": lambda u: [-20, 40 * wave(u), 0], "right_arm:rot": lambda u: arm('r', 100 + 30 * cwave(u), 30), "left_arm:rot": lambda u: arm('l', 100 + 30 * cwave(u), 30),
     "right_leg:rot": lambda u: leg('r', 20 * wave(u)), "left_leg:rot": lambda u: leg('l', 20 * wave(u, 0.5))}, pri=313)
 swim("player.swim.sneak_sink_surface", "Letting Yourself Sink", SURFACE + " && q.is_sneaking", 1.4, {
-    "right_arm:rot": lambda u: arm('r', 160, 20), "left_arm:rot": lambda u: arm('l', 160, 20), "head:rot": lambda u: [-20, 0, 0], "mw_root:pos": lambda u: move(0, -0.6 * u, 0)}, pri=314)
+    "right_arm:rot": lambda u: arm('r', 160, 20), "left_arm:rot": lambda u: arm('l', 160, 20), "head:rot": lambda u: [-20, 0, 0], "mw_root:pos": lambda u: move(0, -0.6 * u, 0)}, pri=314,
+     loop="hold")
 life("player.swim.cheeks_puffed", "Cheeks Puffed Holding Breath", CAT, P, WATER + " && q.is_underwater && q.air < 0.7 && q.air >= 0.3", 1.2, FP, {"head:scl": lambda u: [1.02 + 0.01 * wave(u), 1, 1.02]})
 swim("player.swim.surface_rest_ledge", "Resting Arms On A Ledge", SURFACE + " && q.ground_speed < 0.02 && q.exertion > 0.6", 2.4, {
     "right_arm:rot": lambda u: arm('r', 80, 10), "left_arm:rot": lambda u: arm('l', 80, 10), "body:rot": lambda u: tilt(10, 0, 0), "head:rot": lambda u: [10, 0, 6 * wave(u, 0.3)],

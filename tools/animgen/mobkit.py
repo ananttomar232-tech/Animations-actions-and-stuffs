@@ -52,8 +52,10 @@ def life(cid, name, cat, target, when, L, file, fns, pri=60, group=None, weight=
     return c
 
 
-def loop_state(cid, name, cat, target, when, L, file, fns, pri=120, layer="overlay", group=None, weight=1, exit_delay=0.15, min_time=0.0):
-    c = mob(cid, name, cat, target, L, state(when, group=group, weight=weight, exit_delay=exit_delay, min_time=min_time), layer=layer, pri=pri, file=file)
+def loop_state(cid, name, cat, target, when, L, file, fns, pri=120, layer="overlay", group=None, weight=1, exit_delay=0.15, min_time=0.0, loop=None):
+    """State clip from per-channel functions of u in [0, 1]. Periodic functions loop; a build-up (a ramp that
+    does not return to its start) must pass loop="hold" so it keeps its final pose instead of snapping back."""
+    c = mob(cid, name, cat, target, L, state(when, group=group, weight=weight, exit_delay=exit_delay, min_time=min_time), layer=layer, pri=pri, file=file, loop=loop)
     for key, fn in fns.items():
         bone, _, ch = key.partition(":")
         c.cycle(bone, "rotation" if ch == "rot" else ("position" if ch == "pos" else "scale"), fn)

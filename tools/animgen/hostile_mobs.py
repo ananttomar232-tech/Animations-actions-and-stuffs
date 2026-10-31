@@ -308,7 +308,7 @@ for i, b in enumerate(TENT):
     c.cycle(b, "rotation", lambda u, i=i: [10 * wave(u, i / 9.0) + 5, 0, 6 * wave(u, i / 4.5)])
 c.cycle("mw_root", "position", lambda u: move(0, 2 * wave(u), 0))
 c.cycle("mw_root", "rotation", lambda u: tilt(2 * wave(u, 0.25), 0, 2 * wave(u)))
-c = mob("ghast.charge_shot", "Ghast Inhaling To Shoot", CAT, T, 0.8, state(ALIVE + " && q.is_charging"), layer="additive", pri=70, file=F)
+c = mob("ghast.charge_shot", "Ghast Inhaling To Shoot", CAT, T, 0.8, state(ALIVE + " && q.is_charging"), layer="additive", pri=70, file=F, loop="hold")
 c.cycle("body", "scale", lambda u: [1 + 0.06 * u, 1 + 0.06 * u, 1 + 0.06 * u])
 for i, b in enumerate(TENT):
     c.cycle(b, "rotation", lambda u, i=i: [-25 * u, 0, 8 * wave(u, i / 9.0, 2)])
@@ -377,7 +377,7 @@ for T, sp, label, elder in (("minecraft:guardian", "guardian", "Guardian", False
         c.cycle("mw_center", "rotation", lambda u: tilt(4 * wave(u, 0.15), 0, 0))
         c.cycle("mw_center", "position", lambda u: move(0, 1.2 * wave(u, 0.4), 0))
         loop_state(sp + ".laser_lock", label + " Withering Gaze", CAT, T, ALIVE + " && q.is_attacking", 1.6, F, {
-            "eye:scl": lambda u: [1 + 0.3 * min(1, u * 1.4), 1 + 0.3 * min(1, u * 1.4), 1], "mw_center:rot": lambda u: tilt(-6 * min(1, u * 2), 0, 0)}, pri=140, layer="overlay")
+            "eye:scl": lambda u: [1 + 0.3 * min(1, u * 1.4), 1 + 0.3 * min(1, u * 1.4), 1], "mw_center:rot": lambda u: tilt(-6 * min(1, u * 2), 0, 0)}, pri=140, layer="overlay", loop="hold")
         beat(sp + ".spike_bristle", label + " Rippling Spikes", CAT, T, event("hurt", ALIVE), 1.4, F, {
             s_ + ":scl": [(0, [1, 1, 1]), (0.05 + 0.07 * i, [1, 1.8, 1], "out_expo"), (0.5 + 0.07 * i, [1, 1, 1]), (1.4, [1, 1, 1])] for i, s_ in enumerate(SPK)}, pri=200, layer="reaction")
         life(sp + ".eye_dart", label + " Eye Slow Sweep", CAT, T, ALIVE + " && !q.is_attacking", 6.0, F, {"eye:pos": lambda u: move(0.8 * wave(u), 0.4 * wave(u, 0.25, 2), 0)})
@@ -484,7 +484,7 @@ life("warden.heartbeat", "Warden Soul Heartbeat", CAT, T, ALIVE, 1.0, F, {"left_
 loop_state("warden.sonic_charge", "Warden Sonic Boom Charge", CAT, T, ALIVE + " && q.is_charging", 1.6, F, {
     "body:rot": lambda u: tilt(-25 * min(1, u * 1.5) + 40 * max(0, u - 0.7) / 0.3, 0, 0), "right_arm:rot": lambda u: arm('r', 0, 40 * min(1, u * 2)),
     "left_arm:rot": lambda u: arm('l', 0, 40 * min(1, u * 2)), "head:rot": lambda u: [-30 * min(1, u * 1.5), 0, 0], "left_ribcage:rot": lambda u: [0, -30 * min(1, u * 2), 0],
-    "right_ribcage:rot": lambda u: [0, 30 * min(1, u * 2), 0]}, pri=200, layer="action", min_time=1.0)
+    "right_ribcage:rot": lambda u: [0, 30 * min(1, u * 2), 0]}, pri=200, layer="action", min_time=1.0, loop="hold")
 beat("warden.smash", "Warden Overhead Smash", CAT, T, event("attack", ALIVE), 0.9, F, {
     "right_arm:rot": [(0, Z), (0.3, arm('r', 170, 10), "out_quad"), (0.45, arm('r', 60), "in_quart"), (0.9, Z)], "left_arm:rot": [(0, Z), (0.3, arm('l', 170, 10), "out_quad"), (0.45, arm('l', 60), "in_quart"), (0.9, Z)],
     "body:rot": [(0, Z), (0.3, tilt(-14)), (0.45, tilt(22)), (0.9, Z)]}, pri=180, events=[(0.45, "stomp", {"strength": "1"}), (0.45, "shake", {"intensity": "0.5", "duration": "0.4"})])

@@ -79,6 +79,31 @@ class GaitTests(unittest.TestCase):
             self.assertTrue(all(b[1] > a[1] for a, b in zip(keys, keys[1:])), "spin must be monotonic")
 
 
+class SnapTests(unittest.TestCase):
+    def test_curve_sampling_matches_the_runtime(self):
+        import snaps
+        hold = snaps.Curve({"0": {"v": [0, 0, 0], "l": "smooth"}, "0.6": {"v": [45, 0, 0], "l": "smooth"}, "1.4": {"v": [45, 0, 0], "l": "smooth"},
+                            "2.2": {"v": [0, 0, 0], "l": "smooth"}})
+        self.assertAlmostEqual(hold.sample(1.0)[0], 45.0, places=6)  # auto-clamped holds never overshoot (InterpolationTest)
+        peak = snaps.Curve({"0": [0, 0, 0], "1": {"v": [10, 0, 0], "l": "smooth"}, "2": {"v": [0, 0, 0], "l": "smooth"}})
+        self.assertAlmostEqual(peak.sample(0.5)[0], 5.0, places=6)  # a symmetric ease (ChannelTest.smoothPassesThroughKeys)
+
+    def test_steep_snaps_are_eased_to_span_frames(self):
+        import snaps
+        with Scratch():
+            c = Clip("t.snap", "snap", "player_combat", "@player", length=1.0)
+            c.keys("right_arm", "rotation", [(0, [0, 0, 0]), (0.1, [-150, 0, 0], "out_expo"), (1.0, [0, 0, 0])], lerp="smooth")
+            changes = snaps.soften([c])
+            self.assertTrue(changes)
+            curve = snaps.Curve(c.bones["right_arm"]["rotation"])
+            self.assertLessEqual(curve.frame_jump(0, 1.0 - snaps.FRAME), snaps.LIMITS["rotation"])
+
+    def test_elastic_wobbles_are_left_alone(self):
+        import snaps
+        self.assertIsNone(snaps.softer("out_elastic"))
+        self.assertEqual(snaps.softer("out_sine"), "linear")
+
+
 class ValidatorTests(unittest.TestCase):
     def test_unknown_bone_is_rejected(self):
         with Scratch():

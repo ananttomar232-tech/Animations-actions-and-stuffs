@@ -225,6 +225,16 @@ def cwave(u, phase=0.0, harmonic=1):
     return math.cos((u * harmonic + phase) * 2 * math.pi)
 
 
+def stroke(u, split=0.8):
+    """A working stroke for looping chores: eases 0 -> 1 over the first `split` of the cycle, then returns to 0,
+    so the cycle closes instead of snapping back at the seam."""
+    if u < split:
+        x = u / split
+    else:
+        x = 1 - (u - split) / (1 - split)
+    return x * x * (3 - 2 * x)
+
+
 def strike(c, bone, rest, windup, impact, follow, t_wind, t_imp, t_follow, t_end=None, ch="rotation", settle=None):
     """Anticipation -> impact -> follow-through -> recovery for one bone.
 

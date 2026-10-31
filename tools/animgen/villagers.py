@@ -3,7 +3,7 @@
 The vanilla villager model has one crossed-arms part ("arms"), not two hands; work animations
 move that block, the body and the head together instead of pretending there are separate hands.
 """
-from core import arm, leg, biped
+from core import arm, leg, biped, stroke
 from mobkit import mob, life, loop_state, beat, driven, Z, state, event, wave, cwave, tilt, move
 
 CAT = "villagers_npcs"
@@ -191,7 +191,8 @@ work("leatherworker", "stretch_hide", "Leatherworker Stretching A Hide", 2.0, {
 work("leatherworker", "dye_dip", "Leatherworker Dipping In The Cauldron", 2.4, {
     "arms:rot": lambda u: [-40 - 30 * max(0, -wave(u)), 0, 0], "body:rot": lambda u: tilt(20 + 20 * max(0, -wave(u)), 0, 0), "head:rot": lambda u: [30, 0, 0]}, weight=2)
 work("leatherworker", "cut_strips", "Leatherworker Cutting Strips", 1.2, {
-    "arms:rot": lambda u: [-50, -20 + 40 * u, 0], "arms:pos": lambda u: move(0, 0, -1.2 * u), "head:rot": lambda u: [45, -10 + 20 * u, 0], "body:rot": lambda u: tilt(18, 0, 6 * wave(u, 0.25))}, weight=1)
+    "arms:rot": lambda u: [-50, -20 + 40 * stroke(u, 0.75), 0], "arms:pos": lambda u: move(0, 0, -1.2 * stroke(u, 0.75)), "head:rot": lambda u: [45, -10 + 20 * stroke(u, 0.75), 0],
+    "body:rot": lambda u: tilt(18, 0, 6 * wave(u, 0.25))}, weight=1)
 work("mason", "chisel", "Mason Chiselling Stone", 0.5, {
     "arms:rot": lambda u: [-50, 0, 0], "arms:pos": lambda u: move(0, 0, -0.6 * spike(u, 0, 3)), "head:rot": lambda u: [30, 0, 0], "body:rot": lambda u: tilt(10, 0, 0)}, weight=3)
 work("mason", "measure", "Mason Measuring A Block", 2.4, {
@@ -207,7 +208,7 @@ work("shepherd", "spin_wool", "Shepherd At The Spinning Wheel", 1.0, {
     "arms:rot": lambda u: [-60, 0, 20 * wave(u)], "left_leg:rot": lambda u: leg('l', 25 * max(0, wave(u, 0.25))), "head:rot": lambda u: [25, 0, -6 * wave(u)],
     "mw_root:pos": lambda u: move(0, -2, 0), "right_leg:rot": lambda u: leg('r', 70)}, weight=2)
 work("shepherd", "count_flock", "Shepherd Counting The Flock", 3.0, {
-    "head:rot": lambda u: [5, -50 + 100 * u, 0], "nose:rot": lambda u: [3 * spike(u, 0, 4, 5), 0, 0], "arms:rot": lambda u: [-20, 0, 0]}, weight=2)
+    "head:rot": lambda u: [5, -50 + 100 * stroke(u, 0.85), 0], "nose:rot": lambda u: [3 * spike(u, 0, 4, 5), 0, 0], "arms:rot": lambda u: [-20, 0, 0]}, weight=2)
 work("shepherd", "call_flock", "Shepherd Calling The Flock", 2.0, {
     "arms:rot": lambda u: [-110, 0, 0], "arms:pos": lambda u: move(0, 1, 0), "head:rot": lambda u: [-10, 30 * wave(u, 0, 0.5), 0],
     "body:rot": lambda u: tilt(12 * spike(u, 0.1, 3, 2), 0, 0), "mw_root:pos": lambda u: move(0, 0, 0.5 * spike(u, 0.1, 3, 2))}, weight=1)

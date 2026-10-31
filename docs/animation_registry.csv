@@ -1016,7 +1016,7 @@ drowned.trident_aim,Drowned Raising Trident,hostile_mobs,minecraft:drowned,state
 elder_guardian.beached_flop,Elder Guardian Stranded Heave,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && !q.is_in_water`,2.4,loop,130,overlay,minecraft:elder_guardian,overlay,27,0,complete,auto-validated
 elder_guardian.curse_glare,Elder Guardian Curse Glare,hostile_mobs,minecraft:elder_guardian,event `vocalize` when `!q.is_dead`,2.0,once,150,action,minecraft:elder_guardian,action,8,0,complete,auto-validated
 elder_guardian.eye_dart,Elder Guardian Eye Slow Sweep,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && !q.is_attacking`,6.0,loop,60,additive,minecraft:elder_guardian,additive,9,0,complete,auto-validated
-elder_guardian.laser_lock,Elder Guardian Withering Gaze,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_attacking`,1.6,loop,140,overlay,minecraft:elder_guardian,overlay,18,0,complete,auto-validated
+elder_guardian.laser_lock,Elder Guardian Withering Gaze,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_attacking`,1.6,hold,140,overlay,minecraft:elder_guardian,overlay,18,0,complete,auto-validated
 elder_guardian.spike_bristle,Elder Guardian Rippling Spikes,hostile_mobs,minecraft:elder_guardian,event `hurt` when `!q.is_dead`,1.4,once,200,reaction,minecraft:elder_guardian,reaction,48,0,complete,auto-validated
 elder_guardian.tail_swim,Elder Guardian Ancient Glide,hostile_mobs,minecraft:elder_guardian,state `!q.is_dead && q.is_in_water && q.ground_speed >= 0.02`,2.0,loop,100,base,minecraft:elder_guardian,base,45,0,complete,auto-validated
 ender_dragon.charge_dive,Ender Dragon Charging Dive,hostile_mobs,minecraft:ender_dragon,state `!q.is_dead && q.phase == 'charging_player'`,0.8,loop,64,additive,minecraft:ender_dragon,additive,9,0,complete,auto-validated
@@ -1047,7 +1047,7 @@ evoker.channel_vex,Evoker Channelling Vexes,hostile_mobs,minecraft:evoker,state 
 evoker.raid_celebrate,Evoker Raid Celebration Sway,hostile_mobs,minecraft:evoker,state `!q.is_dead && q.is_celebrating`,1.0,loop,160,action,minecraft:evoker,action,36,0,complete,auto-validated
 evoker.robed_glide,Evoker Robed Glide,hostile_mobs,minecraft:evoker,state `!q.is_dead && q.is_on_ground && q.ground_speed >= 0.01`,1.6,loop,100,base,minecraft:evoker,base,63,2,complete,auto-validated
 evoker.sinister_hum,Evoker Sinister Hum,hostile_mobs,minecraft:evoker,event `vocalize` when `!q.is_dead`,1.4,once,150,gesture,minecraft:evoker,gesture,4,0,complete,auto-validated
-ghast.charge_shot,Ghast Inhaling To Shoot,hostile_mobs,minecraft:ghast,state `!q.is_dead && q.is_charging`,0.8,loop,70,additive,minecraft:ghast,additive,90,0,complete,auto-validated
+ghast.charge_shot,Ghast Inhaling To Shoot,hostile_mobs,minecraft:ghast,state `!q.is_dead && q.is_charging`,0.8,hold,70,additive,minecraft:ghast,additive,90,0,complete,auto-validated
 ghast.drift,Ghast Mournful Drift,hostile_mobs,minecraft:ghast,state `!q.is_dead && !q.is_charging`,5.0,loop,60,additive,minecraft:ghast,additive,99,0,complete,auto-validated
 ghast.pained_flinch,Ghast Pained Flinch,hostile_mobs,minecraft:ghast,event `hurt` when `!q.is_dead`,0.9,once,200,reaction,minecraft:ghast,reaction,30,0,complete,auto-validated
 ghast.recoil,Ghast Fireball Recoil,hostile_mobs,minecraft:ghast,event `shoot:fireball` when `!q.is_dead`,0.8,once,170,action,minecraft:ghast,action,6,0,complete,auto-validated
@@ -1184,7 +1184,7 @@ warden.roar_flex,Warden Roar Ribcage Flex,hostile_mobs,minecraft:warden,event `a
 warden.sense_vibration,Warden Senses A Vibration,hostile_mobs,minecraft:warden,event `notice` when `!q.is_dead`,0.8,once,150,gesture,minecraft:warden,gesture,9,0,complete,auto-validated
 warden.smash,Warden Overhead Smash,hostile_mobs,minecraft:warden,event `attack` when `!q.is_dead`,0.9,once,180,action,minecraft:warden,action,12,2,complete,auto-validated
 warden.sniff,Warden Sniffing The Air,hostile_mobs,minecraft:warden,state `!q.is_dead && q.is_sniffing`,1.0,loop,150,additive,minecraft:warden,additive,18,0,complete,auto-validated
-warden.sonic_charge,Warden Sonic Boom Charge,hostile_mobs,minecraft:warden,state `!q.is_dead && q.is_charging`,1.6,loop,200,action,minecraft:warden,action,54,0,complete,auto-validated
+warden.sonic_charge,Warden Sonic Boom Charge,hostile_mobs,minecraft:warden,state `!q.is_dead && q.is_charging`,1.6,hold,200,action,minecraft:warden,action,54,0,complete,auto-validated
 warden.tendril_quiver,Warden Tendrils Quiver,hostile_mobs,minecraft:warden,state `!q.is_dead`,0.4,loop,60,additive,minecraft:warden,additive,18,0,complete,auto-validated
 witch.brew_drink,Witch Quaffing A Potion,hostile_mobs,minecraft:witch,state `!q.is_dead && q.is_using_item`,1.2,loop,150,action,minecraft:witch,action,27,0,complete,auto-validated
 witch.cackle,Witch Cackle,hostile_mobs,minecraft:witch,event `vocalize` when `!q.is_dead`,1.4,once,150,gesture,minecraft:witch,gesture,14,0,complete,auto-validated
@@ -2334,7 +2334,7 @@ player.swim.seagrass_brush,Brushing Through Seagrass,swimming,@player,state `!q.
 player.swim.shake_off,Shaking Off Water,swimming,@player,event `exit_water` when `!q.is_dead && !q.is_riding && q.vertical_speed <= 0.1`,1.2,once,200,gesture,@player,gesture,20,1,complete,auto-validated
 player.swim.sidestroke_carry,Sidestroke Carrying An Item,swimming,@player,state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_swimming && q.is_sprinting && q.main_hand != 'empty' && q.main_hand != 'trident'`,1.5,loop,309,base,@player,base,45,0,complete,auto-validated
 player.swim.sink_down,Sinking Deliberately,swimming,@player,state `!q.is_dead && !q.is_riding && q.is_in_water && q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.vertical_speed < -0.05 && q.is_sneaking`,2.0,loop,309,base,@player,base,45,0,complete,auto-validated
-player.swim.sneak_sink_surface,Letting Yourself Sink,swimming,@player,state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.is_sneaking`,1.4,loop,314,base,@player,base,36,0,complete,auto-validated
+player.swim.sneak_sink_surface,Letting Yourself Sink,swimming,@player,state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.is_sneaking`,1.4,hold,314,base,@player,base,36,0,complete,auto-validated
 player.swim.splash_play,Splashing Water Playfully,swimming,@player,event `swing` when `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && q.main_hand == 'empty'`,0.6,once,352,action,@player,action,6,1,complete,auto-validated
 player.swim.storm_swell,Riding Storm Swells,swimming,@player,state `!q.is_dead && !q.is_riding && q.is_in_water && !q.is_underwater && !q.is_on_ground && !q.is_sprinting && q.is_thundering && q.sky_exposed`,2.6,loop,317,base,@player,base,45,0,complete,auto-validated
 player.swim.surface_burst,Bursting To The Surface,swimming,@player,event `surface` when `!q.is_dead && !q.is_riding && q.vertical_speed > 0.05`,0.9,once,341,action,@player,action,12,2,complete,auto-validated

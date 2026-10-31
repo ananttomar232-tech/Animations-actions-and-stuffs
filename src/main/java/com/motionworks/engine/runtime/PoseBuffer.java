@@ -1,5 +1,7 @@
 package com.motionworks.engine.runtime;
 
+import com.motionworks.engine.math.MathUtil;
+
 import java.util.Arrays;
 
 /**
@@ -42,6 +44,12 @@ public final class PoseBuffer {
         int w = bone * 3 + group;
         int o = bone * 9 + group * 3;
         float prevW = overrideWeight[w];
+        if (group == 0 && prevW > 0f) {
+            // Rotations blend along the shortest path: 720 degrees fading into 0 must not spin back twice.
+            x = override[o] + MathUtil.wrapRadians(x - override[o]);
+            y = override[o + 1] + MathUtil.wrapRadians(y - override[o + 1]);
+            z = override[o + 2] + MathUtil.wrapRadians(z - override[o + 2]);
+        }
         float newW = prevW * (1f - c) + c;
         float kPrev = prevW * (1f - c) / newW;
         float kNew = c / newW;
@@ -77,12 +85,16 @@ public final class PoseBuffer {
         return false;
     }
 
-    /** Resolves a final channel value given the value vanilla produced and the rest value. */
+    /**
+     * Resolves a final channel value given the value vanilla produced and the rest value. Rotations move from
+     * vanilla along the shortest path (an Euler angle and the same angle plus a whole turn are the same pose).
+     */
     public float resolve(int bone, int component, float vanilla, float rest) {
         int group = component / 3;
         float w = overrideWeight[bone * 3 + group];
         float target = group == 2 ? override[bone * 9 + component] : rest + override[bone * 9 + component];
-        return vanilla + (target - vanilla) * w + additive[bone * 9 + component];
+        float delta = group == 0 ? MathUtil.wrapRadians(target - vanilla) : target - vanilla;
+        return vanilla + delta * w + additive[bone * 9 + component];
     }
 
     public void copyFrom(PoseBuffer other) {

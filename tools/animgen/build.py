@@ -17,6 +17,7 @@ sys.path.insert(0, HERE)
 
 import core  # noqa: E402
 import rigs  # noqa: E402
+import snaps  # noqa: E402
 
 MODULES = [
     "player_locomotion", "player_locomotion_more", "player_combat", "player_combat_more", "player_combat_handling", "player_interactions", "player_interactions_more", "player_interactions_work", "first_person", "first_person_more", "first_person_world",
@@ -48,10 +49,15 @@ def read(path):
         return fh.read()
 
 
+SOFTENED = []
+
+
 def load_modules():
     for m in MODULES:
         if os.path.exists(os.path.join(HERE, m + ".py")):
             importlib.import_module(m)
+    # Over-steep snaps would teleport a limb within one frame; see snaps.py.
+    SOFTENED[:] = snaps.soften(core.CLIPS)
 
 
 VAR_RE = re.compile(r"\b(?:q|query|v|variable)\.[a-z_][a-z0-9_]*")
@@ -288,7 +294,7 @@ def main():
     for c in core.CLIPS:
         counts[c.category] = counts.get(c.category, 0) + 1
     dups = check_duplicates()
-    print("clips:", len(core.CLIPS))
+    print("clips:", len(core.CLIPS), "| snap segments eased to stay within one frame's motion:", len(SOFTENED))
     total_min = 0
     for cat, minimum in CATEGORY_MINIMUMS.items():
         total_min += minimum

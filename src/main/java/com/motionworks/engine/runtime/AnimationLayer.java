@@ -378,9 +378,16 @@ public final class AnimationLayer {
                     ch.sample(p.time(), s, tmp, 0);
                     float k = target == ChannelTarget.ROTATION ? MathUtil.DEG_TO_RAD : 1f;
                     int o = bone * 9 + target.offset;
-                    sumV[o] += tmp[0] * k * w;
-                    sumV[o + 1] += tmp[1] * k * w;
-                    sumV[o + 2] += tmp[2] * k * w;
+                    float before = sumW[bone * 3 + target.group()];
+                    for (int axis = 0; axis < 3; axis++) {
+                        float v = tmp[axis] * k;
+                        // Crossfading clips average rotations along the shortest path around what is already there.
+                        if (target == ChannelTarget.ROTATION && before > 0f) {
+                            float mean = sumV[o + axis] / before;
+                            v = mean + MathUtil.wrapRadians(v - mean);
+                        }
+                        sumV[o + axis] += v * w;
+                    }
                     sumW[bone * 3 + target.group()] += w;
                 }
             }
@@ -406,7 +413,9 @@ public final class AnimationLayer {
                 if (ch == null) continue;
                 ch.sample(p.time(), s, tmp, 0);
                 if (target == ChannelTarget.ROTATION) {
-                    pose.addAdditive(bone, 0, tmp[0] * MathUtil.DEG_TO_RAD * w, tmp[1] * MathUtil.DEG_TO_RAD * w, tmp[2] * MathUtil.DEG_TO_RAD * w);
+                    // Wrapped before weighting, so an additive spin fades in and out the short way round.
+                    pose.addAdditive(bone, 0, MathUtil.wrapRadians(tmp[0] * MathUtil.DEG_TO_RAD) * w, MathUtil.wrapRadians(tmp[1] * MathUtil.DEG_TO_RAD) * w,
+                            MathUtil.wrapRadians(tmp[2] * MathUtil.DEG_TO_RAD) * w);
                 } else if (target == ChannelTarget.POSITION) {
                     pose.addAdditive(bone, 1, tmp[0] * w, tmp[1] * w, tmp[2] * w);
                 } else {
