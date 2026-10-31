@@ -287,7 +287,7 @@ for T, sp, label, tracks in (
                                                             "right_haunch:rot": [(0, Z), (0.1, [40, 0, 0]), (0.5, Z)], "right_ear:rot": [(0, Z), (0.1, [-30, 0, 0]), (0.5, Z)]}),
         ("minecraft:witch", "witch", "Witch Shrieking Recoil", {"head:rot": [(0, Z), (0.08, [-25, 0, 10]), (0.6, Z)], "arms:rot": [(0, Z), (0.1, [-80, 0, 0]), (0.6, Z)], "hat4:rot": [(0, Z), (0.15, [20, 0, 0]), (0.6, Z)]}),
         ("minecraft:piglin_brute", "piglin_brute", "Piglin Brute Stomping Through Pain", {"right_leg:rot": [(0, Z), (0.2, leg('r', 40)), (0.35, leg('r', -6)), (0.7, Z)], "head:rot": [(0, Z), (0.1, [-15, 0, 0]), (0.7, Z)]}),
-        ("minecraft:zombie_villager", "zombie_villager", "Zombie Villager Moaning Recoil", {"head:rot": [(0, Z), (0.1, [-20, 0, 15]), (0.8, Z)], "nose:rot": [(0, Z), (0.15, [10, 0, 0]), (0.8, Z)],
+        ("minecraft:zombie_villager", "zombie_villager", "Zombie Villager Moaning Recoil", {"head:rot": [(0, Z), (0.1, [-20, 0, 15]), (0.8, Z)],
                                                                                          "body:rot": [(0, Z), (0.1, tilt(-10)), (0.8, Z)]}),
         ("minecraft:hoglin", "hoglin", "Hoglin Squealing Buck", {"mw_center:rot": [(0, Z), (0.1, tilt(10, 0, 0)), (0.25, tilt(-8, 0, 0)), (0.6, Z)], "left_hind_leg:rot": [(0, Z), (0.12, [40, 0, 0]), (0.6, Z)],
                                                                "right_hind_leg:rot": [(0, Z), (0.12, [40, 0, 0]), (0.6, Z)]}),

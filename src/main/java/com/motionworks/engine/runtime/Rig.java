@@ -97,12 +97,4 @@ public final class Rig {
         });
     }
 
-    /** Fraction of a clip's animated bones present in this rig; used for validation and LOD. */
-    public float coverage(AnimationClip clip) {
-        int[] b = bind(clip);
-        if (b.length == 0) return 1f;
-        int hit = 0;
-        for (int i : b) if (i >= 0) hit++;
-        return hit / (float) b.length;
-    }
 }

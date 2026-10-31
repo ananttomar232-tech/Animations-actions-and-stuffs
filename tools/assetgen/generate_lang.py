@@ -42,6 +42,7 @@ UI = {
     "motionworks.stats.errors": "%s animation files failed to load; check the log for details",
     "motionworks.list": "%s",
     "motionworks.export": "Animation registry exported to %s",
+    "motionworks.audit.done": "Audited %s clip bindings on %s models: %s issues. Report saved to %s",
     "motionworks.trace.on": "Tracing animation triggers within %s blocks",
     "motionworks.trace.off": "Stopped tracing animation triggers",
     "motionworks.trace.entry": "[trace] %s \u25b8 %s",

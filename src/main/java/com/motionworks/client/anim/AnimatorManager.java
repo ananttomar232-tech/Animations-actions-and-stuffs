@@ -2,6 +2,7 @@ package com.motionworks.client.anim;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.motionworks.MotionWorks;
+import com.motionworks.client.rig.GroundContact;
 import com.motionworks.client.rig.ModelRig;
 import com.motionworks.client.rig.PoseApplier;
 import com.motionworks.client.rig.RigFactory;
@@ -113,7 +114,14 @@ public final class AnimatorManager {
             if (!a.advanceTo(clock)) return;
             ModelRig mr = a.modelRig();
             float strength = MWConfig.CLIENT.intensity.get().floatValue();
+            boolean contact = MWConfig.CLIENT.groundContact.get() && a.standsOnGround();
+            // Ground level is the lowest point of vanilla's own pose for this frame, measured before posing.
+            float ground = contact ? GroundContact.lowest(mr, null, strength, true) : 0f;
             PoseApplier.apply(mr, a.controller().pose(), strength);
+            if (contact) {
+                float lift = GroundContact.lift(mr, a.controller().pose(), strength, ground);
+                if (lift > 0f) stack.translate(0f, -lift / 16f, 0f);
+            }
             PoseApplier.applyRoot(mr, a.controller().pose(), stack, strength);
         } catch (RuntimeException ex) {
             if (!warned) {

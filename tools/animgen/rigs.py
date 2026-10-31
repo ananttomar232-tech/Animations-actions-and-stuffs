@@ -13,7 +13,7 @@ PIGLIN = PLAYER + ["left_ear", "right_ear"]
 VILLAGER = ["head", "hat", "hat_rim", "nose", "body", "jacket", "arms", "right_leg", "left_leg"]
 WITCH = VILLAGER + ["hat2", "hat3", "hat4", "mole"]
 ILLAGER = ["head", "hat", "nose", "body", "arms", "left_shoulder", "right_arm", "left_arm", "right_leg", "left_leg"]
-ZOMBIE_VILLAGER = HUMANOID + ["hat_rim", "nose"]
+ZOMBIE_VILLAGER = HUMANOID + ["hat_rim"]  # the nose is a box inside "head", not a part
 QUAD = ["head", "body", "right_hind_leg", "left_hind_leg", "right_front_leg", "left_front_leg"]
 HORSE = ["body", "tail", "head_parts", "head", "mane", "upper_mouth", "left_ear", "right_ear", "left_hind_leg", "right_hind_leg",
          "left_front_leg", "right_front_leg"]

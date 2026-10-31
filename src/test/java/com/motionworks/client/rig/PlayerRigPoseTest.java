@@ -136,6 +136,30 @@ class PlayerRigPoseTest {
         return clips.stream().filter(c -> c.id().equals(id)).findFirst().orElseThrow();
     }
 
+    @Test
+    void groundContactLiftsBodiesButLetsFeetSink() throws IOException {
+        ModelRig mr = playerRig();
+        vanillaFrame(mr);
+        float ground = GroundContact.lowest(mr, null, 1f, true);
+        assertEquals(24f, ground, 0.01f, "a standing player's feet are 24 model pixels below the neck");
+
+        PoseBuffer flip = new PoseBuffer(mr.rig.size());
+        flip.reset();
+        flip.blendOverride(mr.rig.indexOf("mw_root"), 0, (float) Math.PI, 0f, 0f, 1f);
+        PoseApplier.apply(mr, flip, 1f);
+        float lift = GroundContact.lift(mr, flip, 1f, ground);
+        assertTrue(lift > 20f, "upside down about the feet, the head is deep in the ground: lift " + lift);
+        assertEquals(ground, GroundContact.lowest(mr, flip, 1f, false) - lift, 0.01f, "after the lift the head rests on the ground");
+
+        vanillaFrame(mr);
+        PoseBuffer kneel = new PoseBuffer(mr.rig.size());
+        kneel.reset();
+        kneel.blendOverride(mr.rig.indexOf("mw_root"), 1, 0f, 6f, 0f, 1f);
+        kneel.blendOverride(mr.rig.indexOf("right_leg"), 0, (float) Math.toRadians(-90), 0f, 0f, 1f);
+        PoseApplier.apply(mr, kneel, 1f);
+        assertEquals(0f, GroundContact.lift(mr, kneel, 1f, ground), 0.01f, "a kneel sinks only the feet, which is how it reads");
+    }
+
     /** Regression: the torso drifted away from the legs on the first client run (stale coupled positions). */
     @Test
     void poseDoesNotAccumulateAcrossFrames() throws IOException {

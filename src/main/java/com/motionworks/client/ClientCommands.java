@@ -55,6 +55,7 @@ public final class ClientCommands {
                 .then(Commands.literal("list").executes(c -> list("")).then(Commands.argument("filter", StringArgumentType.greedyString())
                         .executes(c -> list(StringArgumentType.getString(c, "filter")))))
                 .then(Commands.literal("export").executes(c -> export()))
+                .then(Commands.literal("audit").executes(c -> audit()))
                 .then(Commands.literal("debug").executes(c -> {
                     MWConfig.CLIENT.debugOverlay.set(!MWConfig.CLIENT.debugOverlay.get());
                     return 1;
@@ -127,6 +128,15 @@ public final class ClientCommands {
     }
 
     /** Writes the live registry (every loaded clip with its metadata) for auditing. */
+    private static int audit() {
+        Path p = FMLPaths.GAMEDIR.get().resolve("motionworks_audit.txt");
+        com.motionworks.client.rig.LibraryAudit.Result r = com.motionworks.client.rig.LibraryAudit.runAndWrite(p);
+        if (r == null) return 0;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player != null) mc.player.displayClientMessage(Component.translatable("motionworks.audit.done", r.clips(), r.models(), r.issues(), p.toString()), false);
+        return 1;
+    }
+
     private static int export() {
         JsonArray arr = new JsonArray();
         for (AnimationClip c : AnimationLibrary.INSTANCE.clips().all()) {

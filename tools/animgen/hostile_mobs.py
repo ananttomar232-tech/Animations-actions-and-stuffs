@@ -128,7 +128,7 @@ loop_state("zombie_villager.lost_idle", "Zombie Villager Lost Wandering Look", C
 loop_state("zombie_villager.curing_tremor", "Zombie Villager Curing Tremors", CAT, T, ALIVE + " && q.is_shaking", 0.3, F, {
     "body:rot": lambda u: tilt(0, 4 * wave(u), 3 * wave(u, 0.3)), "head:rot": lambda u: [10 * wave(u, 0.1), 0, 8 * wave(u, 0.6)], "right_arm:rot": lambda u: arm('r', 30 + 10 * wave(u), 10)}, pri=160)
 beat("zombie_villager.mournful_hrmm", "Zombie Villager Mournful Hrmm", CAT, T, event("vocalize", ALIVE), 1.6, F, {"head:rot": [(0, Z), (0.4, [30, 0, 15]), (1.0, [32, 0, -12]), (1.6, Z)],
-                                                                                                       "nose:rot": [(0, Z), (0.4, [8, 0, 0]), (1.6, Z)]}, layer="gesture")
+                                                                                                       "body:rot": [(0, Z), (0.4, tilt(6)), (1.6, Z)]}, layer="gesture")
 strike_arms("zombie_villager.flail", "Zombie Villager Flailing Swat", T, event("attack", ALIVE), 0.7, F, [(0, [90]), (0.15, [150, 30, 0]), (0.3, [40, -10, 0], "in_quart"), (0.7, [90])],
             [(0, [90]), (0.3, [140, 30, 0]), (0.45, [40, -10, 0], "in_quart"), (0.7, [90])])
 loop_state("zombie_villager.door_drag", "Zombie Villager Dragging Itself", CAT, T, WALKING + " && q.health < 0.3", 1.8, F, {

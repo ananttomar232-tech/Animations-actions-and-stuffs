@@ -352,6 +352,26 @@ public final class EntityAnimator {
         return true;
     }
 
+    /**
+     * Ground contact applies to a creature standing, crouching or sitting on the ground, unless a playing clip goes
+     * underground on purpose (meta "ground": "free", e.g. a sniffer digging or a zombie rising from the earth).
+     */
+    boolean standsOnGround() {
+        LivingEntity e = entity;
+        if (!e.onGround() || e.isPassenger() || e.isSleeping() || e.deathTime > 0 || e.isInWater()) return false;
+        net.minecraft.world.entity.Pose p = e.getPose();
+        if (p != net.minecraft.world.entity.Pose.STANDING && p != net.minecraft.world.entity.Pose.CROUCHING && p != net.minecraft.world.entity.Pose.SITTING) {
+            return false;
+        }
+        if (controller == null) return true;
+        for (com.motionworks.engine.runtime.AnimationLayer l : controller.layers()) {
+            for (com.motionworks.engine.runtime.ClipPlayback pb : l.playing()) {
+                if ("free".equals(pb.clip.meta("ground", ""))) return false;
+            }
+        }
+        return true;
+    }
+
     long seed() {
         return Hashing.mix(seed);
     }

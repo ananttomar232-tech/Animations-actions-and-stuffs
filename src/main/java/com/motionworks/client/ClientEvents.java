@@ -51,6 +51,8 @@ public final class ClientEvents {
         Minecraft mc = Minecraft.getInstance();
         AnimatorManager.clientTick();
         if (mc.level == null || mc.player == null) return;
+        com.motionworks.client.rig.LibraryAudit.autoRun();
+        com.motionworks.client.rig.PoseGallery.autoRun();
         FirstPersonAnimator.INSTANCE.tick();
         BossIntros.tick();
         SocialDirector.tick();

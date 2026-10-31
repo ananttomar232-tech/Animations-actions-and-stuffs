@@ -30,8 +30,9 @@ public final class RigProfile {
     public final List<Spring> springs = new ArrayList<>();
     public final List<Noise> noise = new ArrayList<>();
     public final List<Driver> drivers = new ArrayList<>();
-    public float[] center = {0f, 12f, 0f};
-    public float[] ground = {0f, 24f, 0f};
+    /** Pivots of the virtual bones in model pixels; null means measured from the model's own geometry. */
+    public float[] center;
+    public float[] ground;
 
     public RigProfile(String id) {
         this.id = id;
@@ -96,8 +97,8 @@ public final class RigProfile {
         springs.addAll(b.springs);
         noise.addAll(b.noise);
         drivers.addAll(b.drivers);
-        center = b.center.clone();
-        ground = b.ground.clone();
+        center = b.center == null ? null : b.center.clone();
+        ground = b.ground == null ? null : b.ground.clone();
     }
 
     private static List<String> strings(JsonArray a) {

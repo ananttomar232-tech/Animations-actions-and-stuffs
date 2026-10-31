@@ -5,6 +5,7 @@
  "key.motionworks.emotes": "Emote Wheel",
  "key.motionworks.inspect": "Inspect Held Item",
  "key.motionworks.skip": "Skip Cinematic",
+ "motionworks.audit.done": "Audited %s clip bindings on %s models: %s issues. Report saved to %s",
  "motionworks.boss.elder_guardian.subtitle": "Keeper of the drowned monument",
  "motionworks.boss.elder_guardian.title": "Elder Guardian",
  "motionworks.boss.ender_dragon.subtitle": "Sovereign of the End",

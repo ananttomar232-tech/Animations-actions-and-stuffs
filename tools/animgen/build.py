@@ -18,6 +18,7 @@ sys.path.insert(0, HERE)
 import core  # noqa: E402
 import rigs  # noqa: E402
 import snaps  # noqa: E402
+import ground  # noqa: E402
 
 MODULES = [
     "player_locomotion", "player_locomotion_more", "player_combat", "player_combat_more", "player_combat_handling", "player_interactions", "player_interactions_more", "player_interactions_work", "first_person", "first_person_more", "first_person_world",
@@ -58,6 +59,7 @@ def load_modules():
             importlib.import_module(m)
     # Over-steep snaps would teleport a limb within one frame; see snaps.py.
     SOFTENED[:] = snaps.soften(core.CLIPS)
+    ground.apply(core.CLIPS)
 
 
 VAR_RE = re.compile(r"\b(?:q|query|v|variable)\.[a-z_][a-z0-9_]*")

@@ -14,4 +14,6 @@ execute align xyz run fill ~-7 ~1 ~6 ~-7 ~1 ~12 minecraft:smooth_stone_slab
 execute align xyz run fill ~-6 ~ ~6 ~-6 ~1 ~12 minecraft:stone
 execute align xyz run summon minecraft:cow ~-8 ~1 ~6.5 {NoAI:1b,Rotation:[-90f,0f]}
 execute align xyz run summon minecraft:horse ~-8 ~1 ~9.5 {NoAI:1b,Rotation:[-90f,0f],Variant:2}
+# An axolotl on dry ground for the play-dead check
+execute align xyz run summon minecraft:axolotl ~-3 ~ ~3 {NoAI:1b,Rotation:[90f,0f]}
 say mwtest scene ready

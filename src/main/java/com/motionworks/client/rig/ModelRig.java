@@ -52,6 +52,71 @@ public final class ModelRig {
         this.couplings = couplings;
         this.couplingPivots = couplingPivots;
         this.couplingMovesParent = movesParent;
+        float[][] measured = profile.center == null || profile.ground == null ? restBounds() : null;
+        this.center = profile.center != null ? profile.center : measured[0];
+        this.ground = profile.ground != null ? profile.ground : measured[1];
+    }
+
+    /** Pivot of mw_center (body centre) and mw_root (ground) in model pixels. */
+    final float[] center;
+    final float[] ground;
+
+    /**
+     * Centre and bottom centre of the model's visible geometry in its rest pose. A rotation about a pivot that is
+     * not inside the body (the old fixed defaults sat above a chicken or a fish) swings it through the air.
+     */
+    private float[][] restBounds() {
+        PartPose[] saved = new PartPose[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i] == null) continue;
+            saved[i] = parts[i].storePose();
+            parts[i].loadPose(parts[i].getInitialPose());
+        }
+        float[] min = {Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE}, max = {-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE};
+        org.joml.Vector3f p = new org.joml.Vector3f();
+        com.mojang.blaze3d.vertex.PoseStack stack = new com.mojang.blaze3d.vertex.PoseStack();
+        for (ModelPart part : GroundContact.topLevel(parts)) {
+            if (!part.visible) continue;
+            part.visit(stack, (pose, path, index, cube) -> {
+                for (int c = 0; c < 8; c++) {
+                    p.set(((c & 1) == 0 ? cube.minX : cube.maxX) / 16f, ((c & 2) == 0 ? cube.minY : cube.maxY) / 16f, ((c & 4) == 0 ? cube.minZ : cube.maxZ) / 16f);
+                    pose.pose().transformPosition(p);
+                    min[0] = Math.min(min[0], p.x * 16f);
+                    min[1] = Math.min(min[1], p.y * 16f);
+                    min[2] = Math.min(min[2], p.z * 16f);
+                    max[0] = Math.max(max[0], p.x * 16f);
+                    max[1] = Math.max(max[1], p.y * 16f);
+                    max[2] = Math.max(max[2], p.z * 16f);
+                }
+            });
+        }
+        for (int i = 0; i < parts.length; i++) if (parts[i] != null) parts[i].loadPose(saved[i]);
+        if (min[0] > max[0]) return new float[][] {{0f, 12f, 0f}, {0f, 24f, 0f}};
+        float cz = (min[2] + max[2]) / 2f;
+        return new float[][] {{0f, (min[1] + max[1]) / 2f, cz}, {0f, max[1], cz}};
+    }
+
+    private ModelPart[] topLevel;
+    private boolean[] topIsLeg;
+
+    /** Parts that are not children of another bound part, which is where a model's geometry starts. */
+    ModelPart[] topLevel() {
+        if (topLevel == null) {
+            ModelPart[] top = GroundContact.topLevel(parts);
+            boolean[] legs = new boolean[top.length];
+            for (int i = 0; i < top.length; i++) {
+                ModelPartIndex.Info info = ModelPartIndex.get(top[i]);
+                legs[i] = info != null && GroundContact.isLeg(info.name());
+            }
+            topIsLeg = legs;
+            topLevel = top;
+        }
+        return topLevel;
+    }
+
+    boolean[] topIsLeg() {
+        topLevel();
+        return topIsLeg;
     }
 
     public ModelPart part(String name) {

@@ -27,6 +27,7 @@ public final class MWConfig {
         public final ForgeConfigSpec.BooleanValue enabled;
         public final ForgeConfigSpec.BooleanValue playerAnimations;
         public final ForgeConfigSpec.BooleanValue mobAnimations;
+        public final ForgeConfigSpec.BooleanValue groundContact;
         public final ForgeConfigSpec.DoubleValue intensity;
         public final ForgeConfigSpec.IntValue animationDistance;
 
@@ -73,6 +74,8 @@ public final class MWConfig {
             enabled = b.comment("Master switch for all MotionWorks animation").define("enabled", true);
             playerAnimations = b.comment("Animate players").define("playerAnimations", true);
             mobAnimations = b.comment("Animate mobs, animals and NPCs").define("mobAnimations", true);
+            groundContact = b.comment("Lift standing bodies so rolls, flips and lying poses rest on the ground instead of sinking into it",
+                    "(feet may still sink: single-block legs cannot bend, so that is how kneels and crouches read)").define("groundContact", true);
             intensity = b.comment("Global animation strength (0 = vanilla, 1 = authored)").defineInRange("intensity", 1.0, 0.0, 1.5);
             animationDistance = b.comment("Entities further than this many blocks keep vanilla animation").defineInRange("animationDistance", 64, 8, 256);
             b.pop();

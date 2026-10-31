@@ -38,6 +38,10 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
             // ./gradlew runClient -PquickPlay=<world folder> joins that singleplayer world directly (see TESTING.md)
             if (project.hasProperty('quickPlay')) args '--quickPlaySingleplayer', project.property('quickPlay')
+            // ./gradlew runClient -PmwAudit=<file> writes the library audit (see LibraryAudit) once in a world
+            if (project.hasProperty('mwAudit')) property 'motionworks.audit', project.property('mwAudit')
+            // ./gradlew runClient -PmwGallery=<directory> renders every clip into numbered contact sheets (see PoseGallery)
+            if (project.hasProperty('mwGallery')) property 'motionworks.gallery', project.property('mwGallery')
         }
 
         server {

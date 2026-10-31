@@ -436,7 +436,7 @@ wolf.yelp_flinch,Wolf Cowering Yelp,damage_reactions,minecraft:wolf,event `hurt`
 zombie.death,Zombie Death Collapse,damage_reactions,minecraft:zombie,event `death`,1.0,once,300,action,minecraft:zombie,action,15,0,complete,auto-validated
 zombie.hurt_lurch,Zombie Lurching From A Blow Behind,damage_reactions,minecraft:zombie,event `hurt_back` when `!q.is_dead`,0.8,once,200,reaction,minecraft:zombie,reaction,9,0,complete,auto-validated
 zombie.hurt_reel,Zombie Reeling From A Hit,damage_reactions,minecraft:zombie,event `hurt_front` when `!q.is_dead`,0.6,once,200,reaction,minecraft:zombie,reaction,10,0,complete,auto-validated
-zombie_villager.hurt_flinch,Zombie Villager Moaning Recoil,damage_reactions,minecraft:zombie_villager,event `hurt` when `!q.is_dead`,0.6,once,200,reaction,minecraft:zombie_villager,reaction,9,0,complete,auto-validated
+zombie_villager.hurt_flinch,Zombie Villager Moaning Recoil,damage_reactions,minecraft:zombie_villager,event `hurt` when `!q.is_dead`,0.6,once,200,reaction,minecraft:zombie_villager,reaction,6,0,complete,auto-validated
 emote.applaud,Applause,emotes,@player,manual (stops when `q.ground_speed > 0.06 || q.recent_hurt < 0.4 || q.is_riding || q.is_swimming || !q.is_on_ground`),0.5,loop,250,action,@player,action,39,1,complete,auto-validated
 emote.arm_wave,Rolling Arm Wave,emotes,@player,manual (stops when `q.ground_speed > 0.06 || q.recent_hurt < 0.4 || q.is_riding || q.is_swimming || !q.is_on_ground`),1.2,loop,250,action,@player,action,52,0,complete,auto-validated
 emote.arms_wide,Arms Wide To The World,emotes,@player,manual (stops when `q.ground_speed > 0.06 || q.recent_hurt < 0.4 || q.is_riding || q.is_swimming || !q.is_on_ground`),2.2,once,250,action,@player,action,15,0,complete,auto-validated

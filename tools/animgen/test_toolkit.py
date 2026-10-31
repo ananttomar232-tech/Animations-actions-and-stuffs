@@ -194,7 +194,8 @@ class AssetConsistencyTests(unittest.TestCase):
         keys = set()
         for dirpath, _, files in os.walk(os.path.join(ROOT, "src/main/java")):
             for fn in files:
-                src = build.read(os.path.join(dirpath, fn))
+                # System property names (-Dmotionworks.audit) look like keys but are not translated
+                src = re.sub(r'System\.getProperty\("[^"]*"\)', "", build.read(os.path.join(dirpath, fn)))
                 keys.update(re.findall(r'"((?:motionworks|key\.motionworks|key\.categories\.motionworks)\.[a-z0-9_.]+[a-z0-9_])"', src))
         keys -= {"motionworks.boss", "motionworks.emotes.group"}  # prefixes completed at runtime, checked below
         for boss in ("wither", "ender_dragon", "warden", "elder_guardian"):

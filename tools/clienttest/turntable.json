@@ -6,13 +6,17 @@
  "hide_hud": true,
  "cancel_on_damage": false,
  "shots": [
-  {"type": "orbit", "target": "@nearest:minecraft:cow", "duration": 3.0, "radius": 4.0, "height": 0.3, "from_angle": -90, "to_angle": -90},
-  {"type": "orbit", "target": "@nearest:minecraft:horse", "duration": 3.0, "radius": 5.0, "height": 0.3, "from_angle": 90, "to_angle": 90},
-  {"type": "orbit", "duration": 3.0, "radius": 4.0, "height": 0.0, "from_angle": 0, "to_angle": 0},
-  {"type": "orbit", "duration": 3.0, "radius": 4.0, "height": 0.0, "from_angle": 90, "to_angle": 90},
-  {"type": "orbit", "duration": 4.0, "radius": 4.0, "height": 0.0, "from_angle": 90, "to_angle": 90}
+  {"type": "orbit", "target": "@nearest:minecraft:cow", "duration": 2.5, "radius": 4.0, "height": 0.3, "from_angle": -90, "to_angle": -90},
+  {"type": "orbit", "target": "@nearest:minecraft:horse", "duration": 2.5, "radius": 5.0, "height": 0.3, "from_angle": 90, "to_angle": 90},
+  {"type": "orbit", "target": "@nearest:minecraft:axolotl", "duration": 3.0, "radius": 2.5, "height": 0.2, "from_angle": 90, "to_angle": 90},
+  {"type": "orbit", "duration": 2.5, "radius": 4.0, "height": 0.0, "from_angle": 0, "to_angle": 0},
+  {"type": "orbit", "duration": 9.0, "radius": 4.5, "height": 0.0, "from_angle": 90, "to_angle": 90}
  ],
  "events": [
-  {"time": 12.1, "type": "animate", "actor": "@self", "clip": "emote.bow"}
+  {"time": 5.1, "type": "animate", "actor": "@nearest:minecraft:axolotl", "clip": "cine.axolotl.faint_reveal"},
+  {"time": 8.2, "type": "animate", "actor": "@self", "clip": "emote.bow"},
+  {"time": 10.6, "type": "animate", "actor": "@self", "clip": "emote.cartwheel"},
+  {"time": 12.6, "type": "animate", "actor": "@self", "clip": "player.combat.dodge_roll_forward"},
+  {"time": 14.3, "type": "animate", "actor": "@self", "clip": "emote.faint"}
  ]
 }

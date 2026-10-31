@@ -159,7 +159,7 @@ public final class PoseApplier {
     public static void applyRoot(ModelRig mr, PoseBuffer pose, PoseStack stack, float strength) {
         for (int b = 0; b < 2; b++) {
             if (!pose.isTouched(b)) continue;
-            float[] pivot = b == 0 ? mr.profile.ground : mr.profile.center;
+            float[] pivot = b == 0 ? mr.ground : mr.center;
             float rx = pose.resolve(b, 0, 0f, 0f) * strength;
             float ry = pose.resolve(b, 1, 0f, 0f) * strength;
             float rz = pose.resolve(b, 2, 0f, 0f) * strength;
