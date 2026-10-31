@@ -232,6 +232,7 @@ public final class ContextSampler {
         s.set(CtxVars.EXERTION, h.exertion);
 
         s.setBool(CtxVars.SNEAKING, e.isCrouching());
+        s.setBool(CtxVars.CINEMATIC, com.motionworks.client.cinematic.CinematicDirector.INSTANCE.features(e));
         s.setBool(CtxVars.SPRINTING, sprinting);
         s.setBool(CtxVars.CRAWLING, e.hasPose(Pose.SWIMMING) && !e.isInWater());
         s.setBool(CtxVars.SWIMMING, e.isSwimming() || (e.isInWater() && !onGround));

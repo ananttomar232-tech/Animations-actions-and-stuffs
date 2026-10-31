@@ -83,7 +83,6 @@ public final class CtxVars {
     public static final int COMBO = Vars.id("q.combo");
     public static final int ATTACK_STRENGTH = Vars.id("q.attack_strength");
     public static final int AGGRESSIVE = Vars.id("q.is_aggressive");
-    public static final int INTERACT_TARGET = Vars.id("q.interact_target");
     public static final int EVENT_ARG = Vars.id("q.event_arg");
     public static final int EVENT_DIR = Vars.id("q.event_dir");
     public static final int EVENT_HEIGHT = Vars.id("q.event_height");

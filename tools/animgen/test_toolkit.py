@@ -191,6 +191,12 @@ class AssetConsistencyTests(unittest.TestCase):
         for entity, info in families.items():
             self.assertIn(info["rig"], rigs, entity)
 
+    def test_context_variable_reference_is_current(self):
+        import gen_context_doc
+        text, _, _ = gen_context_doc.render()
+        self.assertEqual(text, build.read(gen_context_doc.OUT), "run tools/animgen/gen_context_doc.py")
+        self.assertNotIn("not assigned", text)
+
     def test_mixin_config_lists_existing_classes(self):
         cfg = load_json(os.path.join(ROOT, "src/main/resources/motionworks.mixins.json"))
         pkg = cfg["package"].replace(".", "/")

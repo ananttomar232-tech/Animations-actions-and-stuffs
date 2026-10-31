@@ -40,4 +40,22 @@ class SourceConventionsTest {
         }
         assertEquals(List.of(), offenders, "static fields declared after the INSTANCE singleton");
     }
+
+    /** A declared context variable nobody writes would read as 0 forever in every clip that uses it. */
+    @Test
+    void everyContextVariableIsWritten() throws IOException {
+        String decl = Files.readString(Path.of("src/main/java/com/motionworks/common/CtxVars.java"));
+        StringBuilder code = new StringBuilder();
+        try (Stream<Path> files = Files.walk(Path.of("src/main/java"))) {
+            for (Path f : (Iterable<Path>) files.filter(p -> p.toString().endsWith(".java") && !p.endsWith("CtxVars.java"))::iterator) {
+                code.append(Files.readString(f));
+            }
+        }
+        List<String> unwritten = new ArrayList<>();
+        var m = Pattern.compile("int (\\w+) = Vars\\.id\\(\"([^\"]+)\"\\)").matcher(decl);
+        while (m.find()) {
+            if (!Pattern.compile("\\.set(Bool|String)?\\(\\s*CtxVars\\." + m.group(1) + "\\b").matcher(code).find()) unwritten.add(m.group(2));
+        }
+        assertEquals(List.of(), unwritten, "context variables declared in CtxVars but never set");
+    }
 }

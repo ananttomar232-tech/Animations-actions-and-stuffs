@@ -119,6 +119,11 @@ public final class CinematicDirector implements ResourceManagerReloadListener {
         return active != null;
     }
 
+    /** True while a cinematic frames this entity: its anchor, or the local player watching it. */
+    public boolean features(Entity e) {
+        return active != null && (e == Minecraft.getInstance().player || ctx != null && e == ctx.anchor());
+    }
+
     public Sequence active() {
         return active;
     }
