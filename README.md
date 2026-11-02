@@ -16,7 +16,7 @@ Embeddium is installed.
 | Cinematic sequences | 27 authored, skippable, plus your own recorded with `/mw cam` |
 | Entity coverage | 80 entity families on 13 rig profiles: players, every vanilla mob, villagers and illagers. Mobs from other mods are animated by body plan |
 | Assets | 18 particle types, 60 sound events (109 generated OGG files), English translations |
-| Tests | 57 JUnit tests, 6 in-game GameTests, 23 toolkit tests, and headless client tests (development and a real Forge install) that audit every clip on the real models |
+| Tests | 57 JUnit tests, 6 in-game GameTests, 27 toolkit tests, and headless client tests (development and a real Forge install) that audit every clip on the real models |
 
 | Category | Clips | Required |
 |---|---:|---:|

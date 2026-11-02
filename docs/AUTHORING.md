@@ -236,7 +236,12 @@ python3 tools/animgen/test_toolkit.py    # toolkit tests
 ```
 
 `core.py` has the `Clip` builder and gait generators (`quad_gait` with stride, bob, snap, splay and yaw
-character controls). `mobkit.py` has helpers for state loops and event beats, and each category lives in its
+character controls). Limbs are posed with `arm(side, fwd, out, twist)` and `leg(...)`: swing forward (90 points
+ahead, 180 straight up), swing away from the midline (negative crosses the body) and twist about the limb's own
+length. `core.limb` composes them in that meaning and converts the result into ModelPart's angles, which it
+applies x first, then y and z about the parent's axes. Writing intuitive angles straight into those fields is
+only right for a hanging limb: a raised hand swings the wrong way. Successive keys pick the equivalent angles
+nearest the previous key, so a pose passing overhead does not flip. `mobkit.py` has helpers for state loops and event beats, and each category lives in its
 own module. The validator rejects:
 
 - unknown bones

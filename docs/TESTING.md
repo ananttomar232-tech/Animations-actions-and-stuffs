@@ -6,7 +6,7 @@ Gradle caches exist (one online `./gradlew build` first).
 | Layer | Command | Runs in |
 |---|---|---|
 | Authoring validator | `python3 tools/animgen/build.py --check` | seconds |
-| Toolkit tests (23) | `python3 tools/animgen/test_toolkit.py` | ~25 s |
+| Toolkit tests (27) | `python3 tools/animgen/test_toolkit.py` | ~25 s |
 | Java unit tests (57) | `./gradlew test` | ~1 min |
 | In-game GameTests (6) | `./gradlew runGameTestServer` | ~1 min |
 | Headless client smoke test | `tools/clienttest/run_client_smoke.sh` | ~4 min |
@@ -23,6 +23,10 @@ phase variants).
 
 - **Gaits:** default controls reproduce the plain gait; character controls change the shape, not just the
   size; full-turn loops keep rotating forward.
+- **Limb rotations:** `core.limb` (behind `arm` and `leg`) composes intuitive angles (swing forward, swing out
+  from the midline, twist about the limb) into ModelPart's angles exactly: 2,000 random poses round-trip,
+  hanging and purely forward limbs are unchanged, a raised hand with a negative `out` moves toward the midline on
+  either side, and keys stay continuous (no Euler flips) through a pose passing overhead.
 - **Validators:** each one catches what it should (unknown bone, unknown variable, unfired event, scaled copy,
   mirrored copy) and accepts argument forms of real events.
 - **Library:** every category meets its minimum, every clip passes every validator and has registry metadata,
@@ -120,6 +124,13 @@ and covered by tests or the audit:
 - **A slime's eyes floating off its squashing body, and the elder guardian's eye sliding off its face.**
   Fixed by scaling from the model root and holding the eye in place.
 - **Two zombie villager clips animating a nose the model does not have.**
+- **Arms going the wrong way on 27% of clips.** The authoring helper wrote "swing out" and "twist" straight into
+  ModelPart's angles, which is only right for a hanging limb: on an arm raised forward "out" did nothing, and
+  overhead it was reversed. Blowing into your hands held both arms straight out to the sides (the T-pose seen in
+  a snowy world), shading your eyes pointed the hand away, a flex left the arm hanging. Found by filming normal
+  third-person play in the production client with the debug overlay on; fixed in `core.limb`, which changed the
+  limb direction of 671 clips by 15 degrees or more. Before/after renders of the most-changed clips confirm the
+  new poses match their names.
 - From the motion review:
   - spins whipping backwards during their blend-out
   - seven loops snapping back at their seam

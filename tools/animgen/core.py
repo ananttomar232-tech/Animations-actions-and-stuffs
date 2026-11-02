@@ -22,15 +22,77 @@ _IDS = set()
 #   head/body/root: x>0 pitches forward (look down / lean forward); y>0 turns right; z>0 leans left
 #   positions: x<0 = right, y>0 = down, z<0 = forward
 
-def arm(side, fwd=0.0, out=0.0, twist=0.0):
-    """Arm rotation from intuitive angles. side: 'r' or 'l'."""
+def _rx(a):
+    c, s = math.cos(a), math.sin(a)
+    return ((1, 0, 0), (0, c, -s), (0, s, c))
+
+
+def _ry(a):
+    c, s = math.cos(a), math.sin(a)
+    return ((c, 0, s), (0, 1, 0), (-s, 0, c))
+
+
+def _rz(a):
+    c, s = math.cos(a), math.sin(a)
+    return ((c, -s, 0), (s, c, 0), (0, 0, 1))
+
+
+def _mul(a, b):
+    return tuple(tuple(sum(a[i][k] * b[k][j] for k in range(3)) for j in range(3)) for i in range(3))
+
+
+def euler_zyx(m):
+    """ModelPart angles (x, y, z) in degrees with m = Rz(z) Ry(y) Rx(x), the order ModelPart applies them."""
+    sy = max(-1.0, min(1.0, -m[2][0]))
+    if abs(sy) < 0.99999:
+        x, y, z = math.atan2(m[2][1], m[2][2]), math.asin(sy), math.atan2(m[1][0], m[0][0])
+    else:
+        x, y, z = 0.0, math.asin(sy), math.atan2(-m[0][1], m[1][1])
+    return [math.degrees(x), math.degrees(y), math.degrees(z)]
+
+
+class LimbRot(list):
+    """A limb rotation built from intuitive angles. Several angle triples give the same rotation, so when it is
+    keyed, Clip.key picks the one nearest the previous key and the curve between keys does not spin around."""
+
+
+def limb(side, fwd=0.0, out=0.0, twist=0.0):
+    """Rotation of a limb that hangs down at rest, from intuitive angles. side: 'r' or 'l'.
+
+    fwd swings the limb forward (90 points it ahead, 180 straight up, negative behind), out swings it away from
+    the body's midline (negative across it), twist turns it about its own length. They compose in that meaning
+    whatever the other angles are: out is measured sideways from the plane the limb swings forward in, so a hand
+    raised forward with out < 0 moves toward the midline. Writing (-fwd, twist, out) straight into ModelPart's
+    angles, as this once did, is only right for a limb hanging down: ModelPart applies x first, then y and z
+    about the parent's axes, so on a raised arm a negative z swung the hand outward ("blowing into your hands"
+    held both arms straight out to the sides).
+    """
     s = 1 if side == 'r' else -1
-    return [-fwd, twist * s, out * s]
+    m = _mul(_rx(math.radians(-fwd)), _mul(_rz(math.radians(s * out)), _ry(math.radians(s * twist))))
+    return LimbRot(euler_zyx(m))
+
+
+def arm(side, fwd=0.0, out=0.0, twist=0.0):
+    """Arm rotation from intuitive angles (see limb)."""
+    return limb(side, fwd, out, twist)
 
 
 def leg(side, fwd=0.0, out=0.0, twist=0.0):
-    s = 1 if side == 'r' else -1
-    return [-fwd, twist * s, out * s]
+    """Leg rotation from intuitive angles (see limb)."""
+    return limb(side, fwd, out, twist)
+
+
+def _nearest_angles(v, prev):
+    """The angle triple for v's rotation nearest prev: the two Euler solutions, each angle unwrapped."""
+    def unwrap(a, p):
+        return a + 360.0 * round((p - a) / 360.0)
+    best = None
+    for cand in ((v[0], v[1], v[2]), (v[0] + 180.0, 180.0 - v[1], v[2] + 180.0)):
+        c = [unwrap(cand[i], prev[i]) for i in range(3)]
+        d = sum((c[i] - prev[i]) ** 2 for i in range(3))
+        if best is None or d < best[0]:
+            best = (d, c)
+    return best[1]
 
 
 def tilt(fwd=0.0, right=0.0, roll_right=0.0):
@@ -127,8 +189,12 @@ class Clip:
     # -- raw keyframes
     def key(self, bone, ch, t, v, ease=None, lerp=None):
         chan = self.bones.setdefault(bone, {}).setdefault(ch, {})
-        val = [r(x) if isinstance(x, (int, float)) else x for x in v]
         k = "%g" % round(t, 4)
+        if isinstance(v, LimbRot):
+            prev = self._before(chan, t)
+            if prev is not None:
+                v = _nearest_angles(v, prev)
+        val = [r(x) if isinstance(x, (int, float)) else x for x in v]
         if ease or lerp:
             o = {"v": val}
             if ease:
@@ -139,6 +205,17 @@ class Clip:
         else:
             chan[k] = val
         return self
+
+    @staticmethod
+    def _before(chan, t):
+        """The numeric value of the latest key before t, or None."""
+        best = None
+        for k, o in chan.items():
+            kt = float(k)
+            v = o["v"] if isinstance(o, dict) else o
+            if kt < t - 1e-9 and all(isinstance(x, (int, float)) for x in v) and (best is None or kt > best[0]):
+                best = (kt, v)
+        return None if best is None else best[1]
 
     def keys(self, bone, ch, seq, lerp=None):
         """seq: iterable of (t, value) or (t, value, ease)."""

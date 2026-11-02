@@ -246,5 +246,63 @@ class AssetConsistencyTests(unittest.TestCase):
             self.assertTrue(os.path.isfile(path), path)
 
 
+class LimbRotationTests(unittest.TestCase):
+    """core.limb: intuitive limb angles become ModelPart angles that show the intended pose."""
+
+    @staticmethod
+    def hand(v):
+        import core
+        m = core._mul(core._rz(math.radians(v[2])), core._mul(core._ry(math.radians(v[1])), core._rx(math.radians(v[0]))))
+        return [m[i][1] for i in range(3)]  # where the limb's length (0, 1, 0) points: x<0 right, y>0 down, z<0 forward
+
+    def test_hanging_and_forward_limbs_are_unchanged(self):
+        import core
+        for out in (-30, 0, 25):
+            for twist in (-20, 0, 40):
+                for got, want in zip(core.arm('r', 0, out, twist), [0, twist, out]):
+                    self.assertAlmostEqual(got, want, places=6)
+        for fwd in (-60, 30, 90, 150):
+            for got, want in zip(core.arm('l', fwd), [-fwd, 0, 0]):
+                self.assertAlmostEqual(got, want, places=6)
+
+    def test_out_keeps_its_meaning_on_a_raised_arm(self):
+        import core
+        for fwd in (60, 90, 120, 160):
+            right_in, right_out = self.hand(core.arm('r', fwd, -35)), self.hand(core.arm('r', fwd, 35))
+            self.assertGreater(right_in[0], 0.3, "right hand moves toward the midline (+x) at fwd %d" % fwd)
+            self.assertLess(right_out[0], -0.3, "and away from it at fwd %d" % fwd)
+            left_in = self.hand(core.arm('l', fwd, -35))
+            self.assertLess(left_in[0], -0.3, "the left hand mirrors it at fwd %d" % fwd)
+        blow = self.hand(core.arm('r', 120, -40, 40))
+        self.assertGreater(blow[0], 0.5, "blowing into your hands brings them in front of the face")
+        self.assertLess(blow[1], -0.2)
+        self.assertLess(blow[2], -0.5)
+
+    def test_angles_reproduce_the_composed_rotation(self):
+        import core, random
+        rnd = random.Random(7)
+        for _ in range(2000):
+            side, fwd, out, twist = rnd.choice('rl'), rnd.uniform(-180, 180), rnd.uniform(-90, 90), rnd.uniform(-90, 90)
+            s = 1 if side == 'r' else -1
+            want = core._mul(core._rx(math.radians(-fwd)), core._mul(core._rz(math.radians(s * out)), core._ry(math.radians(s * twist))))
+            v = core.arm(side, fwd, out, twist)
+            got = core._mul(core._rz(math.radians(v[2])), core._mul(core._ry(math.radians(v[1])), core._rx(math.radians(v[0]))))
+            for i in range(3):
+                for j in range(3):
+                    self.assertAlmostEqual(got[i][j], want[i][j], places=6)
+
+    def test_keys_stay_continuous(self):
+        import core
+        c = core.Clip("test.limb_continuity", "t", "test", "@player", length=1.0)
+        try:
+            c.cycle("right_arm", "rotation", lambda u: core.arm('r', 170 + 40 * u, -30 * u), samples=16)
+            keys = sorted(((float(k), o["v"] if isinstance(o, dict) else o) for k, o in c.bones["right_arm"]["rotation"].items()))
+            for (_, a), (_, b) in zip(keys, keys[1:]):
+                self.assertLess(max(abs(a[i] - b[i]) for i in range(3)), 30, "no flip between %s and %s" % (a, b))
+        finally:
+            core.CLIPS.remove(c)
+            core._IDS.discard(c.id)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
