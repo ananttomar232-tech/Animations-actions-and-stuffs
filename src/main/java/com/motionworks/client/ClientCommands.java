@@ -1,5 +1,7 @@
 package com.motionworks.client;
 
+import com.motionworks.MotionWorks;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -30,7 +32,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 /**
- * Client-side tooling: {@code /mw play|list|stats|export|debug|emote}, {@code /mw cinematic ...}
+ * Client-side tooling: {@code /mw play|list|stats|export|audit|doctor|debug|emote}, {@code /mw cinematic ...}
  * and the {@code /mw cam ...} camera recorder.
  */
 public final class ClientCommands {
@@ -56,6 +58,7 @@ public final class ClientCommands {
                         .executes(c -> list(StringArgumentType.getString(c, "filter")))))
                 .then(Commands.literal("export").executes(c -> export()))
                 .then(Commands.literal("audit").executes(c -> audit()))
+                .then(Commands.literal("doctor").executes(c -> doctor()))
                 .then(Commands.literal("debug").executes(c -> {
                     MWConfig.CLIENT.debugOverlay.set(!MWConfig.CLIENT.debugOverlay.get());
                     return 1;
@@ -106,6 +109,15 @@ public final class ClientCommands {
         }
         boolean ok = AnimatorManager.get(target).play(clip);
         return say(ok ? "motionworks.play.ok" : "motionworks.play.not_bound", id);
+    }
+
+    /** Why third-person animation is or is not showing in this game: hook, other mods, config. Also written to the log. */
+    private static int doctor() {
+        for (String line : com.motionworks.client.rig.RenderHealth.report()) {
+            say("motionworks.doctor.line", line);
+            MotionWorks.LOGGER.info("MotionWorks doctor: {}", line);
+        }
+        return 1;
     }
 
     private static int stats() {

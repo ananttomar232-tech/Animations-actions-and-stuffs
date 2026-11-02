@@ -1,15 +1,16 @@
 # Testing
 
-MotionWorks is tested in five layers, from pure data checks to the real client. Each runs offline once the
+MotionWorks is tested in six layers, from pure data checks to a real Forge install. Each runs offline once the
 Gradle caches exist (one online `./gradlew build` first).
 
 | Layer | Command | Runs in |
 |---|---|---|
 | Authoring validator | `python3 tools/animgen/build.py --check` | seconds |
 | Toolkit tests (23) | `python3 tools/animgen/test_toolkit.py` | ~25 s |
-| Java unit tests (50) | `./gradlew test` | ~1 min |
+| Java unit tests (57) | `./gradlew test` | ~1 min |
 | In-game GameTests (6) | `./gradlew runGameTestServer` | ~1 min |
 | Headless client smoke test | `tools/clienttest/run_client_smoke.sh` | ~4 min |
+| Production client test | `./gradlew build && tools/clienttest/run_production_client.sh` | ~3 min (plus a one-time Forge install) |
 
 ## Authoring validator
 
@@ -46,6 +47,8 @@ phase variants).
 | `RotationBlendTest` | Spins blend the short way round: against vanilla, between crossfading clips, and when an additive spin fades |
 | `CombatStateTest` | Dodge, parry and counter windows from another world's game time are dropped, not honoured |
 | `WorldEventArgsTest` | Positional world-event encoding, including under a decimal-comma locale |
+| `BodyPlanTableTest` | The body-plan rules for mobs from other mods: every plan borrows a family and rig that exist, the first matching plan wins and needs all its traits, shapes come out right from vanilla part names (a horse's baby legs are not more legs, illagers carry both folded and separate arms), packs cannot name unknown shapes or traits |
+| `AdaptiveRigTest` | A short-legged humanoid "from another mod" is classified as humanoid and its hips found; the fitted player rig turns its torso rigidly about those hips, not vanilla's, without changing the shared profile; `RenderHealth` notices another mod putting back an arm MotionWorks raised, but not a channel MotionWorks left alone |
 | `SourceConventionsTest` | Singletons are the last static field (static initialisation order); every declared context variable is actually written |
 
 ## GameTests (`MotionWorksGameTests`)
@@ -81,7 +84,14 @@ family it takes the model from the entity's real renderer and reports:
 - scale tracks that slide a part's box off its pivot
 
 It also lists bodies that dip below the feet (corrected at runtime by ground contact) and lifts off the
-ground, for review.
+ground, for review. It checks the body-plan classifier on 13 vanilla models whose answer is known (a zombie must
+come out humanoid and animated like a zombie, a vindicator illager, a horse equine, a spider an arthropod ...),
+and lists every entity type without a family with its plan and how many borrowed bone tracks find a part.
+
+A test resource pack removes the families of the pig, the husk and the wandering trader, so the scene also has
+three mobs animated by body plan, as another mod's mobs would be. The log must show each one posed, like a cow, a
+zombie and a villager. The render check (`RenderHealth`, the same data as `/mw doctor`) must report the
+third-person hook healthy: nothing cancelled, every drawn entity type hooked.
 
 The script saves screenshots and a contact sheet to `build/clienttest/`. It fails if the log lacks the
 library, world-join and audit markers, or contains a crash report, a mixin failure, an animation error, an
@@ -120,10 +130,24 @@ and covered by tests or the audit:
   - animators of killed mobs never released
   - remote players' stowed weapons outliving their entity ids
 
+## Production client test (`tools/clienttest/run_production_client.sh`)
+
+The development client remaps the mod while it loads. Players run the reobfuscated jar from `build/libs` in an
+ordinary Forge install, where obfuscated names, the mixin refmap and the jar's manifest all matter. This test
+installs that Forge version with its official installer (once, under `build/prodclient/mc`), builds the launch
+command the vanilla launcher would use (`forge_launch.py`), and runs the shipped jar under Xvfb in the same scene,
+with the same log checks (`checks.sh`) as the smoke test. It needs network access the first time.
+
+Run against the jar that was published before this test existed, it showed third-person animation working in a
+real install (the audit, the render check and screenshots of posed players and mobs). That ruled out a problem
+in the jar itself and pointed at other mods, hence `/mw doctor`.
+
 ## Not covered automatically
 
 - Real GPUs and drivers. The smoke test uses software OpenGL at a few frames per second, so timing-sensitive
   visuals (trails, particles) are checked for errors, not for looks.
-- Other mods, including shader packs, Oculus and Embeddium (the foliage shaders switch off for those).
+- Other mods, including shader packs, Oculus and Embeddium (the foliage shaders switch off for those). The
+  compatibility notes in the README come from reading other mods' rendering hooks and from `RenderHealth`, which
+  watches for them at runtime. No third-party mod is run in these tests.
 - Two real clients on one server. Relayed triggers are covered on the server side by the GameTests.
 - Performance with large mob counts.

@@ -53,6 +53,7 @@ public final class ClientEvents {
         if (mc.level == null || mc.player == null) return;
         com.motionworks.client.rig.LibraryAudit.autoRun();
         com.motionworks.client.rig.PoseGallery.autoRun();
+        com.motionworks.client.rig.RenderHealth.tick();
         FirstPersonAnimator.INSTANCE.tick();
         BossIntros.tick();
         SocialDirector.tick();
@@ -63,6 +64,12 @@ public final class ClientEvents {
             float fall = self.scope().get(CtxVars.LAST_FALL);
             if (self.scope().get(CtxVars.TIME_SINCE_LANDED) == 0.05f && fall > 1.2f) CameraEffects.landing(fall);
         }
+    }
+
+    /** Seen last and even when cancelled, so RenderHealth can tell when another mod takes over an entity's rendering. */
+    @SubscribeEvent(priority = net.minecraftforge.eventbus.api.EventPriority.LOWEST, receiveCanceled = true)
+    public static void onRenderLiving(net.minecraftforge.client.event.RenderLivingEvent.Pre<?, ?> e) {
+        com.motionworks.client.rig.RenderHealth.preRender(e.getEntity(), e.isCanceled());
     }
 
     private static void handleKeys(Minecraft mc, LocalPlayer p) {

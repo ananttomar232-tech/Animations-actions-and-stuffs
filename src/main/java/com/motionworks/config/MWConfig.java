@@ -30,6 +30,7 @@ public final class MWConfig {
         public final ForgeConfigSpec.BooleanValue groundContact;
         public final ForgeConfigSpec.DoubleValue intensity;
         public final ForgeConfigSpec.IntValue animationDistance;
+        public final ForgeConfigSpec.BooleanValue reassertPose;
 
         public final ForgeConfigSpec.BooleanValue firstPerson;
         public final ForgeConfigSpec.DoubleValue firstPersonIntensity;
@@ -78,6 +79,8 @@ public final class MWConfig {
                     "(feet may still sink: single-block legs cannot bend, so that is how kneels and crouches read)").define("groundContact", true);
             intensity = b.comment("Global animation strength (0 = vanilla, 1 = authored)").defineInRange("intensity", 1.0, 0.0, 1.5);
             animationDistance = b.comment("Entities further than this many blocks keep vanilla animation").defineInRange("animationDistance", 64, 8, 256);
+            reassertPose = b.comment("If another mod changes a pose after MotionWorks set it and before the model is drawn, write the MotionWorks",
+                    "pose again (false lets the other mod win). /mw doctor reports when this happens").define("reassertPose", true);
             b.pop();
 
             b.push("firstPerson");

@@ -16,4 +16,8 @@ execute align xyz run summon minecraft:cow ~-8 ~1 ~6.5 {NoAI:1b,Rotation:[-90f,0
 execute align xyz run summon minecraft:horse ~-8 ~1 ~9.5 {NoAI:1b,Rotation:[-90f,0f],Variant:2}
 # An axolotl on dry ground for the play-dead check
 execute align xyz run summon minecraft:axolotl ~-3 ~ ~3 {NoAI:1b,Rotation:[90f,0f]}
+# Animated by body plan (the test resource pack removes their families), as a mob from another mod would be
+summon minecraft:pig ~3.5 ~ ~7 {NoAI:1b}
+summon minecraft:husk ~1.5 ~ ~6.5 {NoAI:1b,PersistenceRequired:1b}
+summon minecraft:wandering_trader ~-3 ~ ~7 {NoAI:1b}
 say mwtest scene ready

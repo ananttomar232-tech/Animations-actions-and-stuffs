@@ -90,6 +90,20 @@ public final class RigProfile {
         return p;
     }
 
+    /**
+     * A copy for a model of other proportions (a mob from another mod borrowing this profile): couplings pivot at the
+     * given hip instead of the vanilla one, and the centre and ground pivots are measured from the model.
+     */
+    public RigProfile fittedTo(float[] hip) {
+        RigProfile p = new RigProfile(id + "~fit");
+        p.inherit(this);
+        p.couplings.clear();
+        for (Coupling c : couplings) p.couplings.add(new Coupling(c.parent(), c.pivot() == null || hip == null ? c.pivot() : hip.clone(), c.moveParent(), c.children()));
+        p.center = null;
+        p.ground = null;
+        return p;
+    }
+
     private void inherit(RigProfile b) {
         groups.putAll(b.groups);
         followers.putAll(b.followers);

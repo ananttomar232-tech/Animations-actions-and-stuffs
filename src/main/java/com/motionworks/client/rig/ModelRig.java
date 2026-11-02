@@ -123,6 +123,12 @@ public final class ModelRig {
         return topIsLeg;
     }
 
+    /** Whether any real model part was found (index 0 and 1 are the virtual root bones). */
+    public boolean hasBones() {
+        for (int i = 2; i < parts.length; i++) if (parts[i] != null) return true;
+        return false;
+    }
+
     public ModelPart part(String name) {
         int i = rig.indexOf(name);
         return i < 0 ? null : parts[i];

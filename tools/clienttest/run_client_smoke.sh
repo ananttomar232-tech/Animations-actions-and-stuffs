@@ -29,6 +29,7 @@ rm -rf run/saves/mwtest/session.lock run/saves/mwtest/playerdata run/saves/mwtes
 mkdir -p run/saves/mwtest/datapacks && cp -r "$HERE/datapack" run/saves/mwtest/datapacks/mwtest
 cp "$HERE/turntable.json" run/config/motionworks/cinematics/turntable.json
 cp "$HERE/options.txt" run/options.txt
+rm -rf run/resourcepacks/mwtest && mkdir -p run/resourcepacks && cp -r "$HERE/resourcepack" run/resourcepacks/mwtest
 
 export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe DISPLAY=":$DISPLAY_NUM"
 Xvfb ":$DISPLAY_NUM" -screen 0 1280x720x24 -nolisten tcp >/dev/null 2>&1 &
@@ -67,20 +68,8 @@ if command -v montage >/dev/null && ls "$OUT"/shots/*.png >/dev/null 2>&1; then
     montage "$OUT"/shots/shot_*.png -resize 50% -tile 6x -geometry +2+2 "$OUT/contact_sheet.png"
 fi
 
-fail=0
-expect() { grep -q -e "$1" "$OUT/client.log" < /dev/null || { echo "FAIL: missing \"$1\""; fail=1; }; }
-reject() { grep -q -e "$1" "$OUT/client.log" < /dev/null && { echo "FAIL: found \"$1\""; grep -m3 -e "$1" "$OUT/client.log"; fail=1; }; }
-expect "MotionWorks loaded [0-9]* animation clips"
-expect "MotionWorks loaded [0-9]* cinematic sequences"
-expect "joined the game"
-expect "mwtest scene ready"
-expect "MotionWorks audit: [0-9]* clip bindings"
-reject "---- Minecraft Crash Report ----"
-reject "MotionWorks failed to animate"
-reject "Mixin apply failed\|InvalidInjectionException\|InvalidMixinException"
-reject "Exception caught during firing event"
-reject "Bad cinematic\|Bad user cinematic\|failed to load"
-reject "MotionWorks audit: [0-9]* clip bindings on [0-9]* models, [1-9][0-9]* issues"
+source "$HERE/checks.sh"
+check_log "$OUT/client.log"
 grep -o "MotionWorks loaded [0-9]* animation clips.*" "$OUT/client.log" | head -1
 [ $fail -eq 0 ] && echo "PASS: client smoke test (screenshots in build/clienttest/)" || echo "client log: $OUT/client.log"
 exit $fail

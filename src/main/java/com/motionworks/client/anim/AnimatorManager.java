@@ -5,6 +5,7 @@ import com.motionworks.MotionWorks;
 import com.motionworks.client.rig.GroundContact;
 import com.motionworks.client.rig.ModelRig;
 import com.motionworks.client.rig.PoseApplier;
+import com.motionworks.client.rig.RenderHealth;
 import com.motionworks.client.rig.RigFactory;
 import com.motionworks.config.MWConfig;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -60,6 +61,7 @@ public final class AnimatorManager {
     public static void clear() {
         ANIMATORS.clear();
         level = null;
+        RenderHealth.reset();
     }
 
     public static void clientTick() {
@@ -102,20 +104,39 @@ public final class AnimatorManager {
     public static void apply(LivingEntity entity, EntityModel<?> model, float partialTicks, PoseStack stack) {
         // The model is shared by every entity of this type: clear what the previous render wrote first.
         RigFactory.restore(model);
-        if (!MWConfig.CLIENT.enabled.get() || entity.level() == null) return;
+        RenderHealth.hooked(entity);
+        if (!MWConfig.CLIENT.enabled.get() || entity.level() == null) {
+            RenderHealth.skipped(entity, RenderHealth.Skip.DISABLED);
+            return;
+        }
         Minecraft mc = Minecraft.getInstance();
-        if (!MWConfig.CLIENT.playerAnimations.get() && entity instanceof net.minecraft.world.entity.player.Player) return;
-        if (!MWConfig.CLIENT.mobAnimations.get() && !(entity instanceof net.minecraft.world.entity.player.Player)) return;
+        boolean player = entity instanceof net.minecraft.world.entity.player.Player;
+        if (player ? !MWConfig.CLIENT.playerAnimations.get() : !MWConfig.CLIENT.mobAnimations.get()) {
+            RenderHealth.skipped(entity, RenderHealth.Skip.DISABLED);
+            return;
+        }
         Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
         double range = MWConfig.CLIENT.animationDistance.get();
-        if (entity.position().distanceToSqr(cam) > range * range) return;
+        if (entity.position().distanceToSqr(cam) > range * range) {
+            RenderHealth.skipped(entity, RenderHealth.Skip.FAR);
+            return;
+        }
         EntityAnimator a = ANIMATORS.get(entity.getId());
-        if (a == null || a.entity != entity) return;
+        if (a == null || a.entity != entity) {
+            RenderHealth.skipped(entity, RenderHealth.Skip.NO_ANIMATOR);
+            return;
+        }
         try {
-            if (!a.bind(model)) return;
+            if (!a.bind(model) || !a.modelRig().hasBones()) {
+                RenderHealth.skipped(entity, RenderHealth.Skip.NO_BONES);
+                return;
+            }
             double clock = (entity.level().getGameTime() + partialTicks) / 20.0;
             a.sampleFrame(partialTicks);
-            if (!a.advanceTo(clock)) return;
+            if (!a.advanceTo(clock)) {
+                RenderHealth.skipped(entity, RenderHealth.Skip.IDLE);
+                return;
+            }
             ModelRig mr = a.modelRig();
             float strength = MWConfig.CLIENT.intensity.get().floatValue();
             boolean contact = MWConfig.CLIENT.groundContact.get() && a.standsOnGround();
@@ -127,7 +148,9 @@ public final class AnimatorManager {
                 if (lift > 0f) stack.translate(0f, -lift / 16f, 0f);
             }
             PoseApplier.applyRoot(mr, a.controller().pose(), stack, strength);
+            RenderHealth.posed(entity, model, mr);
         } catch (RuntimeException ex) {
+            RenderHealth.skipped(entity, RenderHealth.Skip.ERROR);
             if (!warned) {
                 warned = true;
                 MotionWorks.LOGGER.error("MotionWorks failed to animate {} with model {}", entity, model.getClass().getName(), ex);

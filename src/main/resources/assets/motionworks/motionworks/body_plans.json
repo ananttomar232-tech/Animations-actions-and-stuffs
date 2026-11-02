@@ -1,0 +1,22 @@
+{
+  "description": "How entity types with no entry in entities.json (mobs from other mods) are animated. The shape is measured from the model's own part names; traits from the entity. The first matching plan wins; the entity then borrows the rig and clips of the vanilla family named by 'like' (null: keep vanilla animation). Plans in resource packs are tried before these.",
+  "exclude": ["minecraft:armor_stand"],
+  "plans": [
+    {"shape": "humanoid", "traits": ["skeleton"], "like": "minecraft:skeleton"},
+    {"shape": "humanoid", "traits": ["piglin"], "like": "minecraft:piglin"},
+    {"shape": "humanoid", "traits": ["undead"], "like": "minecraft:zombie"},
+    {"shape": "humanoid", "like": "minecraft:player"},
+    {"shape": "illager", "like": "minecraft:vindicator"},
+    {"shape": "villager", "like": "minecraft:villager"},
+    {"shape": "equine", "like": "minecraft:horse"},
+    {"shape": "quadruped", "traits": ["hostile"], "like": "minecraft:polar_bear"},
+    {"shape": "quadruped", "like": "minecraft:cow"},
+    {"shape": "arthropod", "like": "minecraft:spider"},
+    {"shape": "aquatic", "traits": ["fish"], "like": "minecraft:cod"},
+    {"shape": "aquatic", "like": "minecraft:dolphin"},
+    {"shape": "winged", "traits": ["flying_mob"], "like": "minecraft:phantom"},
+    {"shape": "winged", "traits": ["hostile"], "like": "minecraft:bat"},
+    {"shape": "winged", "like": "minecraft:parrot"},
+    {"shape": "any", "like": null}
+  ]
+}

@@ -14,9 +14,9 @@ Embeddium is installed.
 |---|---|
 | Animation clips | **2,518**, all trigger-bound, in 15 categories (table below) |
 | Cinematic sequences | 27 authored, skippable, plus your own recorded with `/mw cam` |
-| Entity coverage | 80 entity families on 13 rig profiles: players, every vanilla mob, villagers and illagers |
+| Entity coverage | 80 entity families on 13 rig profiles: players, every vanilla mob, villagers and illagers. Mobs from other mods are animated by body plan |
 | Assets | 18 particle types, 60 sound events (109 generated OGG files), English translations |
-| Tests | 50 JUnit tests, 6 in-game GameTests, 23 toolkit tests, and a headless client smoke test that audits every clip on the real models |
+| Tests | 57 JUnit tests, 6 in-game GameTests, 23 toolkit tests, and headless client tests (development and a real Forge install) that audit every clip on the real models |
 
 | Category | Clips | Required |
 |---|---:|---:|
@@ -59,6 +59,12 @@ under them. Pivots a profile does not set are measured from the model's own geom
 its body rather than a point above it. Each frame the applier restores whatever vanilla did not rewrite, so
 poses never accumulate. **Ground contact** keeps standing bodies out of the floor: a roll, cartwheel or pose
 lying down rests on the ground, while kneels still sink only the feet (a single-block leg has no knee).
+
+**Mobs from other mods.** A mob MotionWorks has no family for is animated by its **body plan**: the part names
+of the model the game actually draws decide its shape (humanoid, quadruped, horse-like, arthropod, aquatic,
+winged, villager or illager), and its class decides traits (undead, hostile, fish ...). It is then animated like
+the matching vanilla family (a modded undead humanoid like a zombie, a modded quadruped like a cow), with the rig
+fitted to its own proportions. The rules are data (`body_plans.json`); see [`docs/AUTHORING.md`](docs/AUTHORING.md).
 
 **Players and first person.** Locomotion, combat (combos, charged swings, blocking, ranged weapons), every
 interaction, swimming, flying, riding, damage and recovery. A separate first-person animator drives the hands
@@ -117,6 +123,7 @@ Build from source:
 |---|---|---|
 | `/mw play <clip>`, `/mw emote <clip>` | client | Play a clip on yourself (emotes are sent to nearby players) |
 | `/mw list [filter]`, `/mw stats`, `/mw debug`, `/mw export` | client | Browse the library, show load statistics, toggle the debug overlay, export the registry |
+| `/mw doctor` | client, in a world | Explain whether third-person animation is reaching the models: for each entity type drawn in the last 4 s, how often its rendering was cancelled by another mod, reached the hook, was posed, or was re-posed by another mod, plus config switches and installed mods known to take over entity rendering, with what to change |
 | `/mw audit` | client, in a world | Check every clip against the models the game actually renders (missing bones, clips that move nothing, parts scaled off their bodies, bodies below the feet) and save a report |
 | `/mw cinematic play <id>`, `stop`, `list` | client | Preview cinematics locally |
 | `/mw cam add`, `clear`, `preview`, `save <name>` | client | Record a camera path and save it as `user:<name>` |
@@ -132,6 +139,28 @@ animation distance, camera shake strength, letterbox and HUD hiding, foliage and
 footsteps, foley, weapon trails, faces, personality and conversations. `config/motionworks-common.toml` has
 `sync` (trigger broadcasting), `combat` (dodge, parry window, shield bash, counter attacks, landing rolls)
 and `social` (emotes). Every option documents itself in the file.
+
+## If third-person animation does not show
+
+First-person animation runs separately, so it can work while third-person animation is blocked. Third-person
+animation is posed on Minecraft's own entity models, right after vanilla poses them. A mod that draws entities
+with its own models skips that step. MotionWorks checks this while you play: when your player or most mobs are
+blocked, it says so once in chat. `/mw doctor` gives the details:
+
+- **Epic Fight** draws players and the mobs it gives combat to with its own skeleton. In its settings, turn
+  "Player Vanilla Model" ON and switch to Mining mode (its Toggle Battle/Mining Mode key) to see MotionWorks on
+  your player. The mobs Epic Fight animates stay Epic Fight's.
+- **Entity Model Features** with a pack such as Fresh Animations animates the mobs that pack remodels. Disable
+  the pack, or its models for the mobs you want MotionWorks to animate.
+- Mods that only pose the vanilla model (Not Enough Animations, playerAnimator, Better Combat, Emotecraft,
+  First-person Model, Figura without an avatar) do so before MotionWorks, which poses last. When something changes
+  a pose after MotionWorks and before the model is drawn, MotionWorks writes its pose again
+  (`animation.reassertPose`, on by default) and `/mw doctor` counts it.
+- Check `animation.enabled`, `playerAnimations`, `mobAnimations`, `intensity` and `animationDistance` in
+  `config/motionworks-client.toml`.
+
+These findings come from the in-game check and from reading those mods' rendering hooks. The mods themselves have
+not been run together with MotionWorks in the automated tests.
 
 ## Extending it
 
@@ -159,8 +188,11 @@ played faster, scaled, mirrored or offset fails the build.
 - Clips are authored right-handed. First person mirrors for left-handed players; third-person poses do not.
 - The foliage vertex shaders are disabled when Oculus or Embeddium is present (they replace the same shaders).
   Everything else works with them.
-- Client rendering has been verified headlessly under Xvfb with software OpenGL (see `docs/TESTING.md`). That
-  covers boot, mixins, world join, scene animation and cinematics, but not a real GPU or other mods.
+- Client rendering has been verified headlessly under Xvfb with software OpenGL, in the development client and
+  in a real Forge install running the shipped jar (see `docs/TESTING.md`). That covers boot, mixins, world join,
+  scene animation and cinematics, but not a real GPU or other mods.
+- Entities drawn by a renderer that is not Minecraft's living-entity renderer (GeckoLib mobs, Epic Fight's
+  skeletons) cannot be posed. `/mw doctor` and `/mw audit` name them.
 
 ## License
 

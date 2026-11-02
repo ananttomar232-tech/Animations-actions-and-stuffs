@@ -38,6 +38,8 @@
  "motionworks.play.ok": "Playing %s",
  "motionworks.play.unknown": "Unknown clip: %s",
  "motionworks.stats": "MotionWorks: %s",
+ "motionworks.doctor.line": "[MotionWorks doctor] %s",
+ "motionworks.doctor.warning": "MotionWorks: third-person animation is blocked. %s. Run /mw doctor for details.",
  "motionworks.stats.errors": "%s animation files failed to load; check the log for details",
  "motionworks.trace.entry": "[trace] %s ▸ %s",
  "motionworks.trace.off": "Stopped tracing animation triggers",

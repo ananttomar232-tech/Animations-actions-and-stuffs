@@ -76,19 +76,21 @@ public final class EntityAnimator {
         return controller != null ? controller.scope() : staging;
     }
 
-    AnimationLibrary.EntityFamily family() {
-        AnimationLibrary.EntityFamily f = AnimationLibrary.INSTANCE.family(typeId);
-        if (f != null) return f;
-        if (entity instanceof Player) f = AnimationLibrary.INSTANCE.family("minecraft:player");
-        return f != null ? f : new AnimationLibrary.EntityFamily("generic", List.of(typeId, "@living"));
-    }
-
     /** Binds (or rebinds) a controller to the model that is about to render. */
     boolean bind(EntityModel<?> model) {
         AnimationLibrary lib = AnimationLibrary.INSTANCE;
         if (controller != null && model == boundModel && generation == lib.generation()) return true;
-        AnimationLibrary.EntityFamily fam = family();
-        RigProfile profile = lib.rig(fam.rig());
+        AnimationLibrary.EntityFamily fam = lib.family(typeId);
+        if (fam == null && entity instanceof Player) fam = lib.family("minecraft:player");
+        RigProfile profile;
+        if (fam != null) {
+            profile = lib.rig(fam.rig());
+        } else {
+            // Not one MotionWorks knows (a mob from another mod): animate it like the vanilla family its body matches.
+            com.motionworks.client.rig.BodyPlans.Resolved plan = com.motionworks.client.rig.BodyPlans.resolve(entity, typeId, model);
+            fam = plan.family();
+            profile = plan.profile();
+        }
         ModelRig mr = RigFactory.get(model, profile);
         Collection<AnimationClip> clips = lib.clips().forTargets(fam.targets());
         Scope previous = controller != null ? controller.scope() : staging;

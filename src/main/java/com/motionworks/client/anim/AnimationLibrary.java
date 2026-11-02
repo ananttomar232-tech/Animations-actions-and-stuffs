@@ -39,6 +39,7 @@ public final class AnimationLibrary implements ResourceManagerReloadListener {
     private final ClipLibrary clips = new ClipLibrary();
     private final Map<String, RigProfile> rigs = new LinkedHashMap<>();
     private final Map<String, EntityFamily> families = new LinkedHashMap<>();
+    private final com.motionworks.engine.io.BodyPlanTable bodyPlans = new com.motionworks.engine.io.BodyPlanTable();
     private int generation;
     private final List<String> errors = new ArrayList<>();
 
@@ -61,6 +62,11 @@ public final class AnimationLibrary implements ResourceManagerReloadListener {
 
     public Map<String, EntityFamily> families() {
         return families;
+    }
+
+    /** How entity types without a family (mobs from other mods) are animated; see {@code body_plans.json}. */
+    public com.motionworks.engine.io.BodyPlanTable bodyPlans() {
+        return bodyPlans;
     }
 
     /** Increments on each reload so animators can rebuild their controllers. */
@@ -102,6 +108,11 @@ public final class AnimationLibrary implements ResourceManagerReloadListener {
                 try (Reader r = res.openAsReader()) {
                     JsonObject o = JsonParser.parseReader(r).getAsJsonObject();
                     for (Map.Entry<String, JsonElement> e : o.entrySet()) {
+                        if (e.getValue().isJsonNull()) {
+                            // A pack can hand a type back to the body-plan rules (or test them on a vanilla mob).
+                            families.remove(e.getKey());
+                            continue;
+                        }
                         JsonObject f = e.getValue().getAsJsonObject();
                         List<String> targets = new ArrayList<>();
                         f.getAsJsonArray("targets").forEach(t -> targets.add(t.getAsString()));
@@ -109,6 +120,19 @@ public final class AnimationLibrary implements ResourceManagerReloadListener {
                     }
                 } catch (Exception e) {
                     errors.add(ns + ":motionworks/entities.json: " + e.getMessage());
+                }
+            }
+        }
+        bodyPlans.clear();
+        for (String ns : manager.getNamespaces()) {
+            List<Resource> stack = new ArrayList<>(manager.getResourceStack(new ResourceLocation(ns, "motionworks/body_plans.json")));
+            // Highest-priority pack first, so a resource pack's plans are tried before the mod's own.
+            java.util.Collections.reverse(stack);
+            for (Resource res : stack) {
+                try (Reader r = res.openAsReader()) {
+                    bodyPlans.load(r, ns + ":motionworks/body_plans.json (" + res.sourcePackId() + ")");
+                } catch (Exception e) {
+                    errors.add(ns + ":motionworks/body_plans.json: " + e.getMessage());
                 }
             }
         }

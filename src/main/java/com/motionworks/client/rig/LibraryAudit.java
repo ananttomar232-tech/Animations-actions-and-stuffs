@@ -102,6 +102,8 @@ public final class LibraryAudit {
             rest.restore();
             PoseApplier.restore(mr);
         }
+        List<String> plans = new ArrayList<>();
+        clipsChecked += bodyPlans(level, issues, plans);
         List<String> report = new ArrayList<>();
         report.add(String.format("MotionWorks library audit: %d clip bindings on %d models, %d issues", clipsChecked, models, issues.size()));
         report.addAll(issues);
@@ -109,6 +111,8 @@ public final class LibraryAudit {
         report.addAll(corrected);
         report.add("-- lifts for review (jumps, hops, rears and flight lift on purpose):");
         report.addAll(lifts);
+        report.add("-- entity types without a family (mobs from other mods), animated by body plan:");
+        report.addAll(plans);
         report.add("-- notes:");
         report.addAll(notes);
         return new Result(clipsChecked, models, issues.size(), report);
@@ -147,6 +151,97 @@ public final class LibraryAudit {
                 || e instanceof net.minecraft.world.entity.monster.Vex || e instanceof net.minecraft.world.entity.animal.allay.Allay
                 || e instanceof net.minecraft.world.entity.monster.Blaze || e instanceof net.minecraft.world.entity.boss.wither.WitherBoss
                 || e instanceof net.minecraft.world.entity.monster.Guardian);
+    }
+
+    /**
+     * Vanilla models whose body plan is known: the classifier must put each in its own family, or a mob from another
+     * mod with the same body would be animated wrongly.
+     */
+    static final Map<String, String[]> EXPECTED_PLANS = Map.ofEntries(
+            Map.entry("minecraft:player", new String[] {"humanoid", "minecraft:player"}),
+            Map.entry("minecraft:zombie", new String[] {"humanoid", "minecraft:zombie"}),
+            Map.entry("minecraft:skeleton", new String[] {"humanoid", "minecraft:skeleton"}),
+            Map.entry("minecraft:piglin", new String[] {"humanoid", "minecraft:piglin"}),
+            Map.entry("minecraft:villager", new String[] {"villager", "minecraft:villager"}),
+            Map.entry("minecraft:vindicator", new String[] {"illager", "minecraft:vindicator"}),
+            Map.entry("minecraft:horse", new String[] {"equine", "minecraft:horse"}),
+            Map.entry("minecraft:cow", new String[] {"quadruped", "minecraft:cow"}),
+            Map.entry("minecraft:spider", new String[] {"arthropod", "minecraft:spider"}),
+            Map.entry("minecraft:cod", new String[] {"aquatic", "minecraft:cod"}),
+            Map.entry("minecraft:dolphin", new String[] {"aquatic", "minecraft:dolphin"}),
+            Map.entry("minecraft:phantom", new String[] {"winged", "minecraft:phantom"}),
+            Map.entry("minecraft:parrot", new String[] {"winged", "minecraft:parrot"}));
+
+    /**
+     * Checks the body-plan classifier on the vanilla models above, then audits every living entity type that has no
+     * family (in a modded game, the other mods' mobs): which plan it gets and how much of the borrowed clips its
+     * model can play. Returns the clip bindings checked.
+     */
+    private static int bodyPlans(Level level, List<String> issues, List<String> plans) {
+        Minecraft mc = Minecraft.getInstance();
+        AnimationLibrary lib = AnimationLibrary.INSTANCE;
+        int checked = 0;
+        for (Map.Entry<String, String[]> e : new java.util.TreeMap<>(EXPECTED_PLANS).entrySet()) {
+            LivingEntity living = living(level, e.getKey());
+            EntityModel<?> model = living == null ? null : modelOf(living);
+            if (model == null) {
+                issues.add("PLAN " + e.getKey() + ": no model to classify");
+                continue;
+            }
+            java.util.Set<String> parts = BodyPlans.partNames(RigFactory.get(model, lib.rig("generic")));
+            String shape = BodyPlans.shapeOf(living, model, parts);
+            var plan = lib.bodyPlans().match(shape, BodyPlans.traits(living));
+            String like = plan == null ? null : plan.like();
+            if (!shape.equals(e.getValue()[0]) || !e.getValue()[1].equals(like)) {
+                issues.add("PLAN " + e.getKey() + ": classified as " + shape + " like " + like + ", expected " + e.getValue()[0] + " like "
+                        + e.getValue()[1] + " (parts " + parts + ")");
+            }
+        }
+        for (EntityType<?> type : ForgeRegistries.ENTITY_TYPES) {
+            String id = String.valueOf(ForgeRegistries.ENTITY_TYPES.getKey(type));
+            if (lib.family(id) != null || type == EntityType.PLAYER) continue;
+            Entity entity;
+            try {
+                entity = type.create(level);
+            } catch (RuntimeException ex) {
+                // Another mod's entity may not survive being built on the client outside its own spawning code.
+                plans.add("SKIP " + id + ": could not be created for the audit (" + ex + ")");
+                continue;
+            }
+            if (!(entity instanceof LivingEntity living)) continue;
+            EntityModel<?> model = modelOf(living);
+            if (model == null) {
+                plans.add("SKIP " + id + ": drawn by " + mc.getEntityRenderDispatcher().getRenderer(entity).getClass().getName()
+                        + ", which is not a living-entity renderer, so no part model can be posed");
+                continue;
+            }
+            BodyPlans.Resolved r = BodyPlans.resolve(living, id, model);
+            ModelRig mr = RigFactory.get(model, r.profile());
+            int clips = 0, bound = 0, wanted = 0;
+            for (AnimationClip clip : lib.clips().forTargets(r.family().targets())) {
+                clips++;
+                checked++;
+                for (BoneTrack t : clip.tracks()) {
+                    if (t.bone().startsWith("mw_")) continue;
+                    wanted++;
+                    if (mr.rig.indexOf(t.bone()) >= 0) bound++;
+                }
+                scaleDrift(clip, id, mr, issues);
+            }
+            plans.add(String.format("%s: %s; %d clips, %d of %d bone tracks find a part (parts %s)", id, r.describe(), clips, bound, wanted,
+                    BodyPlans.partNames(mr)));
+        }
+        return checked;
+    }
+
+    private static LivingEntity living(Level level, String id) {
+        if (id.equals("minecraft:player")) return Minecraft.getInstance().player;
+        return create(level, id) instanceof LivingEntity l ? l : null;
+    }
+
+    private static EntityModel<?> modelOf(LivingEntity e) {
+        EntityRenderer<?> r = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(e);
+        return r instanceof LivingEntityRenderer<?, ?> lr ? lr.getModel() : null;
     }
 
     private static Entity create(Level level, String id) {

@@ -8,6 +8,7 @@ profiles, entity families and cinematics without code.
 | `assets/<ns>/motionworks/animations/**/*.json` | Clips (MotionWorks format, or Bedrock/Blockbench animation JSON) |
 | `assets/<ns>/motionworks/rigs/<id>.json` | Rig profiles |
 | `assets/<ns>/motionworks/entities.json` | Which rig and clip targets each entity type uses |
+| `assets/<ns>/motionworks/body_plans.json` | How entity types not in `entities.json` (other mods' mobs) are animated |
 | `assets/<ns>/motionworks/cinematics/<id>.json` | Cinematic sequences, played as `<ns>:<id>` |
 | `config/motionworks/cinematics/<name>.json` | Your own sequences (from `/mw cam save`), played as `user:<name>` |
 
@@ -154,6 +155,44 @@ Timed `events` fire as the clip passes them: `footstep` (`foot`), `sound` (`soun
 
 `entities.json` maps entity types to a rig and the clip targets they use:
 `{"minecraft:cow": {"rig": "quadruped", "targets": ["minecraft:cow", "@quadruped", "@living"]}}`.
+A pack can map a type to `null` to remove it, which hands it to the body plans below.
+
+## Mobs from other mods: body plans
+
+An entity type with no entry in `entities.json` is animated by its **body plan**. When it is first drawn,
+MotionWorks reads the part names of the model its renderer actually uses and decides its shape:
+
+| Shape | Measured as |
+|---|---|
+| `arthropod` | six or more legs (a horse's baby legs and a player's pants do not count) |
+| `illager`, `villager` | head, two legs and folded `arms`, on an illager or villager model or entity |
+| `humanoid` | head, two legs and two arms (or folded arms) |
+| `equine`, `quadruped` | four legs named like vanilla's (`right_hind_leg` ...); `equine` for horse models and entities |
+| `aquatic` | a water animal, or any part named like a fin |
+| `winged` | any part named like a wing |
+| `other` | anything else |
+
+It also reads the entity's traits: `undead`, `arthropod`, `skeleton`, `piglin`, `illager`, `villager`,
+`horse`, `hostile`, `animal`, `fish`, `water`, `flying_mob` and `flying_animal`. The first plan in
+`body_plans.json` whose shape and traits all match decides which vanilla family the mob is animated **like**.
+It gets that family's clips and rig profile, fitted to its own proportions: the torso pivots at the model's own
+hips (where its legs join), and the centre and ground pivots are measured from its geometry.
+
+```json
+{
+  "exclude": ["mymod:statue"],
+  "plans": [
+    {"shape": "quadruped", "traits": ["water"], "like": "minecraft:turtle"},
+    {"shape": "any", "like": null}
+  ]
+}
+```
+
+Plans in resource packs are tried before the mod's own, so a pack can redirect any shape. `"like": null`, or
+listing the type in `exclude`, keeps vanilla animation (the shipped rules exclude the armour stand). A pack can
+still add clips for the type itself (`"target": "mymod:yeti"`): they play alongside the borrowed ones.
+`/mw audit` lists every such type in the game with its plan and how many of the borrowed bone tracks find a
+part, and `/mw doctor` shows the plan of each mob being drawn.
 
 ## Cinematics
 
